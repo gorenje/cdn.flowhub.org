@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 50 77 L 50 50 " fill="none" stroke="rgb(255, 255, 255)" stroke-width="8.78662150719729" stroke-linecap="butt">
+  </path>
+  <path d="M 94.93056731583404 35.622745513916016 L 71.2454833984375 71.2454833984375 " fill="none" stroke="rgb(255, 255, 255)" stroke-width="8.78662150719729" stroke-linecap="butt" transform="matrix(1 0 0 1 -21.2455 -21.2455)">
+  </path>
+  <path d="M -78.93056731583404 36.17028045654297 L -55.67118835449219 71.79300689697266 " fill="none" stroke="rgb(255, 255, 255)" stroke-width="8.78662150719729" stroke-linecap="butt" transform="matrix(1 0 0 1 105.396 -21.7213)">
+  </path>
+</svg>
