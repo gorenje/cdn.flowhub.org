@@ -1,0 +1,2769 @@
+
+<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-flowhub/flowhub_sidebar] --- -->
+<script type="text/javascript">
+(function() {
+   var globalYourConfigNode = null;
+   
+   function flowHubPullUpdateFlows(e=null){$.get("https://api.flowhub.org/v1/flows?cb="+(new Date).getTime()).done(o=>{var l=[];Object.keys(o.data).forEach(function(e){l.push({label:o.data[e].name,icon:"fa "+(RED.nodes.workspace(e)?"fa-check-circle-o":""),flowid:e,sublabel:e,selected:$("#node-input-flowhubpull-flowid").val()==e,checkbox:!1,children:void 0})}),e&&(l.sort((e,o)=>e.label<o.label?-1:1),e(l))}).fail(e=>{var o="",o="rejected"==e.state()?"<p>Failed to retrieve FlowHub catalogue, request blocked.</p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>":"<p>Failed to retrieve FlowHub catalogue.</p><p>Check browser console for more details.</p>";console.warn("Error loading https://api.flowhub.org/v1/flows:",e),RED.notify(o,{type:"error",id:"FlowHubPull",timeout:4e3})})}
+   
+   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function loadScript(e,t){var o=document.createElement("script");o.type="text/javascript",o.readyState?o.onreadystatechange=function(){"loaded"!==o.readyState&&"complete"!==o.readyState||(o.onreadystatechange=null,t&&t())}:o.onload=function(){t&&t()},o.src=e,document.getElementsByTagName("head")[0].appendChild(o)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled"},defaultRevertHandler=(e,t,o)=>{e=RED.nodes.node(e);e&&(e[t]=o,e.dirty=!0,RED.nodes.dirty(!0),RED.view.redraw())},revertableAttributes={},revertableAttributesNames=(["x","y","template","name","info","func","label","tooltip","timeout","repeat"].forEach(function(e){revertableAttributes[e]=defaultRevertHandler}),Object.keys(revertableAttributes));function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function clickBaitDiff(){$("th.revertable").on("click",e=>{e.preventDefault();var t,o=$($(e.target).parent()).data("attr");confirm('Really revert changes to attribute "'+o+'"?')&&(t=revertableAttributes[o])&&t($($(e.target).parent()).data("id"),o,JSON.parse(atob($($(e.target).parent()).data("oldval"))))})}function createDiff(l,c){var f=[],s=[];try{if(Object.keys(c).forEach(function(e){var t;Object.keys(l).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],f.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),s.push(e))}),Object.keys(l).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof l[e]?JSON.stringify(l[e]):l[e],f.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),s.push(e))}),Object.keys(l).forEach(function(i){if(-1<Object.keys(c).indexOf(i))if(JSON.stringify(l[i])!==JSON.stringify(c[i]))try{let o=null,t=void 0;s.push(i);try{t=Diff.diffLines(c[i],l[i])}catch(e){t=Diff.diffLines(JSON.stringify(c[i],void 0,1),JSON.stringify(l[i],void 0,1))}const r=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),r.appendChild(o)});var n=-1<revertableAttributesNames.indexOf(i)?" revertable":"",e=document.createElement("tr");e.setAttribute("class","dv-differ"),e.setAttribute("data-id",l.id),e.setAttribute("data-attr",i);try{e.setAttribute("data-oldval",btoa(JSON.stringify(c[i])))}catch(e){n=""}var a,d=document.createElement("th");d.setAttribute("class",n),d.appendChild(document.createTextNode(i)),descMap[i]&&((a=document.createElement("i")).style["font-size"]="80%",a.appendChild(document.createTextNode("("+descMap[i]+")")),d.appendChild(a)),e.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(r),e.append(d),f.push(e.outerHTML)}catch(e){console.log("--Exceeption",e),f.push("<tr><th class='dv-error'>"+i+" CAUSED EXCEP</th><td><code>"+escapeHtml(l[i])+"</code></td><td><code>"+escapeHtml(c[i])+"</code></td></tr>")}else f.push("<tr><th>"+i+"</th><td><code>"+escapeHtml(l[i])+"</code></td><td><code>"+escapeHtml(c[i])+"</code></td></tr>")}),0==s.length){let o=null;var e="OBJ",t=Diff.diffJson(c,l);const d=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),d.appendChild(o)});var i,n=document.createElement("tr"),a=(n.setAttribute("class","dv-differ"),document.createElement("th"));return a.appendChild(document.createTextNode(e)),descMap[e]&&((i=document.createElement("i")).style["font-size"]="80%",i.appendChild(document.createTextNode("("+descMap[e]+")")),a.appendChild(i)),n.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(d),n.append(a),{html:n.outerHTML,icon:"fa-question"}}}catch(e){console.log("Exception",e)}var o=["x","y","w","h","g","wires"];return{html:f.join(""),icon:0==s.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function doPushSubmission(e,t){var o=RED.workspaces.active();$.ajax({url:"FlowHubPush",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:o,flowdata:e||{},flowlabel:RED.nodes.workspace(o).label,cfgnode:t}),success:function(e){RED.notify("Submission triggered",{type:"warning",id:"FlowHubPush",timeout:2e3}),$("#flowhubpush-view-flow-link").attr("href","https://flowhub.org/f/"+o).show()},error:function(e,t,o){RED.notify("Submission failed: "+t,{type:"error",id:"FlowHubPush",timeout:2e3}),console.log(t,o)}})}function getFlowDataFromCurrentWorkspace(){var e=RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeRemoveHighlight(){document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({msg:"removehighlight"},"*")}function iframeHighlightItem(e){iframeRemoveHighlight(),document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({item:{label:e.label,icon:e.icon,class:e.class,sublabel:e.sublabel,objid:e.objid},msg:"highlightitem"},"*")}function iframeHasBeenLoaded(e){var t=getFlowDataFromCurrentWorkspace();setTimeout(()=>{e.contentWindow.postMessage({nodes:t,msg:"renderlocalflow",flowid:RED.workspaces.active()},"*")},345)}function doSubmission(e){var t=RED.workspaces.active();if(RED.nodes.workspace(t))RED.notify("Flow Comparison Triggered",{type:"warning",id:"FlowHubDiff",timeout:2e3}),$.ajax({url:"FlowHubDiff",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowhub:"submission from ",flowdata:e||{},flowlabel:RED.nodes.workspace(t).label}),success:function(e){var d=[],r={};if("failed"==e.status){RED.notify("This does not seem to be a FlowHub flow id: "+t,{type:"error",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else if($("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+e.flowid).show(),e.changes.forEach(function(e){var t,o,i,n,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-trash",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0,objid:a},d.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-plus-square",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(n=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+n.icon,class:"",diffcontent:n.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[a])):((t=RED.nodes.node(a))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(i=("function"==typeof(i=o.label)?i.call(t):i)||""),o&&i||(i=t.type),n=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:i,icon:"fa "+n.icon,class:"",diffcontent:n.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[t.id]))}),e.ifurl&&$("#node-input-flowhubdiff-svgcontainer").html('<iframe id="flowhubdiff-svgimageiframe" width="100%" height="100%" src="'+e.ifurl+'" onload="window.iframeHasBeenLoaded(this)" style="border: none; min-height: 300px;"></iframe>'),0==d.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){$("#node-input-flowhubdiff-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.objid&&iframeHighlightItem(t)}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw()),t.diffcontent?($("#node-input-flowhubdiff-diffcontainer").html(t.diffcontent),clickBaitDiff()):$("#node-input-flowhubdiff-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-flowhubdiff-target-filter").show();var o=$("#node-input-flowhubdiff-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-flowhubdiff-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-flowhubdiff-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+$("#node-input-flowhubdiff-target-container-div").treeList("data").length))}})}$("#node-input-flowhubdiff-target-container-div").treeList("data",d.sort((e,t)=>e.icon==t.icon?e.label.toLowerCase()>t.label.toLowerCase():e.icon>t.icon))}},error:function(e,t,o){$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify("Not Allowed - 500.","error"):0==e.status?RED.notify("Not Allowed - 0.","error"):RED.notify("Not Allowed - Unexpected.","error")}});else{RED.notify("Comparing subflows not supported.",{type:"error",id:"FlowHubDiff",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
+
+   function ensureYourConfigNodeExists() {
+      // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
+      // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
+
+      // If we had found it previously, check if it has been deleted by the user behind our back
+      if (globalYourConfigNode !== null) {
+         var configNode = RED.nodes.node(globalYourConfigNode.id);
+         if (configNode === null) { globalYourConfigNode = null; }
+      }
+
+      // If not found previously, let's go find it
+      if (globalYourConfigNode === null) {
+         var configNodes = [];
+         RED.nodes.eachConfig(function(configNode) {
+             if (configNode.type === 'FlowHubCfg') { 
+                 configNodes.push(configNode); 
+             }
+         });
+
+         // Make sure we only have 1 config node
+         while (configNodes.length > 1) {
+             var configNode = configNodes.pop();
+             RED.nodes.remove(configNode.id);
+             RED.nodes.dirty(true);
+         }
+
+         // When we found a config node, let's use that one
+         if (configNodes.length === 1) { globalYourConfigNode = configNodes[0]; }
+      }
+
+      // When it doesn't exist yet, create it if required
+      if (globalYourConfigNode === null) {
+         // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+         // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+         // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+         // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+         let typ = RED.nodes.getType("FlowHubCfg");
+         
+         globalYourConfigNode = {
+             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
+             _def: typ,
+             type: "FlowHubCfg",
+             hasUsers: false, 
+             users: [],
+             name: "FlowHubCfg",
+             label: function() { return this.name || "FlowHubCfg"},
+             /* default data */
+             apiToken: typ.defaults.apiToken.value,
+             apiTokenType: typ.defaults.apiTokenType.value,
+             email: "",
+             fullname: "",
+             flowid: "",
+             flowrevision: "",
+             notab: false,
+             pushcomment: ""
+         }
+
+         // Add the new config node to the collection of Node-RED nodes
+         RED.nodes.add(globalYourConfigNode);
+
+         // Make sure the "Deploy" button becomes active
+         RED.nodes.dirty(true);
+      }      
+   }
+
+   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+      var content = $($('script[type="text/x-red"][data-template-name="FlowHubDiff"]').i18n().html());
+    
+      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+      // --> more details: https://nodered.org/docs/api/ui/sidebar/
+      RED.sidebar.addTab({
+         id: "FlowHubDiff",
+         label: "FlowHub", // short name for the tab
+         name: "FlowHub.org", // long name for the menu
+         content: content,
+         enableOnEdit: true,
+         iconClass: "fa fa-window-minimize",
+         visible: true
+      });
+
+      /*
+      RED.actions.remove("flowhub:flowhub-push-flow")
+      RED.actions.add("flowhub:flowhub-push-flow",() => {
+         ensureYourConfigNodeExists();
+         doPushSubmission( getFlowDataFromCurrentWorkspace(), globalYourConfigNode )
+      });
+      */
+      
+      loadScript("https://cdn.openmindmap.org/thirdparty/diff.min.js")
+      ensureYourConfigNodeExists();
+
+      var tabs = RED.tabs.create({
+            id: 'func-flowhub-tabs',
+            onchange: function(tab) {
+               $('#func-flowhub-tabs-content').children().hide();
+               $('#' + tab.id).show();
+            }
+      });
+      
+      // Add first tab, pull
+      tabs.addTab({
+            id: 'func-flowhub-tab-pull',
+            iconClass: 'fa fa-download',
+            label: 'Pull'
+      });
+
+      // Add first tab, compare
+      tabs.addTab({
+            id: 'func-flowhub-tab-compare',
+            iconClass: 'fa fa-question',
+            label: 'Compare'
+      });
+      
+      // Add tab, push
+      tabs.addTab({
+            id: 'func-flowhub-tab-push',
+            iconClass: 'fa fa-exclamation',
+            label: 'Push'
+      });
+      
+      tabs.activateTab("func-flowhub-tab-pull");
+
+      $('#node-input-flowhubdiff-compare-btn').on('click', (e) => {
+         e.preventDefault();
+         doSubmission( getFlowDataFromCurrentWorkspace() )
+      })
+
+      $('#node-input-flowhubpush-push-btn').on('click', (e) => {
+         if ( e ) { e.preventDefault(); }
+         ensureYourConfigNodeExists();
+
+         globalYourConfigNode.fullname = $('#node-input-flowhubpush-fullname').val();
+         globalYourConfigNode.email = $('#node-input-flowhubpush-email').val();
+         globalYourConfigNode.pushcomment = $('#node-input-flowhubpush-comment').val();
+
+         doPushSubmission( getFlowDataFromCurrentWorkspace(), globalYourConfigNode )
+      });
+
+      $("#node-input-flowhubpush-apiToken").typedInput({
+          types:["env", "global", "cred"],
+          typeField: "#node-input-flowhubpush-apiTokenType"
+      });
+
+      $("#node-input-flowhubpush-apiToken").typedInput( 'value', globalYourConfigNode.apiToken || globalYourConfigNode._def.defaults.apiToken.value );
+      $("#node-input-flowhubpush-apiToken").typedInput( 'type', globalYourConfigNode.apiTokenType || globalYourConfigNode._def.defaults.apiTokenType.value);
+
+      $("#node-input-flowhubpush-apiToken").on('change', () => {
+         ensureYourConfigNodeExists();
+         
+         var val = $("#node-input-flowhubpush-apiToken").typedInput('value');
+         var typ = $("#node-input-flowhubpush-apiToken").typedInput('type');
+
+         if ( val != globalYourConfigNode.apiToken ) {
+            globalYourConfigNode.apiToken = val;
+            RED.nodes.dirty(true);
+         }
+
+         if ( typ != globalYourConfigNode.apiTokenType ) {
+            globalYourConfigNode.apiTokenType = typ;
+            RED.nodes.dirty(true);
+         }
+      })
+
+      $('#node-input-flowhubpush-email').on('change', (e) => {
+         if ( e ) { e.preventDefault(); }
+         ensureYourConfigNodeExists();
+
+         let val = $('#node-input-flowhubpush-email').val();
+         if ( val != globalYourConfigNode.email ) { 
+            globalYourConfigNode.email = val;
+            RED.nodes.dirty(true);
+         }
+      })
+      $('#node-input-flowhubpush-email').val(globalYourConfigNode.email)
+
+      $('#node-input-flowhubpush-fullname').on('change', (e) => {
+         if ( e ) { e.preventDefault(); }
+         ensureYourConfigNodeExists();
+
+         let val = $('#node-input-flowhubpush-fullname').val();
+         if ( val != globalYourConfigNode.fullname ) { 
+            globalYourConfigNode.fullname = val;
+            RED.nodes.dirty(true);
+         }
+      })
+      $('#node-input-flowhubpush-fullname').val(globalYourConfigNode.fullname)
+
+      $('#node-input-flowhubpush-comment').on('change', (e) => {
+         if ( e ) { e.preventDefault(); }
+         ensureYourConfigNodeExists();
+
+         let val = $('#node-input-flowhubpush-comment').val();
+         if ( val != globalYourConfigNode.pushcomment ) { 
+            globalYourConfigNode.pushcomment = val;
+            RED.nodes.dirty(true);
+         }
+      })
+      $('#node-input-flowhubpush-comment').val(globalYourConfigNode.pushcomment)
+
+      RED.comms.subscribe('flowhub:submission-result', (event,data) => {
+         RED.notify("Submission status: " + data.status, {
+            type: data.statusType,
+            id: "FlowHubPushResult",
+            timeout: 2000
+         });
+      });
+
+      if ( globalYourConfigNode.notab ) {
+         $('#flowhubpull-dialog-import-opt-sb-current').addClass('selected')
+         $('#flowhubpull-dialog-import-opt-sb-new').removeClass('selected')
+        } else {
+         $('#flowhubpull-dialog-import-opt-sb-new').addClass('selected')
+         $('#flowhubpull-dialog-import-opt-sb-current').removeClass('selected')
+       }
+       
+       $('#flowhubpull-dialog-import-opt-sb-current').on('click', (e) => {
+         e.preventDefault();
+
+         ensureYourConfigNodeExists();
+         globalYourConfigNode.notab = true
+         RED.nodes.dirty(true);
+
+         $('#flowhubpull-dialog-import-opt-sb-new').removeClass('selected')
+         $('#flowhubpull-dialog-import-opt-sb-current').addClass('selected')
+       })
+
+       $('#flowhubpull-dialog-import-opt-sb-new').on('click', (e) => {
+         e.preventDefault();
+
+         ensureYourConfigNodeExists();
+         globalYourConfigNode.notab = false;
+         RED.nodes.dirty(true);
+
+         $('#flowhubpull-dialog-import-opt-sb-current').removeClass('selected')
+         $('#flowhubpull-dialog-import-opt-sb-new').addClass('selected')
+       })
+
+      var dirList = $("#node-input-flowhubpull-sb-target-container-div").css({
+        width: "100%",
+        height: "100%"
+       }).treeList(
+         {
+           multi:false
+         }
+       ).on('treelistselect', function(event, item) {
+         if ( item.flowid ) {
+           $('#node-input-flowhubpull-flowid').val(item.flowid);
+
+           ensureYourConfigNodeExists();
+           globalYourConfigNode.flowid = item.flowid;
+           RED.nodes.dirty(true);
+
+           $('#flowhubpull-sb-view-flow-link').attr(
+             'href', 'https://flowhub.org/f/'+item.flowid
+           ).show();
+           
+           $('#node-input-flowhubpull-sb-import-flow-but').prop('disabled',false)
+         }
+       }).on('treelistconfirm', function(event, item) {
+         if ( item.flowid ) {
+           $('#node-input-flowhubpull-flowid').val(item.flowid);
+
+           ensureYourConfigNodeExists();
+           globalYourConfigNode.flowid = item.flowid;
+           RED.nodes.dirty(true);
+
+           $('#flowhubpull-sb-view-flow-link').attr(
+             'href', 'https://flowhub.org/f/'+item.flowid
+           ).show();
+
+           $('#node-input-flowhubpull-sb-import-flow-but').prop('disabled',false)
+           $("#node-input-flowhubpull-sb-import-flow-but").trigger('click');
+         }
+       });
+
+       var items = [];
+
+       if ( globalYourConfigNode.flowrevision != "" ) {
+         $('#node-input-flowhubpull-flowrevision').val(globalYourConfigNode.flowrevision)
+       }
+
+       if ( globalYourConfigNode.flowid ) {
+         $('#node-input-flowhubpull-flowid').val(globalYourConfigNode.flowid);
+         $('#flowhubpull-sb-view-flow-link').attr(
+            'href', 'https://flowhub.org/f/' + globalYourConfigNode.flowid
+         ).show();
+       } else {
+        $('#node-input-flowhubpull-sb-import-flow-but').prop('disabled',true)
+       }
+
+       flowHubPullUpdateFlows((treeListItems) => {
+         items = treeListItems;
+         dirList.treeList('data', treeListItems);
+       });
+
+       var search = $("#node-input-flowhubpull-sb-target-filter").searchBox({
+         style: "compact",
+         delay: 300,
+         change: function() {
+           var val = $(this).val().trim().toLowerCase();
+           if (val === "") {
+             dirList.treeList("filter", null);
+             search.searchBox("count","");
+           } else {
+             var count = dirList.treeList("filter", function(item) {
+               return item.label.toLowerCase().indexOf(val) > -1 || item.sublabel.toLowerCase().indexOf(val) > -1
+             });
+             search.searchBox("count",count + " / " + dirList.treeList("data").length);
+           }
+         }
+       });
+
+       $('#node-input-flowhubpull-sb-refresh-list-but').on('click', function(e) {
+         e.preventDefault();
+
+         setTimeout( () => {
+           flowHubPullUpdateFlows((treeListItems) => {
+             items = treeListItems;
+             dirList.treeList('data', treeListItems);
+           });
+         }, 300);
+       });
+
+       $("#node-input-flowhubpull-sb-import-flow-but").on("click", function(e) {
+         if ( e ) { e.preventDefault(); }
+
+         ensureYourConfigNodeExists();
+         var notab = globalYourConfigNode.notab;
+
+         if ( $('#node-input-flowhubpull-flowid').val().trim() == "" ||
+              !$('#node-input-flowhubpull-flowid').val() ) {
+           return RED.notify(RED._("notification.warning", {
+             message: "FlowID not provided, doing nothing."
+           }), "warning");
+         }
+
+         $('#node-dialog-ok').trigger('click')
+
+         $.get( "https://api.flowhub.org/v1/flows/" +
+                $('#node-input-flowhubpull-flowid').val() +
+                "?cb=" + new Date().getTime() + "&v=" + 
+                $('#node-input-flowhubpull-flowrevision').val(), function(e,d) {
+                  RED.clipboard.import();
+
+                  setTimeout( () => {
+                    var content = e;
+
+                    if ( notab ) {
+                      content = e.filter(function(o) {
+                        return o.type != "tab"
+                      });
+                    }
+
+                    $('#red-ui-clipboard-dialog-import-text').val(
+                      JSON.stringify(content)
+                    ).trigger("paste");
+                  }, 300);
+                });
+       });
+
+      $('#node-input-flowhubpull-flowrevision').on('change', () => {
+        ensureYourConfigNodeExists();
+        let val = $('#node-input-flowhubpull-flowrevision').val();
+        
+        if (globalYourConfigNode.flowrevision != val ) {
+          globalYourConfigNode.flowrevision = val
+          RED.nodes.dirty(true);
+        }
+      })
+   };
+   
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<style>
+.diff-viewer {
+    overflow: scroll;
+    background-color: rgb(244, 244, 244);
+    border: 1px solid rgb(196, 196, 196);
+    height: 80vh;
+    padding: 20px;
+    max-width: 90vw;
+    border-radius: 5px;
+}
+
+.dv-differ {
+    background-color: rgba(244, 170, 23, 0.476) !important;
+}
+
+.dv-removed {
+    background-color: rgb(203, 203, 38) !important;
+}
+
+.dv-added {
+    background-color: rgb(86, 222, 120) !important;
+}
+
+.dv-error {
+    background-color: #ff4b09 !important;
+}
+
+.dv-pre-elem {
+    page-break-inside: avoid;
+    font-family: monospace;
+    max-width: 100%;
+    overflow: auto;
+    display: block;
+    word-wrap: break-word;
+    margin: 0px !important;
+}
+
+.flowhublogo {
+    background-image: url("icons/@gregoriusrippenstein/node-red-contrib-flowhub/flowhublogo.svg");
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: top;
+}
+
+th.revertable:after {
+    content: " ⟲";
+    color: "green";
+}
+
+/*
+ * The rest is taken from node-maker - https: //github.com/Steveorevo/node-maker
+ */
+.red-ui-tray-content #dialog-form {
+    white-space: nowrap;
+}
+
+.full-row .red-ui-typedInput-container {
+    min-width: 70%;
+}
+
+.col input {
+    min-width: 100%;
+}
+
+.sml-lbl {
+    height: 66px;
+}
+
+.sml-lbl label {
+    font-size: smaller;
+    margin-bottom: 0px;
+    display: block !important;
+}
+
+.reg-lbl label {
+    white-space: nowrap;
+    margin-top: 5px;
+    height: 0px;
+}
+
+.red-ui-editor .form-row label.full-lbl {
+    white-space: normal;
+    width: 100%;
+}
+
+.col {
+    float: left;
+    margin-right: 5px;
+    min-height: 36px;
+}
+
+.col .red-ui-typedInput-container {
+    width: 100% !important;
+}
+
+.col-50 {
+    width: 50%;
+}
+
+.col-33 {
+    width: 33%;
+}
+
+.col-66 {
+    width: 66%;
+}
+
+.col-25 {
+    width: 25%;
+}
+
+.col-75 {
+    width: 75%;
+}
+
+.col-100 .red-ui-typedInput-container {
+    width: 70% !important;
+}
+
+.col-100.no-label .red-ui-typedInput-container {
+    width: 100% !important;
+}
+
+.txtarea {
+    padding-bottom: 26px;
+}
+
+.txtarea label {
+    vertical-align: top;
+    margin-top: 3px;
+}
+
+.txtarea textarea {
+    width: 70%;
+    margin-bottom: -28px !important;
+}
+
+.btn-regular {
+    margin-bottom: 14px !important;
+}
+
+</style>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="FlowHubDiff">
+<div class="form-row func-flowhub-tabs-row">
+   <ul style="min-width: 600px; margin-bottom: 20px;" id="func-flowhub-tabs"></ul>
+</div>
+
+<!--func-flowhub-tabs-row-->
+<div id="func-flowhub-tabs-content" style="min-height: calc(100% - 95px);">
+
+   <!--func-flowhub-tab-compare#-->
+   <div id="func-flowhub-tab-compare" style="display:none">
+      <div class="form-row">
+         <div class="col-100">
+
+            <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
+               <button id="node-input-flowhubdiff-compare-btn"
+                                             class="red-ui-button"><i class="fa fa-balance-scale"></i> Compare to Remote Flow</button>
+               <a id="flowhubdiff-view-flow-link" style="color: blue; display: none; margin-left: 40px;" target="_blank"
+                  href="">View Flow <i class="fa fa-external-link"></i></a>
+            </div>
+
+            <div class="form-row node-input-target-row node-input-target-list-row"
+               style="min-height: 100px; margin-left: 10px; margin-right: 15px;">
+               <div style="margin-right: 15px; margin-bottom: 5px; width: 35%; padding-left: 60%;">
+                  <input type="text" id="node-input-flowhubdiff-target-filter" style="display: none;">
+               </div>
+
+               <div id="node-input-flowhubdiff-target-container-div" style="min-height: 100px"></div>
+            </div>
+
+            <div class="form-row" style="min-height: 300px; margin-left: 10px; margin-right: 15px;">
+               <div id="node-input-flowhubdiff-svgcontainer"></div>
+            </div>
+
+            <div class="form-row" style="min-height: 100px; margin-left: 10px; margin-right: 15px;">
+               <div id="node-input-flowhubdiff-diffcontainer" class="diff-viewer"></div>
+            </div>
+
+         </div>
+      </div>
+      <!--form-row-->
+   </div>
+
+   <!--func-flowhub-tab-pull#-->
+   <div id="func-flowhub-tab-pull" style="display:none" style="min-height: calc(100% - 95px);">
+      <div class="form-row">
+         <div class="col-100">
+
+            <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
+               <button id="node-input-flowhubpull-sb-refresh-list-but"
+                        class="red-ui-button"><i class="fa fa-refresh"></i> Refresh Flow List</button>
+
+               <a id="flowhubpull-sb-view-flow-link" style="color: blue; display: none; margin-left: 40px;"
+                  target="_blank" href="">View Flow & Revisions <i class="fa fa-external-link"></i></a>
+            </div>
+
+            <div class="form-row node-input-target-row node-input-target-list-row"
+               style="position: relative; min-height: 100px; height: 500px; margin-left: 10px; margin-right: 15px;">
+               <div style="position: absolute; top: -30px; right: 0px;">
+                  <input type="text" id="node-input-flowhubpull-sb-target-filter" placeholder="Name or Flow Id">
+               </div>
+
+               <div id="node-input-flowhubpull-sb-target-container-div" style="min-height: 500px;"></div>
+            </div>
+
+            <div class="form-row" style="margin-left: 10px; margin-right: 15px;">
+               All flows are licensed under a copyleft <a style="color: blue;" target="_blank"
+                  href="https://raw.githubusercontent.com/gorenje/flows.flowhub.org/main/LICENSE">license
+                  <i class="fa fa-external-link"></i></a>,
+               hereby permission is given to use any flow for any purpose
+               <b>other than</b> for evil. No guarantee of purpose fulfillment
+               is made nor warrenty for failure - all risk is carried by the user.
+            </div>
+
+            <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
+               <label>
+                 <span>Flow ID:</span>
+               </label>
+              <input type="text"
+               disabled="disabled"
+               id="node-input-flowhubpull-flowid"
+               style="display:inline-block; width:40%; vertical-align:baseline;"
+               placeholder="Flow ID to Import">
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <label>
+                <span>Import to:</span>
+              </label>
+
+              <span>
+                 <a id="flowhubpull-dialog-import-opt-sb-current" class="red-ui-button toggle" href="#" data-i18n="clipboard.export.current">current flow tab</a>
+                 <a id="flowhubpull-dialog-import-opt-sb-new" class="red-ui-button toggle" href="#" data-i18n="clipboard.import.newFlow">new flow tab</a>
+              </span>
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <label for="node-input-flowhubpull-flowrevision">Revision:</label>
+               <input type="text" id="node-input-flowhubpull-flowrevision" placeholder="Revision"/>
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <button id="node-input-flowhubpull-sb-import-flow-but"
+                                             class="red-ui-button">Import Flow</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!--func-flowhub-tab-push#-->
+   <div id="func-flowhub-tab-push" style="display:none">
+      <div class="form-row">
+         <div class="col-100">
+
+            <div class="form-row" style="margin-top: 30px; margin-left: 10px;">
+               <button id="node-input-flowhubpush-push-btn"
+                        class="red-ui-button"><i class="fa fa-share-square-o"></i> Push Flow to FlowHub</button>
+               <a id="flowhubpush-view-flow-link" style="color: blue; display: none; margin-left: 80px;" target="_blank"
+                  href="">View Flow <i class="fa fa-external-link"></i></a>
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               Provide your email, full name and commit to submit the current flow.
+               All submissions will be reviewed at GitHub and either merged or dropped.
+               Your <b>email, name and comment</b> will be attached to the commit added to
+               the <a style="color: blue;" target="_blank" href="https://github.com/gorenje/flows.flowhub.org">FlowHub
+                  repository
+                  <i class="fa fa-external-link"></i></a>
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <label for="node-input-flowhubpush-email">
+                        <i class="fa fa-tag"></i>
+                        Email
+                     </label>
+               <input type="text" id="node-input-flowhubpush-email"
+                           placeholder="john.smith@example.com">
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <label for="node-input-flowhubpush-fullname">
+                        <i class="fa fa-tag"></i>
+                        Name
+                     </label>
+               <input type="text" id="node-input-flowhubpush-fullname"
+                           placeholder="Firstname Surname">
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <label for="node-input-flowhubpush-comment">
+                                    <i class="fa fa-tag"></i>
+                                    Comment
+                                 </label>
+               <textarea id="node-input-flowhubpush-comment"
+                                       placeholder="comment"></textarea>
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               All submissions must be verified by email. After submission you
+               will recieve an email to <b>confirm your submission.
+            </div>
+
+            <div class="form-row" style="margin-left: 10px;">
+               <b>License:</b><br><br>
+                All flows submitted are licensed under a copyleft <a style="color: blue;" target="_blank"
+                  href="https://raw.githubusercontent.com/gorenje/flows.flowhub.org/main/LICENSE">license
+                  <i class="fa fa-external-link"></i></a>,
+               that grants complete do-anything-but-not-evil permission to the user
+               and provides no warranty in case of failure nor guarantee of success.
+            </div>
+
+         </div>
+      </div>
+      <!--form-row-->
+   </div>
+   <!--func-flowhub-tab-tab#-->
+</div>
+<!--func-flowhub-tabs-content-->
+</script>
+
+<!-- --- [red-plugin:@bartbutenaers/node-red-autolayout-sidebar/sidebar-plugin] --- -->
+<!--
+  Copyright 2023, Bart Butenaers & Gerrit Riessen
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<script src="auto_layout_config/lib/elkjs"></script>
+<script src="auto_layout_config/lib/dagrejs"></script>
+
+<script type="text/javascript">
+(function() {
+    var globalAutoLayoutConfigNode = null;
+    
+    function findSelectedNodes(/*thisNode*/) {
+        /*
+         * Take the selection and create a nodeset from it.
+         */
+        var selection = RED.view.selection();
+        var fixedNodeId = undefined;
+        var ns = undefined;
+
+        if (!selection.nodes || selection.nodes.length == 0) {
+            RED.notify("Select exactly one node.");
+            return;
+        }
+
+        if ( selection.nodes.length == 1 ) {
+            // This is not applicable for the sidebar plugin
+            //if (selection.nodes[0].id == thisNode.id || selection.nodes[0].type == thisNode.type) {
+            //    RED.notify("Please do not select the align node.");
+            //    return;
+            //}
+
+            if ( selection.nodes[0].type == "group") {
+                ns = RED.group.getNodes(selection.nodes[0])
+                if ( ns.length == 0 ) {
+                    RED.notify("Empty group selected, very funny.");
+                    return;
+                }
+                fixedNodeId = ns[0].id;
+            } else {
+                ns = RED.nodes.getAllFlowNodes(selection.nodes[0])
+                fixedNodeId = selection.nodes[0].id;
+            }
+        }
+
+        if ( selection.nodes.length > 1 ) {
+            ns = []
+            for ( var idx = 0 ; idx < selection.nodes.length ; idx++ ) {
+                if ( selection.nodes[idx].type == "group") {
+                    ns = ns.concat(RED.group.getNodes(selection.nodes[idx]))
+                } else {
+                    ns.push(selection.nodes[idx])
+                    fixedNodeId ||= selection.nodes[idx].id;
+                }
+          }
+
+          fixedNodeId ||= ns[0].id;
+        }
+
+        if ( !ns ) {
+            RED.notify("No nodes selected.");
+            return;
+        }
+
+        /* 
+         * From here it's all nodeset based.
+         */
+
+        // Convert nodes to flows.json format since all the wires, i.e. links, are 
+        // contained in one simple json format.
+        var allnodes = RED.nodes.createExportableNodeSet(ns).filter((n) => {
+            return n.type != "tab" && n.type != 'subflow' && n.type != "group"
+        });
+
+        var alledges = [];
+        var allNodeIds = allnodes.map( d => d.id);
+
+        allnodes.forEach((n) => {
+            // Only continue if the node has wires (e.g. a ui_group has no wires)
+            if (n.wires) {
+                for (var widx = 0; widx < (n.wires || []).length; widx++) {
+                    for (var xidx = 0; xidx < n.wires[widx].length; xidx++) {
+                        if ( allNodeIds.indexOf(n.wires[widx][xidx])> -1){
+                            alledges.push({
+                                id: n.id + n.wires[widx][xidx],
+                                sources: [n.id],
+                                targets: [n.wires[widx][xidx]]
+                            });
+                        }
+                    }
+                }
+            }
+        })
+
+        allnodes = allnodes.map((n) => {
+            let bbox = ( ( document.getElementById(n.id) && document.getElementById(n.id).getBBox && document.getElementById(n.id) ) || {
+              getBBox: () => {
+                return {
+                  width: 0,
+                  height: 0
+                }
+              }
+            });
+
+            return {
+                id: n.id,
+                width: bbox.getBBox().width + 3,
+                height: bbox.getBBox().height + 3,
+            }
+        });
+
+        return {
+            allnodes: allnodes,
+            alledges: alledges,
+            fixedNodeId: fixedNodeId
+        };
+    }
+    
+    function moveNodes(fixedNodeId, children) {
+        //var children = payload.nodes;
+        //var fixedNodeId = payload.fixedNodeId;
+
+        var changedNodes = [];
+
+        // Before moving anything we get the offset (x,y) - this is the amount that our
+        // fixed Node moved - our fixed node does not move, this means everything is offset
+        // by the distance it moved.
+        var offsetX = 0;
+        var offsetY = 0;
+        children.forEach((c) => {
+            if (c.id == fixedNodeId) {
+                var nd = RED.nodes.node(c.id) || RED.nodes.junction(c.id);
+                offsetX = c.x - nd.x;
+                offsetY = c.y - nd.y;
+            }
+        });
+
+        children.forEach((c) => {
+            var nd = RED.nodes.node(c.id) || RED.nodes.junction(c.id);
+
+            changedNodes.push({
+                n: nd,
+                ox: nd.x,
+                oy: nd.y,
+                moved: nd.moved
+            });
+
+            nd.x = c.x - offsetX;
+            nd.y = c.y - offsetY;
+            nd.dirty = true;
+        });
+
+        RED.history.push({ t: "move", nodes: changedNodes, dirty: RED.nodes.dirty() });
+        RED.nodes.dirty(true);
+        RED.view.redraw(true);
+    }
+    
+    function getDefaultSettings() {
+        return {
+            "dagre_lr": {
+                "rankdir": "LR",
+                "marginx": 20,
+                "marginy": 20,
+                "nodesep": 30,
+                "ranksep": 50
+            },
+            "dagre_longest_path": {
+                "rankdir": "LR",
+                "marginx": 2,
+                "marginy": 2,
+                "ranker": "longest-path",
+                "nodesep": 2,
+                "ranksep": 2
+            },
+            "elkjs_mr_tree": {
+                "algorithm": "mrtree",
+                "childAreaHeight": 4500,
+                "childAreaWidth": 4500,
+                "org.eclipse.elk.direction": "RIGHT"
+            },
+            "elkjs_layered_upwards": {
+                "algorithm": "org.eclipse.elk.layered",
+                "elk.direction": "UP",
+                "cycleBreaking.strategy": "INTERACTIVE",
+                "layering.strategy": "INTERACTIVE",
+                "crossingMinimization.semiInteractive": true,
+                "separateConnectedComponents": true,
+                "nodePlacement.strategy": "NETWORK_SIMPLEX",
+                "spacing.nodeNode": 70,
+                "spacing.nodeNodeBetweenLayers": 25,
+                "spacing.edgeNode": 25,
+                "spacing.edgeNodeBetweenLayers": 20,
+                "spacing.edgeEdge": 20,
+                "spacing.edgeEdgeBetweenLayers": 15,
+                "elk.hierarchyHandling": "INCLUDE_CHILDREN",
+                "elk.layered.spacing.edgeNodeBetweenLayers": 40,
+                "elk.layered.nodePlacement.bk.fixedAlignment": "BALANCED",
+                "layering.layerConstraint": "FIRST"
+            },
+            "elkjs_layered_downwards": {
+                "algorithm": "org.eclipse.elk.layered",
+                "elk.direction": "DOWN",
+                "cycleBreaking.strategy": "INTERACTIVE",
+                "layering.strategy": "INTERACTIVE",
+                "crossingMinimization.semiInteractive": true,
+                "separateConnectedComponents": true,
+                "nodePlacement.strategy": "NETWORK_SIMPLEX",
+                "spacing.nodeNode": 70,
+                "spacing.nodeNodeBetweenLayers": 25,
+                "spacing.edgeNode": 25,
+                "spacing.edgeNodeBetweenLayers": 20,
+                "spacing.edgeEdge": 20,
+                "spacing.edgeEdgeBetweenLayers": 15
+            },
+            "elkjs_box": {
+                "algorithm": "org.eclipse.elk.box",
+                "childAreaHeight": 3000,
+                "childAreaWidth": 3000
+            },
+            "pull_request_2267": {
+                // TODO
+            }
+        }
+    }
+  
+    // Ensure that the globalAutoLayoutConfigNode (still) exists, because the user might have deleted it meanwhile...
+    // !!!!!!!!!!!!!!! CALL THIS FUNCTION EVERYWHERE THE globalAutoLayoutConfigNode IS BEING USED !!!!!!!!!!!!!!!
+    function ensureAutoLayoutConfigNode() {
+        // If we had found it previously, check if it has been deleted by the user behind our back
+        if (globalAutoLayoutConfigNode !== null) {
+            var configNode = RED.nodes.node(globalAutoLayoutConfigNode.id);
+            if (configNode === null) { globalAutoLayoutConfigNode = null; }
+        }
+
+        // If not found previously, let's go find it
+        if (globalAutoLayoutConfigNode === null) {
+            var configNodes = [];
+            console.log("=======================> HIER configNodes via eachConfig nodig")
+            RED.nodes.eachConfig(function(configNode) {
+                if (configNode.type === 'auto_layout_config') { 
+                    configNodes.push(configNode); 
+                }
+            });
+
+            // Make sure we only have 1 config node
+            while (configNodes.length > 1) {
+                var configNode = configNodes.pop();
+                RED.nodes.remove(configNode.id);
+                RED.nodes.dirty(true);
+            }
+
+            // When we found a config node, let's use that one
+            if (configNodes.length === 1) { globalAutoLayoutConfigNode = configNodes[0]; }
+        }
+
+        // When it doesn't exist yet, create it if required
+        if (globalAutoLayoutConfigNode === null) {
+            // TODO controleren of de defaults door de config node code zelf toegepast worden????
+
+            // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+            // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+            // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+            // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+            globalAutoLayoutConfigNode = {
+                id: RED.nodes.id(),
+                _def: RED.nodes.getType("auto_layout_config"),
+                type: "auto_layout_config",
+                hasUsers: false, 
+                users: [],
+                // TODO default values for all properties
+                name: "AutoLayout",
+                label: function() { return this.name || "AutoLayout"},
+                algorithm: "dagre_lr", // Default algorithm
+                settings: JSON.stringify(getDefaultSettings()) // Start with the default settings per algorithm
+            }
+
+            // Add the new config node to the collection of Node-RED nodes
+            RED.nodes.add(globalAutoLayoutConfigNode);
+
+            // Make sure the "Deploy" button becomes active
+            RED.nodes.dirty(true);
+        }
+    }
+
+    function executeAutoLayout() {
+        ensureAutoLayoutConfigNode();
+
+        let currentAlgorithm = globalAutoLayoutConfigNode.algorithm;
+        let currentAlgorithmSettings = JSON.parse(globalAutoLayoutConfigNode.settings)[currentAlgorithm];
+
+        let selection = findSelectedNodes();
+
+        if (!selection) {
+            return;
+        }
+
+        switch(currentAlgorithm) {
+            case "dagre_lr":
+            case "dagre_longest_path":
+                // Code take from https://pastebin.com/TJRFD3mg
+                // Which came from https://discourse.nodered.org/t/read-flows-json-and-position-the-nodes-in-most-efficient-readable-way/78158/12
+                var g = new dagre.graphlib.Graph();
+                g.setGraph(currentAlgorithmSettings);
+                g.setDefaultEdgeLabel(function () { return {}; });                       
+
+                for (var idx = 0; idx < selection.allnodes.length; idx++) {
+                    var n = selection.allnodes[idx];
+                    g.setNode(n.id, {
+                        ...n,
+                    })
+                }
+                
+                // The above loop can be replaced by :
+                // for (var idx = 0; idx < selection.allnodes.length; idx++) {
+                //     var node = selection.allnodes[idx];
+                //     var clonedNode = Object.assign({}, node);
+                //     g.setNode(n.id, clonedNode);
+                // }
+
+
+                for (var idx = 0; idx < selection.alledges.length; idx++) {
+                    var e = selection.alledges[idx];
+                    g.setEdge(e.sources[0], e.targets[0])
+                }
+
+                dagre.layout(g);
+                
+                var nodes = g.nodes().map(function (v) {
+                     return {
+                          ...g.node(v)
+                        }
+                })   
+                
+                try {
+                    moveNodes(selection.fixedNodeId, nodes);
+                } catch ( ex ) {
+                    console.error( "Dagre exception moving nodes", ex)
+                    // ensure that dagre errors are also shown as notifications in Node-RED.
+                    RED.notify("Dagre autoroute error: " + ex);
+                }
+                break;
+            case "elkjs_mr_tree": 
+            case "elkjs_layered_upwards": 
+            case "elkjs_layered_downwards": 
+            case "elkjs_box": 
+                // see https://github.com/kieler/elkjs#api for more details
+                var graph = {
+                    id: "root",
+                    layoutOptions: currentAlgorithmSettings,
+                    children: selection.allnodes,
+                    edges: selection.alledges
+                };
+
+                const elk = new ELK();
+
+                elk.layout(graph)
+                    .then((g) => {
+                        moveNodes(selection.fixedNodeId, g.children);
+                    })
+                    .catch((ex) => {
+                        console.error( "ELKjs exception moving nodes", ex)
+                        RED.notify("ElkJs autoroute error: " + ex);
+                    });
+                break;
+            
+            case "pull_request_2267": 
+                // Code Taken from https://github.com/node-red/node-red/pull/2267/files
+                // I only replaced 'selection' by 'selection_', but it would be better to use the above 'selection' variable.
+                var selection_ = RED.view.selection();
+                
+                if (!selection_.nodes || selection_.nodes.length !== 1) {
+                    RED.notify("Select exactly one node");
+                    return;
+                }
+                
+                var ns = undefined;
+                if (selection_.nodes[0].type == "group") {
+                    ns = RED.group.getNodes(selection_.nodes[0])
+                } else {
+                    ns = RED.nodes.getAllFlowNodes(selection_.nodes[0]);
+                }
+
+                // Find Input node
+
+                var nodes = {};
+                var minRank = 0;
+                var stack = [];
+                var candidateInputs = {};
+                var candidateOutputs = {};
+                ns.forEach(function (n) {
+                    candidateInputs[n.id] = n;
+                    candidateOutputs[n.id] = n;
+                    nodes[n.id] = {
+                        n: n,
+                        i: [],
+                        o: [],
+                        d: -1, // depth from start
+                        r: -1, // rank order at that depth
+                        downstream: 0
+                    }
+                });
+                RED.nodes.eachLink(function (link) {
+                    if (nodes[link.source.id] || nodes[link.target.id]) {
+                        nodes[link.source.id].o.push(link.target.id);
+                        nodes[link.target.id].i.push(link.source.id);
+                        delete candidateInputs[link.target.id]
+                        delete candidateOutputs[link.source.id]
+                    }
+                })
+
+                var inputs = Object.keys(candidateInputs);
+                var outputs = Object.keys(candidateOutputs);
+
+                if (inputs.length > 1) {
+                    RED.notify("Multiple start points - bailing")
+                    return;
+                }
+
+                if (outputs.length === 0) {
+                    RED.notify("No outputs - is this a big loop? Bailing");
+                    return;
+                }
+
+                function applyDepth(id, d) {
+                    if (nodes[id].d < d) {
+                        nodes[id].d = d;
+                        nodes[id].o.forEach(function (nid) {
+                            applyDepth(nid, d + 1);
+                        })
+                    }
+                }
+                applyDepth(inputs[0], 0)
+
+                function calculateDownstream(id, downstream) {
+                    nodes[id].downstream += downstream;
+                    nodes[id].i.forEach(function (nid) {
+                        calculateDownstream(nid, nodes[id].downstream + 1);
+                    })
+                }
+                outputs.forEach(function (id) {
+                    calculateDownstream(id, 0)
+                })
+
+                var ranks = {};
+                function rankNodes(node) {
+                    if (node.r === -1) {
+                        ranks[node.d] = ranks[node.d] || [];
+                        node.r = ranks[node.d].length;
+                        ranks[node.d].push(node);
+                        node.o.sort(function (a, b) {
+                            return nodes[b].downstream - nodes[a].downstream
+                        })
+                        node.o.forEach(function (nid) {
+                            rankNodes(nodes[nid])
+                        })
+                    }
+                }
+                rankNodes(nodes[inputs[0]]);
+                function shuffleRanks(node) {
+                    var pushed = false;
+                    if (node.o.length > 1) {
+                        var outputs = node.o.slice(0);
+                        outputs.sort(function (a, b) {
+                            if (nodes[a].d === nodes[b].d) {
+                                return nodes[a].r - nodes[b].r;
+                            } else {
+                                return nodes[b].d - nodes[a].d;
+                            }
+                        })
+                        // outputs.forEach(function(o,i) { console.log(" ",i," + "+nodes[o].n.type," d:",nodes[o].d," r:",nodes[o].r)});
+                        var rank = nodes[outputs[0]].r;
+                        var depth = nodes[outputs[0]].d;
+                        for (var i = 1; i < outputs.length; i++) {
+                            // console.log(outputs[i]);
+                            var n = nodes[outputs[i]];
+                            if (n.d !== depth && n.r === rank) {
+                                // need to move n down one.
+                                var r = n.r;
+                                ns.forEach(function (_n) {
+                                    var nn = nodes[_n.id];
+                                    if (nn.d >= n.d && nn.d < depth && nn.r >= r) {
+                                        pushed = true;
+                                        nn.r++;
+                                    }
+                                })
+                            }
+                            depth = n.d;
+                            rank = n.r;
+                        }
+                    }
+                    node.o.forEach(function (n) {
+                        pushed = pushed || shuffleRanks(nodes[n])
+                    })
+                    return pushed;
+                }
+                var shuffle = function () {
+                    if (shuffleRanks(nodes[inputs[0]])) {
+                        shuffle();
+                    }
+                }
+                shuffle();
+
+
+                var x = nodes[inputs[0]].n.x;
+                var y = nodes[inputs[0]].n.y;
+                var changedNodes = [];
+                ns.forEach(function (n) {
+                    var d = nodes[n.id].d;
+                    var r = nodes[n.id].r;
+
+                    changedNodes.push({
+                        n: n,
+                        ox: n.x,
+                        oy: n.y,
+                        moved: n.moved
+                    });
+
+                    n.x = x + d * 200;
+                    n.y = y + r * 50;
+                    n.dirty = true;
+                    // n.dirtyStatus = true;
+                    // n.status = {
+                    //     text:"d"+d+" : r"+r+" : ds"+nodes[n.id].downstream
+                    // }
+                });
+
+                if (changedNodes.length > 0) {
+                    RED.history.push({ t: "move", nodes: changedNodes, dirty: RED.nodes.dirty() });
+                    RED.nodes.dirty(true);
+                    RED.view.redraw(true);
+                }
+                
+                break;
+
+        }
+    }
+
+    RED.plugins.registerPlugin("autolayout-sidebar-plugin", {});
+
+    // Make sure the editor is completely loaded, before filling the sidebar with content.
+    // Because only just before that, RED.nodes will be loaded.  Otherwise RED.nodes.getType("auto_layout_config") would 
+    // return undefined, and RED.nodes.add would throw an exception...
+    // The problem is that Node-RED does not offer an "editor-loaded" event.
+    // I did a feature request for that, but for some obscure reason it was not accepted...
+    // (see https://discourse.nodered.org/t/new-editor-event-when-all-nodes-have-been-loaded/60314)
+    // On Discourse there was a workaround shared, but the 'workspace:change' is emitted a bit too early.
+    // Because it is emitted just before the config nodes are loaded, so RED.nodes.eachConfig above would not find our config node.
+    // (see https://discourse.nodered.org/t/add-sidebar-tab-on-app-start-not-working/64726/4).
+    // I found that the 'runtime-state' event is triggered just after the config nodes are loaded, so it works fine. 
+    // But it is a non-official unpublished event, so it might be changed or removed in the future...
+    var dothisOneTimePlease = () => {
+        RED.events.off('runtime-state', dothisOneTimePlease )
+
+        // Register an action so the user could bind a keyboard shortcut to show the auto-layout sidebar
+        // but avoid an "Error: Cannot override existing action" error in the browser console:
+        if( RED.actions.list().filter( (d) => { return d.id == "core:auto-layout-flow"} ).length == 0 ) {
+            RED.actions.add("core:auto-layout-flow", executeAutoLayout);
+        }
+        
+        // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+        var content = $($('script[type="text/x-red"][data-template-name="auto_layout_sidebar"]').i18n().html());
+       
+        // Add a "Auto Layout" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+        RED.sidebar.addTab({
+            id: "sidebar-auto-layout",
+            label: "auto_layout", // short name for the tab
+            name: "Auto Layout", // long name for the menu
+            content: content,
+            closeable: true,
+            disableOnEdit: true,
+            iconClass: "fa fa-outdent"
+        });
+
+        // Show the algorithm settings as json in a typedinput element (in the sidebar)
+        $("#node-input-settings").typedInput({
+            default: 'json',
+            types:['json']
+        });
+
+        // When the algorithm properties are changed in the sidebar, then store them into the config node
+        $("#node-input-settings").on("change", function() {
+            ensureAutoLayoutConfigNode();
+
+            let currentAlgorithmSettings = $(this).typedInput('value');
+            let currentAlgorithm = globalAutoLayoutConfigNode.algorithm;
+
+            // When the property value has changed, save it in the config node and activate the 'deploy' button.
+            // Remark: don't check the input type (i.e. use != instead of  !==) because we will get the number values as strings...
+            //if (globalAutoLayoutConfigNode.settings[currentAlgorithm] != currentAlgorithmSettings) {
+                let settingsObj = JSON.parse(globalAutoLayoutConfigNode.settings);
+                settingsObj[currentAlgorithm] = JSON.parse(currentAlgorithmSettings);
+                globalAutoLayoutConfigNode.settings = JSON.stringify(settingsObj);
+                RED.nodes.dirty(true);
+            //}
+        })
+
+        // When the algorithm is changed in the sidebar, then store it into the config node
+        $("#node-input-algorithm").on("change", function() {
+            ensureAutoLayoutConfigNode();
+
+            let currentAlgorithm = $(this).val();
+            let currentAlgorithmSettings = JSON.parse(globalAutoLayoutConfigNode.settings)[currentAlgorithm];
+
+            // When the property value has changed, save it in the config node and activate the 'deploy' button.
+            // Remark: don't check the input type (i.e. use != instead of  !==) because we will get the number values as strings...
+            if (globalAutoLayoutConfigNode.algorithm != currentAlgorithm) {
+                globalAutoLayoutConfigNode.algorithm = currentAlgorithm;
+                RED.nodes.dirty(true);
+            }
+            
+            $("#node-input-settings").typedInput('value', JSON.stringify(currentAlgorithmSettings));
+        })
+        $("#node-input-algorithm").change();
+
+        $("#auto-layout-button").click( executeAutoLayout );
+
+        $("#auto-layout-revert-button").click(function() {
+            // revert the last change by calling undo but also maintain the 
+            // original selection, making it easier to try out different 
+            // algorithms.
+            var sle = RED.view.selection();
+
+            // this will clear the selection, hence make a copy beforehand
+            RED.actions.invoke("core:undo");
+
+            RED.view.select(sle);
+        })
+    };
+    RED.events.on('runtime-state', dothisOneTimePlease )
+})();
+</script>
+
+<script type="text/x-red" data-template-name="auto_layout_sidebar">
+    <div style="position: relative; height: 100%; margin: 15px;">
+        <label for="node-input-algorithm" style="margin-top: 25px"><i class="fa fa-terminal"></i> Algorithm</label>
+        <select id="node-input-algorithm">
+            <option value="dagre_lr">Dagre LR</option>
+            <option value="dagre_longest_path">Dagre Longest Path</option>
+            <option value="elkjs_mr_tree">ELKjs Mr. Tree</option>
+            <option value="elkjs_layered_upwards">ELKjs Layered Upwards</option>
+            <option value="elkjs_layered_downwards">ELKjs Layered Downwards</option>
+            <option value="elkjs_box">ELKjs Box</option>
+            <option value="pull_request_2267">Pull Request 2267</option></select>
+        </select>
+
+        <label for="node-input-settings" style="margin-top: 15px"><i class="fa fa-cog"></i> Settings</label>
+        <input type="text" id="node-input-settings" style="width: 100%; margin-top: 30px">
+        
+        <button type="button" id="auto-layout-button" style="font-size: larger;width:100%;background-color: yellowgreen;color:white;border: none;height: 32px;margin-top: 30px;">Execute auto-layout</button>
+
+        <button type="button" id="auto-layout-revert-button" style="font-size: smaller;width:50%;background-color: rgb(225, 119, 129); color: rgb(246, 246, 246); border: 1px solid rgb(173, 22, 37); height: 32px; margin-top: 30px;"><i class="fa fa-undo"></i> Undo</button>
+    </div>
+</script>
+
+<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin] --- -->
+<script type="text/javascript">
+(function() {
+   var globalYourConfigNode = null;
+
+   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function loadScript(e,t){var o=document.createElement("script");o.type="text/javascript",o.readyState?o.onreadystatechange=function(){"loaded"!==o.readyState&&"complete"!==o.readyState||(o.onreadystatechange=null,t&&t())}:o.onload=function(){t&&t()},o.src=e,document.getElementsByTagName("head")[0].appendChild(o)}function addPanZoom(){var e=$(".flowviewer svg"),t=(e.attr("width",""),e.attr("height",""),e.css("width",$(".flowviewer").width()+"px"),e.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());e.attr("viewBox",[t.x,t.y,t.width,t.height].join(" "));(e=d3.select(".flowviewer svg")).html("<g>"+e.html()+"</g>");var o=e.select("g"),n=d3.behavior.zoom().scaleExtent([.3,100]).on("zoom",function(e){o.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});e.call(n)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled",w:"Width",h:"Height"};function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function createDiff(r,c){var s=[],l=[];if(Object.keys(c).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],s.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],s.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(n){if(-1<Object.keys(c).indexOf(n))if(JSON.stringify(r[n])!==JSON.stringify(c[n])){let o=null,t=void 0;l.push(n);try{t=Diff.diffLines(c[n],r[n])}catch(e){t=Diff.diffLines(JSON.stringify(c[n],void 0,1),JSON.stringify(r[n],void 0,1))}const i=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),i.appendChild(o)});var e,d=document.createElement("tr"),a=(d.setAttribute("class","dv-differ"),document.createElement("th"));a.appendChild(document.createTextNode(n)),descMap[n]&&((e=document.createElement("i")).style["font-size"]="80%",e.appendChild(document.createTextNode("("+descMap[n]+")")),a.appendChild(e)),d.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(i),d.append(a),s.push(d.outerHTML)}else s.push("<tr><th>"+n+"</th><td><code>"+escapeHtml(r[n])+"</code></td><td><code>"+escapeHtml(c[n])+"</code></td></tr>")}),0==l.length){let o=null;var e="OBJ",t=Diff.diffJson(c,r);const a=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),a.appendChild(o)});var n,t=document.createElement("tr"),d=(t.setAttribute("class","dv-differ"),document.createElement("th"));return d.appendChild(document.createTextNode(e)),descMap[e]&&((n=document.createElement("i")).style["font-size"]="80%",n.appendChild(document.createTextNode("("+descMap[e]+")")),d.appendChild(n)),t.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(a),t.append(d),{html:t.outerHTML,icon:"fa-question"}}var o=["x","y","w","h","g","wires"];return{html:s.join(""),icon:0==l.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getFlowDataFromCurrentWorkspace(){var e=RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeHasBeenLoaded(e){var t=getFlowDataFromCurrentWorkspace();setTimeout(()=>{e.contentWindow.postMessage({nodes:t,msg:"renderlocalflow",flowid:t[0].id},"*")},345)}function doSubmission(n){var t=RED.workspaces.active(),e=n.filter(e=>e.z==t||e.id==t);$($($("#svgelem .container-diff02")[0]).find(".containerGroup")[0]).find("g").html(""),$($($("#svgelem .container-diff01")[0]).find(".containerGroup")[0]).find("g").html(""),$.ajax({url:"FlowCompareCfg",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowdata:e||{},flowlabel:(RED.nodes.workspace(t)||{label:"subflow"}).label}),success:function(e){var i=[],r={};if("failed"==e.status)RED.notify("Error happened, please check console",{type:"error",timeout:2e3}),console.error("Error in flow compare: ",e);else{renderFlow(e.flowid,e.nodes,$($("#svgelem .container-diff02")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0}),renderFlow(e.flowid,n,$($("#svgelem .container-diff01")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0});var t=$(".flowviewer svg"),o=(t.attr("width",""),t.attr("height",""),t.css("width",$(".flowviewer").width()+"px"),t.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());if(t.attr("viewBox",[o.x,o.y,o.width,o.height].join(" ")),document.getElementById("node-input-compare-slider").oninput=function(){$(".container-diff01").css("opacity",this.value/100),$(".container-diff02").css("opacity",(100-this.value)/100)},e.changes.forEach(function(e){var t,o,n,d,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-times",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("deleted"),$(".group-"+a).addClass("deleted"),i.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-check",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("added"),$(".group-"+a).addClass("added"),i.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(d=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[a])):((t=RED.nodes.node(a))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),d=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:n,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[t.id]))}),0==i.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowcompare-target-container-div").treeList("empty"),$("#node-input-flowcompare-diffcontainer").html("")}catch(e){}}else{try{$("#node-input-flowcompare-target-container-div").treeList("empty")}catch(e){$("#node-input-flowcompare-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){$(".node-"+t.objid).addClass("highlight"),$(".group-"+t.objid).addClass("highlight")}).on("treelistitemmouseout",function(e,t){$(".node-"+t.objid).removeClass("highlight"),$(".group-"+t.objid).removeClass("highlight")}).on("treelistselect",function(e,t){t.diffcontent?($("#node-input-flowcompare-diffcontainer").html(t.diffcontent),t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw())):$("#node-input-flowcompare-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))})}$("#node-input-flowcompare-target-container-div").treeList("data",i.sort((e,t)=>e.icon>t.icon))}}},error:function(e,t,o){404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify(node._("common.notification.error",{message:node._("inject.errors.failed")}),"error"):0==e.status?RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.no-response")}),"error"):RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.unexpected",{status:e.status,message:t})}),"error")}})}function flowCompareEventListener(e){$("#node-input-flowcompare-autoupdate-button").is(":checked")&&e.old!=e.workspace&&doSubmission(getFlowDataFromCurrentWorkspace())}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
+
+   function ensureYourConfigNodeExists() {
+      // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
+      // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
+
+      // If we had found it previously, check if it has been deleted by the user behind our back
+      if (globalYourConfigNode !== null) {
+         var configNode = RED.nodes.node(globalYourConfigNode.id);
+         if (configNode === null) { globalYourConfigNode = null; }
+      }
+
+      // If not found previously, let's go find it
+      if (globalYourConfigNode === null) {
+         var configNodes = [];
+         RED.nodes.eachConfig(function(configNode) {
+             if (configNode.type === 'FlowCompareCfg') { 
+                 configNodes.push(configNode); 
+             }
+         });
+
+         // Make sure we only have 1 config node
+         while (configNodes.length > 1) {
+             var configNode = configNodes.pop();
+             RED.nodes.remove(configNode.id);
+             RED.nodes.dirty(true);
+         }
+
+         // When we found a config node, let's use that one
+         if (configNodes.length === 1) { globalYourConfigNode = configNodes[0]; }
+      }
+
+      // When it doesn't exist yet, create it if required
+      if (globalYourConfigNode === null) {
+         // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+         // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+         // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+         // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+         globalYourConfigNode = {
+             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
+             _def: RED.nodes.getType("FlowCompareCfg"),
+             type: "FlowCompareCfg",
+             hasUsers: false, 
+             users: [],
+             name: "FlowCompare",
+             label: function() { return this.name || "FlowCompare"},
+             /* values and data defined by this config node */
+             data: "some default value", // Default data
+         }
+
+         // Add the new config node to the collection of Node-RED nodes
+         RED.nodes.add(globalYourConfigNode);
+
+         // Make sure the "Deploy" button becomes active
+         RED.nodes.dirty(true);
+      }      
+   }
+
+   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+      var content = $($('script[type="text/x-red"][data-template-name="FlowCompare"]').i18n().html());
+    
+      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+      // --> more details: https://nodered.org/docs/api/ui/sidebar/
+      RED.sidebar.addTab({
+         id: "FlowCompare",
+         label: "Flow Compare", // short name for the tab
+         name: "Flow Compare", // long name for the menu
+         content: content,
+         closeable: true,
+         // disableOnEdit: true,
+         enableOnEdit: true,
+         iconClass: "fa fa-map" // your fontawesome icon
+      });
+
+      // required external libraries
+      loadScript("https://cdn.openmindmap.org/thirdparty/diff.min.js", () => {
+           loadScript("https://cdn.openmindmap.org/embed/flowviewer.js")
+      })
+      
+      addPanZoom();
+      ensureYourConfigNodeExists();
+
+      RED.events.on('workspace:change', flowCompareEventListener);
+
+      RED.actions.remove("flowcompare:compare-flow-to-remote")
+      RED.actions.add("flowcompare:compare-flow-to-remote",function() {
+        doSubmission(getFlowDataFromCurrentWorkspace())
+      });
+
+      $('#node-input-flowcompare-button').on('click', (e) => {
+         if ( e ) { e.preventDefault(); }
+         doSubmission(getFlowDataFromCurrentWorkspace())
+      });
+   };
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<style>
+.flow-description-text {
+  font-family: monospace;
+  font-size: 30px;
+  dominant-baseline: middle;
+}
+.flowviewer {
+  border: 1px rgb(196, 196, 196) solid;
+  border-radius: 5px;
+}
+
+.deleted {
+  fill: rgb(120, 68, 68);
+  fill-opacity: 0.2;
+  stroke: black;
+  stroke-width: 2px;
+}
+.added {
+  fill: rgb(64, 166, 98);
+  fill-opacity: 0.4;
+  stroke: rgb(10, 255, 23);
+  stroke-width: 4px;
+}
+.changed {
+  fill: rgb(126, 97, 208);
+  fill-opacity: 0.6;
+  stroke: rgb(229, 0, 156);
+  stroke-width: 3px;
+}
+.moved {
+  fill: rgb(210, 251, 89);
+  fill-opacity: 0.3;
+  stroke: rgb(0, 50, 249);
+  stroke-width: 3px;
+}
+
+.highlight {
+  stroke: rgb(255, 89, 89) !important;
+  stroke-width: 10px !important;
+}
+
+.diff-viewer {
+  overflow: scroll;
+  background-color: rgb(244, 244, 244);
+  border: 1px solid rgb(196, 196, 196);
+  height: 80vh;
+  padding: 20px;
+  max-width: 90vw;
+  border-radius: 5px;
+}
+
+.dv-differ {
+  background-color: rgba(244, 170, 23, 0.476) !important;
+}
+
+.dv-removed {
+  background-color: rgb(203, 203, 38) !important;
+}
+
+.dv-added {
+  background-color: rgb(86, 222, 120) !important;
+}
+
+.dv-pre-elem {
+  page-break-inside: avoid;
+  font-family: monospace;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+  word-wrap: break-word;
+  margin: 0px !important;
+}
+
+
+#diff-viewer{
+  overflow:scroll;
+  background-color:rgb(244, 244, 244);
+  border: 2px solid #000;
+  height:80vh;
+  display:none;
+  position:fixed;
+  top:10vh;
+  left:5vw;
+  z-index: 1000;
+  padding: 20px;
+  max-width: 90vw;
+}
+
+.dv-differ {
+  background-color: rgba(244, 170, 23, 0.476) !important;
+}
+
+.dv-removed {
+  background-color: rgb(203, 203, 38) !important;
+}
+
+.dv-added {
+  background-color: rgb(86, 222, 120) !important;
+}
+
+.dv-pre-elem {
+    page-break-inside: avoid;
+    font-family: monospace;
+    max-width: 100%;
+    overflow: auto;
+    display: block;
+    word-wrap: break-word;
+    margin: 0px !important;
+}
+
+</style>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="FlowCompare">
+  <div class="form-row" style="margin-left: 15px; margin-top: 30px; margin-right: 15px;">
+    <button id="node-input-flowcompare-button"
+                class="red-ui-button">Compare</button>
+    <input type="checkbox" id="node-input-flowcompare-autoupdate-button"
+               style="display:inline-block; width:15px; vertical-align:baseline; margin-left: 20px;">
+    <label for="node-input-flowcompare-autoupdate-button">Auto Compare</label>
+  </div>
+    
+  <div class="form-row node-input-target-row node-input-target-list-row" 
+           style="position: relative; min-height: 100px; margin-left: 10px; margin-right: 15px;">  
+    <div id="node-input-flowcompare-target-container-div" style="min-height: 100px"></div>
+  </div>
+  
+  <div class="form-row" style="position: relative; min-height: 300px;  margin-left: 10px; margin-right: 15px;">
+    <div id="node-input-flowcompare-svgcontainer" class="flowviewer">
+      <svg id="svgelem" pointer-events="all" style="cursor: crosshair; min-height: 300px;"
+        version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <!-- Use group elems to ensure that layering of shapes is correct, i.e. nodes always over wires -->
+        <g class='container-gridlines'>
+          <g class='flowGridlines'></g>
+        </g>
+
+        <g class='container-diff01' style="opacity: 0;">
+          <g class="containerGroup">
+            <g class="flowDescription"></g>
+            <g class='flowGroups'></g>
+            <g class='flowWires'></g>
+            <g class='flowNodes'></g>
+          </g>
+        </g>
+        <g class='container-diff02'  style="opacity: 1;">
+          <g class="containerGroup">
+            <g class="flowDescription"></g>
+            <g class='flowGroups'></g>
+            <g class='flowWires'></g>
+            <g class='flowNodes'></g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <input style="width: 100%; min-width: 300px;" id="node-input-compare-slider" type="range" min="0" max="100" step="1" value="0"></input>
+  </div>
+  
+  <div class="form-row" style="position: relative; min-height: 100px;  margin-left: 10px; margin-right: 15px;">
+    <div id="node-input-flowcompare-diffcontainer" class="diff-viewer"></div>
+  </div>
+
+</script>
+<!-- --- [red-plugin:@gorenje/node-red-contrib-writermap-mindmap/blog-changes-sidebar] --- -->
+<script type="text/javascript">
+(function() {
+
+   var fillNumOfUpdates = () => {
+     var sltObj = $('#node-input-blogchangesidebar-numOfUpdates');
+     sltObj.html("");
+
+     sltObj.append(
+       $('<option></option>').val(-1).html("-- All --")
+     );
+     [5,10,20,50,100,150,200].forEach( function(v) {
+       sltObj.append($('<option></option>').val(v).html(v));
+     });
+
+     sltObj.val(20);
+   };
+
+   var setupTreelist = () => {
+      return $("#node-input-blogchangesidebar-target-container-div").css({
+        width: "100%",
+        height: "calc(100%)"
+      }).treeList(
+        {
+          multi: false
+        }
+      ).on("treelistitemmouseover", function(e, item) {
+      }).on("treelistitemmouseout", function(e, item) {
+      }).on('treelistselect', function(event, item) {
+        if ( item.node ) {
+          RED.workspaces.show(item.node.z,false,false,true);
+          var ndeid = item.node.id;
+          setTimeout( () => {
+            RED.view.reveal(ndeid, true);
+            RED.view.redraw();
+          }, 38);
+        }
+      }).on('treelistconfirm', function(event, item) {
+        if (item.node) {
+          RED.workspaces.show(item.node.z,false,false,true);
+          var ndeid = item.node.id;
+
+          setTimeout(() => {
+            const nodeToShow = RED.nodes.node(ndeid)
+
+            if (nodeToShow) {
+              RED.view.reveal(nodeToShow.id);
+              RED.view.select(nodeToShow.id);
+              RED.editor.edit(nodeToShow);
+            }
+
+            if (ndeid == RED.workspaces.active()) {
+              RED.workspaces.edit()
+            }
+          }, 50);
+        }
+      });
+   };
+
+   var initialiseConfigNodeOnce = () => {
+     RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      var content = $($('script[type="text/x-red"][data-template-name="BlogChangesSidebar"]').i18n().html());
+
+      RED.sidebar.addTab({
+         id: "BlogChangesSidebar",
+         label: "blogchanges", // short name for the tab
+         name: "Blog Changes", // long name for the menu
+         content: content,
+         enableOnEdit: true,
+         iconClass: "fa fa-tty" // your fontawesome icon
+      });
+
+     fillNumOfUpdates();
+
+     var dirList = setupTreelist();
+
+     var search = $("#node-input-blogchangesidebar-target-filter").searchBox({
+       style: "compact",
+       delay: 300,
+       change: function() {
+         var val = $(this).val().trim().toLowerCase();
+         if (val === "") {
+           dirList.treeList("filter", null);
+           search.searchBox("count","");
+         } else {
+           var count = dirList.treeList("filter", function(item) {
+             return item.label.toLowerCase().indexOf(val) > -1 || item.node.type.toLowerCase().indexOf(val) > -1
+           });
+           search.searchBox("count",count + " / " + dirList.treeList('data').length);
+         }
+       }
+     });
+
+      var doSomething = (e) => {
+        if (e) { e.preventDefault(); }
+
+        var blogPageNodes = [];
+        var that = this;
+
+        RED.nodes.eachNode( function(n) {
+          if ( n.updatedAt && n.createdAt ) {
+            blogPageNodes.push( {
+              id: n.id,
+              updatedAt: Date.parse(n.updatedAt)
+            });
+          }
+        });
+
+        blogPageNodes.sort( function(a,b) {
+          return a.updatedAt < b.updatedAt;
+        });
+        let numChanges = parseInt(
+          $("#node-input-blogchangesidebar-numOfUpdates").val()
+        );
+        if ( numChanges > 0 ) {
+          blogPageNodes.length = numChanges;
+        }
+
+        var items = [];
+        var nodeItemMap = {};
+
+        blogPageNodes.forEach( function (nde) {
+          var nId = nde.id;
+          var n = RED.nodes.node(nId);
+
+          var blogInfoNode = { reloadOnEdit: false };
+          RED.nodes.getNodeLinks(nId).forEach( function(lnk) {
+            if ( lnk.target.type == "BlogPageInfo" ) {
+              blogInfoNode = RED.nodes.node( lnk.target.id );
+            }
+          });
+
+          var nodeDef = RED.nodes.getType(n.type);
+          var label;
+
+          if (nodeDef) {
+            var l = nodeDef.label;
+            label = (typeof l === "function" ? l.call(n) : l)||"";
+          }
+
+          if (!nodeDef || !label) {
+            label = n.type;
+          }
+
+          nodeItemMap[n.id] = {
+            node:     n,
+            label:    label,
+            icon:     n.d ? "fa fa-eye-slash" : "fa fa-eye",
+            class:    "",
+            sublabel: n.updatedAt,
+            selected: false,
+            checkbox: false,
+            children: undefined
+          };
+
+          items.push(nodeItemMap[n.id]);
+        });
+
+        dirList.treeList('data',items);
+      }
+
+     $("#node-input-blogchangesidebar-numOfUpdates").on("change", doSomething)
+
+     $('#node-input-blogchangesidebar-refresh-button').on('click', doSomething);
+      setTimeout(doSomething, 1550);
+   };
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="BlogChangesSidebar">
+   <div class="form-row node-input-target-row node-input-target-list-row"
+        style="min-height: 300px; height: calc(100% - 250px); margin-top: 30px; margin-left: 10px; margin-right: 15px;">
+      <div>
+        <label for="node-input-blogchangesidebar-target-filter">
+          <span>Search: </span>
+        </label>
+        <input type="text" id="node-input-blogchangesidebar-target-filter">
+      </div>
+
+      <div id="node-input-blogchangesidebar-target-container-div"
+           style="margin-top:10px;"></div>
+   </div>
+
+   <div class="form-row" style="margin-left: 10px; margin-top: 70px;">
+      <label for="node-input-blogchangesidebar-numOfUpdates">
+        <span>Num Updates: </span>
+      </label>
+      <select id="node-input-blogchangesidebar-numOfUpdates"></select>
+   </div>
+
+   <div class="form-row" style="margin-left: 10px;">
+     <button id="node-input-blogchangesidebar-refresh-button"
+             class="red-ui-button"><i class="fa fa-shower"></i> Refresh</button>
+   </div>
+</script>
+
+<!-- --- [red-plugin:@gorenje/node-red-contrib-writermap-mindmap/blog-pages-sidebar] --- -->
+<script type="text/javascript">
+
+(function() {
+
+   var setupTreelist = () => {
+      return $("#node-input-blogpagessidebar-target-container-div").css({
+        width: "100%",
+        height: "calc(100%)"
+      }).treeList(
+        {
+          multi:false
+        }
+      ).on("treelistitemmouseover", function(e, item) {
+        /* if ( item.node && item.node.z == RED.workspaces.active()) {
+         *   RED.view.reveal(item.node.id,true)
+         *   RED.view.redraw();
+         * }*/
+      }).on("treelistitemmouseout", function(e, item) {
+      }).on('treelistselect', function(event, item) {
+        if ( item.node ) {
+          RED.workspaces.show(item.node.z,false,false,true);
+          var ndeid = item.node.id;
+          setTimeout( () => {
+            RED.view.reveal(ndeid, true);
+            RED.view.redraw();
+          }, 38);
+        }
+      }).on('treelistconfirm', function(event, item) {
+        if ( item.node ) {
+          RED.workspaces.show(item.node.z,false,false,true);
+
+          var ndeid = item.node.id;
+          setTimeout(() => {
+            const nodeToShow = RED.nodes.node(ndeid)
+
+            if (nodeToShow) {
+              RED.view.reveal(nodeToShow.id);
+              RED.view.select(nodeToShow.id);
+              RED.editor.edit(nodeToShow);
+            }
+
+            if (ndeid == RED.workspaces.active()) {
+              RED.workspaces.edit()
+            }
+          }, 50);
+        }
+      });
+   };
+
+   var retrieveBlogPages = () => {
+      var blogPageNodes = [];
+
+      RED.nodes.eachNode( function(n) {
+        if ( n.type == "link in" && n.name.match( /^\[[^\]]+\] /) ) {
+          blogPageNodes.push( { ...n } );
+        }
+      });
+
+      blogPageNodes = blogPageNodes.filter( function(nde) {
+        return RED.nodes.getNodeLinks(nde.id).filter( function (b) {
+          return b.target.type == "BlogPageInfo"
+        }).length > 0;
+      })
+      blogPageNodes.sort( function( a,b ) { return a.name > b.name } );
+
+      var items = [];
+      var nodeItemMap = {};
+
+      var duplicatePaths = {};
+
+      blogPageNodes.forEach( function (nde) {
+        var nId = nde.id;
+        var n = RED.nodes.node(nId);
+
+        var blogInfoNode = { reloadOnEdit: false };
+        RED.nodes.getNodeLinks(nId).forEach( function(lnk) {
+          if ( lnk.target.type == "BlogPageInfo" ) {
+            blogInfoNode = RED.nodes.node( lnk.target.id );
+          }
+        });
+
+        /* provide an indication what the different pages are doing */
+        var sublabel = blogInfoNode.reloadOnEdit  ? "↻" : "─";
+        sublabel += blogInfoNode.draft            ? "Ɛ" : "─";
+        sublabel += blogInfoNode.redirectToNode   ? "↗" : "─";
+        sublabel += blogInfoNode.incIndex         ? "⌂" : "─";
+        sublabel += blogInfoNode.incRss           ? "⋔" : "─";
+        sublabel += blogInfoNode.incSitemap       ? "⅄" : "─";
+        sublabel += blogInfoNode.image            ? "⊞" : "─";
+
+        var nodeDef = RED.nodes.getType(n.type);
+        var label;
+
+        if (nodeDef) {
+          var l = nodeDef.label;
+          label = (typeof l === "function" ? l.call(n) : l)||"";
+
+          if (sublabel.indexOf("subflow:") === 0) {
+            return;
+          }
+        }
+
+        if (!nodeDef || !label) {
+          label = n.type;
+        }
+
+        (duplicatePaths[label] ||= []).push(n.id);
+
+        nodeItemMap[n.id] = {
+          node:     n,
+          label:    label,
+          icon:     n.d ? "fa fa-eye-slash" : "fa fa-eye",
+          class:    "",
+          sublabel: sublabel,
+          selected: false,
+          checkbox: false,
+          children: undefined
+        };
+
+        items.push(nodeItemMap[n.id]);
+      });
+
+      $.each( duplicatePaths, (propName) => {
+        if ( duplicatePaths[propName].length > 1 ) {
+          items.forEach( (itm) => {
+            if ( itm.label == propName ) {
+              itm.sublabel = "DUPLICATE";
+              itm.class = "duplicate-path"
+            }
+          });
+        }
+      });
+
+     $("#node-input-blogpagessidebar-target-container-div").treeList(
+       'data',items
+     );
+   };
+
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      var content = $($('script[type="text/x-red"][data-template-name="BlogPagesSidebar"]').i18n().html());
+
+      RED.sidebar.addTab({
+         id: "BlogPagesSidebar",
+         label: "blog pages", // short name for the tab
+         name: "Blog Pages", // long name for the menu
+         content: content,
+         closeable: true,
+         enableOnEdit: true,
+         iconClass: "fa fa-sitemap" // your fontawesome icon
+      });
+
+      var dirList = setupTreelist();
+
+      var search = $("#node-input-blogpagessidebar-target-filter").searchBox({
+        style: "compact",
+        delay: 300,
+        change: function() {
+          var val = $(this).val().trim().toLowerCase();
+          if (val === "") {
+            dirList.treeList("filter", null);
+            search.searchBox("count","");
+          } else {
+            var count = dirList.treeList("filter", function(item) {
+              return item.label.toLowerCase().indexOf(val) > -1 || item.node.type.toLowerCase().indexOf(val) > -1
+            });
+            search.searchBox("count",count + " / " + dirList.treeList('data').length);
+          }
+        }
+      });
+
+      retrieveBlogPages()
+
+      $('#node-input-blogpagessidebar-refresh-but').on('click', (e) => {
+        retrieveBlogPages()
+      })
+   };
+
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<style>
+   .duplicate-path {
+      background-color: #f6c1cc !important;
+   }
+</style>
+
+<!-- the html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="BlogPagesSidebar">
+
+  <div class="form-row node-input-target-row node-input-target-list-row"
+       style="min-height: 300px; height: calc(100% - 150px); margin-top: 30px; margin-left: 10px; margin-right: 15px;">
+     <div>
+       <input type="text"
+              id="node-input-blogpagessidebar-target-filter"
+              placeholder="Search">
+     </div>
+     <div id="node-input-blogpagessidebar-target-container-div"
+        style="margin-top: 5px;"></div>
+  </div>
+
+  <div class="form-row" style="margin-left: 10px;margin-right: 15px; margin-top: 50px;">
+    <button id="node-input-blogpagessidebar-refresh-but"
+            class="red-ui-button"><i class="fa fa-shower"></i> Refresh</button>
+  </div>
+</script>
+
+<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-flow2uml6073427901121491/sidebar-plugin] --- -->
+<script type="text/javascript">
+(function() {
+   var globalYourConfigNode = null;
+
+   window.FlowToMermaid={constructMermaid:function(e,l="TB",n=void 0){for(var r={payload:e},e=r.payload.filter(e=>"tab"!=e.type&&"group"!=e.type),t={},i=0;i<e.length;i++){var a=e[i];t[a.id]=a}var s=n,o=(n||(s={nodes:{node:e=>t[e],subflow:e=>t[e]}}),e=>e&&{nnull:"not null",eq:"==",neq:"!=",lt:"<",lte:"<=",gt:">",gte:">=",hask:"has key",cont:"contains"}[e]||e),c=e=>e.replaceAll("&","&amp;").replaceAll("#","#35;").replaceAll("[","#91;").replaceAll("]","#93;").replaceAll("(","#40;").replaceAll(")","#41;").replaceAll("|","#124;").replaceAll(">","&gt;").replaceAll("<","&lt;").replaceAll("{","#123;").replaceAll("}","#125;").replaceAll("/","#47;").replaceAll('"',"#34;"),p=(e,l=void 0)=>{var n=e.name||e.type;switch(l=l?"|"+c(l)+"| ":"",n=c(n),e.type){case"switch":case"join":case"split":return l+e.id+'{"'+n+'"}';case"link call":case"link out":if(e.mode&&"return"==e.mode)return l+e.id+"[\\Link Return/]";if(!e.name||e.name.match(/^link out/)){if("dynamic"==e.linkType)return l+e.id+'{{"'+(n="\\Dynamic Target/")+'"}}';var r=e.links&&0<e.links.length&&(t[e.links[0]]||s.nodes.node(e.links[0])),n=c(r&&r.name||e.type)}return l+e.id+'{{"'+n+'"}}';case"link in":return n=c(e.name||e.links&&0<e.links.length&&t[e.links[0]]&&t[e.links[0]].name||e.type),l+e.id+'{{"'+n+'"}}';case"junction":return l+e.id+'(("conn"))';case"inject":case"debug":return l+e.id+'(["'+n+'"])';default:return e.type.startsWith("subflow:")&&(r=s.nodes.subflow(e.type.replace(/subflow:/,"")),n=c(r&&r.name||e.type)),l+e.id+'["'+n+'"]'}};r.mermaid=["%% change this to LR Node-RED like UML","graph "+l];for(var u,i=0;i<e.length;i++){var d=e[i];if(d.links&&0<d.links.length&&"link out"==d.type)for(var h=0;h<d.links.length;h++)t[d.links[h]]&&r.mermaid.push(p(d)+" -.-> "+d.links[h]);if(d.wires&&0<d.wires.length)if("switch"==d.type)for(var m=0;m<d.wires.length;m++)for(var f=0;f<d.wires[m].length;f++)r.mermaid.push(p(d)+" --\x3e "+p(t[d.wires[m][f]],(u=d.rules[m]).v&&u.t?o(u.t)+" "+u.v:u.v&&!u.t?u.v:o(u.t)));else{var k,w=d.outputLabels;d.type.startsWith("subflow:")&&(w=(k=s.nodes.subflow(d.type.replace(/subflow:/,"")))&&k.outputLabels||w);for(m=0;m<d.wires.length;m++)for(f=0;f<d.wires[m].length;f++)r.mermaid.push(p(d)+" --\x3e "+p(t[d.wires[m][f]],w&&w[m]||void 0))}}return r.mermaid.join("\n")}};
+  
+   function obtainCurrentActiveFlow() {
+      var activeWorkspace = RED.workspaces.active();
+      var nodes = RED.nodes.groups(activeWorkspace);
+
+      nodes = nodes.concat(RED.nodes.junctions(activeWorkspace));
+      nodes = nodes.concat(RED.nodes.filterNodes({ z: activeWorkspace }));
+
+      RED.nodes.eachConfig(function (n) {
+        if (n.z === RED.workspaces.active() && n._def.hasUsers === false) {
+          // Grab any config nodes scoped to this flow that don't
+          // require any flow-nodes to use them
+          nodes.push(n);
+        }
+      });
+
+      var parentNode = RED.nodes.workspace(
+        activeWorkspace
+      ) || RED.nodes.subflow(activeWorkspace);
+
+      nodes.unshift(parentNode);
+
+      return RED.nodes.createExportableNodeSet(nodes)
+   };
+
+   function getMermaidLink(mermaidTxt) {
+      /* 
+       * this snippet isn't taken from
+       *   https://github.com/mermaid-js/mermaid-live-editor/blob/develop/src/lib/util/serde.ts
+       * but it comes from there. Using base64 instead of pako because
+       * base64 does not require installing any extras.
+       */
+      let payload = {
+         "code":mermaidTxt,
+         "mermaid":"{\n  \"theme\": \"default\"\n}",
+         "autoSync":false,
+         "updateDiagram":false,
+         "panZoom":true,
+         "pan": {
+            "x":261.5279541015625,
+            "y":80.74539184570312
+         },
+         "zoom": 0.829212067225414,
+         "editorMode":"code"
+      }
+      return "https://mermaid.live/edit#base64:" + btoa( JSON.stringify(payload) )
+   };
+   
+   function ensureYourConfigNodeExists() {
+      // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
+      // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
+
+      // If we had found it previously, check if it has been deleted by the user behind our back
+      if (globalYourConfigNode !== null) {
+         var configNode = RED.nodes.node(globalYourConfigNode.id);
+         if (configNode === null) { globalYourConfigNode = null; }
+      }
+
+      // If not found previously, let's go find it
+      if (globalYourConfigNode === null) {
+         var configNodes = [];
+         RED.nodes.eachConfig(function(configNode) {
+             if (configNode.type === 'Flow2MermaidCfg') { 
+                 configNodes.push(configNode); 
+             }
+         });
+
+         // Make sure we only have 1 config node
+         while (configNodes.length > 1) {
+             var configNode = configNodes.pop();
+             RED.nodes.remove(configNode.id);
+             RED.nodes.dirty(true);
+         }
+
+         // When we found a config node, let's use that one
+         if (configNodes.length === 1) { globalYourConfigNode = configNodes[0]; }
+      }
+
+      // When it doesn't exist yet, create it if required
+      if (globalYourConfigNode === null) {
+         // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+         // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+         // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+         // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+         globalYourConfigNode = {
+             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
+             _def: RED.nodes.getType("Flow2MermaidCfg"),
+             type: "Flow2MermaidCfg",
+             hasUsers: false, 
+             users: [],
+             name: "Flow2Uml",
+             label: function() { return this.name || "Flow2Uml"},
+             /* values and data defined by this config node */
+             direction: "TB", // Default data
+             genmereditor: ""
+         }
+
+         // Add the new config node to the collection of Node-RED nodes
+         RED.nodes.add(globalYourConfigNode);
+
+         // Make sure the "Deploy" button becomes active
+         RED.nodes.dirty(true);
+      }      
+   }
+
+   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+      var content = $($('script[type="text/x-red"][data-template-name="Flow2Mermaid"]').i18n().html());
+    
+      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+      // --> more details: https://nodered.org/docs/api/ui/sidebar/
+      RED.sidebar.addTab({
+         id: "Flow2Mermaid",
+         label: "Flow2Uml", // short name for the tab
+         name: "Flow to UML", // long name for the menu
+         content: content,
+         closeable: false,
+         enableOnEdit: true,
+         iconClass: "fa fa-shower", // your fontawesome icon
+         onchange: () => { } /* called when tab becomes visible */
+      });
+
+      ensureYourConfigNodeExists();
+      /* Upgrading node causes errors here since the genmereditor attribute is defined on the "old" config
+         node. Hence define it here incase this is the "old" config ndoe. The new config node has this
+         attribute *but* has the same type so the new config isn't installed.
+      */
+      if ( !globalYourConfigNode.genmereditor ) { globalYourConfigNode.genmereditor = ""; RED.nodes.dirty(true); }
+
+      $('#node-input-genmereditor-mermaid-code').html("<code>" + globalYourConfigNode.genmereditor.replaceAll("\n","<br>") + "</code>");
+      $('#node-input-genmereditor-mermaid-code').data('mermaid', btoa(globalYourConfigNode.genmereditor))
+      $('#genmermaid-view-uml-link').attr('href', getMermaidLink(globalYourConfigNode.genmereditor));
+
+      $("#btn_genmercopy").on('click', (e) => {
+         if ( e ) e.preventDefault();
+         RED.clipboard.copyText(atob($('#node-input-genmereditor-mermaid-code').data('mermaid')))
+         RED.notify("Mermaid UML has been copied to pasteboard.", "success");
+      })
+
+      $("#btn_genmersave").on('click', (e) => {
+         var data = atob($('#node-input-genmereditor-mermaid-code').data('mermaid'));
+         ensureYourConfigNodeExists();
+         
+         if (globalYourConfigNode.genmereditor != data) {
+            globalYourConfigNode.genmereditor = data;
+            $('#genmermaid-view-uml-link').attr('href', getMermaidLink(data));
+            RED.nodes.dirty(true);
+         }
+      })
+
+      var doSomething = (e) => {
+         if (e) { e.preventDefault(); }
+         ensureYourConfigNodeExists();
+
+         var mermaidTxt = FlowToMermaid.constructMermaid(obtainCurrentActiveFlow(), globalYourConfigNode.direction, RED);         
+
+         try {
+            /*
+            * using encode and unescape here becuase the contents can cause an error:
+            * ==> Uncaught DOMException: String contains an invalid character
+            * from Stackoverflow, unescape & encode can fix that:
+            * ==> https://stackoverflow.com/questions/23223718/failed-to-execute-btoa-on-window-the-string-to-be-encoded-contains-characte
+            * But this can alter the text because the encoding isn't Utf8 but encode & unescape forces the encoding to become Utf8.
+            */
+            $('#node-input-genmereditor-mermaid-code').data('mermaid', btoa(mermaidTxt))
+         } catch (ex) {
+            $('#node-input-genmereditor-mermaid-code').data('mermaid', btoa(unescape(encodeURIComponent(mermaidTxt))))
+         }
+
+         try {
+            $('#genmermaid-view-uml-link').attr('href', getMermaidLink(mermaidTxt));
+         } catch (ex ) {
+            $('#genmermaid-view-uml-link').attr('href', getMermaidLink(unescape(encodeURIComponent(mermaidTxt))))
+         }
+
+         try {
+            $('#node-input-genmereditor-mermaid-code').html("<code>" + mermaidTxt.replaceAll("\n","<br>") + "</code>");
+         } catch ( ex ) {
+            $('#node-input-genmereditor-mermaid-code').html("<code>" + unescape(encodeURIComponent(mermaidTxt)).replaceAll("\n","<br>") + "</code>");
+         }
+      }
+
+      RED.actions.remove("flow2mermaid:convert-flow-to-uml")
+      RED.actions.add("flow2mermaid:convert-flow-to-uml",function() {
+        doSomething();
+        var data = atob($('#node-input-genmereditor-mermaid-code').data('mermaid'));
+
+        RED.clipboard.copyText(data)
+        $('#genmermaid-view-uml-link').attr('href', getMermaidLink(data));
+
+        RED.notify("Mermaid UML has been copied to pasteboard.", "success");
+      });
+
+      $('#node-input-generate-diagram-but').on('click', (e) => {
+         doSomething(e);
+      })
+
+      // When the user has entered new data in the sidebar, then store it into the config node
+      $("#node-input-genmerdirection").on("change", function() {
+        ensureYourConfigNodeExists();
+
+        let data = $(this).val();
+
+         if (globalYourConfigNode.direction != data) {
+            globalYourConfigNode.direction = data;
+            // Since the config node has been updated, the 'Deploy' button should become active
+            RED.nodes.dirty(true);
+         }
+      })
+
+      $("#node-input-genmerdirection").typedInput({
+            types: [
+               {
+                  value: "genmerdirection",
+                  
+                  options: [
+                        { "value":"TB", "label": "Top to Bottom"},
+                        { "value":"LR", "label": "Left to Right"}
+                  ]
+               }
+            ]
+      });
+      // At startup load your config node data into the plugin sidebar html elements
+      $('#node-input-genmerdirection').val(globalYourConfigNode.direction)
+
+      // Allow dynamic re-size after init. appearance 
+      setTimeout(function () {
+            $('#node-props').css('width', '100%');
+      }, 30);
+   };
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<style>
+   .red-ui-tray-content #dialog-form {
+    white-space: nowrap;
+}
+
+.full-row .red-ui-typedInput-container {
+    min-width: 70%;
+}
+
+.col input {
+    min-width: 100%;
+}
+
+.sml-lbl {
+    height: 66px;
+}
+
+.sml-lbl label {
+    font-size: smaller;
+    margin-bottom: 0px;
+    display: block !important;
+}
+
+.reg-lbl label {
+    white-space: nowrap;
+    margin-top: 5px;
+    height: 0px;
+}
+
+.red-ui-editor .form-row label.full-lbl {
+    white-space: normal;
+    width: 100%;
+}
+
+.col {
+    float: left;
+    margin-right: 5px;
+    min-height: 36px;
+}
+
+.col .red-ui-typedInput-container {
+    width: 100% !important;
+}
+
+.col-50 {
+    width: 50%;
+}
+
+.col-33 {
+    width: 33%;
+}
+
+.col-66 {
+    width: 66%;
+}
+
+.col-25 {
+    width: 25%;
+}
+
+.col-75 {
+    width: 75%;
+}
+
+.col-100 .red-ui-typedInput-container {
+    width: 70% !important;
+}
+
+.col-100.no-label .red-ui-typedInput-container {
+    width: 100% !important;
+}
+
+.txtarea {
+    padding-bottom: 26px;
+}
+
+.txtarea label {
+    vertical-align: top;
+    margin-top: 3px;
+}
+
+.txtarea textarea {
+    width: 70%;
+    margin-bottom: -28px !important;
+}
+
+.btn-regular {
+    margin-bottom: 14px !important;
+}
+
+</style>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="Flow2Mermaid">
+   <div id="node-props" style="width: 460px; height: 100%; margin-left: 10px; margin-right: 15px; margin-top: 30px;">
+      <div class="form-row" style="margin-left: 10px; margin-right: 15px;">
+         <button id="node-input-generate-diagram-but" type="button" class="red-ui-button btn-regular"><i class="fa fa-plug"></i> Generate Mermaid Diagram</button>
+      </div>
+
+      <!--form-row-->
+      <div class="form-row" style="margin-left: 10px; margin-right: 15px;">
+         <div class="col-100">
+            <label for="node-input-genmerdirection"><i class="fa fa-compass"></i> Direction</label>
+            <input type="text" id="node-input-genmerdirection">
+         </div>
+      </div>
+
+      <!--form-row-->
+      <div class="form-row"
+         style="min-height: 300px; overflow: scroll; margin-left: 10px; margin-right: 15px; height: calc(100% - 210px); overflow: hidden;">
+         <label for="node-input-genmereditor-mermaid-code"><i class="fa fa-pencil"></i> Mermaid</label>
+         <div id="node-input-genmereditor-mermaid-code" style="border: 1px rgb(196, 196, 196) solid; border-radius: 5px; overflow: scroll; height: calc(100% - 40px);"></div>
+      </div>
+
+      <!--form-row-->
+      <div class="form-row" style="margin-left: 10px; margin-right: 15px;">
+            <button id="btn_genmersave" type="button" class="red-ui-button btn-regular"><i class="fa fa-save"></i> Save</button>
+            <button id="btn_genmercopy" style="margin-left: 40px;" type="button" class="red-ui-button btn-regular"><i class="fa fa-copy"></i> Copy to Clipboard</button>
+            <a id="genmermaid-view-uml-link" style="color: blue; margin-left: 40px;" target="_blank" href="#">View UML <i class="fa fa-external-link"></i></a>
+      </div>
+   </div>
+   <!--node-props-->
+
+</script>
+<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar] --- -->
+<script type="text/javascript">
+(function() {
+   var globalYourConfigNode = null;
+
+   function doSubmission(pkgname,pkgversion) {
+      ensureYourConfigNodeExists();
+
+      $.ajax({
+         url:         "NodeFactorySidebarCfg",
+         type:        "POST",
+         contentType: "application/json; charset=utf-8",
+
+         data: JSON.stringify({
+            pkgname: $("#node-input-nodefactorysidebar-package-name").val().trim(),
+            pkgversion: $("#node-input-nodefactorysidebar-package-version").val().trim()
+         }),
+
+         success: function (resp) {
+            RED.notify("Submission triggered", {
+               type: "warning",
+               id: "NodeFactorySidebar",
+               timeout: 2000
+            });
+         },
+
+         error: function (jqXHR, textStatus, errorThrown) {
+            RED.notify("Submission failed: " + textStatus, {
+               type: "error",
+               id: "NodeFactorySidebar",
+               timeout: 2000
+            });
+            console.log(textStatus,errorThrown )
+         }
+      });      
+   }
+
+   function ensureYourConfigNodeExists() {
+      // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
+      // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
+
+      // If we had found it previously, check if it has been deleted by the user behind our back
+      if (globalYourConfigNode !== null) {
+         var configNode = RED.nodes.node(globalYourConfigNode.id);
+         if (configNode === null) { globalYourConfigNode = null; }
+      }
+
+      // If not found previously, let's go find it
+      if (globalYourConfigNode === null) {
+         var configNodes = [];
+         RED.nodes.eachConfig(function(configNode) {
+             if (configNode.type === 'NodeFactorySidebarCfg') { 
+                 configNodes.push(configNode); 
+             }
+         });
+
+         // Make sure we only have 1 config node
+         while (configNodes.length > 1) {
+             var configNode = configNodes.pop();
+             RED.nodes.remove(configNode.id);
+             RED.nodes.dirty(true);
+         }
+
+         // When we found a config node, let's use that one
+         if (configNodes.length === 1) { globalYourConfigNode = configNodes[0]; }
+      }
+
+      // When it doesn't exist yet, create it if required
+      if (globalYourConfigNode === null) {
+         // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+         // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+         // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+         // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+         let typ = RED.nodes.getType("NodeFactorySidebarCfg");
+
+         globalYourConfigNode = {
+             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
+             _def: typ,
+             type: "NodeFactorySidebarCfg",
+             hasUsers: false, 
+             users: [],
+             name: "NodeFactorySidebar",
+             label: function() { return this.name || "NodeFactorySidebar"},
+             /* values and data defined by this config node */
+             pkgname: typ.defaults.pkgname.value, 
+             pkgversion: typ.defaults.pkgversion.value
+         }
+
+         // Add the new config node to the collection of Node-RED nodes
+         RED.nodes.add(globalYourConfigNode);
+
+         // Make sure the "Deploy" button becomes active
+         RED.nodes.dirty(true);
+      }      
+   }
+
+   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+      var content = $($('script[type="text/x-red"][data-template-name="NodeFactorySidebar"]').i18n().html());
+    
+      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+      // --> more details: https://nodered.org/docs/api/ui/sidebar/
+      RED.sidebar.addTab({
+         id: "NodeFactorySidebar",
+         label: "Pkg Import", // short name for the tab
+         name: "Package Import", // long name for the menu
+         content: content,
+         closeable: true,
+         // disableOnEdit: true,
+         enableOnEdit: true,
+         iconClass: "fa fa-industry" // your fontawesome icon
+      });
+
+      ensureYourConfigNodeExists();
+
+      var doSomething = (e) => {
+         if (e) { e.preventDefault(); }
+         doSubmission()
+      }
+
+      $('#node-input-nodefactorysidebar-generate-btn').on('click', doSomething );
+
+      $("#node-input-nodefactorysidebar-package-version").on("change", function() {
+         ensureYourConfigNodeExists();
+
+         let data = $(this).val();
+
+         if (globalYourConfigNode.pkgversion != data) {
+           globalYourConfigNode.pkgversion = data.trim();
+           RED.nodes.dirty(true);
+         }
+      })
+      $("#node-input-nodefactorysidebar-package-version").val(globalYourConfigNode.pkgversion);
+
+      $("#node-input-nodefactorysidebar-package-name").on("change", function() {
+        ensureYourConfigNodeExists();
+
+        let data = $(this).val();
+
+        if (globalYourConfigNode.pkgname != data) {
+           globalYourConfigNode.pkgname = data.trim();
+           RED.nodes.dirty(true);
+        }
+      })
+      $("#node-input-nodefactorysidebar-package-name").val(globalYourConfigNode.pkgname);
+   };
+
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="NodeFactorySidebar">
+   <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
+      Import <a href="https://npmjs.com" target=_blank>npmJs.com</a> packages as a flow. packages
+      are imported as a collection of PkgFile nodes. This can help to learn from other
+      peoples experiences and code.
+   </div>
+
+   <div class="form-row" style="margin-left: 10px;">
+      Enter package details here:
+   </div>
+
+  <div class="form-row" style="margin-left: 10px;">
+   <label for="node-input-nodefactorysidebar-package-name">
+      <i class="fa fa-tag"></i>
+      Name
+    </label>
+      <input type="text" id="node-input-nodefactorysidebar-package-name"
+              placeholder="node-red-dashboard">
+   </div>
+
+   <div class="form-row" style="margin-left: 10px;">
+      <label for="node-input-nodefactorysidebar-package-version">
+         <i class="fa fa-tag"></i>
+         Version
+      </label>
+      <input type="text" id="node-input-nodefactorysidebar-package-version"
+           placeholder="3.5.0">
+   </div>
+
+   <div class="form-row">
+      <div style="position: relative; height: 100%; margin: 15px;">
+         <button id="node-input-nodefactorysidebar-generate-btn" 
+                 class="red-ui-button"
+                 style="width: 100%; margin-top: 30px">Import Package</button>
+      </div>
+   </div>
+
+</script>
+
+<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-introspection/screenshot] --- -->
+<script type="text/javascript">
+(function() {
+   var globalRefToSvgData;
+
+   function setupTreelist(){var e=collectOrphans();if(0==e.length){RED.notify("No Orphans Found",{type:"warning",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.node&&t.node.z==RED.workspaces.active()&&(RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectOrphans(){const t=new Set;var n=[],i=(RED.nodes.eachLink(e=>{t.add(e.source),t.add(e.target)}),RED.nodes.eachNode(e=>{t.has(e)||n.push(e)}),[]),r={};return n.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n=t.label,n=("function"==typeof n?n.call(e):n)||"",o=e.type;if(0===o.indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:o,selected:!1,checkbox:!1},i.push(r[e.id])}),i}
+   
+   function nr_intro_generate_svg_3_1(r){return e=>{try{handleSvgObject($($("svg[width=8000]")[0]),e)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_0(r){return e=>{try{handleSvgObject($($("svg")[0]),e)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function handleSvgObject(o,e){var t=o.clone();t.find("foreignObject").remove(),t.find("svg.__screenshot").remove();function a(t,e){for(var n=0;n<t.length;n++){var s=t.item(n),i=e[n];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))}),["fill","stroke"].forEach(function(t){var e,n,r=(e=$(i).attr(t)||$(i).css(t))&&null!==e&&"none"!=e?(n=e.match(/^#(.)(.)(.)$/))?"#"+n[1]+n[1]+n[2]+n[2]+n[3]+n[3]:(n=e.match(/^#......$/))?e:null===(n=e.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(r=e.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2),opa:r[4]}:(console.log("Screenshot node: returned unknown color: "+e),e):"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2):"none";"object"==typeof r?(s.setAttribute(t+"-opacity",r.opa),s.setAttribute(t,r.clr)):s.setAttribute(t,r)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var n='<?xml version="1.0" standalone="no"?>\r\n<svg '+('width="'+o.attr("width")+'" height="'+o.attr("height")+'"')+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',t=t.html(),l=(new DOMParser).parseFromString(n+t+"\r\n</svg>","image/svg+xml"),r=e=>(["g","rect","line","path","circle","image","text"].forEach(t=>{$(e.getElementsByTagName(t)).each((t,e)=>{e.setAttribute("class",""),e.setAttribute("id","")})}),e),s=(["g","rect","line","path","circle","image"].forEach(function(t){a(l.getElementsByTagName(t),o.find(t))}),["text"].forEach(function(t){a(l.getElementsByTagName(t),o.find(t));for(var e=l.getElementsByTagName(t),n=o.find(t),r=0;r<e.length;r++){var s=e.item(r),i=n[r];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))})}}),l.getElementsByTagName("image")),g={},i=(n,r,s)=>{var i=n.getAttribute("xlink:href"),o=i.substr(-4,4).toLowerCase(),a={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(g[i])return n.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+g[i]),s(r-1);switch(o){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onload=function(t){var e=l.response;e&&(e=(t=>{for(var e="",n=new Uint8Array(t),r=n.byteLength,s=0;s<r;s++)e+=String.fromCharCode(n[s]);return window.btoa(e)})(e),g[i]=e,n.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+e)),s(r-1)},l.send(null);break;case".svg":$.get(i,function(t){var e=new XMLSerializer,e=btoa(e.serializeToString(t));g[i]=e,n.setAttribute("xlink:href","data:image/svg+xml;base64,"+e),s(r-1)})}},c=t=>{t<0?e((new XMLSerializer).serializeToString(r(l))):i(s.item(t),t,c)};0<s.length?i(s.item(s.length-1),s.length-1,c):e((new XMLSerializer).serializeToString(r(l)))}function generatorFunctionForVersion(t){var n,e=t.settings.version.split("."),r=e[0],e=e[1];if("3"==r){if("0"==e)return nr_intro_generate_svg_3_0(t);if("1"==e)return nr_intro_generate_svg_3_1(t)}return n=t,t=>{var e="Node-RED version ("+n.settings.version+") not supported";n.notify(e,{type:"error"}),t&&t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+e+"</text></svg>")}}function addPanZoom(){var t=d3.select("#node-input-screenshot-svgcontainer svg"),e=(t.html("<g>"+t.html()+"</g>"),t.select("g")),n=d3.behavior.zoom().scaleExtent([.2,100]).on("zoom",function(t){e.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});t.call(n)}
+
+   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+      var content = $($('script[type="text/x-red"][data-template-name="Screenshot"]').i18n().html());
+    
+      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+      // --> more details: https://nodered.org/docs/api/ui/sidebar/
+      RED.sidebar.addTab({
+         id: "Introspection",
+         label: "Introspection", // short name for the tab
+         name: "Introspection", // long name for the menu
+         content: content,
+         enableOnEdit: true,
+         iconClass: "fa fa-camera" // your fontawesome icon
+      });
+
+      var tabs = RED.tabs.create({
+            id: 'func-introspection-tabs',
+            onchange: function(tab) {
+               $('#func-introspection-tabs-content').children().hide();
+               $('#' + tab.id).show();
+            }
+      });
+      
+      // Add first tab, screenshot
+      tabs.addTab({
+            id: 'func-introspection-tab-screenshot',
+            iconClass: 'fa fa-photo',
+            label: 'Screenshot'
+      });
+      
+      // Add tab, orphans
+      tabs.addTab({
+            id: 'func-introspection-tab-orphans',
+            iconClass: 'fa fa-life-ring',
+            label: 'Orphans'
+      });
+
+      $('#node-screenshot-capture-btn').on("click", function (e) {
+         if ( e ) { e.preventDefault() }
+
+         $('#node-input-screenshot-svgcontainer').html( "Please wait, screenshot being prepared ..." );
+
+         generatorFunctionForVersion(RED)( (svgdata) => {
+            $('#node-input-screenshot-svgcontainer').html(svgdata);
+            globalRefToSvgData = svgdata;
+            setTimeout(() => {
+               addPanZoom()
+            },150)
+         });
+      })
+
+      // handle the download button under the editor window.
+      $('#node-screenshot-download-svg').on("click", function (e) {
+        if (e) { e.preventDefault(); }
+        var svgBlob = new Blob([globalRefToSvgData], {type:"image/svg+xml;charset=utf-8"});
+        var svgUrl = URL.createObjectURL(svgBlob);
+        var downloadLink = document.createElement("a");
+        downloadLink.href = svgUrl;
+        downloadLink.download = "screenshot.svg";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      });
+
+      $('#node-screenshot-copy-to-clipboard-svg').on("click", function (e) {
+        if (e) { e.preventDefault(); }
+        if ( RED.clipboard.copyText(globalRefToSvgData) ) {
+          RED.notify("SVG copied to clipboard", { type: "success" });
+        }
+      });
+
+      // When the user has entered new data in the sidebar, then store it into the config node
+      $("#node-input-orphan-find-btn").on("click", function(e) {
+         if ( e ) { e.preventDefault() }
+         setupTreelist();
+      })
+   };
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<style>
+   .col-100 .red-ui-typedInput-container {
+   width: 70% !important;
+   }
+   
+   .col-100.no-label .red-ui-typedInput-container {
+   width: 100% !important;
+   }
+</style>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="Screenshot">
+
+   <div class="form-row func-introspection-tabs-row">
+      <ul style="min-width: 600px; margin-bottom: 20px;" id="func-introspection-tabs"></ul>
+   </div>
+
+   <div id="func-introspection-tabs-content" style="min-height: calc(100% - 95px);">
+      <div id="func-introspection-tab-screenshot" style="display:none; min-height: calc(100%);">
+         <div class="form-row">
+            <div class="col-100">
+
+               <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
+                  <button type="button" id="node-screenshot-capture-btn" 
+                          class="red-ui-button red-ui-button-large"><i class="fa fa-camera"></i> Capture</button>
+                          
+                  <button type="button" id="node-screenshot-download-svg" style="margin-left: 30px;"
+                          class="red-ui-button red-ui-button-large"><i class="fa fa-download"></i> Download</button>
+                  <button type="button" id="node-screenshot-copy-to-clipboard-svg" 
+                           class="red-ui-button red-ui-button-large"><i class="fa fa-clipboard"></i> Copy to Clipboard</button>            
+               </div>
+
+               <div class="form-row" style="min-height: 300px; height: 450px; overflow: hidden; margin-left: 10px; margin-right: 15px; border: 1px rgb(196, 196, 196) solid; border-radius: 5px;">
+                  <div id="node-input-screenshot-svgcontainer"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="func-introspection-tab-orphans" style="display:none; min-height: calc(100%);">
+         <div class="form-row">
+            <div class="col-100">
+               <div class="form-row node-input-target-row" style="margin-left: 10px; margin-top: 30px">
+                  <button id="node-input-orphan-find-btn"
+                          class="red-ui-button"><i class="fa fa-rotate-right"></i> Refresh</button>
+               </div>
+               
+               <div class="form-row node-input-target-row node-input-target-list-row"
+                  style="margin-left: 10px; position: relative; min-height: 200px; height: 450px; margin-right: 15px; ">
+                  <div style="margin-bottom: 5px; width: 35%; padding-left: 60%;">
+                     <input type="text" id="node-input-orphan-target-filter" style="display: none;">
+                  </div>
+                  <div id="node-input-orphan-target-container-div"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   
+</script>
