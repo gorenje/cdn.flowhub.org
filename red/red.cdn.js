@@ -871,6 +871,7 @@ var RED = (function() {
             console.log("Palette editor disabled");
         }
 
+        RED.sidebar.init();
 
         if (RED.settings.theme("projects.enabled",false)) {
             RED.projects.init();
@@ -900,8 +901,6 @@ var RED = (function() {
         $("#red-ui-main-container").show();
 
         loadPluginList();
-
-        RED.sidebar.init();
     }
 
 
