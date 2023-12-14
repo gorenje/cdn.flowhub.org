@@ -855,6 +855,8 @@ var RED = (function() {
     }
 
     function loadEditor() {
+        RED.events.DEBUG = true;
+
         RED.workspaces.init();
         RED.statusBar.init();
         RED.view.init();
@@ -901,6 +903,11 @@ var RED = (function() {
         $("#red-ui-main-container").show();
 
         loadPluginList();
+        // trigger the plugins to render the sidebar
+        RED.events.emit('runtime-state', {});
+        setTimeout( () => {
+          RED.events.emit('runtime-state', {});
+        }, 1302);
     }
 
 
