@@ -913,9 +913,9 @@ var RED = (function() {
             RED.events.emit('runtime-state', {});
             setTimeout( () => {
               RED.events.emit('runtime-state', {});
-            }, 213);
-          }, 123);
-        }, 732);
+            }, 513);
+          }, 323);
+        }, 2732);
     }
 
 
