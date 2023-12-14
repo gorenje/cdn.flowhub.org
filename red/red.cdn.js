@@ -114,7 +114,7 @@ var RED = (function() {
                 "Accept":"application/json"
             },
             cache: false,
-            url: 'plugins',
+            url: 'plugins/plugins.json',
             success: function(data) {
                 loader.reportProgress(RED._("event.loadPlugins"), 13)
                 RED.i18n.loadPluginCatalogs(function() {
@@ -135,7 +135,7 @@ var RED = (function() {
                 "Accept-Language": lang
             },
             cache: false,
-            url: 'plugins',
+            url: 'plugins/plugins.html',
             success: function(data) {
                 var configs = data.trim().split(/(?=<!-- --- \[red-plugin:\S+\] --- -->)/);
                 var totalCount = configs.length;
@@ -238,7 +238,7 @@ var RED = (function() {
                 "Accept":"application/json"
             },
             cache: false,
-            url: 'nodes',
+            url: 'nodes/nodes.json',
             success: function(data) {
                 RED.nodes.setNodeList(data);
                 loader.reportProgress(RED._("event.loadNodeCatalogs"), 25)
@@ -275,7 +275,7 @@ var RED = (function() {
                 "Accept-Language": lang
             },
             cache: false,
-            url: 'nodes',
+            url: 'nodes/nodes.html',
             success: function(data) {
                 var configs = data.trim().split(/(?=<!-- --- \[red-module:\S+\] --- -->)/);
                 var totalCount = configs.length;
