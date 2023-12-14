@@ -859,21 +859,22 @@ var RED = (function() {
         // after Node-REDs appearance
         RED.events.DEBUG = true;
 
+        // trigger the plugins to render their sidebar content
         let initPlugins = () => {
+          // workspace dirty is the last event of the initialisation phase
+          // so use it to trigger the loading of the sidebar nodes
           RED.events.off("workspace:dirty", initPlugins);
 
-         // trigger the plugins to render their sidebar content
           setTimeout( () => {
             RED.events.emit('runtime-state', { state: 'start'});
-            setTimeout( () => {
-              RED.events.emit('runtime-state', { state: 'start'});
-              setTimeout( () => {
-                RED.events.emit('runtime-state', { state: 'start'});
-              }, 713);
-            }, 723);
           }, 732);
         };
         RED.events.on( "workspace:dirty", initPlugins);
+
+        // this has the side-effect of initialising any sidebar plugins.
+        RED.events.on( "deploy", () => {
+          RED.events.emit('runtime-state', { state: 'start' })
+        });
 
         RED.workspaces.init();
         RED.statusBar.init();
@@ -16092,8 +16093,6 @@ RED.deploy = (function() {
                 $("#red-ui-header-button-deploy").removeClass("disabled");
             }
             RED.notify('<p>'+RED._("deploy.successfulRestart")+'</p>',"success");
-            // this has the side-effect of initialising any sidebar plugins.
-            RED.events.emit('runtime-state', { state: 'start' })
         }).fail(function(xhr,textStatus,err) {
             if (deployWasEnabled) {
                 $("#red-ui-header-button-deploy").removeClass("disabled");
