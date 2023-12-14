@@ -1065,9 +1065,9 @@ var RED = (function() {
          if (handlers[evt]) {
              let cpyHandlers = [...handlers[evt]];
 
-             for (var i=0;i<cpyHandlers[evt].length;i++) {
+             for (var i=0;i<cpyHandlers.length;i++) {
                  try {
-                     cpyHandlers[evt][i].apply(null, args);
+                     cpyHandlers[i].apply(null, args);
                  } catch(err) {
                      console.warn("RED.events.emit error: ["+evt+"] "+(err.toString()));
                      console.warn(err);
