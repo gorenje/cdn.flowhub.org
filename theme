@@ -1,0 +1,20 @@
+{
+    "page": {
+        "title": "Node-RED Serverless",
+        "favicon": "favicon.ico",
+        "tabicon": {
+            "icon": "red/images/node-red-icon-black.svg",
+            "colour": "#8f0000"
+        }
+    },
+    "header": {
+        "title": "Node-RED <small>Serverless</small>",
+        "image": "red/images/node-red.svg"
+    },
+    "asset": {
+        "red": "red/red.min.js",
+        "main": "red/main.min.js",
+        "vendorMonaco": "vendor/monaco/monaco-bootstrap.js"
+    },
+    "themes": []
+}
