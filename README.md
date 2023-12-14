@@ -4,7 +4,7 @@ This repository contains a minimal viable Node-RED instance. The intention is to
 
 An initial idea was to use [Stackblitz](https://stackblitz.com/edit/node-djgejy?file=index.js&initialPath=/?fhid=aaab9308f8fbb2c5) for hosting an in-browser complete version of Node-RED, i.e. with server but that did not [work out](https://discourse.nodered.org/t/in-browser-node-red-a-follow-up-using-stackblitz/83639). Instead I decided to create this repository with a basic Node-RED client missing its server.
 
-The secret sauce is though: I made many small changes to the [red.js](blob/main/red/red.cdn.js) to support a dynamic server for certain actions, i.e., loading the initial flow data.
+The secret sauce is though: I made many small changes to the [red.js](red/red.cdn.js) to support a dynamic server for certain actions, i.e., loading the initial flow data.
 
 Node-RED version used is 3.1.3 with dashboard nodes and some other nodes pre-installed. Loading of other node packages is not supported but deployment is supported ... but nothing changes.
 
