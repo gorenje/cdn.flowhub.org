@@ -16231,8 +16231,10 @@ RED.deploy = (function() {
 
         deployInflight = true;
         shadeShow();
+        let srv = RED.settings.get("dynamicServer", "")
+
         $.ajax({
-            url: "flows",
+            url: srv + "flows",
             type: "POST",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
@@ -32405,8 +32407,11 @@ RED.palette.editor = (function() {
         if (url) {
             requestBody.url = url;
         }
+
+        let srv = RED.settings.get("dynamicServer", "")
+
         $.ajax({
-            url:"nodes",
+            url: srv+"nodes",
             type: "POST",
             data: JSON.stringify(requestBody),
             contentType: "application/json; charset=utf-8"
