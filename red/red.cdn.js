@@ -855,7 +855,9 @@ var RED = (function() {
     }
 
     function loadEditor() {
-        RED.events.DEBUG = true;
+        // set to true to inspect all the events raised, before, during and
+        // after Node-REDs appearance
+        RED.events.DEBUG = false;
 
         RED.workspaces.init();
         RED.statusBar.init();
@@ -903,11 +905,17 @@ var RED = (function() {
         $("#red-ui-main-container").show();
 
         loadPluginList();
-        // trigger the plugins to render the sidebar
-        RED.events.emit('runtime-state', {});
+
+        // trigger the plugins to render their sidebar content
         setTimeout( () => {
           RED.events.emit('runtime-state', {});
-        }, 1302);
+          setTimeout( () => {
+            RED.events.emit('runtime-state', {});
+            setTimeout( () => {
+              RED.events.emit('runtime-state', {});
+            }, 213);
+          }, 123);
+        }, 732);
     }
 
 
