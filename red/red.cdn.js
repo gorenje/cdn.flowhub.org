@@ -255,7 +255,7 @@ var RED = (function() {
                 "Accept":"application/json"
             },
             cache: false,
-            url: 'icons',
+            url: 'icons.json',
             success: function(data) {
                 RED.nodes.setIconSets(data);
                 if (done) {
@@ -1505,7 +1505,7 @@ RED.settings = (function () {
             },
             dataType: "json",
             cache: false,
-            url: 'settings',
+            url: 'settings.json',
             success: function (data) {
                 setProperties(data);
                 done(null, data);

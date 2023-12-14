@@ -1,0 +1,29 @@
+{
+    "editor": {
+        "view": {
+            "view-store-zoom": false,
+            "view-store-position": false,
+            "view-show-grid": true,
+            "view-snap-grid": false,
+            "view-grid-size": "20",
+            "view-node-status": true,
+            "view-node-show-label": true,
+            "view-show-tips": true,
+            "view-show-welcome-tours": true
+        },
+        "keymap": {
+            "core:align-selection-to-bottom": {
+                "scope": "red-ui-workspace",
+                "key": "alt-a b"
+            },
+            "core:align-selection-to-left": {
+                "scope": "red-ui-workspace",
+                "key": "alt-a l"
+            }
+        }
+    },
+    "menu-menu-item-sidebar": true,
+    "menu-deploymenu-item-node": true,
+    "menu-deploymenu-item-full": false,
+    "menu-menu-item-palette": true
+}

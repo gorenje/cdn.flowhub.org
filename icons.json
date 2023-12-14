@@ -1,0 +1,116 @@
+{
+    "node-red": [
+        "alert.svg",
+        "arduino.svg",
+        "arrow-in.svg",
+        "batch.svg",
+        "bluetooth.svg",
+        "bridge-dash.svg",
+        "bridge.svg",
+        "cog.svg",
+        "comment.svg",
+        "db.svg",
+        "debug.svg",
+        "envelope.svg",
+        "feed.svg",
+        "file-in.svg",
+        "file-out.svg",
+        "file.svg",
+        "function.svg",
+        "hash.svg",
+        "inject.svg",
+        "join.svg",
+        "leveldb.svg",
+        "light.svg",
+        "link-call.svg",
+        "link-out.svg",
+        "link-return.svg",
+        "mongodb.svg",
+        "mouse.svg",
+        "parser-csv.svg",
+        "parser-html.svg",
+        "parser-json.svg",
+        "parser-xml.svg",
+        "parser-yaml.svg",
+        "range.svg",
+        "rbe.svg",
+        "redis.svg",
+        "rpi.svg",
+        "serial.svg",
+        "sort.svg",
+        "split.svg",
+        "status.svg",
+        "subflow.svg",
+        "swap.svg",
+        "switch.svg",
+        "template.svg",
+        "timer.svg",
+        "trigger.svg",
+        "watch.svg",
+        "white-globe.svg"
+    ],
+    "node-red-dashboard": [
+        "ui_button.png",
+        "ui_chart.png",
+        "ui_colour_picker.png",
+        "ui_date_picker.png",
+        "ui_dropdown.png",
+        "ui_form.png",
+        "ui_gauge.png",
+        "ui_numeric.png",
+        "ui_slider.png",
+        "ui_switch.png",
+        "ui_template.png",
+        "ui_text.png",
+        "ui_toast.png"
+    ],
+    "node-red-node-base64": [
+        "parser-base64.png"
+    ],
+    "@gregoriusrippenstein/node-red-contrib-uglifyjs": [],
+    "node-red-contrib-aedes": [
+        "aedes.png",
+        "aedes_original.png"
+    ],
+    "node-red-contrib-blockly": [],
+    "node-red-contrib-web-worldmap": [],
+    "node-red-contrib-web-babylonjs": [
+        "babylon.png"
+    ],
+    "node-red-contrib-i2c": [],
+    "@gregoriusrippenstein/node-red-contrib-flowhub": [
+        "flowhubdiff.svg",
+        "flowhublogo.svg",
+        "flowhubpull.svg",
+        "flowhubpush.svg"
+    ],
+    "@bartbutenaers/node-red-autolayout-sidebar": [],
+    "@gregoriusrippenstein/node-red-contrib-flowcompare": [],
+    "node-red-contrib-postgresql": [
+        "postgresql.png"
+    ],
+    "@gorenje/node-red-contrib-writermap-mindmap": [
+        "aeon.svg",
+        "change.svg",
+        "github-mark.svg",
+        "hn.svg",
+        "linkedin.svg",
+        "medium.svg",
+        "node-red.svg",
+        "open_mind_logo.svg"
+    ],
+    "@gregoriusrippenstein/node-red-contrib-validation-and-documentation": [],
+    "node-red-contrib-gzip": [
+        "gzip.png"
+    ],
+    "@gregoriusrippenstein/node-red-contrib-tarball15552127055190357": [],
+    "@gregoriusrippenstein/node-red-contrib-flow2uml6073427901121491": [],
+    "node-red-contrib-osc": [],
+    "node-red-node-swagger": [],
+    "@gregoriusrippenstein/node-red-contrib-nodedev": [
+        "nodedevsubflow.svg"
+    ],
+    "@gregoriusrippenstein/node-red-contrib-introspection": [
+        "introspesubflow.svg"
+    ]
+}
