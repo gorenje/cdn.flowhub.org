@@ -861,19 +861,27 @@ var RED = (function() {
 
         // trigger the plugins to render their sidebar content
         let initPlugins = () => {
-          // workspace dirty is the last event of the initialisation phase
-          // so use it to trigger the loading of the sidebar nodes
-          RED.events.off("workspace:dirty", initPlugins);
+            // workspace dirty is the last event of the initialisation phase
+            // so use it to trigger the loading of the sidebar nodes but do it
+            // only once.
+            RED.events.off("workspace:dirty", initPlugins);
 
-          setTimeout( () => {
-            RED.events.emit('runtime-state', { state: 'start'});
-          }, 732);
+            setTimeout( () => {
+              RED.events.emit('runtime-state', { state: 'start'});
+            }, 732);
         };
         RED.events.on( "workspace:dirty", initPlugins);
 
-        // this has the side-effect of initialising any sidebar plugins.
+        // the deploy event is triggered, then the server is sent the
+        // new flow and depending on what happens, the server sends a
+        // runtime-state event back (i.e. all the flows have been restarted).
+        // Since the server, in this case, isn't doing anything, need to
+        // simulate the runtime-state event (since it's also used for
+        // initialising side bar nodes.
         RED.events.on( "deploy", () => {
-          RED.events.emit('runtime-state', { state: 'start' })
+            setTimeout( () => {
+                RED.events.emit('runtime-state', { state: 'start' })
+            }, 50);
         });
 
         RED.workspaces.init();
