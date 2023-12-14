@@ -28611,7 +28611,7 @@ RED.view.tools = (function() {
             } else if (node.type === 'tab' || node.type === 'subflow') {
                 thingType = 'flow'
             }
-            let url = `${window.location.origin}${window.location.pathname}#${thingType}/${node.id}`
+            let url = `${window.location.origin}${window.location.pathname}${window.location.search}#${thingType}/${node.id}`
             if (isEdit) {
                 url += '/edit'
             }
