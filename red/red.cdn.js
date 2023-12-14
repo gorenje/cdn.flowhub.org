@@ -1565,11 +1565,13 @@ RED.settings = (function () {
                 clearTimeout(pendingSave);
             }
             pendingSave = setTimeout(function() {
-                pendingSave = null;
+              pendingSave = null;
+              let srv = RED.settings.get("dynamicServer", "")
+
                 $.ajax({
                     method: 'POST',
                     contentType: 'application/json',
-                    url: 'settings/user',
+                    url: srv + 'settings/user',
                     data: JSON.stringify(userSettings),
                     success: function (data) {
                     },
@@ -1983,9 +1985,11 @@ RED.comms = (function() {
     function connectWS() {
         active = true;
         var wspath;
+        let dynSrv = RED.settings.get("dynamicServer", undefined)
 
-        if (RED.settings.apiRootUrl) {
-            var m = /^(https?):\/\/(.*)$/.exec(RED.settings.apiRootUrl);
+
+        if (RED.settings.apiRootUrl || dynSrv) {
+            var m = /^(https?):\/\/(.*)$/.exec(RED.settings.apiRootUrl || dynSrv);
             if (m) {
                 console.log(m);
                 wspath = "ws"+(m[1]==="https"?"s":"")+"://"+m[2]+"comms";
