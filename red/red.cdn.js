@@ -908,11 +908,11 @@ var RED = (function() {
 
         // trigger the plugins to render their sidebar content
         setTimeout( () => {
-          RED.events.emit('runtime-state', {});
+          RED.events.emit('runtime-state', { state: 'start'});
           setTimeout( () => {
-            RED.events.emit('runtime-state', {});
+            RED.events.emit('runtime-state', { state: 'start'});
             setTimeout( () => {
-              RED.events.emit('runtime-state', {});
+              RED.events.emit('runtime-state', { state: 'start'});
             }, 513);
           }, 323);
         }, 2732);
