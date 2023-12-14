@@ -859,6 +859,22 @@ var RED = (function() {
         // after Node-REDs appearance
         RED.events.DEBUG = true;
 
+        let initPlugins = () => {
+          RED.events.off("workspace:dirty", initPlugins);
+
+         // trigger the plugins to render their sidebar content
+          setTimeout( () => {
+            RED.events.emit('runtime-state', { state: 'start'});
+            setTimeout( () => {
+              RED.events.emit('runtime-state', { state: 'start'});
+              setTimeout( () => {
+                RED.events.emit('runtime-state', { state: 'start'});
+              }, 513);
+            }, 323);
+          }, 732);
+        };
+        RED.events.on( "workspace:dirty", initPlugins);
+
         RED.workspaces.init();
         RED.statusBar.init();
         RED.view.init();
@@ -906,16 +922,6 @@ var RED = (function() {
 
         loadPluginList();
 
-      // trigger the plugins to render their sidebar content
-         /* setTimeout( () => {
-       *   RED.events.emit('runtime-state', { state: 'start'});
-       *   setTimeout( () => {
-       *     RED.events.emit('runtime-state', { state: 'start'});
-       *     setTimeout( () => {
-       *       RED.events.emit('runtime-state', { state: 'start'});
-       *     }, 513);
-       *   }, 323);
-       * }, 2732);*/
     }
 
 
