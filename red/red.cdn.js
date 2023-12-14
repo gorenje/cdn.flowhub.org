@@ -871,7 +871,6 @@ var RED = (function() {
             console.log("Palette editor disabled");
         }
 
-        RED.sidebar.init();
 
         if (RED.settings.theme("projects.enabled",false)) {
             RED.projects.init();
@@ -901,6 +900,8 @@ var RED = (function() {
         $("#red-ui-main-container").show();
 
         loadPluginList();
+
+        RED.sidebar.init();
     }
 
 
@@ -34448,9 +34449,10 @@ RED.editor = (function() {
         var intialTimeout = setTimeout(function() {
             timeoutNotification = RED.notify($('<p data-i18n="[prepend]editor.loadCredentials">  <img src="red/images/spin.svg"/></p>').i18n(),{fixed: true})
         },800);
+        let srv = RED.settings.get("dynamicServer", "")
 
         var dashedType = type.replace(/\s+/g, '-');
-        var credentialsUrl = 'credentials/' + dashedType + "/" + id;
+        var credentialsUrl = srv + 'credentials/' + dashedType + "/" + id;
 
         $.ajax({
             url: credentialsUrl,
