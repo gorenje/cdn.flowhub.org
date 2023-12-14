@@ -859,6 +859,16 @@ var RED = (function() {
         // after Node-REDs appearance
         RED.events.DEBUG = true;
 
+        // disable tour on if parameter 't' is set to 0
+        try {
+            RED.settings.set(
+                "editor.view.view-show-welcome-tours",
+                new URLSearchParams(window.location.search).get('t') !== "0"
+            )
+        } catch (ex) {
+            console.log( "error on tour", ex )
+        }
+
         // trigger the plugins to render their sidebar content
         let initPlugins = () => {
             // workspace dirty is the last event of the initialisation phase
