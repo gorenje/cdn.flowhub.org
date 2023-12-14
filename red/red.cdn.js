@@ -16058,8 +16058,10 @@ RED.deploy = (function() {
         var deployWasEnabled = !$("#red-ui-header-button-deploy").hasClass("disabled");
         deployInflight = true;
         deployButtonSetBusy();
+        let srv = RED.settings.get("dynamicServer", "")
+
         $.ajax({
-            url:"flows",
+            url:srv+"flows",
             type: "POST",
             headers: {
                 "Node-RED-Deployment-Type":"reload"
@@ -33352,8 +33354,10 @@ RED.palette.editor = (function() {
                 var data = new FormData();
                 data.append("tarball",uploadInput[0].files[0]);
                 var filename = uploadInput[0].files[0].name;
+                let srv = RED.settings.get("dynamicServer", "")
+
                 $.ajax({
-                    url: 'nodes',
+                    url: srv+'nodes',
                     data: data,
                     cache: false,
                     contentType: false,
@@ -52718,8 +52722,10 @@ RED.projects.userSettings = (function() {
                 }
                 // console.log(JSON.stringify(payload,null,4));
                 RED.deploy.setDeployInflight(true);
+                let srv = RED.settings.get("dynamicServer", "")
+
                 utils.sendRequest({
-                    url: "settings/user/keys",
+                    url: srv + "settings/user/keys",
                     type: "POST",
                     responses: {
                         0: function(error) {
