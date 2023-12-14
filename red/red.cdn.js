@@ -869,8 +869,8 @@ var RED = (function() {
               RED.events.emit('runtime-state', { state: 'start'});
               setTimeout( () => {
                 RED.events.emit('runtime-state', { state: 'start'});
-              }, 513);
-            }, 323);
+              }, 713);
+            }, 723);
           }, 732);
         };
         RED.events.on( "workspace:dirty", initPlugins);
@@ -16092,6 +16092,8 @@ RED.deploy = (function() {
                 $("#red-ui-header-button-deploy").removeClass("disabled");
             }
             RED.notify('<p>'+RED._("deploy.successfulRestart")+'</p>',"success");
+            // this has the side-effect of initialising any sidebar plugins.
+            RED.events.emit('runtime-state', { state: 'start' })
         }).fail(function(xhr,textStatus,err) {
             if (deployWasEnabled) {
                 $("#red-ui-header-button-deploy").removeClass("disabled");
