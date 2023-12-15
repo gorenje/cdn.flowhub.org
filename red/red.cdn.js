@@ -894,6 +894,19 @@ var RED = (function() {
             }, 50);
         });
 
+        // redirect those requests that demonstrate certain functionality
+        // to the deadred server.
+        let deadredRedirectablesAjax = [
+            "FlowHubDiff",
+            "FlowHubPush",
+            "FlowCompareCfg"
+        ];
+        $.ajaxPrefilter(function( options ) {
+            if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
+                options.url = RED.settings.get("dynamicServer", "") + options.url
+            }
+        });
+
         RED.workspaces.init();
         RED.statusBar.init();
         RED.view.init();

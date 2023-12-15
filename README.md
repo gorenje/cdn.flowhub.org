@@ -11,3 +11,13 @@ Node-RED version used is 3.1.3 with dashboard nodes and some other nodes pre-ins
 A dynamic server definition is defined [by this flow](https://flowhub.org/f/15cc9fb0e94d56cd) - its responsible for providing a websocket endpoint, a POST endpoint and for providing an initial flow to be shown. For example, the backend flow can be also viewed in the [Node-RED client](https://cdn.flowhub.org/?fhid=15cc9fb0e94d56cd).
 
 Purpose of all this is to provide a "Node-RED feel" for folks interested in using Node-RED but who do not have the ability to install it somewhere. And since creating a serverful Node-RED instance for others to use would be a open invitation to all sorts of illegal activities, hence this static but dynamic-feeling Node-RED instance.
+
+## Running locally
+
+To run this locally for testing *(this assumes python3 and make have been installed.)*:
+
+```
+make run-local
+```
+
+Node-RED will start will retrieve and initial [flow](https://flowhub.org/f/67a6db53dc49ae4c) from FlowHub.org. All communication with the dynamic server will continue.
