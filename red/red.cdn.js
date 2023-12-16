@@ -899,9 +899,17 @@ var RED = (function() {
         let deadredRedirectablesAjax = [
             "FlowHubDiff",
             "FlowHubPush",
-            "FlowCompareCfg"
+            "FlowCompareCfg",
+            "NodeFactorySidebarCfg"
         ];
-        $.ajaxPrefilter(function( options ) {
+
+        $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+            if ( options.url.match(/^inject\/[a-z0-9]{16}/i) ) {
+                jqXHR.abort("Flow execution is not supported.");
+                jqXHR.status = -1
+                options.error( jqXHR, "<b>Flow execution is not supported.</b>", {});
+            }
+
             if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
                 options.url = RED.settings.get("dynamicServer", "") + options.url
             }
