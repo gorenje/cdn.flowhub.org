@@ -1500,5 +1500,17 @@
         ],
         "user": false,
         "version": "0.1.16"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-node-markdown/markdown",
+        "local": true,
+        "module": "node-red-node-markdown",
+        "name": "markdown",
+        "types": [
+            "markdown"
+        ],
+        "user": false,
+        "version": "0.1.4"
     }
 ]

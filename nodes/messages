@@ -528,5 +528,6 @@
                 "noproperty": "No property found to process"
             }
         }
-    }
+    },
+    "node-red-node-markdown/markdown": {}
 }
