@@ -14279,33 +14279,6 @@ msg.cookies = {
 <script type="text/html" data-help-name="PubMedium">
     <p>Publish content to Medium.com. A Medium API token is recommended else this will not work.</p>
 </script>
-<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-flow2uml6073427901121491/flowtomermaid] --- -->
-<script type="text/javascript">
-(function ($) {
-   RED.nodes.registerType('Flow2MermaidCfg', {
-      category: 'config',
-      hasUsers: false,
-      defaults: {
-         name: { value: "" },
-         direction: { value: "" },
-         genmereditor: {value:""},
-      },
-      paletteLabel: 'Flow2MermaidCfg',
-      label: function () {
-         return this.name;
-      }
-  });
-})(jQuery);
-</script>
-
-<!-- The html for the config node info panel (in right sidebar) -->
-<script type="text/x-red" data-template-name="Flow2MermaidCfg">
-   <p>Generate a Mermaid flowchart diagram from the active flow tab.</p>
-
-   <h3>Description</h3>
-   Convert the current flow tabl a work-flow UML diagram in Mermaid syntax. The result is stored in the pasteboard - Ctrl/Cmd-V can be used to paste the Mermaid diagram into the <a style="color: blue;" target=_blank href="https://mermaid.live/edit">live editor <i class="fa fa-external-link"></i></a>.
-</script>
-
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare] --- -->
 <script type="text/javascript">
 (function ($) {
@@ -16699,123 +16672,6 @@ Functionality:
 <script type="text/x-red" data-template-name="NodeFactorySidebarCfg">
     <p>Generate nodes for an existing node package.</p>
    Generate nodes for an existing node package.
-</script>
-<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-tarball15552127055190357/tarball] --- -->
-<script type="text/javascript">
-(function(){
-  
-
-  function frontendSupportFunction() {
-  }
-
-  var functTwo = (arg) => {
-
-  };
-  
-  RED.nodes.registerType('tarball',{
-    color: '#DEB887',
-    icon: "font-awesome/fa-archive",
-    category: 'storage',
-    defaults: {
-      name: {
-        value:"",
-      },
-    },
-
-    inputs: 1,
-
-    outputs: 1,
-
-    label: function() {
-      return (this.name || this._def.paletteLabel);
-    },
-
-    labelStyle: function() {
-      return this.name?"node_label_italic":"";
-    },
-
-    onpaletteadd: function() {
-    },
-
-    oneditprepare: function() {
-    },
-
-    oneditcancel: function() {
-    },
-
-    oneditsave: function() {
-    },
-
-    onpaletteremove: function() {
-    },
-
-
-
-  });
-})();
-</script>
-
-<script type="text/html" data-template-name="tarball">
-  <div class="form-row">
-    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
-    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
-  </div>
-</script>
-
-<script type="text/html" data-help-name="tarball">
-    <p>Compress and extract tarballs in xz and gzip format.</p>
-<p>
-  Supports xz and gzip compression.
-
-<p><b>Compression</b>
-
-<p>
-  For compression, <code>msg.payload</code> is assumed to be an array containing
-  objects of the form:
-
-<p>
-  <code>
-  {<br>
-    path: "full/path/in/tar/file.txt",<br>
-    payload: Buffer.from("file contents"),<br>
-  }<br>
-  </code>
-<p>
-  Payload is assumed to be a <code>Buffer</code> object. If <code>path</code> is not defined, the
-  entry is ignored.
-
-<p>
-  Returned is a tar archive which can then be compressed using 
-  <a href="https://flows.nodered.org/node/@ecraneworldwide/node-red-contrib-lz4" target="_blank">Lzma</a>
-  or <a href="https://flows.nodered.org/node/node-red-contrib-gzip" target="_blank">Gzip</a>.
-  
-<p><b>Extraction</b>
-
-<p>
-  Extraction assumes that the msg.payload is an Buffer with
-  the contents of the tarball. Either encoded in xz format or
-  gzip format or non-encoded tar archive.
-
-<p>
-  A message is generated as each file is extracted. All data is encoded
-  in a <code>Buffer</code> object as it is not possible to distinguish between
-  binary content and text content. The message has a <code>path</code> attribute 
-  for the file name and <code>payload</code> contains the buffer with the files
-  contents.
-
-<p>
-  Once all files have been extracted, one file message is sent that
-  contains <code>complete</code> set to true and <code>payload</code> being an array containing
-  all files that were extracted. Each file is represented by a hash
-  object: 
-<p>
-  <code>
-  {<br>
-    path: "full path of file",<br>
-    payload: Buffer.from("object containing file contents in Buffer form")<br>
-  }<br>
-  </code>
-
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs] --- -->
 <script type="text/javascript">
@@ -27396,4 +27252,289 @@ this.scope.action = function() { return value; }
     <p>If the input is a Base64 string it converts it back to a binary buffer.</p>
     <p>You can also fix coding into base64, and base64 to buffer if required.</p>
     <p>Note: Using "Encode to Base64" will encode an already encoded string.</p>
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-tarball/tarball] --- -->
+<script type="text/javascript">
+(function(){
+  
+
+  function frontendSupportFunction() {
+  }
+
+  var functTwo = (arg) => {
+
+  };
+  
+  RED.nodes.registerType('tarball',{
+    color: '#DEB887',
+    icon: "font-awesome/fa-archive",
+    category: 'storage',
+    defaults: {
+      name: {
+        value:"",
+      },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="tarball">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="tarball">
+    <p>Compress and extract tarballs in xz and gzip format.</p>
+<p>
+  Supports xz and gzip compression.
+
+<p><b>Compression</b>
+
+<p>
+  For compression, <code>msg.payload</code> is assumed to be an array containing
+  objects of the form:
+
+<p>
+  <code>
+  {<br>
+    path: "full/path/in/tar/file.txt",<br>
+    payload: Buffer.from("file contents"),<br>
+  }<br>
+  </code>
+<p>
+  Payload is assumed to be a <code>Buffer</code> object. If <code>path</code> is not defined, the
+  entry is ignored.
+
+<p>
+  Returned is a tar archive which can then be compressed using 
+  <a href="https://flows.nodered.org/node/@ecraneworldwide/node-red-contrib-lz4" target="_blank">Lzma</a>
+  or <a href="https://flows.nodered.org/node/node-red-contrib-gzip" target="_blank">Gzip</a>.
+  
+<p><b>Extraction</b>
+
+<p>
+  Extraction assumes that the msg.payload is an Buffer with
+  the contents of the tarball. Either encoded in xz format or
+  gzip format or non-encoded tar archive.
+
+<p>
+  A message is generated as each file is extracted. All data is encoded
+  in a <code>Buffer</code> object as it is not possible to distinguish between
+  binary content and text content. The message has a <code>path</code> attribute 
+  for the file name and <code>payload</code> contains the buffer with the files
+  contents.
+
+<p>
+  Once all files have been extracted, one file message is sent that
+  contains <code>complete</code> set to true and <code>payload</code> being an array containing
+  all files that were extracted. Each file is represented by a hash
+  object: 
+<p>
+  <code>
+  {<br>
+    path: "full path of file",<br>
+    payload: Buffer.from("object containing file contents in Buffer form")<br>
+  }<br>
+  </code>
+
+</script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker] --- -->
+<script type="text/javascript">
+(function(){
+  
+  RED.nodes.registerType('AIsBreaker',{
+    color: '#1AE0F0',
+    icon: "logo.png",
+    category: 'algintell',
+    defaults: {
+      name: {
+        value:"",
+      },
+      apiToken: {
+        value: "",
+      },
+      apiTokenType: {
+        value: "cred",
+      },
+      serviceid: {
+        value: "chat:dummy"
+      },
+      endpoint: {
+        value: "https://api.demo.aisbreaker.org"
+      },
+      servicejson: {
+        value: '{ "serviceId": "chat:dummy"}'
+      }
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+      $("#node-input-apiToken").typedInput({
+        types:["env", "global", "cred"],
+        typeField: "#node-input-apiTokenType"
+      });
+      
+      let jssn = JSON.parse(this.servicejson)
+
+      this.editor = RED.editor.createEditor({
+        id: 'node-input-servicejson-editor',
+        mode: 'ace/mode/json',
+        value: JSON.stringify(jssn,null,2)
+      });
+      
+      $('#node-input-serviceid').val( this.serviceid );
+
+      // delay this listener so as not to overwrite the default
+      // value of the editor. This is a stupid solution but the
+      // servicejson is the default value which is overwritten
+      // with the serviceid value is set... because this onchange event
+      // is triggered. so setup this listener _after_ setting
+      // the value of the selector, i.e. $('#..serviceid').val(..) above
+      // the servicejson _may_ have been altered by the user 
+      // directly, hence it's the single source of truth even if the
+      // serviceid is set.
+      setTimeout( () => {
+        $('#node-input-serviceid').on('change', (e) => {
+          if (e) { e.preventDefault(); }
+          
+          let v = {
+            serviceId: $('#node-input-serviceid').val()
+          }
+
+          if ( $('#node-input-serviceid').val() == "aisbreaker:mirror") {
+            v = {
+              "serviceId": "aisbreaker:mirror",
+              "forward2ServiceProps": { 
+                  "serviceId": "chat:echo" 
+              }
+            }
+          }
+
+          if ( $('#node-input-serviceid').val() == "chat:openai.com/compatible-version" ) {
+            v = {
+              "serviceId": "chat:openai.com",
+              "url": "https://api.openai.compatible.example.com/v1/chat/completions"
+            }
+          }
+
+          this.editor.setValue(JSON.stringify(v,null,2))
+        })
+      }, 300);
+    },
+
+    oneditcancel: function() {
+      this.editor.destroy();
+      delete this.editor;
+    },
+
+    oneditsave: function() {
+      $("#node-input-servicejson").val(this.editor.getValue());
+      this.editor.destroy();
+      delete this.editor;
+    },
+
+    onpaletteremove: function() {
+    },
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="AIsBreaker">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-apiToken">
+      <i class="fa fa-key"></i>
+      <span data-i18n="aisbreaker.access_token.label"></span>
+    </label>
+    <input type="text" id="node-input-apiToken" data-i18n="[placeholder]aisbreaker.access_token.placeholder">
+    <input type="hidden" id="node-input-apiTokenType">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-serviceid">
+      <i class="fa fa-fax"></i>
+      <span data-i18n="aisbreaker.serviceid.label"></span>
+    </label>
+    <select id="node-input-serviceid">
+      <option value="chat:dummy" data-i18n="aisbreaker.serviceid.chat_dummy"></option>
+      <option value="aisbreaker:mirror" data-i18n="aisbreaker.serviceid.chat_echo_mirror"></option>
+
+      <option value="chat:openai.com" data-i18n="aisbreaker.serviceid.chat_openai_com"></option>
+      <option value="chat:openai.com/gpt-3.5-turbo" data-i18n="aisbreaker.serviceid.chat_openai_com_gpt_3_5_turbo"></option>
+      <option value="chat:openai.com/gpt-4" data-i18n="aisbreaker.serviceid.chat_openai_com_gpt_4"></option>
+      <option value="chat:openai.com/compatible-version" data-i18n="aisbreaker.serviceid.chat_gtp_compatiable"></option>
+      <option value="chat:huggingface.co/microsoft/DialoGPT-large" data-i18n="aisbreaker.serviceid.chat_huggingface_co_microsoft_dialogpt_large"></option>
+      <option value="chat:huggingface.co/microsoft/DialoGPT-small" data-i18n="aisbreaker.serviceid.chat_huggingface_co_microsoft_dialogpt_small"></option>
+      <option value="chat:huggingface.co/<HF_ACCOUNT>/<HF_MODEL>" data-i18n="aisbreaker.serviceid.chat_huggingface_co_any_model"></option>
+      
+      <option value="text-to-image:dummy" data-i18n="aisbreaker.serviceid.text_to_image_dummy"></option>
+      <option value="text-to-image:openai.com" data-i18n="aisbreaker.serviceid.text_to_image_openai_com"></option>
+      <option value="text-to-image:stability.ai" data-i18n="aisbreaker.serviceid.text_to_image_stability_ai"></option>
+    </select>
+  </div>
+
+  <div class="form-row node-text-editor-row">
+    <input type="hidden" id="node-input-servicejson" autofocus="autofocus">
+    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-servicejson-editor"></div>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-endpoint"><i class="fa fa-server"></i> <span data-i18n="aisbreaker.endpoint.label"></span></label>
+    <input type="text" id="node-input-endpoint" data-i18n="[placeholder]aisbreaker.endpoint.placeholder">
+  </div>
+</script>
+<script type="text/html" data-help-name="AIsBreaker">
+  <p>Wrapper Node around AIsBreaker.org</p>
+  Wrapper Node around AIsBreaker.org which itself is a wrapper around several AI chatbots.
 </script>

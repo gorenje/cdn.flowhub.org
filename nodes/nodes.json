@@ -1,1 +1,1504 @@
-[{"id":"node-red/junction","name":"junction","types":["junction"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/inject","name":"inject","types":["inject"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/debug","name":"debug","types":["debug"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/complete","name":"complete","types":["complete"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/catch","name":"catch","types":["catch"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/status","name":"status","types":["status"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/link","name":"link","types":["link in","link out","link call"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/comment","name":"comment","types":["comment"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/global-config","name":"global-config","types":["global-config"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/unknown","name":"unknown","types":["unknown"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/function","name":"function","types":["function"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/switch","name":"switch","types":["switch"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/change","name":"change","types":["change"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/range","name":"range","types":["range"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/template","name":"template","types":["template"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/delay","name":"delay","types":["delay"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/trigger","name":"trigger","types":["trigger"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/exec","name":"exec","types":["exec"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/rbe","name":"rbe","types":["rbe"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/tls","name":"tls","types":["tls-config"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/httpproxy","name":"httpproxy","types":["http proxy"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/mqtt","name":"mqtt","types":["mqtt in","mqtt out","mqtt-broker"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/httpin","name":"httpin","types":["http in","http response"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/httprequest","name":"httprequest","types":["http request"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/websocket","name":"websocket","types":["websocket in","websocket out","websocket-listener","websocket-client"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/tcpin","name":"tcpin","types":["tcp in","tcp out","tcp request"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/udp","name":"udp","types":["udp in","udp out"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/CSV","name":"CSV","types":["csv"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/HTML","name":"HTML","types":["html"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/JSON","name":"JSON","types":["json"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/XML","name":"XML","types":["xml"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/YAML","name":"YAML","types":["yaml"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/split","name":"split","types":["split","join"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/sort","name":"sort","types":["sort"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/batch","name":"batch","types":["batch"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/file","name":"file","types":["file","file in"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red/watch","name":"watch","types":["watch"],"enabled":true,"local":false,"user":false,"module":"node-red","version":"3.1.3"},{"id":"node-red-dashboard/ui_base","name":"ui_base","types":["ui_base"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_button","name":"ui_button","types":["ui_button"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_dropdown","name":"ui_dropdown","types":["ui_dropdown"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_switch","name":"ui_switch","types":["ui_switch"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_slider","name":"ui_slider","types":["ui_slider"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_numeric","name":"ui_numeric","types":["ui_numeric"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_text_input","name":"ui_text_input","types":["ui_text_input"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_date_picker","name":"ui_date_picker","types":["ui_date_picker"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_colour_picker","name":"ui_colour_picker","types":["ui_colour_picker"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_form","name":"ui_form","types":["ui_form"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_text","name":"ui_text","types":["ui_text"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_gauge","name":"ui_gauge","types":["ui_gauge"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_chart","name":"ui_chart","types":["ui_chart"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_audio","name":"ui_audio","types":["ui_audio"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_toast","name":"ui_toast","types":["ui_toast"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_ui_control","name":"ui_ui_control","types":["ui_ui_control"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_template","name":"ui_template","types":["ui_template"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_link","name":"ui_link","types":["ui_link"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_tab","name":"ui_tab","types":["ui_tab"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_group","name":"ui_group","types":["ui_group"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-dashboard/ui_spacer","name":"ui_spacer","types":["ui_spacer"],"enabled":true,"local":true,"user":false,"module":"node-red-dashboard","version":"3.6.1"},{"id":"node-red-node-base64/base64","name":"base64","types":["base64"],"enabled":true,"local":true,"user":false,"module":"node-red-node-base64","version":"0.3.0"},{"id":"@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs","name":"uglifyjs","types":["UglifyJS"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-uglifyjs","version":"0.0.6"},{"id":"node-red-contrib-aedes/aedes-mqtt-broker","name":"aedes-mqtt-broker","types":["aedes broker"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-aedes","version":"0.11.1"},{"id":"node-red-contrib-blockly/blockly","name":"blockly","types":["Blockly"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-blockly","version":"2.3.0"},{"id":"node-red-contrib-blockly/blockly-config","name":"blockly-config","types":["blockly-config"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-blockly","version":"2.3.0"},{"id":"node-red-contrib-web-babylonjs/scene","name":"scene","types":["scene"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/material","name":"material","types":["material"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/sphere","name":"sphere","types":["sphere"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/box","name":"box","types":["box"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/plane","name":"plane","types":["plane"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/cone","name":"cone","types":["cone"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/transform","name":"transform","types":["transform"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-web-babylonjs/events","name":"events","types":["events"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-web-babylonjs","version":"0.0.15"},{"id":"node-red-contrib-i2c/i2c","name":"i2c","types":["i2c scan","i2c in","i2c out"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-i2c","version":"0.9.0"},{"id":"@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull","name":"flowhubpull","types":["FlowHubPull"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-flowhub","version":"0.4.2"},{"id":"@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg","name":"flowhubcfg","types":["FlowHubCfg"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-flowhub","version":"0.4.2"},{"id":"@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config","name":"auto_layout_config","types":["auto_layout_config"],"enabled":true,"local":true,"user":false,"module":"@bartbutenaers/node-red-autolayout-sidebar","version":"0.0.3"},{"id":"@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare","name":"flowcompare","types":["FlowCompareCfg"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-flowcompare","version":"0.1.2"},{"id":"node-red-contrib-postgresql/postgresql","name":"postgresql","types":["postgreSQLConfig","postgresql"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-postgresql","version":"0.14.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/base","name":"base","types":[],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/topic","name":"topic","types":["Topic"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/observation","name":"observation","types":["Observation"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/question","name":"question","types":["Question"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/thought","name":"thought","types":["Thought"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/idea","name":"idea","types":["Idea"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/analogy","name":"analogy","types":["Analogy"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/aphorism","name":"aphorism","types":["Aphorism"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/poesie","name":"poesie","types":["Poesie"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/humour","name":"humour","types":["Humour"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/treasure","name":"treasure","types":["Treasure"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/consequence","name":"consequence","types":["Consequence"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/advantage","name":"advantage","types":["Advantage"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/disadvantage","name":"disadvantage","types":["Disadvantage"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/text","name":"text","types":["Text"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/blog-post","name":"blog-post","types":["Blog-Post"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/comment","name":"comment","types":["Comment"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/codebase","name":"codebase","types":["Code-Base"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/sketch","name":"sketch","types":["Sketch"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/inspiration","name":"inspiration","types":["Inspiration"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/quote","name":"quote","types":["Quote"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/definition","name":"definition","types":["Definition"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/book","name":"book","types":["Book"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/author","name":"author","types":["Author"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/blogchanges","name":"blogchanges","types":["BlogChanges"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/blogdetails","name":"blogdetails","types":["BlogDetails"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/blogpages","name":"blogpages","types":["BlogPages"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo","name":"blogpageinfo","types":["BlogPageInfo"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/blogcontent","name":"blogcontent","types":["BlogContent"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gorenje/node-red-contrib-writermap-mindmap/pubmedium","name":"pubmedium","types":["PubMedium"],"enabled":true,"local":true,"user":false,"module":"@gorenje/node-red-contrib-writermap-mindmap","version":"0.1.0"},{"id":"@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema","name":"json-schema","types":["JsonSchemaValidatorWithDocu"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-validation-and-documentation","version":"0.1.0"},{"id":"node-red-contrib-gzip/markdown","name":"markdown","types":["gzip"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-gzip","version":"0.0.3"},{"id":"@gregoriusrippenstein/node-red-contrib-tarball15552127055190357/tarball","name":"tarball","types":["tarball"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-tarball15552127055190357","version":"0.0.1"},{"id":"@gregoriusrippenstein/node-red-contrib-flow2uml6073427901121491/flowtomermaid","name":"flowtomermaid","types":["Flow2MermaidCfg"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-flow2uml6073427901121491","version":"0.1.7"},{"id":"node-red-contrib-osc/osc","name":"osc","types":["osc"],"enabled":true,"local":true,"user":false,"module":"node-red-contrib-osc","version":"1.1.0"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops","name":"nodedevops","types":["NodeDevOps"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory","name":"nodefactory","types":["NodeFactory"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile","name":"pkgfile","types":["PkgFile"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball","name":"npmtarball","types":["NpmTarBall"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall","name":"noderedinstall","types":["NodeRedInstall"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish","name":"npmpublish","types":["NpmPublish"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg","name":"nodefactorycfg","types":["NodeFactorySidebarCfg"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-nodedev","version":"0.2.4"},{"id":"@gregoriusrippenstein/node-red-contrib-introspection/seeker","name":"seeker","types":["Seeker"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-introspection","version":"0.5.5"},{"id":"@gregoriusrippenstein/node-red-contrib-introspection/sink","name":"sink","types":["Sink"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-introspection","version":"0.5.5"},{"id":"@gregoriusrippenstein/node-red-contrib-introspection/getflows","name":"getflows","types":["GetFlows"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-introspection","version":"0.5.5"},{"id":"@gregoriusrippenstein/node-red-contrib-introspection/sendflow","name":"sendflow","types":["SendFlow"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-introspection","version":"0.5.5"},{"id":"@gregoriusrippenstein/node-red-contrib-introspection/clientcode","name":"clientcode","types":["ClientCode"],"enabled":true,"local":true,"user":false,"module":"@gregoriusrippenstein/node-red-contrib-introspection","version":"0.5.5"}]
+[
+    {
+        "enabled": true,
+        "id": "node-red/junction",
+        "local": false,
+        "module": "node-red",
+        "name": "junction",
+        "types": [
+            "junction"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/inject",
+        "local": false,
+        "module": "node-red",
+        "name": "inject",
+        "types": [
+            "inject"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/debug",
+        "local": false,
+        "module": "node-red",
+        "name": "debug",
+        "types": [
+            "debug"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/complete",
+        "local": false,
+        "module": "node-red",
+        "name": "complete",
+        "types": [
+            "complete"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/catch",
+        "local": false,
+        "module": "node-red",
+        "name": "catch",
+        "types": [
+            "catch"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/status",
+        "local": false,
+        "module": "node-red",
+        "name": "status",
+        "types": [
+            "status"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/link",
+        "local": false,
+        "module": "node-red",
+        "name": "link",
+        "types": [
+            "link in",
+            "link out",
+            "link call"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/comment",
+        "local": false,
+        "module": "node-red",
+        "name": "comment",
+        "types": [
+            "comment"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/global-config",
+        "local": false,
+        "module": "node-red",
+        "name": "global-config",
+        "types": [
+            "global-config"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/unknown",
+        "local": false,
+        "module": "node-red",
+        "name": "unknown",
+        "types": [
+            "unknown"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/function",
+        "local": false,
+        "module": "node-red",
+        "name": "function",
+        "types": [
+            "function"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/switch",
+        "local": false,
+        "module": "node-red",
+        "name": "switch",
+        "types": [
+            "switch"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/change",
+        "local": false,
+        "module": "node-red",
+        "name": "change",
+        "types": [
+            "change"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/range",
+        "local": false,
+        "module": "node-red",
+        "name": "range",
+        "types": [
+            "range"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/template",
+        "local": false,
+        "module": "node-red",
+        "name": "template",
+        "types": [
+            "template"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/delay",
+        "local": false,
+        "module": "node-red",
+        "name": "delay",
+        "types": [
+            "delay"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/trigger",
+        "local": false,
+        "module": "node-red",
+        "name": "trigger",
+        "types": [
+            "trigger"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/exec",
+        "local": false,
+        "module": "node-red",
+        "name": "exec",
+        "types": [
+            "exec"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/rbe",
+        "local": false,
+        "module": "node-red",
+        "name": "rbe",
+        "types": [
+            "rbe"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/tls",
+        "local": false,
+        "module": "node-red",
+        "name": "tls",
+        "types": [
+            "tls-config"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/httpproxy",
+        "local": false,
+        "module": "node-red",
+        "name": "httpproxy",
+        "types": [
+            "http proxy"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/mqtt",
+        "local": false,
+        "module": "node-red",
+        "name": "mqtt",
+        "types": [
+            "mqtt in",
+            "mqtt out",
+            "mqtt-broker"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/httpin",
+        "local": false,
+        "module": "node-red",
+        "name": "httpin",
+        "types": [
+            "http in",
+            "http response"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/httprequest",
+        "local": false,
+        "module": "node-red",
+        "name": "httprequest",
+        "types": [
+            "http request"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/websocket",
+        "local": false,
+        "module": "node-red",
+        "name": "websocket",
+        "types": [
+            "websocket in",
+            "websocket out",
+            "websocket-listener",
+            "websocket-client"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/tcpin",
+        "local": false,
+        "module": "node-red",
+        "name": "tcpin",
+        "types": [
+            "tcp in",
+            "tcp out",
+            "tcp request"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/udp",
+        "local": false,
+        "module": "node-red",
+        "name": "udp",
+        "types": [
+            "udp in",
+            "udp out"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/CSV",
+        "local": false,
+        "module": "node-red",
+        "name": "CSV",
+        "types": [
+            "csv"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/HTML",
+        "local": false,
+        "module": "node-red",
+        "name": "HTML",
+        "types": [
+            "html"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/JSON",
+        "local": false,
+        "module": "node-red",
+        "name": "JSON",
+        "types": [
+            "json"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/XML",
+        "local": false,
+        "module": "node-red",
+        "name": "XML",
+        "types": [
+            "xml"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/YAML",
+        "local": false,
+        "module": "node-red",
+        "name": "YAML",
+        "types": [
+            "yaml"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/split",
+        "local": false,
+        "module": "node-red",
+        "name": "split",
+        "types": [
+            "split",
+            "join"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/sort",
+        "local": false,
+        "module": "node-red",
+        "name": "sort",
+        "types": [
+            "sort"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/batch",
+        "local": false,
+        "module": "node-red",
+        "name": "batch",
+        "types": [
+            "batch"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/file",
+        "local": false,
+        "module": "node-red",
+        "name": "file",
+        "types": [
+            "file",
+            "file in"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red/watch",
+        "local": false,
+        "module": "node-red",
+        "name": "watch",
+        "types": [
+            "watch"
+        ],
+        "user": false,
+        "version": "3.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_base",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_base",
+        "types": [
+            "ui_base"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_button",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_button",
+        "types": [
+            "ui_button"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_dropdown",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_dropdown",
+        "types": [
+            "ui_dropdown"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_switch",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_switch",
+        "types": [
+            "ui_switch"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_slider",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_slider",
+        "types": [
+            "ui_slider"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_numeric",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_numeric",
+        "types": [
+            "ui_numeric"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_text_input",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_text_input",
+        "types": [
+            "ui_text_input"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_date_picker",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_date_picker",
+        "types": [
+            "ui_date_picker"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_colour_picker",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_colour_picker",
+        "types": [
+            "ui_colour_picker"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_form",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_form",
+        "types": [
+            "ui_form"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_text",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_text",
+        "types": [
+            "ui_text"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_gauge",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_gauge",
+        "types": [
+            "ui_gauge"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_chart",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_chart",
+        "types": [
+            "ui_chart"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_audio",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_audio",
+        "types": [
+            "ui_audio"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_toast",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_toast",
+        "types": [
+            "ui_toast"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_ui_control",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_ui_control",
+        "types": [
+            "ui_ui_control"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_template",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_template",
+        "types": [
+            "ui_template"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_link",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_link",
+        "types": [
+            "ui_link"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_tab",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_tab",
+        "types": [
+            "ui_tab"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_group",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_group",
+        "types": [
+            "ui_group"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-dashboard/ui_spacer",
+        "local": true,
+        "module": "node-red-dashboard",
+        "name": "ui_spacer",
+        "types": [
+            "ui_spacer"
+        ],
+        "user": false,
+        "version": "3.6.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-node-base64/base64",
+        "local": true,
+        "module": "node-red-node-base64",
+        "name": "base64",
+        "types": [
+            "base64"
+        ],
+        "user": false,
+        "version": "0.3.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-uglifyjs",
+        "name": "uglifyjs",
+        "types": [
+            "UglifyJS"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-aedes/aedes-mqtt-broker",
+        "local": true,
+        "module": "node-red-contrib-aedes",
+        "name": "aedes-mqtt-broker",
+        "types": [
+            "aedes broker"
+        ],
+        "user": false,
+        "version": "0.11.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-blockly/blockly",
+        "local": true,
+        "module": "node-red-contrib-blockly",
+        "name": "blockly",
+        "types": [
+            "Blockly"
+        ],
+        "user": false,
+        "version": "2.3.0"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-blockly/blockly-config",
+        "local": true,
+        "module": "node-red-contrib-blockly",
+        "name": "blockly-config",
+        "types": [
+            "blockly-config"
+        ],
+        "user": false,
+        "version": "2.3.0"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/scene",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "scene",
+        "types": [
+            "scene"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/material",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "material",
+        "types": [
+            "material"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/sphere",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "sphere",
+        "types": [
+            "sphere"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/box",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "box",
+        "types": [
+            "box"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/plane",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "plane",
+        "types": [
+            "plane"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/cone",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "cone",
+        "types": [
+            "cone"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/transform",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "transform",
+        "types": [
+            "transform"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-web-babylonjs/events",
+        "local": true,
+        "module": "node-red-contrib-web-babylonjs",
+        "name": "events",
+        "types": [
+            "events"
+        ],
+        "user": false,
+        "version": "0.0.15"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-i2c/i2c",
+        "local": true,
+        "module": "node-red-contrib-i2c",
+        "name": "i2c",
+        "types": [
+            "i2c scan",
+            "i2c in",
+            "i2c out"
+        ],
+        "user": false,
+        "version": "0.9.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhubpull",
+        "types": [
+            "FlowHubPull"
+        ],
+        "user": false,
+        "version": "0.4.2"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhubcfg",
+        "types": [
+            "FlowHubCfg"
+        ],
+        "user": false,
+        "version": "0.4.2"
+    },
+    {
+        "enabled": true,
+        "id": "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config",
+        "local": true,
+        "module": "@bartbutenaers/node-red-autolayout-sidebar",
+        "name": "auto_layout_config",
+        "types": [
+            "auto_layout_config"
+        ],
+        "user": false,
+        "version": "0.0.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
+        "name": "flowcompare",
+        "types": [
+            "FlowCompareCfg"
+        ],
+        "user": false,
+        "version": "0.1.2"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-postgresql/postgresql",
+        "local": true,
+        "module": "node-red-contrib-postgresql",
+        "name": "postgresql",
+        "types": [
+            "postgreSQLConfig",
+            "postgresql"
+        ],
+        "user": false,
+        "version": "0.14.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/base",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "base",
+        "types": [],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/topic",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "topic",
+        "types": [
+            "Topic"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/observation",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "observation",
+        "types": [
+            "Observation"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/question",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "question",
+        "types": [
+            "Question"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/thought",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "thought",
+        "types": [
+            "Thought"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/idea",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "idea",
+        "types": [
+            "Idea"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/analogy",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "analogy",
+        "types": [
+            "Analogy"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/aphorism",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "aphorism",
+        "types": [
+            "Aphorism"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/poesie",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "poesie",
+        "types": [
+            "Poesie"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/humour",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "humour",
+        "types": [
+            "Humour"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/treasure",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "treasure",
+        "types": [
+            "Treasure"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/consequence",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "consequence",
+        "types": [
+            "Consequence"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/advantage",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "advantage",
+        "types": [
+            "Advantage"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/disadvantage",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "disadvantage",
+        "types": [
+            "Disadvantage"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/text",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "text",
+        "types": [
+            "Text"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/blog-post",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "blog-post",
+        "types": [
+            "Blog-Post"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/comment",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "comment",
+        "types": [
+            "Comment"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/codebase",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "codebase",
+        "types": [
+            "Code-Base"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/sketch",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "sketch",
+        "types": [
+            "Sketch"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/inspiration",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "inspiration",
+        "types": [
+            "Inspiration"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/quote",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "quote",
+        "types": [
+            "Quote"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/definition",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "definition",
+        "types": [
+            "Definition"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/book",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "book",
+        "types": [
+            "Book"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/author",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "author",
+        "types": [
+            "Author"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogchanges",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "blogchanges",
+        "types": [
+            "BlogChanges"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogdetails",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "blogdetails",
+        "types": [
+            "BlogDetails"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogpages",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "blogpages",
+        "types": [
+            "BlogPages"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "blogpageinfo",
+        "types": [
+            "BlogPageInfo"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogcontent",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "blogcontent",
+        "types": [
+            "BlogContent"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-writermap-mindmap/pubmedium",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-writermap-mindmap",
+        "name": "pubmedium",
+        "types": [
+            "PubMedium"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-validation-and-documentation",
+        "name": "json-schema",
+        "types": [
+            "JsonSchemaValidatorWithDocu"
+        ],
+        "user": false,
+        "version": "0.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-gzip/markdown",
+        "local": true,
+        "module": "node-red-contrib-gzip",
+        "name": "markdown",
+        "types": [
+            "gzip"
+        ],
+        "user": false,
+        "version": "0.0.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-osc/osc",
+        "local": true,
+        "module": "node-red-contrib-osc",
+        "name": "osc",
+        "types": [
+            "osc"
+        ],
+        "user": false,
+        "version": "1.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodedevops",
+        "types": [
+            "NodeDevOps"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodefactory",
+        "types": [
+            "NodeFactory"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "pkgfile",
+        "types": [
+            "PkgFile"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "npmtarball",
+        "types": [
+            "NpmTarBall"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "noderedinstall",
+        "types": [
+            "NodeRedInstall"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "npmpublish",
+        "types": [
+            "NpmPublish"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodefactorycfg",
+        "types": [
+            "NodeFactorySidebarCfg"
+        ],
+        "user": false,
+        "version": "0.2.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/seeker",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "seeker",
+        "types": [
+            "Seeker"
+        ],
+        "user": false,
+        "version": "0.5.5"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sink",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "sink",
+        "types": [
+            "Sink"
+        ],
+        "user": false,
+        "version": "0.5.5"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/getflows",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "getflows",
+        "types": [
+            "GetFlows"
+        ],
+        "user": false,
+        "version": "0.5.5"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sendflow",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "sendflow",
+        "types": [
+            "SendFlow"
+        ],
+        "user": false,
+        "version": "0.5.5"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/clientcode",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "clientcode",
+        "types": [
+            "ClientCode"
+        ],
+        "user": false,
+        "version": "0.5.5"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-tarball/tarball",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-tarball",
+        "name": "tarball",
+        "types": [
+            "tarball"
+        ],
+        "user": false,
+        "version": "0.0.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-aisbreaker",
+        "name": "aisbreaker",
+        "types": [
+            "AIsBreaker"
+        ],
+        "user": false,
+        "version": "0.1.16"
+    }
+]
