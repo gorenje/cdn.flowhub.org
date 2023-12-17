@@ -916,18 +916,6 @@
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
-        "name": "flowcompare",
-        "types": [
-            "FlowCompareCfg"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
         "id": "node-red-contrib-postgresql/postgresql",
         "local": true,
         "module": "node-red-contrib-postgresql",
@@ -1512,5 +1500,17 @@
         ],
         "user": false,
         "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
+        "name": "flowcompare",
+        "types": [
+            "FlowCompareCfg"
+        ],
+        "user": false,
+        "version": "0.1.3"
     }
 ]

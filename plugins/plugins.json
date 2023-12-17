@@ -26,18 +26,6 @@
     {
         "editor": true,
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
-        "name": "sidebar-plugin",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "editor": true,
-        "enabled": true,
         "id": "@gorenje/node-red-contrib-writermap-mindmap/blog-changes-sidebar",
         "local": true,
         "module": "@gorenje/node-red-contrib-writermap-mindmap",
@@ -82,5 +70,17 @@
         "runtime": false,
         "user": false,
         "version": "0.5.5"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
+        "name": "sidebar-plugin",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.1.3"
     }
 ]

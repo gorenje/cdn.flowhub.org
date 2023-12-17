@@ -1374,275 +1374,6 @@ th.revertable:after {
     </div>
 </script>
 
-<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin] --- -->
-<script type="text/javascript">
-(function() {
-   var globalYourConfigNode = null;
-
-   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function loadScript(e,t){var o=document.createElement("script");o.type="text/javascript",o.readyState?o.onreadystatechange=function(){"loaded"!==o.readyState&&"complete"!==o.readyState||(o.onreadystatechange=null,t&&t())}:o.onload=function(){t&&t()},o.src=e,document.getElementsByTagName("head")[0].appendChild(o)}function addPanZoom(){var e=$(".flowviewer svg"),t=(e.attr("width",""),e.attr("height",""),e.css("width",$(".flowviewer").width()+"px"),e.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());e.attr("viewBox",[t.x,t.y,t.width,t.height].join(" "));(e=d3.select(".flowviewer svg")).html("<g>"+e.html()+"</g>");var o=e.select("g"),n=d3.behavior.zoom().scaleExtent([.3,100]).on("zoom",function(e){o.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});e.call(n)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled",w:"Width",h:"Height"};function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function createDiff(r,c){var s=[],l=[];if(Object.keys(c).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],s.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],s.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(n){if(-1<Object.keys(c).indexOf(n))if(JSON.stringify(r[n])!==JSON.stringify(c[n])){let o=null,t=void 0;l.push(n);try{t=Diff.diffLines(c[n],r[n])}catch(e){t=Diff.diffLines(JSON.stringify(c[n],void 0,1),JSON.stringify(r[n],void 0,1))}const i=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),i.appendChild(o)});var e,d=document.createElement("tr"),a=(d.setAttribute("class","dv-differ"),document.createElement("th"));a.appendChild(document.createTextNode(n)),descMap[n]&&((e=document.createElement("i")).style["font-size"]="80%",e.appendChild(document.createTextNode("("+descMap[n]+")")),a.appendChild(e)),d.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(i),d.append(a),s.push(d.outerHTML)}else s.push("<tr><th>"+n+"</th><td><code>"+escapeHtml(r[n])+"</code></td><td><code>"+escapeHtml(c[n])+"</code></td></tr>")}),0==l.length){let o=null;var e="OBJ",t=Diff.diffJson(c,r);const a=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),a.appendChild(o)});var n,t=document.createElement("tr"),d=(t.setAttribute("class","dv-differ"),document.createElement("th"));return d.appendChild(document.createTextNode(e)),descMap[e]&&((n=document.createElement("i")).style["font-size"]="80%",n.appendChild(document.createTextNode("("+descMap[e]+")")),d.appendChild(n)),t.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(a),t.append(d),{html:t.outerHTML,icon:"fa-question"}}var o=["x","y","w","h","g","wires"];return{html:s.join(""),icon:0==l.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getFlowDataFromCurrentWorkspace(){var e=RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeHasBeenLoaded(e){var t=getFlowDataFromCurrentWorkspace();setTimeout(()=>{e.contentWindow.postMessage({nodes:t,msg:"renderlocalflow",flowid:t[0].id},"*")},345)}function doSubmission(n){var t=RED.workspaces.active(),e=n.filter(e=>e.z==t||e.id==t);$($($("#svgelem .container-diff02")[0]).find(".containerGroup")[0]).find("g").html(""),$($($("#svgelem .container-diff01")[0]).find(".containerGroup")[0]).find("g").html(""),$.ajax({url:"FlowCompareCfg",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowdata:e||{},flowlabel:(RED.nodes.workspace(t)||{label:"subflow"}).label}),success:function(e){var i=[],r={};if("failed"==e.status)RED.notify("Error happened, please check console",{type:"error",timeout:2e3}),console.error("Error in flow compare: ",e);else{renderFlow(e.flowid,e.nodes,$($("#svgelem .container-diff02")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0}),renderFlow(e.flowid,n,$($("#svgelem .container-diff01")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0});var t=$(".flowviewer svg"),o=(t.attr("width",""),t.attr("height",""),t.css("width",$(".flowviewer").width()+"px"),t.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());if(t.attr("viewBox",[o.x,o.y,o.width,o.height].join(" ")),document.getElementById("node-input-compare-slider").oninput=function(){$(".container-diff01").css("opacity",this.value/100),$(".container-diff02").css("opacity",(100-this.value)/100)},e.changes.forEach(function(e){var t,o,n,d,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-times",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("deleted"),$(".group-"+a).addClass("deleted"),i.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-check",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("added"),$(".group-"+a).addClass("added"),i.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(d=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[a])):((t=RED.nodes.node(a))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),d=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:n,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[t.id]))}),0==i.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowcompare-target-container-div").treeList("empty"),$("#node-input-flowcompare-diffcontainer").html("")}catch(e){}}else{try{$("#node-input-flowcompare-target-container-div").treeList("empty")}catch(e){$("#node-input-flowcompare-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){$(".node-"+t.objid).addClass("highlight"),$(".group-"+t.objid).addClass("highlight")}).on("treelistitemmouseout",function(e,t){$(".node-"+t.objid).removeClass("highlight"),$(".group-"+t.objid).removeClass("highlight")}).on("treelistselect",function(e,t){t.diffcontent?($("#node-input-flowcompare-diffcontainer").html(t.diffcontent),t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw())):$("#node-input-flowcompare-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))})}$("#node-input-flowcompare-target-container-div").treeList("data",i.sort((e,t)=>e.icon>t.icon))}}},error:function(e,t,o){404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify(node._("common.notification.error",{message:node._("inject.errors.failed")}),"error"):0==e.status?RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.no-response")}),"error"):RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.unexpected",{status:e.status,message:t})}),"error")}})}function flowCompareEventListener(e){$("#node-input-flowcompare-autoupdate-button").is(":checked")&&e.old!=e.workspace&&doSubmission(getFlowDataFromCurrentWorkspace())}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
-
-   function ensureYourConfigNodeExists() {
-      // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
-      // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
-
-      // If we had found it previously, check if it has been deleted by the user behind our back
-      if (globalYourConfigNode !== null) {
-         var configNode = RED.nodes.node(globalYourConfigNode.id);
-         if (configNode === null) { globalYourConfigNode = null; }
-      }
-
-      // If not found previously, let's go find it
-      if (globalYourConfigNode === null) {
-         var configNodes = [];
-         RED.nodes.eachConfig(function(configNode) {
-             if (configNode.type === 'FlowCompareCfg') { 
-                 configNodes.push(configNode); 
-             }
-         });
-
-         // Make sure we only have 1 config node
-         while (configNodes.length > 1) {
-             var configNode = configNodes.pop();
-             RED.nodes.remove(configNode.id);
-             RED.nodes.dirty(true);
-         }
-
-         // When we found a config node, let's use that one
-         if (configNodes.length === 1) { globalYourConfigNode = configNodes[0]; }
-      }
-
-      // When it doesn't exist yet, create it if required
-      if (globalYourConfigNode === null) {
-         // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
-         // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
-         // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
-         // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
-         globalYourConfigNode = {
-             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
-             _def: RED.nodes.getType("FlowCompareCfg"),
-             type: "FlowCompareCfg",
-             hasUsers: false, 
-             users: [],
-             name: "FlowCompare",
-             label: function() { return this.name || "FlowCompare"},
-             /* values and data defined by this config node */
-             data: "some default value", // Default data
-         }
-
-         // Add the new config node to the collection of Node-RED nodes
-         RED.nodes.add(globalYourConfigNode);
-
-         // Make sure the "Deploy" button becomes active
-         RED.nodes.dirty(true);
-      }      
-   }
-
-   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
-   var initialiseConfigNodeOnce = () => {
-      RED.events.off('runtime-state', initialiseConfigNodeOnce);
-
-      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
-      var content = $($('script[type="text/x-red"][data-template-name="FlowCompare"]').i18n().html());
-    
-      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
-      // --> more details: https://nodered.org/docs/api/ui/sidebar/
-      RED.sidebar.addTab({
-         id: "FlowCompare",
-         label: "Flow Compare", // short name for the tab
-         name: "Flow Compare", // long name for the menu
-         content: content,
-         closeable: true,
-         // disableOnEdit: true,
-         enableOnEdit: true,
-         iconClass: "fa fa-map" // your fontawesome icon
-      });
-
-      // required external libraries
-      loadScript("https://cdn.openmindmap.org/thirdparty/diff.min.js", () => {
-           loadScript("https://cdn.openmindmap.org/embed/flowviewer.js")
-      })
-      
-      addPanZoom();
-      ensureYourConfigNodeExists();
-
-      RED.events.on('workspace:change', flowCompareEventListener);
-
-      RED.actions.remove("flowcompare:compare-flow-to-remote")
-      RED.actions.add("flowcompare:compare-flow-to-remote",function() {
-        doSubmission(getFlowDataFromCurrentWorkspace())
-      });
-
-      $('#node-input-flowcompare-button').on('click', (e) => {
-         if ( e ) { e.preventDefault(); }
-         doSubmission(getFlowDataFromCurrentWorkspace())
-      });
-   };
-   RED.events.on('runtime-state', initialiseConfigNodeOnce);
-})();
-</script>
-
-<style>
-.flow-description-text {
-  font-family: monospace;
-  font-size: 30px;
-  dominant-baseline: middle;
-}
-.flowviewer {
-  border: 1px rgb(196, 196, 196) solid;
-  border-radius: 5px;
-}
-
-.deleted {
-  fill: rgb(120, 68, 68);
-  fill-opacity: 0.2;
-  stroke: black;
-  stroke-width: 2px;
-}
-.added {
-  fill: rgb(64, 166, 98);
-  fill-opacity: 0.4;
-  stroke: rgb(10, 255, 23);
-  stroke-width: 4px;
-}
-.changed {
-  fill: rgb(126, 97, 208);
-  fill-opacity: 0.6;
-  stroke: rgb(229, 0, 156);
-  stroke-width: 3px;
-}
-.moved {
-  fill: rgb(210, 251, 89);
-  fill-opacity: 0.3;
-  stroke: rgb(0, 50, 249);
-  stroke-width: 3px;
-}
-
-.highlight {
-  stroke: rgb(255, 89, 89) !important;
-  stroke-width: 10px !important;
-}
-
-.diff-viewer {
-  overflow: scroll;
-  background-color: rgb(244, 244, 244);
-  border: 1px solid rgb(196, 196, 196);
-  height: 80vh;
-  padding: 20px;
-  max-width: 90vw;
-  border-radius: 5px;
-}
-
-.dv-differ {
-  background-color: rgba(244, 170, 23, 0.476) !important;
-}
-
-.dv-removed {
-  background-color: rgb(203, 203, 38) !important;
-}
-
-.dv-added {
-  background-color: rgb(86, 222, 120) !important;
-}
-
-.dv-pre-elem {
-  page-break-inside: avoid;
-  font-family: monospace;
-  max-width: 100%;
-  overflow: auto;
-  display: block;
-  word-wrap: break-word;
-  margin: 0px !important;
-}
-
-
-#diff-viewer{
-  overflow:scroll;
-  background-color:rgb(244, 244, 244);
-  border: 2px solid #000;
-  height:80vh;
-  display:none;
-  position:fixed;
-  top:10vh;
-  left:5vw;
-  z-index: 1000;
-  padding: 20px;
-  max-width: 90vw;
-}
-
-.dv-differ {
-  background-color: rgba(244, 170, 23, 0.476) !important;
-}
-
-.dv-removed {
-  background-color: rgb(203, 203, 38) !important;
-}
-
-.dv-added {
-  background-color: rgb(86, 222, 120) !important;
-}
-
-.dv-pre-elem {
-    page-break-inside: avoid;
-    font-family: monospace;
-    max-width: 100%;
-    overflow: auto;
-    display: block;
-    word-wrap: break-word;
-    margin: 0px !important;
-}
-
-</style>
-
-<!-- The html for the right sidebar plugin screen -->
-<script type="text/x-red" data-template-name="FlowCompare">
-  <div class="form-row" style="margin-left: 15px; margin-top: 30px; margin-right: 15px;">
-    <button id="node-input-flowcompare-button"
-                class="red-ui-button">Compare</button>
-    <input type="checkbox" id="node-input-flowcompare-autoupdate-button"
-               style="display:inline-block; width:15px; vertical-align:baseline; margin-left: 20px;">
-    <label for="node-input-flowcompare-autoupdate-button">Auto Compare</label>
-  </div>
-    
-  <div class="form-row node-input-target-row node-input-target-list-row" 
-           style="position: relative; min-height: 100px; margin-left: 10px; margin-right: 15px;">  
-    <div id="node-input-flowcompare-target-container-div" style="min-height: 100px"></div>
-  </div>
-  
-  <div class="form-row" style="position: relative; min-height: 300px;  margin-left: 10px; margin-right: 15px;">
-    <div id="node-input-flowcompare-svgcontainer" class="flowviewer">
-      <svg id="svgelem" pointer-events="all" style="cursor: crosshair; min-height: 300px;"
-        version="1.1" xmlns="http://www.w3.org/2000/svg">
-        <!-- Use group elems to ensure that layering of shapes is correct, i.e. nodes always over wires -->
-        <g class='container-gridlines'>
-          <g class='flowGridlines'></g>
-        </g>
-
-        <g class='container-diff01' style="opacity: 0;">
-          <g class="containerGroup">
-            <g class="flowDescription"></g>
-            <g class='flowGroups'></g>
-            <g class='flowWires'></g>
-            <g class='flowNodes'></g>
-          </g>
-        </g>
-        <g class='container-diff02'  style="opacity: 1;">
-          <g class="containerGroup">
-            <g class="flowDescription"></g>
-            <g class='flowGroups'></g>
-            <g class='flowWires'></g>
-            <g class='flowNodes'></g>
-          </g>
-        </g>
-      </svg>
-    </div>
-    <input style="width: 100%; min-width: 300px;" id="node-input-compare-slider" type="range" min="0" max="100" step="1" value="0"></input>
-  </div>
-  
-  <div class="form-row" style="position: relative; min-height: 100px;  margin-left: 10px; margin-right: 15px;">
-    <div id="node-input-flowcompare-diffcontainer" class="diff-viewer"></div>
-  </div>
-
-</script>
 <!-- --- [red-plugin:@gorenje/node-red-contrib-writermap-mindmap/blog-changes-sidebar] --- -->
 <script type="text/javascript">
 (function() {
@@ -2399,4 +2130,273 @@ th.revertable:after {
    </div>
 
    
+</script>
+<!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin] --- -->
+<script type="text/javascript">
+(function() {
+   var globalYourConfigNode = null;
+
+   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function loadScript(e,t){var o=document.createElement("script");o.type="text/javascript",o.readyState?o.onreadystatechange=function(){"loaded"!==o.readyState&&"complete"!==o.readyState||(o.onreadystatechange=null,t&&t())}:o.onload=function(){t&&t()},o.src=e,document.getElementsByTagName("head")[0].appendChild(o)}function addPanZoom(){var e=$(".flowviewer svg"),t=(e.attr("width",""),e.attr("height",""),e.css("width",$(".flowviewer").width()+"px"),e.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());e.attr("viewBox",[t.x,t.y,t.width,t.height].join(" "));(e=d3.select(".flowviewer svg")).html("<g>"+e.html()+"</g>");var o=e.select("g"),n=d3.behavior.zoom().scaleExtent([.3,100]).on("zoom",function(e){o.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});e.call(n)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled",w:"Width",h:"Height"};function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function createDiff(r,c){var s=[],l=[];if(Object.keys(c).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],s.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],s.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(n){if(-1<Object.keys(c).indexOf(n))if(JSON.stringify(r[n])!==JSON.stringify(c[n])){let o=null,t=void 0;l.push(n);try{t=Diff.diffLines(c[n],r[n])}catch(e){t=Diff.diffLines(JSON.stringify(c[n],void 0,1),JSON.stringify(r[n],void 0,1))}const i=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),i.appendChild(o)});var e,d=document.createElement("tr"),a=(d.setAttribute("class","dv-differ"),document.createElement("th"));a.appendChild(document.createTextNode(n)),descMap[n]&&((e=document.createElement("i")).style["font-size"]="80%",e.appendChild(document.createTextNode("("+descMap[n]+")")),a.appendChild(e)),d.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(i),d.append(a),s.push(d.outerHTML)}else s.push("<tr><th>"+n+"</th><td><code>"+escapeHtml(r[n])+"</code></td><td><code>"+escapeHtml(c[n])+"</code></td></tr>")}),0==l.length){let o=null;var e="OBJ",t=Diff.diffJson(c,r);const a=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),a.appendChild(o)});var n,t=document.createElement("tr"),d=(t.setAttribute("class","dv-differ"),document.createElement("th"));return d.appendChild(document.createTextNode(e)),descMap[e]&&((n=document.createElement("i")).style["font-size"]="80%",n.appendChild(document.createTextNode("("+descMap[e]+")")),d.appendChild(n)),t.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(a),t.append(d),{html:t.outerHTML,icon:"fa-question"}}var o=["x","y","w","h","g","wires"];return{html:s.join(""),icon:0==l.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getFlowDataFromCurrentWorkspace(){var e=RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function doSubmission(n){var t=RED.workspaces.active(),e=n.filter(e=>e.z==t||e.id==t);$($($("#svgelem .container-diff02")[0]).find(".containerGroup")[0]).find("g").html(""),$($($("#svgelem .container-diff01")[0]).find(".containerGroup")[0]).find("g").html(""),$.ajax({url:"FlowCompareCfg",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowdata:e||{},flowlabel:(RED.nodes.workspace(t)||{label:"subflow"}).label}),success:function(e){var i=[],r={};if("failed"==e.status)RED.notify("Error happened, please check console",{type:"error",timeout:2e3}),console.error("Error in flow compare: ",e);else{renderFlow(e.flowid,e.nodes,$($("#svgelem .container-diff02")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0}),renderFlow(e.flowid,n,$($("#svgelem .container-diff01")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0});var t=$(".flowviewer svg"),o=(t.attr("width",""),t.attr("height",""),t.css("width",$(".flowviewer").width()+"px"),t.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());if(t.attr("viewBox",[o.x,o.y,o.width,o.height].join(" ")),document.getElementById("node-input-compare-slider").oninput=function(){$(".container-diff01").css("opacity",this.value/100),$(".container-diff02").css("opacity",(100-this.value)/100)},e.changes.forEach(function(e){var t,o,n,d,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-times",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("deleted"),$(".group-"+a).addClass("deleted"),i.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-check",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("added"),$(".group-"+a).addClass("added"),i.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(d=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[a])):((t=RED.nodes.node(a))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),d=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:n,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[t.id]))}),0==i.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowcompare-target-container-div").treeList("empty"),$("#node-input-flowcompare-diffcontainer").html("")}catch(e){}}else{try{$("#node-input-flowcompare-target-container-div").treeList("empty")}catch(e){$("#node-input-flowcompare-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){$(".node-"+t.objid).addClass("highlight"),$(".group-"+t.objid).addClass("highlight")}).on("treelistitemmouseout",function(e,t){$(".node-"+t.objid).removeClass("highlight"),$(".group-"+t.objid).removeClass("highlight")}).on("treelistselect",function(e,t){t.diffcontent?($("#node-input-flowcompare-diffcontainer").html(t.diffcontent),t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw())):$("#node-input-flowcompare-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))})}$("#node-input-flowcompare-target-container-div").treeList("data",i.sort((e,t)=>e.icon>t.icon))}}},error:function(e,t,o){404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify(node._("common.notification.error",{message:node._("inject.errors.failed")}),"error"):0==e.status?RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.no-response")}),"error"):RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.unexpected",{status:e.status,message:t})}),"error")}})}function flowCompareEventListener(e){$("#node-input-flowcompare-autoupdate-button").is(":checked")&&e.old!=e.workspace&&doSubmission(getFlowDataFromCurrentWorkspace())}
+
+   function ensureYourConfigNodeExists() {
+      // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
+      // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
+
+      // If we had found it previously, check if it has been deleted by the user behind our back
+      if (globalYourConfigNode !== null) {
+         var configNode = RED.nodes.node(globalYourConfigNode.id);
+         if (configNode === null) { globalYourConfigNode = null; }
+      }
+
+      // If not found previously, let's go find it
+      if (globalYourConfigNode === null) {
+         var configNodes = [];
+         RED.nodes.eachConfig(function(configNode) {
+             if (configNode.type === 'FlowCompareCfg') { 
+                 configNodes.push(configNode); 
+             }
+         });
+
+         // Make sure we only have 1 config node
+         while (configNodes.length > 1) {
+             var configNode = configNodes.pop();
+             RED.nodes.remove(configNode.id);
+             RED.nodes.dirty(true);
+         }
+
+         // When we found a config node, let's use that one
+         if (configNodes.length === 1) { globalYourConfigNode = configNodes[0]; }
+      }
+
+      // When it doesn't exist yet, create it if required
+      if (globalYourConfigNode === null) {
+         // Remark: since this config node is dynamically created (and only used in this sidebar which isn't another node), the config
+         // node is in fact "unused".  But since we don't want it to appear "unused" in the "config nodes" panel, we need to set hasUsers
+         // to false (see https://github.com/node-red/node-red/blob/master/CHANGELOG.md#0161-maintenance-release).
+         // The hasUsers needs also to be specified in the RED.nodes.registerType statement!
+         globalYourConfigNode = {
+             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
+             _def: RED.nodes.getType("FlowCompareCfg"),
+             type: "FlowCompareCfg",
+             hasUsers: false, 
+             users: [],
+             name: "FlowCompare",
+             label: function() { return this.name || "FlowCompare"},
+             /* values and data defined by this config node */
+             data: "some default value", // Default data
+         }
+
+         // Add the new config node to the collection of Node-RED nodes
+         RED.nodes.add(globalYourConfigNode);
+
+         // Make sure the "Deploy" button becomes active
+         RED.nodes.dirty(true);
+      }      
+   }
+
+   // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
+   var initialiseConfigNodeOnce = () => {
+      RED.events.off('runtime-state', initialiseConfigNodeOnce);
+
+      // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
+      var content = $($('script[type="text/x-red"][data-template-name="FlowCompare"]').i18n().html());
+    
+      // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
+      // --> more details: https://nodered.org/docs/api/ui/sidebar/
+      RED.sidebar.addTab({
+         id: "FlowCompare",
+         label: "Flow Compare", // short name for the tab
+         name: "Flow Compare", // long name for the menu
+         content: content,
+         closeable: true,
+         // disableOnEdit: true,
+         enableOnEdit: true,
+         iconClass: "fa fa-map" // your fontawesome icon
+      });
+
+      // required external libraries
+      loadScript("https://cdn.openmindmap.org/thirdparty/diff.min.js", () => {
+           loadScript("https://cdn.openmindmap.org/embed/flowviewer.js")
+      })
+      
+      addPanZoom();
+      ensureYourConfigNodeExists();
+
+      RED.events.on('workspace:change', flowCompareEventListener);
+
+      RED.actions.remove("flowcompare:compare-flow-to-remote")
+      RED.actions.add("flowcompare:compare-flow-to-remote",function() {
+        doSubmission(getFlowDataFromCurrentWorkspace())
+      });
+
+      $('#node-input-flowcompare-button').on('click', (e) => {
+         if ( e ) { e.preventDefault(); }
+         doSubmission(getFlowDataFromCurrentWorkspace())
+      });
+   };
+   RED.events.on('runtime-state', initialiseConfigNodeOnce);
+})();
+</script>
+
+<style>
+.flow-description-text {
+  font-family: monospace;
+  font-size: 30px;
+  dominant-baseline: middle;
+}
+.flowviewer {
+  border: 1px rgb(196, 196, 196) solid;
+  border-radius: 5px;
+}
+
+.deleted {
+  fill: rgb(120, 68, 68);
+  fill-opacity: 0.2;
+  stroke: black;
+  stroke-width: 2px;
+}
+.added {
+  fill: rgb(64, 166, 98);
+  fill-opacity: 0.4;
+  stroke: rgb(10, 255, 23);
+  stroke-width: 4px;
+}
+.changed {
+  fill: rgb(126, 97, 208);
+  fill-opacity: 0.6;
+  stroke: rgb(229, 0, 156);
+  stroke-width: 3px;
+}
+.moved {
+  fill: rgb(210, 251, 89);
+  fill-opacity: 0.3;
+  stroke: rgb(0, 50, 249);
+  stroke-width: 3px;
+}
+
+.highlight {
+  stroke: rgb(255, 89, 89) !important;
+  stroke-width: 10px !important;
+}
+
+.diff-viewer {
+  overflow: scroll;
+  background-color: rgb(244, 244, 244);
+  border: 1px solid rgb(196, 196, 196);
+  height: 80vh;
+  padding: 20px;
+  max-width: 90vw;
+  border-radius: 5px;
+}
+
+.dv-differ {
+  background-color: rgba(244, 170, 23, 0.476) !important;
+}
+
+.dv-removed {
+  background-color: rgb(203, 203, 38) !important;
+}
+
+.dv-added {
+  background-color: rgb(86, 222, 120) !important;
+}
+
+.dv-pre-elem {
+  page-break-inside: avoid;
+  font-family: monospace;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+  word-wrap: break-word;
+  margin: 0px !important;
+}
+
+
+#diff-viewer{
+  overflow:scroll;
+  background-color:rgb(244, 244, 244);
+  border: 2px solid #000;
+  height:80vh;
+  display:none;
+  position:fixed;
+  top:10vh;
+  left:5vw;
+  z-index: 1000;
+  padding: 20px;
+  max-width: 90vw;
+}
+
+.dv-differ {
+  background-color: rgba(244, 170, 23, 0.476) !important;
+}
+
+.dv-removed {
+  background-color: rgb(203, 203, 38) !important;
+}
+
+.dv-added {
+  background-color: rgb(86, 222, 120) !important;
+}
+
+.dv-pre-elem {
+    page-break-inside: avoid;
+    font-family: monospace;
+    max-width: 100%;
+    overflow: auto;
+    display: block;
+    word-wrap: break-word;
+    margin: 0px !important;
+}
+
+</style>
+
+<!-- The html for the right sidebar plugin screen -->
+<script type="text/x-red" data-template-name="FlowCompare">
+  <div class="form-row" style="margin-left: 15px; margin-top: 30px; margin-right: 15px;">
+    <button id="node-input-flowcompare-button"
+                class="red-ui-button">Compare</button>
+    <input type="checkbox" id="node-input-flowcompare-autoupdate-button"
+               style="display:inline-block; width:15px; vertical-align:baseline; margin-left: 20px;">
+    <label for="node-input-flowcompare-autoupdate-button">Auto Compare</label>
+  </div>
+    
+  <div class="form-row node-input-target-row node-input-target-list-row" 
+           style="position: relative; min-height: 100px; margin-left: 10px; margin-right: 15px;">  
+    <div id="node-input-flowcompare-target-container-div" style="min-height: 100px"></div>
+  </div>
+  
+  <div class="form-row" style="position: relative; min-height: 300px;  margin-left: 10px; margin-right: 15px;">
+    <div id="node-input-flowcompare-svgcontainer" class="flowviewer">
+      <svg id="svgelem" pointer-events="all" style="cursor: crosshair; min-height: 300px;"
+        version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <!-- Use group elems to ensure that layering of shapes is correct, i.e. nodes always over wires -->
+        <g class='container-gridlines'>
+          <g class='flowGridlines'></g>
+        </g>
+
+        <g class='container-diff01' style="opacity: 0;">
+          <g class="containerGroup">
+            <g class="flowDescription"></g>
+            <g class='flowGroups'></g>
+            <g class='flowWires'></g>
+            <g class='flowNodes'></g>
+          </g>
+        </g>
+        <g class='container-diff02'  style="opacity: 1;">
+          <g class="containerGroup">
+            <g class="flowDescription"></g>
+            <g class='flowGroups'></g>
+            <g class='flowWires'></g>
+            <g class='flowNodes'></g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <input style="width: 100%; min-width: 300px;" id="node-input-compare-slider" type="range" min="0" max="100" step="1" value="0"></input>
+  </div>
+  
+  <div class="form-row" style="position: relative; min-height: 100px;  margin-left: 10px; margin-right: 15px;">
+    <div id="node-input-flowcompare-diffcontainer" class="diff-viewer"></div>
+  </div>
+
 </script>
