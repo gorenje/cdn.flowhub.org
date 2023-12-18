@@ -35,3 +35,10 @@ make run-local
 ```
 
 Node-RED will start will retrieve and initial [flow](https://flowhub.org/f/67a6db53dc49ae4c) from FlowHub.org. All communication with the dynamic server will continue.
+
+
+## Similiar Ideas / Projects
+
+- [Pagenodes](https://github.com/monteslu/pagenodes) which is a complete Node-RED in browser implementation, unfortunately last commit 2018. Still accessible (accepting the risk) at [pagenodes.com](https://pagenodes.com).
+
+- [Stackblitz](https://stackblitz.com/edit/node-djgejy?file=index.js&initialPath=/?fhid=aaab9308f8fbb2c5) which also runs a complete Node-RED instance in the browser but is very fragile. See Node-RED [forum](https://discourse.nodered.org/t/node-red-in-browser-via-stackblitz/72224) for more details.
