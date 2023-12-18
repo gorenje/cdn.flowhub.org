@@ -325,7 +325,7 @@ var RED = (function() {
 
     function loadFlows(done) {
       loader.reportProgress(RED._("event.loadFlows"),80 )
-      let srv = RED.settings.get("dynamicServer", "")
+      let srv = RED.settings.get("dynamicServer")
         $.ajax({
             headers: {
               "Accept":"application/json",
@@ -857,13 +857,14 @@ var RED = (function() {
     function loadEditor() {
         // set to true to inspect all the events raised, before, during and
         // after Node-REDs appearance
-        RED.events.DEBUG = true;
+        RED.events.DEBUG = false;
+
+        let srchParams = new URLSearchParams(window.location.search);
 
         // disable tour on if parameter 't' is set to 0
         try {
             RED.settings.set(
-                "editor.view.view-show-welcome-tours",
-                new URLSearchParams(window.location.search).get('t') !== "0"
+                "editor.view.view-show-welcome-tours",srchParams.get('t') !== "0"
             )
         } catch (ex) {
             console.log( "error on tour", ex )
@@ -904,6 +905,64 @@ var RED = (function() {
         ];
 
         $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+
+            // capture the initial loading of the flow data and abort it
+            // _if_ a gist is specified and _not_ a flowhub id. If gist
+            // loading fails, then add exception to info box!
+            if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")
+              && srchParams.get("gist") && !srchParams.get("fhid") &&
+                 options.type == "GET") {
+
+                let failureFlow = (ex) => {
+                    return [ {
+                        "id": "42805616781e564c",
+                        "type": "tab",
+                        "label": "[deadred] failed to load gist",
+                        "disabled": false,
+                        "info": "",
+                        "env": []
+                    }, {
+                        "id": "b6b4eb80e0790685",
+                        "type": "comment",
+                        "z": "42805616781e564c",
+                        "name": "Welcome to Deadred - Double Click on this Node",
+                        "info": "Unfortunately the load of the gist failed with:\n```\n" + ex + "\n```\n",
+                        "x": 1070,
+                        "y": 634,
+                        "wires": []
+                    }
+                    ]
+                };
+
+                try {
+                    jqXHR.abort();
+
+                    let gistid = srchParams.get("gist").split("/");
+                    gistid = gistid[gistid.length-1];
+
+                    $.get(
+                        "https://api.github.com/gists/" + gistid
+                    ).success( (gistdata) => {
+                        try {
+                            options.success({
+                                rev: RED.nodes.id() + RED.nodes.id(),
+                                flows: JSON.parse(gistdata.files["flow.json"].content)
+                            })
+                        } catch ( ex ) {
+                            options.success({
+                                rev: RED.nodes.id() + RED.nodes.id(),
+                                flows: failureFlow(ex)
+                            })
+                        }
+                    })
+                } catch ( ex ) {
+                    options.success({
+                        rev: RED.nodes.id() + RED.nodes.id(),
+                        flows: failureFlow(ex)
+                    })
+                }
+            }
+
             if ( options.url.match(/^inject\/[a-z0-9]{16}/i) ) {
                 jqXHR.abort("Flow execution is not supported.");
                 jqXHR.status = -1
@@ -2048,7 +2107,7 @@ RED.comms = (function() {
     function connectWS() {
         active = true;
         var wspath;
-        let dynSrv = RED.settings.get("dynamicServer", undefined)
+        let dynSrv = RED.settings.get("dynamicServer")
 
 
         if (RED.settings.apiRootUrl || dynSrv) {

@@ -12,6 +12,20 @@ A dynamic server definition is defined [by this flow](https://flowhub.org/f/15cc
 
 Purpose of all this is to provide a "Node-RED feel" for folks interested in using Node-RED but who do not have the ability to install it somewhere. And since creating a serverful Node-RED instance for others to use would be a open invitation to all sorts of illegal activities, hence this static but dynamic-feeling Node-RED instance.
 
+## Gist support
+
+If you want to load a Gist (i.e., from [flows.nodered.org](https://flows.nodered.org/search?type=flow)) as initial flow, then add the [gist=](https://cdn.flowhub.org/?t=0&gist=joepavitt/ec39fe4e3187a7c41153488d4e0abbf3) parameter. The gist can be found by clicking on the *view on github* link.
+
+The gist can either be `user/gistid` or just `gistid` - it seems that the user name does not scope the gistid, it appears to be globally unique.
+
+Gists must have a file called `flow.json` at the top level else this won't work.
+
+## Import/Export of Flows
+
+Importing the textual representation of flows is possible and works well. Note though that it is likely that flows will contain unknown nodes (shown in dashed red outlines).
+
+Since this is an static instance, there is no possiblility to dynamically load nodes. You can clone the repo and add to the static files. [retrieve.sh](/retreive.sh) is a script that does some parts of the updating of existing static content from a live Node-RED instance.
+
 ## Running locally
 
 To run this locally for testing *(this assumes python3 and make have been installed.)*:
