@@ -24,7 +24,7 @@ Gists must have a file called `flow.json` at the top level else this won't work.
 
 Importing the textual representation of flows is possible and works well. Note though that it is likely that flows will contain unknown nodes (shown in dashed red outlines).
 
-Since this is an static instance, there is no possiblility to dynamically load nodes. You can clone the repo and add to the static files. [retrieve.sh](/retreive.sh) is a script that does some parts of the updating of existing static content from a live Node-RED instance.
+Since this is an static instance, there is no possiblility to dynamically load nodes. You can clone the repo and add to the static files. [retrieve.sh](retrieve.sh) is a script that does some parts of the updating of existing static content from a live Node-RED instance.
 
 ## Running locally
 
