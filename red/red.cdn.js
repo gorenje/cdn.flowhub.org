@@ -915,22 +915,22 @@ var RED = (function() {
 
                 let failureFlow = (ex) => {
                     return [ {
-                        "id": "42805616781e564c",
-                        "type": "tab",
-                        "label": "[deadred] failed to load gist",
-                        "disabled": false,
-                        "info": "",
-                        "env": []
-                    }, {
-                        "id": "b6b4eb80e0790685",
-                        "type": "comment",
-                        "z": "42805616781e564c",
-                        "name": "Welcome to Deadred - Double Click on this Node",
-                        "info": "Unfortunately the load of the gist failed with:\n```\n" + ex + "\n```\n",
-                        "x": 1070,
-                        "y": 634,
-                        "wires": []
-                    }
+                            "id": "42805616781e564c",
+                            "type": "tab",
+                            "label": "[deadred] failed to load gist",
+                            "disabled": false,
+                            "info": "",
+                            "env": []
+                        }, {
+                            "id": "b6b4eb80e0790685",
+                            "type": "comment",
+                            "z": "42805616781e564c",
+                            "name": "Welcome to Deadred - Double Click on this Node",
+                            "info": "Unfortunately the load of the gist failed with:\n```\n" + ex + "\n```\n",
+                            "x": 1070,
+                            "y": 634,
+                            "wires": []
+                        }
                     ]
                 };
 
@@ -2113,7 +2113,6 @@ RED.comms = (function() {
         if (RED.settings.apiRootUrl || dynSrv) {
             var m = /^(https?):\/\/(.*)$/.exec(RED.settings.apiRootUrl || dynSrv);
             if (m) {
-                console.log(m);
                 wspath = "ws"+(m[1]==="https"?"s":"")+"://"+m[2]+"comms";
             }
         } else {
@@ -2260,10 +2259,18 @@ RED.comms = (function() {
         }
     }
 
+    // simulate a message coming in on the websocket
+    function emit(data) {
+        if (ws && ws.readyState == 1) {
+            ws.onmessage( { data: JSON.stringify(data) } )
+        }
+    }
+
     return {
         connect: connectWS,
         subscribe: subscribe,
-        unsubscribe:unsubscribe
+        unsubscribe:unsubscribe,
+        emit: emit
     }
 })();
 ;RED.runtime = (function() {
