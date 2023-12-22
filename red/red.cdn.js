@@ -859,6 +859,9 @@ var RED = (function() {
         // after Node-REDs appearance
         RED.events.DEBUG = false;
 
+        // initialise everything to catch everything that needs catching.
+        DEADRED.init();
+
         let srchParams = new URLSearchParams(window.location.search);
 
         // disable tour on if parameter 't' is set to 0
@@ -895,17 +898,8 @@ var RED = (function() {
             }, 50);
         });
 
-        // redirect those requests that demonstrate certain functionality
-        // to the deadred server.
-        let deadredRedirectablesAjax = [
-            "FlowHubDiff",
-            "FlowHubPush",
-            "FlowCompareCfg",
-            "NodeFactorySidebarCfg"
-        ];
 
         $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-
             // capture the initial loading of the flow data and abort it
             // _if_ a gist is specified and _not_ a flowhub id. If gist
             // loading fails, then add exception to info box!
@@ -963,15 +957,6 @@ var RED = (function() {
                 }
             }
 
-            if ( options.url.match(/^inject\/[a-z0-9]{16}/i) ) {
-                jqXHR.abort("Flow execution is not supported.");
-                jqXHR.status = -1
-                options.error( jqXHR, "<b>Flow execution is not supported.</b>", {});
-            }
-
-            if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
-                options.url = RED.settings.get("dynamicServer", "") + options.url
-            }
         });
 
         RED.workspaces.init();
@@ -1020,7 +1005,6 @@ var RED = (function() {
         $("#red-ui-main-container").show();
 
         loadPluginList();
-
     }
 
 
@@ -2262,7 +2246,11 @@ RED.comms = (function() {
     // simulate a message coming in on the websocket
     function emit(data) {
         if (ws && ws.readyState == 1) {
-            ws.onmessage( { data: JSON.stringify(data) } )
+            if ( Array.isArray( data ) ) {
+                ws.onmessage( { data: JSON.stringify(data) } )
+            } else {
+                ws.onmessage( { data: JSON.stringify([data]) } )
+            }
         }
     }
 
