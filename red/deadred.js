@@ -14,6 +14,72 @@ var DEADRED = (function() {
     let stopExecution = false;
     let executionState = {};
 
+    const switchOperators = {
+        'eq': function(a, b) { return a == b; },
+        'neq': function(a, b) { return a != b; },
+        'lt': function(a, b) { return a < b; },
+        'lte': function(a, b) { return a <= b; },
+        'gt': function(a, b) { return a > b; },
+        'gte': function(a, b) { return a >= b; },
+        'btwn': function(a, b, c) {
+            return (a >= b && a <= c) || (a <= b && a >= c);
+        },
+        'cont': function(a, b) { return (a + "").indexOf(b) != -1; },
+        'regex': function(a, b, c, d) {
+            return (a + "").match(new RegExp(b,d?'i':''));
+        },
+        'true': function(a) { return a === true; },
+        'false': function(a) { return a === false; },
+        'null': function(a) { return (typeof a == "undefined" || a === null); },
+        'nnull': function(a) { return (typeof a != "undefined" && a !== null); },
+        'empty': function(a) {
+            if (typeof a === 'string' || Array.isArray(a) ) {
+                return a.length === 0;
+            } else if (typeof a === 'object' && a !== null) {
+                return Object.keys(a).length === 0;
+            }
+            return false;
+        },
+        'nempty': function(a) {
+            if (typeof a === 'string' || Array.isArray(a) ) {
+                return a.length !== 0;
+            } else if (typeof a === 'object' && a !== null) {
+                return Object.keys(a).length !== 0;
+            }
+            return false;
+        },
+        'istype': function(a, b) {
+            if (b === "array") { return Array.isArray(a); }
+            else if (b === "json") {
+                try { JSON.parse(a); return true; }   // or maybe ??? a !== null; }
+                catch(e) { return false;}
+            }
+            else if (b === "null") { return a === null; }
+            else if (b === "number") { return typeof a === b && !isNaN(a) }
+            else { return typeof a === b && !Array.isArray(a) && a !== null; }
+        },
+        'head': function(a, b, c, d, parts) {
+            var count = Number(b);
+            return (parts.index < count);
+        },
+        'tail': function(a, b, c, d, parts) {
+            var count = Number(b);
+            return (parts.count -count <= parts.index);
+        },
+        'index': function(a, b, c, d, parts) {
+            var min = Number(b);
+            var max = Number(c);
+            var index = parts.index;
+            return ((min <= index) && (index <= max));
+        },
+        'hask': function(a, b) {
+            return a !== undefined && a !== null && (typeof b !== "object" )  &&  a.hasOwnProperty(b+"");
+        },
+        'jsonata_exp': function(a, b) { return (b === true); },
+        'else': function(a) { return a === true; }
+    };
+
+
     function clearStatusForNode(nde) {
         emitStatusForNode(nde,{})
     }
@@ -223,7 +289,6 @@ var DEADRED = (function() {
                         headers: hdrs,
                         dataType: typeFromRet(nde.ret)
                     }).done( data => {
-                        console.log( data )
                         if ( nde.ret == "txt" ) {
                             msg.payload = data.toString("utf8")
                         } else if ( nde.ret == "bin" ) {
@@ -354,6 +419,61 @@ var DEADRED = (function() {
 
                 break
 
+            case 'switch':
+
+                if ( nde.property && nde.propertyType == "msg" ) {
+                    let val = msg[nde.property]
+
+                    let correctness = nde.rules.map( rle => {
+                        let tst = switchOperators[rle.t] || (() => {return false})
+
+                        try {
+                            return tst(val,rle.v,rle.v2)
+                        } catch (ex) {
+                            return false
+                        }
+                    })
+
+                    let lnks = []
+                    if ( nde.checkall == "true" ) {
+                        RED.nodes.getNodeLinks( nde ).forEach( lnk => {
+                            if ( correctness[lnk.sourcePort] ) {
+                                lnks.push( lnk )
+                            }
+                        })
+                    } else {
+                        for ( var idx = 0 ; idx < correctness.length ; idx++){
+                            if ( correctness[idx] ) {
+                                RED.nodes.getNodeLinks( nde ).forEach( lnk => {
+                                    if ( lnk.sourcePort == idx ) lnks.push(lnk)
+                                })
+                                break
+                            }
+                        }
+                    }
+
+                    passMsgToLinks(lnks, msg);
+                    return
+                }
+
+                break
+
+            case 'xml':
+
+                let xmlData = msg[nde.property]
+
+                if ( typeof xmlData == "string" ) {
+                    msg[nde.property] = window.x2js.xml_str2json(xmlData)
+                } else if ( typeof xmlData == "object" ) {
+                    msg[nde.property] = window.x2js.json2xml_str(xmlData)
+                }
+
+                passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                return
+
+            //
+            // leave here
+            //
             case "inject":
 
                 var handleType = (nde,prp,msg) => {
@@ -378,7 +498,7 @@ var DEADRED = (function() {
                         case "bin":
                             var data = JSON.parse(prp.v);
                             if (Array.isArray(data) || (typeof(data) === "string")) {
-                                msg[prp.p] = Buffer.from(data);
+                                msg[prp.p] = new ArrayBuffer(data);
                             }
                             else {
                                 // TODO: generate error here.
