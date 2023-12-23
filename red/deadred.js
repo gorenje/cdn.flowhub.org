@@ -24,7 +24,7 @@ var DEADRED = (function() {
 
     function nodeTypeNotSupported(nde) {
         RED.notify(
-            "Execution of type: " + nde.type + "("+nde.id+") not supported",
+            "Execution of type: " + nde.type + " ("+nde.id+") not supported",
             "warning"
         );
     }
@@ -41,9 +41,13 @@ var DEADRED = (function() {
         if ( stopExecution || nde.d ) { return; }
 
         // clone the message, handle exceptions with shallower clone
-        try {
-            msg = structuredClone(msg)
-        } catch ( ex ) {
+        if ( typeof structuredClone != "undefined" ) { //looking at your Opera...
+            try {
+                msg = structuredClone(msg)
+            } catch ( ex ) {
+                msg = JSON.parse( JSON.stringify(msg))
+            }
+        } else {
             msg = JSON.parse( JSON.stringify(msg))
         }
 
@@ -59,6 +63,90 @@ var DEADRED = (function() {
         }
 
         switch ( nde.type ) {
+            case "ClientCode":
+                RED.comms.emit([{
+                    "topic":"introspect:client-code-perform",
+                    "data":{
+                        "msg":"execfunc",
+                        "payload":msg.payload,
+                        "topic":msg.topic,
+                        "func": nde.clientcode,
+                        "nodeid": nde.id,
+                        "_msg": { ...msg },
+                        "format":"string["+nde.clientcode.length+"]"
+                    }
+                }])
+
+                return;
+
+            case "change":
+                nde.rules.forEach( rle => {
+                    if ( rle.t == "set" ) {
+                        if ( rle.pt == "msg" && rle.tot == "str" ) {
+                            msg[rle.p] = rle.to
+                        }
+                        if ( rle.pt == "msg" && rle.tot == "json" ) {
+                            msg[rle.p] = JSON.parse(rle.to)
+                        }
+                    }
+
+                    if ( rle.t == "delete" && rle.pt == "msg" ) {
+                        delete msg[rle.p];
+                    }
+                })
+
+                passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                return
+
+            case "debug":
+                if ( !nde.active ) { return }
+
+                let donesomething = false;
+
+                if ( nde.console ) {
+                    console.log( "Debug Node", msg)
+                    donesomething = true
+                }
+
+                if ( nde.tosidebar ) {
+                    RED.comms.emit([{
+                        "topic":"debug",
+                        "data":{
+                            "id":nde.id,
+                            "z":nde.z,
+                            "path":nde.z,
+                            "name":nde._def.label.call(nde),
+                            "topic":msg.topic,
+                            "property":"",
+                            "msg":JSON.stringify(msg),
+                            "format":"Object"
+                        }}])
+                    donesomething = true
+                }
+
+                if( isNodeDebugCounter(nde) ) {
+                    executionState[nde.id] = executionState[nde.id] || {
+                        cnt: 0
+                    }
+                    executionState[nde.id]["cnt"] += 1
+
+                    let txt = executionState[nde.id]["cnt"];
+                    if ( nde.statusType == "auto" ) {
+                        txt = JSON.stringify( msg )
+                    }
+
+                    emitStatusForNode(nde, {
+                        "text": txt,
+                        "fill":"blue",
+                        "shape":"ring"
+                    })
+                    donesomething = true
+                }
+
+                if ( donesomething ) return
+                break
+
+
             case "delay":
 
                 if ( nde.pauseType === "delay" ) {
@@ -108,24 +196,50 @@ var DEADRED = (function() {
 
                 break
 
-            case "change":
-                nde.rules.forEach( rle => {
-                    if ( rle.t == "set" ) {
-                        if ( rle.pt == "msg" && rle.tot == "str" ) {
-                            msg[rle.p] = rle.to
-                        }
-                        if ( rle.pt == "msg" && rle.tot == "json" ) {
-                            msg[rle.p] = JSON.parse(rle.to)
+            case "http request":
+                if ( nde.method == "GET" ) {
+                    let url = msg.url || nde.url
+
+                    let hdrs = {};
+                    (nde.headers || []).forEach( hdr => {
+                        hdrs[hdr.keyValue || hdr.keyType] = (
+                            hdr.valueValue || hdr.valueType
+                        )
+                    })
+                    hdrs = { ...hdrs, ...(msg.headers || {}) }
+
+                    let typeFromRet = (ret) => {
+                        if ( ret == "txt" ) {
+                            return "text"
+                        } else if ( ret == "obj" ) {
+                            return "json"
+                        } else {
+                            return undefined
                         }
                     }
 
-                    if ( rle.t == "delete" && rle.pt == "msg" ) {
-                        delete msg[rle.p];
-                    }
-                })
+                    $.get({
+                        url: url,
+                        headers: hdrs,
+                        dataType: typeFromRet(nde.ret)
+                    }).done( data => {
+                        console.log( data )
+                        if ( nde.ret == "txt" ) {
+                            msg.payload = data.toString("utf8")
+                        } else if ( nde.ret == "bin" ) {
+                            msg.payload = new ArrayBuffer(data)
+                        } else {
+                            msg.payload = data
+                        }
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg)
+                    }).fail( data => {
+                        RED.notify( "Error requesting: " + url, "error")
+                        console.log( "error requesting: " + url, data )
+                    })
+                    return
+                }
 
-                passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
-                return
+                break
 
             case "join":
                 if ( nde.mode == "custom" && nde.build == "array" &&
@@ -149,71 +263,72 @@ var DEADRED = (function() {
 
                 break
 
-            case "debug":
-                if ( !nde.active ) { return }
+            case "json":
+                let data = msg[nde.property]
 
-                let donesomething = false;
-
-                if ( nde.console ) {
-                    console.log( "Debug Node", msg)
-                    donesomething = true
+                let toStr = (d,p) => {
+                    if ( p ) {
+                        return JSON.stringify(d, null, 4)
+                    } else {
+                        return JSON.stringify(d)
+                    }
                 }
 
-                if ( nde.tosidebar ) {
-                    RED.comms.emit([{
-                        "topic":"debug",
-                        "data":{
-                            "id":nde.id,
-                            "z":nde.z,
-                            "path":nde.z,
-                            "name":nde._def.label.call(nde),
-                            "topic":msg.topic,
-                            "property":"",
-                            "msg":JSON.stringify(msg),
-                            "format":"Object"
-                        }}])
-                    donesomething = true
+                if ( nde.action == "" ) {
+                    if ( typeof data == "string" ) {
+                        msg[nde.property] = JSON.parse(data)
+                    } else {
+                        msg[nde.property] = toStr(data,nde.pretty)
+                    }
+                } else if ( nde.action == "str" ) {
+                    msg[nde.property] = toStr(data,nde.pretty)
+                } else {
+                    msg[nde.property] = JSON.parse(data)
                 }
 
-                if( isNodeDebugCounter(nde) ) {
-                    executionState[nde.id] = executionState[nde.id] || {
-                        cnt: 0
-                    }
-                    executionState[nde.id]["cnt"] += 1
+                passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                return
 
-                    let txt = executionState[nde.id]["cnt"];
-                    if ( nde.statusType == "auto" ) {
-                        txt = JSON.stringify( msg )
-                    }
+            case "link call":
+                // TOOD: ------
+                // TODO: handle the timeout value set on the node
+                // TODO: ------
 
-                    emitStatusForNode(nde, {
-                        "text": txt,
-                        "fill":"blue",
-                        "shape":"ring"
+                msg._linkSource = msg._linkSource || []
+                msg._linkSource.push( nde.id )
+
+                if ( nde.linkType == "static" ) {
+                    nde.links.forEach( ndeid => {
+                        let nde = RED.nodes.node(ndeid);
+                        captureExceptionExecuteNode(nde, msg)
                     })
-                    donesomething = true
                 }
 
-                if ( donesomething ) return
-
-            case "ClientCode":
-                let data = [
-                    {
-                        "topic":"introspect:client-code-perform",
-                        "data":{
-                            "msg":"execfunc",
-                            "payload":msg.payload,
-                            "topic":msg.topic,
-                            "func": nde.clientcode,
-                            "nodeid": nde.id,
-                            "_msg": { ...msg },
-                            "format":"string["+nde.clientcode.length+"]"
+                if ( nde.linkType == "dynamic" ) {
+                    if ( msg.target ) {
+                        let mth = msg.target.match(/^([a-z0-9]{16})$/i)
+                        if ( mth ) {
+                            let nde = RED.nodes.node(mth[1]);
+                            captureExceptionExecuteNode(nde, msg)
+                            return
                         }
-                    }
-                ]
 
-                RED.comms.emit(data)
-                return;
+                        let foundNode = false
+                        RED.nodes.eachNode( nde => {
+                            if ( nde.name === msg.target ) {
+                                captureExceptionExecuteNode(nde, msg)
+                                foundNode = true
+                            }
+                        })
+                        if ( foundNode ) return
+                    }
+
+                    RED.notify(
+                        "Target not found Link Call ("+ nde.id +")", "error"
+                    )
+                }
+
+                return
 
             case "link out":
 
@@ -224,6 +339,20 @@ var DEADRED = (function() {
                     })
                     return
                 }
+
+                if ( nde.mode == "return" ) {
+                    let links = [...(msg._linkSource || [])]
+                    delete msg._linkSource
+
+                    while ( ndeid = links.pop() ) {
+                        let nde = RED.nodes.node(ndeid)
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    }
+
+                    return
+                }
+
+                break
 
             case "inject":
 
@@ -271,6 +400,9 @@ var DEADRED = (function() {
                         handleType(nde, prp, msg)
                     }
                 })
+
+                // Intentionally no break or return here, its meant to
+                // fall through.
 
             case "link in":
             case "junction":
