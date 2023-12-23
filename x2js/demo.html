@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<h1>X2JS Demo</h1>
+<button id="convertToJsonBtn">XML => JSON</button>
+<button id="convertToXmlBtn">JSON => XML</button>
+<div>
+    <h4>XML:</h4>
+    <textarea id="xmlArea" cols="55" rows="15"></textarea>
+</div>
+
+<div>
+    <h4>JSON:</h4>
+    <textarea id="jsonArea" cols="55" rows="15"></textarea>
+</div>
+
+<script type='module'>
+    import X2JS from "./xml2json.esm.js";
+
+    (() => {
+        const x2js = new X2JS({
+            emptyNodeForm: 'undefined',
+            emptyArrayKeepTag: true
+        });
+        const xml$ = document.querySelector("#xmlArea")
+        const json$ = document.querySelector("#jsonArea")
+
+        function convertXml2JSon() {
+            const xmlStr = xml$.value
+            const json = x2js.xml_str2json(xmlStr)
+            json$.value = JSON.stringify(json, null, 2)
+        }
+
+        function convertJSon2XML() {
+            const jsonStr = json$.value
+            const json = JSON.parse(jsonStr)
+            xml$.value = x2js.json2xml_str(json)
+        }
+
+        xml$.value = `<root>
+    <child>
+        <textNode>First &amp; Child</textNode>
+    </child>
+    <child>
+        <textNode>Second Child</textNode>
+    </child>
+    <testAttrs attr1='attr1Value'/>
+</root>`;
+        convertXml2JSon();
+        const convertToJsonBtn$ = document.querySelector('#convertToJsonBtn')
+        const convertToXmlBtn$ = document.querySelector('#convertToXmlBtn')
+        convertToJsonBtn$.addEventListener('click', convertXml2JSon);
+        convertToXmlBtn$.addEventListener('click', convertJSon2XML);
+    })();
+</script>
+</body>
+</html>
