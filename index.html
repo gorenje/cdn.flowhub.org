@@ -28,6 +28,14 @@
 <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css?v=">
 <link rel="stylesheet" href="/red/style.min.css?v=">
 <link rel="stylesheet" href="/vendor/monaco/style.css?v=">
+<script type='module'>
+  import X2JS from "/x2js/xml2json.esm.js";
+
+  window.x2js = new X2JS({
+    emptyNodeForm: 'undefined',
+    emptyArrayKeepTag: true
+  });
+</script>
 </head>
 
 <body spellcheck="false">
