@@ -27577,3 +27577,29 @@ this.scope.action = function() { return value; }
     <p>It is configured with html, linkify and typographer options turned on.</p>
 
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid] --- -->
+<script type="text/javascript">
+(function ($) {
+   RED.nodes.registerType('Flow2MermaidCfg', {
+      category: 'config',
+      hasUsers: false,
+      defaults: {
+         name: { value: "" },
+         direction: { value: "" },
+         genmereditor: {value:""},
+      },
+      paletteLabel: 'Flow2MermaidCfg',
+      label: function () {
+         return this.name;
+      }
+  });
+})(jQuery);
+</script>
+
+<!-- The html for the config node info panel (in right sidebar) -->
+<script type="text/x-red" data-template-name="Flow2MermaidCfg">
+   <p>Generate a Mermaid flowchart diagram from the active flow tab.</p>
+
+   <h3>Description</h3>
+   Convert the current flow tabl a work-flow UML diagram in Mermaid syntax. The result is stored in the pasteboard - Ctrl/Cmd-V can be used to paste the Mermaid diagram into the <a style="color: blue;" target=_blank href="https://mermaid.live/edit">live editor <i class="fa fa-external-link"></i></a>.
+</script>

@@ -13,6 +13,7 @@
     "@gregoriusrippenstein/node-red-contrib-aisbreaker": [
         "logo.png"
     ],
+    "@gregoriusrippenstein/node-red-contrib-flow2uml": [],
     "@gregoriusrippenstein/node-red-contrib-flowcompare": [],
     "@gregoriusrippenstein/node-red-contrib-flowhub": [
         "flowhubdiff.svg",

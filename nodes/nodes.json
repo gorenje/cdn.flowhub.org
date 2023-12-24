@@ -888,7 +888,7 @@
             "FlowHubPull"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.4"
     },
     {
         "enabled": true,
@@ -900,7 +900,7 @@
             "FlowHubCfg"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.4"
     },
     {
         "enabled": true,
@@ -912,7 +912,7 @@
             "auto_layout_config"
         ],
         "user": false,
-        "version": "0.0.3"
+        "version": "0.0.4"
     },
     {
         "enabled": true,
@@ -1512,5 +1512,17 @@
         ],
         "user": false,
         "version": "0.1.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
+        "name": "flowtomermaid",
+        "types": [
+            "Flow2MermaidCfg"
+        ],
+        "user": false,
+        "version": "0.1.8"
     }
 ]

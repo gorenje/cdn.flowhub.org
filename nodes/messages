@@ -62,6 +62,7 @@
             }
         }
     },
+    "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
     "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
     "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg": {},
     "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull": {},
