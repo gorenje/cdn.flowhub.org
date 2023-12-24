@@ -2245,7 +2245,7 @@ RED.comms = (function() {
 
     // simulate a message coming in on the websocket
     function emit(data) {
-        if (ws && ws.readyState == 1) {
+        if (ws) {
             if ( Array.isArray( data ) ) {
                 ws.onmessage( { data: JSON.stringify(data) } )
             } else {
