@@ -80,12 +80,12 @@ var DEADRED = (function() {
     };
 
 
-    function clearStatusForNode(nde) {
-        emitStatusForNode(nde,{})
+    function clearStatusForNode(ndeid) {
+        emitStatusForNode(ndeid,{})
     }
 
-    function emitStatusForNode(nde,status) {
-        RED.comms.emit([{ "topic":"status/" + nde.id, "data": status }])
+    function emitStatusForNode(ndeid,status) {
+        RED.comms.emit([{ "topic":"status/" + ndeid, "data": status }])
     }
 
     function nodeTypeNotSupported(nde) {
@@ -119,13 +119,14 @@ var DEADRED = (function() {
 
         // don't overwrite the counter
         if ( !isNodeDebugCounter(nde) ) {
-            emitStatusForNode(nde, {
+            emitStatusForNode(nde.id, {
                 "text":"msg received",
                 "fill":"grey",
                 "shape":"ring"
             })
 
-            setTimeout( () => { clearStatusForNode(nde) }, 1500);
+            var ndeid = nde.id
+            setTimeout( () => { clearStatusForNode(ndeid) }, 1500);
         }
 
         switch ( nde.type ) {
@@ -201,7 +202,7 @@ var DEADRED = (function() {
                         txt = JSON.stringify( msg )
                     }
 
-                    emitStatusForNode(nde, {
+                    emitStatusForNode(nde.id, {
                         "text": txt,
                         "fill":"blue",
                         "shape":"ring"
@@ -364,21 +365,21 @@ var DEADRED = (function() {
 
                 if ( nde.linkType == "static" ) {
                     nde.links.forEach( ndeid => {
-                        let nde = RED.nodes.node(ndeid);
-                        captureExceptionExecuteNode(nde, msg)
+                        captureExceptionExecuteNode(RED.nodes.node(ndeid), msg)
                     })
                 }
 
                 if ( nde.linkType == "dynamic" ) {
                     if ( msg.target ) {
-                        let mth = msg.target.match(/^([a-z0-9]{16})$/i)
+                        var mth = msg.target.match(/^([a-z0-9]{16})$/i)
                         if ( mth ) {
-                            let nde = RED.nodes.node(mth[1]);
-                            captureExceptionExecuteNode(nde, msg)
+                            captureExceptionExecuteNode(
+                                RED.nodes.node(mth[1]), msg
+                            )
                             return
                         }
 
-                        let foundNode = false
+                        var foundNode = false
                         RED.nodes.eachNode( nde => {
                             if ( nde.name === msg.target ) {
                                 captureExceptionExecuteNode(nde, msg)
@@ -399,19 +400,26 @@ var DEADRED = (function() {
 
                 if ( nde.mode == "link" ) {
                     nde.links.forEach( ndeid => {
-                        let nde = RED.nodes.node(ndeid);
-                        captureExceptionExecuteNode(nde, msg)
+                        captureExceptionExecuteNode(RED.nodes.node(ndeid), msg)
                     })
                     return
                 }
 
                 if ( nde.mode == "return" ) {
-                    let links = [...(msg._linkSource || [])]
-                    delete msg._linkSource
+                    let lnkndeid = msg._linkSource.pop()
 
-                    while ( ndeid = links.pop() ) {
-                        let nde = RED.nodes.node(ndeid)
-                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    if ( lnkndeid ) {
+                        // don't execute the node at the end of the lnkndeid
+                        // since it's a link call node, so we pass the message
+                        // on to all the wires connected to the link call node
+                        passMsgToLinks(RED.nodes.getNodeLinks(
+                            RED.nodes.node(lnkndeid)
+                        ), msg);
+                    } else {
+                        RED.notify(
+                            "Error: got to link return but no nodeid","error"
+                        )
+                        console.log( "no linkSource for return", [nde, msg])
                     }
 
                     return
@@ -435,6 +443,7 @@ var DEADRED = (function() {
                     })
 
                     let lnks = []
+
                     if ( nde.checkall == "true" ) {
                         RED.nodes.getNodeLinks( nde ).forEach( lnk => {
                             if ( correctness[lnk.sourcePort] ) {
@@ -472,7 +481,7 @@ var DEADRED = (function() {
                 return
 
             //
-            // leave here
+            // leave the inject here, it falls through, i.e. no break or return
             //
             case "inject":
 
@@ -574,7 +583,7 @@ var DEADRED = (function() {
         setTimeout( () => {
             stopExecution = false
             executionState = {};
-            RED.nodes.eachNode( (nde) => { clearStatusForNode(nde) });
+            RED.nodes.eachNode( (nde) => { clearStatusForNode(nde.id) });
         }, 2000);
     }
 
