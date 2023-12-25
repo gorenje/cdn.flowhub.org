@@ -152,8 +152,17 @@ var DEADRED = (function() {
                         if ( rle.pt == "msg" && rle.tot == "str" ) {
                             msg[rle.p] = rle.to
                         }
+                        if ( rle.pt == "msg" && rle.tot == "bool" ) {
+                            msg[rle.p] = (rle.to === "true")
+                        }
+                        if ( rle.pt == "msg" && rle.tot == "num" ) {
+                            msg[rle.p] = Number(rle.to)
+                        }
                         if ( rle.pt == "msg" && rle.tot == "json" ) {
                             msg[rle.p] = JSON.parse(rle.to)
+                        }
+                        if ( rle.pt == "msg" && rle.tot == "jsonata" ) {
+                            msg[rle.p] = jsonata(rle.to).evaluate({msg:msg})
                         }
                     }
 
