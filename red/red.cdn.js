@@ -29035,9 +29035,20 @@ RED.sidebar = (function() {
 
     function showSidebar(id, skipShowSidebar) {
         if (id === ":first") {
-            id = lastSessionSelectedTab || RED.settings.get("editor.sidebar.order",["info", "help", "version-control", "debug"])[0]
+            var srchParams = new URLSearchParams(window.location.search);
+            id = srchParams.get("sbid") || lastSessionSelectedTab || RED.settings.get("editor.sidebar.order",["info", "help", "version-control", "debug"])[0]
         }
         if (id) {
+            if ( !knownTabs[id] ) {
+                // sidebars that are loaded via plugins aren't yet available
+                // meaning we need to wait until they are
+                setTimeout( () => {
+                    if (!containsTab(id) && knownTabs[id]) {
+                        sidebar_tabs.addTab(knownTabs[id]);
+                    }
+                    sidebar_tabs.activateTab(id);
+                },1000)
+            }
             if (!containsTab(id) && knownTabs[id]) {
                 sidebar_tabs.addTab(knownTabs[id]);
             }
