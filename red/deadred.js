@@ -749,24 +749,59 @@ var DEADRED = (function() {
             $(ele).css('color', '#f4a0a0')
 
             $(ele).on('click', function (e) {
-                ndeIds.forEach( ndeid => {
-                    RED.view.reveal(ndeid, true)
-                })
-                RED.view.redraw();
+                if ( ndeIds.length == 1 ) {
+                    RED.view.reveal(ndeIds[0], true)
+                    RED.view.redraw();
+                } else {
+                    var preselected = ndeIds;
+
+                    RED.tray.hide();
+                    RED.view.selectNodes({
+                        selected: preselected,
+                        onselect: function(selection) {
+                            RED.tray.show();
+                        },
+                        oncancel: function() {
+                            RED.tray.show();
+                        }
+                    });
+
+                }
             });
         });
 
         $('a.ahl-group-only').each(function (idx, ele) {
-            var ndeIds = getDataIds(ele);
+            var grpIds = getDataIds(ele);
             setHrefClass(ele);
             $(ele).removeClass('ahl-group-only');
             $(ele).css('color', '#f4a0a0')
 
+            // here the ids are group ides, need to find all nodes in those
+            // groups and highlight them
+            var ndeIds = []
+            grpIds.forEach( grpId => {
+                RED.nodes.group(grpId).nodes.forEach( n => ndeIds.push(n.id) )
+            })
+
             $(ele).on('click', function (e) {
-                ndeIds.forEach( ndeid => {
-                    RED.view.reveal(ndeid, true)
-                })
-                RED.view.redraw();
+                if ( ndeIds.length == 1 ) {
+                    RED.view.reveal(ndeIds[0], true)
+                    RED.view.redraw();
+                } else {
+                    var preselected = ndeIds;
+
+                    RED.tray.hide();
+                    RED.view.selectNodes({
+                        selected: preselected,
+                        onselect: function(selection) {
+                            RED.tray.show();
+                        },
+                        oncancel: function() {
+                            RED.tray.show();
+                        }
+                    });
+
+                }
             });
         });
     }
