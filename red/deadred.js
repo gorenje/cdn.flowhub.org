@@ -729,9 +729,7 @@ var DEADRED = (function() {
         }
     });
 
-
     function handleTextReferences() {
-
         var getDataIds = (ele) => {
             return ($(ele).data("ids") || $(ele).data("id") || "").split(",");
         };
@@ -741,46 +739,60 @@ var DEADRED = (function() {
             $(ele).addClass('ahl');
         };
 
+        var nodesInGrp = (grpId) => {
+            var ndeIds = []
+            RED.nodes.group(grpId).nodes.forEach( n => {
+                if ( n.type == "group" ) {
+                    ndeIds = ndeIds.concat( nodesInGrp(n.id) )
+                } else {
+                    ndeIds.push(n.id)
+                }
+            })
+            return ndeIds
+        };
+
+        var highlightNodes = (ndeIds) => {
+            // move the workspace to the first node of
+            // the group but don't make the highlight blink
+            RED.view.reveal(ndeIds[0], false)
+            RED.view.redraw();
+
+            RED.tray.hide();
+            RED.view.selectNodes({
+                selected: ndeIds,
+                onselect: function(selection) { RED.tray.show(); },
+                oncancel: function() { RED.tray.show(); }
+            });
+        };
 
         $('a.ahl-node-only').each(function (idx, ele) {
-            var ndeIds = getDataIds(ele);
             setHrefClass(ele);
             $(ele).removeClass('ahl-node-only');
             $(ele).css('color', '#f4a0a0')
+
+            var ndeIds = getDataIds(ele);
 
             $(ele).on('click', function (e) {
                 if ( ndeIds.length == 1 ) {
                     RED.view.reveal(ndeIds[0], true)
                     RED.view.redraw();
                 } else {
-                    var preselected = ndeIds;
-
-                    RED.tray.hide();
-                    RED.view.selectNodes({
-                        selected: preselected,
-                        onselect: function(selection) {
-                            RED.tray.show();
-                        },
-                        oncancel: function() {
-                            RED.tray.show();
-                        }
-                    });
-
+                    highlightNodes(ndeIds)
                 }
             });
         });
 
         $('a.ahl-group-only').each(function (idx, ele) {
-            var grpIds = getDataIds(ele);
             setHrefClass(ele);
             $(ele).removeClass('ahl-group-only');
             $(ele).css('color', '#f4a0a0')
 
             // here the ids are group ides, need to find all nodes in those
             // groups and highlight them
+            var grpIds = getDataIds(ele);
             var ndeIds = []
             grpIds.forEach( grpId => {
-                RED.nodes.group(grpId).nodes.forEach( n => ndeIds.push(n.id) )
+                ndeIds = ndeIds.concat( nodesInGrp( grpId ) )
             })
 
             $(ele).on('click', function (e) {
@@ -788,19 +800,7 @@ var DEADRED = (function() {
                     RED.view.reveal(ndeIds[0], true)
                     RED.view.redraw();
                 } else {
-                    var preselected = ndeIds;
-
-                    RED.tray.hide();
-                    RED.view.selectNodes({
-                        selected: preselected,
-                        onselect: function(selection) {
-                            RED.tray.show();
-                        },
-                        oncancel: function() {
-                            RED.tray.show();
-                        }
-                    });
-
+                    highlightNodes(ndeIds)
                 }
             });
         });
