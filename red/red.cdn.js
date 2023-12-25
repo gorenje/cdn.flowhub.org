@@ -8746,6 +8746,8 @@ RED.utils = (function() {
     function renderMarkdown(txt) {
         var rendered = _marked.parse(txt);
         var cleaned = DOMPurify.sanitize(rendered, {SAFE_FOR_JQUERY: true})
+
+        RED.events.emit("markdown:rendered")
         return cleaned;
     }
 
