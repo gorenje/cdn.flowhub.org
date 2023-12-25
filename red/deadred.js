@@ -650,7 +650,55 @@ var DEADRED = (function() {
         }
     });
 
+
+    function handleTextReferences() {
+
+        var getDataIds = (ele) => {
+            return ($(ele).data("ids") || $(ele).data("id") || "").split(",");
+        };
+
+        var setHrefClass = (ele) => {
+            $(ele).attr('href', '#');
+            $(ele).addClass('ahl');
+        };
+
+
+        $('a.ahl-node-only').each(function (idx, ele) {
+            var ndeIds = getDataIds(ele);
+            setHrefClass(ele);
+            $(ele).removeClass('ahl-node-only');
+            $(ele).css('color', '#f4a0a0')
+
+            $(ele).on('click', function (e) {
+                ndeIds.forEach( ndeid => {
+                    RED.view.reveal(ndeid, true)
+                })
+                RED.view.redraw();
+            });
+        });
+
+        $('a.ahl-group-only').each(function (idx, ele) {
+            var ndeIds = getDataIds(ele);
+            setHrefClass(ele);
+            $(ele).removeClass('ahl-group-only');
+            $(ele).css('color', '#f4a0a0')
+
+            $(ele).on('click', function (e) {
+                ndeIds.forEach( ndeid => {
+                    RED.view.reveal(ndeid, true)
+                })
+                RED.view.redraw();
+            });
+        });
+    }
+
     function init() {
+        RED.events.on( 'markdown:rendered', () => {
+            setTimeout( () => {
+                handleTextReferences()
+            },1000)
+        })
+
         console.log( "DEADRED initialised" )
     }
 
