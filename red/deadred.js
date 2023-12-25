@@ -587,12 +587,65 @@ var DEADRED = (function() {
         }, 2000);
     }
 
+    function compareFlows(msg) {
+        var oldFlowRevision = {};
+        var newFlowRevision = {};
+
+        for (var idx = 0; idx < msg.payload.length; idx++) {
+            oldFlowRevision[msg.payload[idx].id] = msg.payload[idx]
+        }
+
+        for (var idx = 0; idx < msg.new_flowdata.length; idx++) {
+            newFlowRevision[msg.new_flowdata[idx].id] = msg.new_flowdata[idx]
+        }
+
+        var changes = []
+
+        /* nodes that have been deleted */
+        for (var idx = 0; idx < msg.payload.length; idx++) {
+            var oldObj = msg.payload[idx];
+
+            if (!newFlowRevision[oldObj.id]) {
+                changes.push({
+                    type: "deleted",
+                    id: oldObj.id,
+                    oldObj: oldObj,
+                    newObj: undefined
+                })
+            }
+        }
+
+        for (var idx = 0; idx < msg.new_flowdata.length; idx++) {
+            var newObj = msg.new_flowdata[idx];
+            var oldObj = oldFlowRevision[newObj.id];
+
+            if (!oldObj) {
+                changes.push({
+                    type: "added",
+                    id: newObj.id,
+                    oldObj: undefined,
+                    newObj: newObj
+                })
+            } else {
+                if (JSON.stringify(oldObj) != JSON.stringify(newObj)) {
+                    changes.push({
+                        type: "changed",
+                        id: newObj.id,
+                        oldObj: oldObj,
+                        newObj: newObj
+                    })
+                }
+            }
+        }
+
+        return changes;
+    }
+
     // redirect those requests that demonstrate certain functionality
     // to the deadred server.
     let deadredRedirectablesAjax = [
         "FlowHubDiff",
         "FlowHubPush",
-        "FlowCompareCfg",
         "NodeFactorySidebarCfg"
     ];
 
@@ -603,6 +656,31 @@ var DEADRED = (function() {
         // patial functionality provided by the deadred backend
         if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
             options.url = RED.settings.get("dynamicServer", "") + options.url
+        }
+
+        // handle the FlowCompare functionality locally since we store
+        // the flow data on deploy - extract what is being compared from there.
+        mth = options.url.match(/^FlowCompareCfg/i)
+        if ( mth ) {
+            var data = JSON.parse( options.data )
+            var lcl = JSON.parse( RED.settings.getLocal("flowdata"))
+
+            var lclnodes = []
+            lcl.flows.forEach( nde => {
+                if ( nde.id == data.flowid || nde.z == data.flowid ) {
+                    lclnodes.push(nde)
+                }
+            })
+
+            options.success({
+                "status": "ok",
+                "flowid": data.flowid,
+                "nodes": data.flowdata,
+                "changes": compareFlows({ payload: lclnodes,
+                                          new_flowdata: data.flowdata })
+            })
+
+            jqXHR.abort();
         }
 
         // handle the client code node callbacks, there are two:
@@ -643,9 +721,10 @@ var DEADRED = (function() {
         // through but handle a reload and stop the flows.
         if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")
           && options.type == "POST") {
-
             if ( options.headers["Node-RED-Deployment-Type"] == "reload" ){
                 reloadFlows()
+            } else {
+                RED.settings.setLocal( "flowdata", options.data)
             }
         }
     });

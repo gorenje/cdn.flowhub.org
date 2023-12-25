@@ -336,6 +336,12 @@ var RED = (function() {
             success: function(nodes) {
                 if (nodes) {
                     var currentHash = window.location.hash;
+                    // store the initial flow to local storage for the
+                    // flowcompare node
+                    RED.settings.setLocal("flowdata", JSON.stringify({
+                        rev: RED.nodes.id() + RED.nodes.id(),
+                        flows: nodes.flows
+                    }))
                     RED.nodes.version(nodes.rev);
                     loader.reportProgress(RED._("event.importFlows"),90 )
                     try {
@@ -942,6 +948,12 @@ var RED = (function() {
                                 rev: RED.nodes.id() + RED.nodes.id(),
                                 flows: JSON.parse(gistdata.files["flow.json"].content)
                             })
+                            // store the flow data to local storage for the
+                            // flowcompare node.
+                            RED.settings.setLocal( "flowdata", JSON.stringify({
+                                rev: RED.nodes.id() + RED.nodes.id(),
+                                flows: JSON.parse(gistdata.files["flow.json"].content)
+                            }))
                         } catch ( ex ) {
                             options.success({
                                 rev: RED.nodes.id() + RED.nodes.id(),
