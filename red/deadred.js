@@ -675,7 +675,7 @@ var DEADRED = (function() {
             options.success({
                 "status": "ok",
                 "flowid": data.flowid,
-                "nodes": data.flowdata,
+                "nodes": lclnodes,
                 "changes": compareFlows({ payload: lclnodes,
                                           new_flowdata: data.flowdata })
             })
