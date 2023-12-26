@@ -62,12 +62,14 @@ var DEADRED = (function() {
             msg = JSON.parse( JSON.stringify(msg))
         }
 
+        // message tracing can be deactivated using the __notrace property
+        // on the msg object.
         if ( !msg.__notrace ) {
             // don't overwrite the counter
             if ( !isNodeDebugCounter(nde) ) {
                 emitStatusForNode(nde.id, {
-                    "text":"msg received",
-                    "fill":"grey",
+                    "text": "msg " + (nde.type == "inject" ? "generaed" : "received"),
+                    "fill": "grey",
                     "shape":"ring"
                 })
 
