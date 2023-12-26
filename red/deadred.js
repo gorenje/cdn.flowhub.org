@@ -102,6 +102,17 @@ var DEADRED = (function() {
         )
     }
 
+    function executeSubflow(msg, subflowId) {
+        var subflow = RED.nodes.subflow(subflowId)
+
+        if ( subflow.in.length > 0 ) {
+            var startNode = RED.nodes.node(
+                RED.nodes.getNodeLinks(subflow.in[0].id)[0].target.id
+            )
+            captureExceptionExecuteNode(startNode, msg)
+        }
+    }
+
     function executeNode(nde, msg) {
         // d ==> disabled
         if ( stopExecution || nde.d ) { return; }
@@ -129,6 +140,25 @@ var DEADRED = (function() {
             setTimeout( () => { clearStatusForNode(ndeid) }, 1500);
         }
 
+        // Start of subflow execution. This is done using a similar method
+        // to the handling of link nodes: add an array to the message to
+        // indicate that this is part of a subflow.
+        var mth = nde.type.match(/^subflow:(.+)$/i)
+        if ( mth ) {
+            var ndeid = nde.id
+            var evtId = "subevt:" + nde.id + ":" + mth[1]
+
+            msg._subflowEvent = msg._subflowEvent || []
+            msg._subflowEvent.push(evtId)
+
+            executeSubflow(msg, mth[1])
+
+            return
+        }
+
+        // Within the swith, a 'break' will cause an error message explaining
+        // that the node is not supported. A 'return' will mean the node
+        // has been completely applied.
         switch ( nde.type ) {
             case "ClientCode":
                 RED.comms.emit([{
@@ -409,7 +439,18 @@ var DEADRED = (function() {
 
                 if ( nde.mode == "link" ) {
                     nde.links.forEach( ndeid => {
-                        captureExceptionExecuteNode(RED.nodes.node(ndeid), msg)
+                        // if you end up here with a node that was null, then
+                        // the link out node has stale links -- i.e. node ids
+                        // that no longer exist in the flow.
+                        var trgNde = RED.nodes.node(ndeid)
+                        if ( !trgNde ) {
+                            console.warn(
+                                "Missing node for link id: " + ndeid +
+                                " stale flow, check link out node: " + nde.id
+                            )
+                        } else {
+                            captureExceptionExecuteNode(trgNde, msg)
+                        }
                     })
                     return
                 }
@@ -431,6 +472,19 @@ var DEADRED = (function() {
                         console.log( "no linkSource for return", [nde, msg])
                     }
 
+                    return
+                }
+
+                break
+
+            case 'subflow':
+                if ( nde.direction == "out" ) {
+                    var evtId = msg._subflowEvent.pop()
+                    var ndeId = evtId.split(":")[1]
+
+                    passMsgToLinks(RED.nodes.getNodeLinks(
+                        RED.nodes.node(ndeId)
+                    ), msg);
                     return
                 }
 
@@ -554,7 +608,7 @@ var DEADRED = (function() {
     // as the name says: capture the exceptions during execution
     function captureExceptionExecuteNode(nde, msg) {
         if ( !nde ) {
-            console.error( "captureExceptionExecuteNode: Node was null")
+            console.error( "captureExceptionExecuteNode: Node was null", msg)
             return
         }
 
@@ -581,6 +635,16 @@ var DEADRED = (function() {
                 RED.nodes.node(lnk.target.id) ||
                 RED.nodes.junction(lnk.target.id)
             )
+            // this is the end of a subflow run
+            if ( !nde && lnk.target.type == "subflow" ) {
+                nde = lnk.target
+            }
+
+            // this should not happen and if it does, then we're dealing
+            // with some monster.
+            if ( !nde ) {
+                console.error("*** NO target found for LINK", lnk)
+            }
             captureExceptionExecuteNode(nde, msg)
         })
     }
@@ -738,6 +802,9 @@ var DEADRED = (function() {
         }
     });
 
+    //
+    // Used to highlight the links in markdown text
+    //
     function handleTextReferences() {
         var getDataIds = (ele) => {
             return ($(ele).data("ids") || $(ele).data("id") || "").split(",");
