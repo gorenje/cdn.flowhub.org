@@ -14,72 +14,6 @@ var DEADRED = (function() {
     let stopExecution = false;
     let executionState = {};
 
-    const switchOperators = {
-        'eq': function(a, b) { return a == b; },
-        'neq': function(a, b) { return a != b; },
-        'lt': function(a, b) { return a < b; },
-        'lte': function(a, b) { return a <= b; },
-        'gt': function(a, b) { return a > b; },
-        'gte': function(a, b) { return a >= b; },
-        'btwn': function(a, b, c) {
-            return (a >= b && a <= c) || (a <= b && a >= c);
-        },
-        'cont': function(a, b) { return (a + "").indexOf(b) != -1; },
-        'regex': function(a, b, c, d) {
-            return (a + "").match(new RegExp(b,d?'i':''));
-        },
-        'true': function(a) { return a === true; },
-        'false': function(a) { return a === false; },
-        'null': function(a) { return (typeof a == "undefined" || a === null); },
-        'nnull': function(a) { return (typeof a != "undefined" && a !== null); },
-        'empty': function(a) {
-            if (typeof a === 'string' || Array.isArray(a) ) {
-                return a.length === 0;
-            } else if (typeof a === 'object' && a !== null) {
-                return Object.keys(a).length === 0;
-            }
-            return false;
-        },
-        'nempty': function(a) {
-            if (typeof a === 'string' || Array.isArray(a) ) {
-                return a.length !== 0;
-            } else if (typeof a === 'object' && a !== null) {
-                return Object.keys(a).length !== 0;
-            }
-            return false;
-        },
-        'istype': function(a, b) {
-            if (b === "array") { return Array.isArray(a); }
-            else if (b === "json") {
-                try { JSON.parse(a); return true; }   // or maybe ??? a !== null; }
-                catch(e) { return false;}
-            }
-            else if (b === "null") { return a === null; }
-            else if (b === "number") { return typeof a === b && !isNaN(a) }
-            else { return typeof a === b && !Array.isArray(a) && a !== null; }
-        },
-        'head': function(a, b, c, d, parts) {
-            var count = Number(b);
-            return (parts.index < count);
-        },
-        'tail': function(a, b, c, d, parts) {
-            var count = Number(b);
-            return (parts.count -count <= parts.index);
-        },
-        'index': function(a, b, c, d, parts) {
-            var min = Number(b);
-            var max = Number(c);
-            var index = parts.index;
-            return ((min <= index) && (index <= max));
-        },
-        'hask': function(a, b) {
-            return a !== undefined && a !== null && (typeof b !== "object" )  &&  a.hasOwnProperty(b+"");
-        },
-        'jsonata_exp': function(a, b) { return (b === true); },
-        'else': function(a) { return a === true; }
-    };
-
-
     function clearStatusForNode(ndeid) {
         emitStatusForNode(ndeid,{})
     }
@@ -128,16 +62,18 @@ var DEADRED = (function() {
             msg = JSON.parse( JSON.stringify(msg))
         }
 
-        // don't overwrite the counter
-        if ( !isNodeDebugCounter(nde) ) {
-            emitStatusForNode(nde.id, {
-                "text":"msg received",
-                "fill":"grey",
-                "shape":"ring"
-            })
+        if ( !msg.__notrace ) {
+            // don't overwrite the counter
+            if ( !isNodeDebugCounter(nde) ) {
+                emitStatusForNode(nde.id, {
+                    "text":"msg received",
+                    "fill":"grey",
+                    "shape":"ring"
+                })
 
-            var ndeid = nde.id
-            setTimeout( () => { clearStatusForNode(ndeid) }, 1500);
+                var ndeid = nde.id
+                setTimeout( () => { clearStatusForNode(ndeid) }, 1500);
+            }
         }
 
         // Start of subflow execution. This is done using a similar method
@@ -148,8 +84,11 @@ var DEADRED = (function() {
             var ndeid = nde.id
             var evtId = "subevt:" + nde.id + ":" + mth[1]
 
-            msg._subflowEvent = msg._subflowEvent || []
-            msg._subflowEvent.push(evtId)
+            msg._subflowOut = msg._subflowOut || []
+            msg._subflowOut.push(evtId)
+
+            msg._subflowStatus = msg._subflowStatus || []
+            msg._subflowStatus.push(evtId)
 
             executeSubflow(msg, mth[1])
 
@@ -194,6 +133,11 @@ var DEADRED = (function() {
                         if ( rle.pt == "msg" && rle.tot == "jsonata" ) {
                             msg[rle.p] = jsonata(rle.to).evaluate({msg:msg})
                         }
+                        if ( rle.pt == "msg" && rle.tot == "msg" ) {
+                            msg[rle.p] = NodeRedBackendCode.getObjectProperty(
+                                msg, rle.to
+                            )
+                        }
                     }
 
                     if ( rle.t == "delete" && rle.pt == "msg" ) {
@@ -215,12 +159,14 @@ var DEADRED = (function() {
                 }
 
                 if ( nde.tosidebar ) {
+                    // TODO: debugs don't work in subflows since the
+                    // TODO: path setting is wrong
                     RED.comms.emit([{
                         "topic":"debug",
                         "data":{
-                            "id":nde.id,
-                            "z":nde.z,
-                            "path":nde.z,
+                            "id": nde.id,
+                            "z": nde.z,
+                            "path": nde.z,
                             "name":nde._def.label.call(nde),
                             "topic":msg.topic,
                             "property":"",
@@ -479,12 +425,24 @@ var DEADRED = (function() {
 
             case 'subflow':
                 if ( nde.direction == "out" ) {
-                    var evtId = msg._subflowEvent.pop()
+                    var evtId = msg._subflowOut.pop()
                     var ndeId = evtId.split(":")[1]
 
                     passMsgToLinks(RED.nodes.getNodeLinks(
                         RED.nodes.node(ndeId)
                     ), msg);
+
+                    return
+                }
+
+                if ( nde.direction == "status" ) {
+                    var evtId = msg._subflowStatus.pop()
+                    var ndeId = evtId.split(":")[1]
+
+                    if ( typeof msg.status == "object" ) {
+                        emitStatusForNode(ndeId, msg.status)
+                    }
+
                     return
                 }
 
@@ -493,10 +451,12 @@ var DEADRED = (function() {
             case 'switch':
 
                 if ( nde.property && nde.propertyType == "msg" ) {
-                    let val = msg[nde.property]
+                    let val = NodeRedBackendCode.getObjectProperty(
+                        msg,nde.property
+                    )
 
                     let correctness = nde.rules.map( rle => {
-                        let tst = switchOperators[rle.t] || (() => {return false})
+                        let tst = NodeRedBackendCode.switchOperators[rle.t] || (() => {return false})
 
                         try {
                             return tst(val,rle.v,rle.v2)
