@@ -150,6 +150,27 @@ var DEADRED = (function() {
                 passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
                 return
 
+            case "csv":
+
+                if ( typeof msg.payload == "object" ) {
+                    msg.payload = Papa.unparse( msg.payload )
+                    passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    return
+                } else {
+                    if ( nde.multi == "one" ) {
+                        Papa.parse( msg.payload ).forEach( d => {
+                            msg.payload = d
+                            passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                        })
+                    } else {
+                        msg.payload = Papa.parse( msg.payload )
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    }
+                    return
+                }
+
+                break
+
             case "debug":
                 if ( !nde.active ) { return }
 
