@@ -1,0 +1,18 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="Objects" colour="#F99EA3">
+    <block type="object_create"></block>
+    <block type="object_keys">
+      <value name="object_input">
+        <shadow type="node_msg">
+        </shadow>
+      </value>
+    </block>
+    <block type="object_from_json">
+      <value name="JSON">
+        <shadow type="text">
+        </shadow>
+      </value> 
+    </block>
+    <block type="object_to_json"></block>
+  </category>
+</xml>

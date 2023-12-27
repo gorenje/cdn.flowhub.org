@@ -27603,3 +27603,3317 @@ this.scope.action = function() { return value; }
    <h3>Description</h3>
    Convert the current flow tabl a work-flow UML diagram in Mermaid syntax. The result is stored in the pasteboard - Ctrl/Cmd-V can be used to paste the Mermaid diagram into the <a style="color: blue;" target=_blank href="https://mermaid.live/edit">live editor <i class="fa fa-external-link"></i></a>.
 </script>
+
+<!-- --- [red-module:node-red-contrib-zip/zip] --- -->
+<!--
+  Copyright 2017 Guilherme Francescon
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/x-red" data-template-name="zip">
+	<div class="form-row">
+		<label for="node-input-mode"><i class="fa fa-sliders"></i> <span data-i18n="zip.label.mode"></span></label>
+		<select type="text" id="node-input-mode">
+			<option value="compress" data-i18n="zip.mode.compress"></option>
+			<option value="decompress" data-i18n="zip.mode.decompress"></option>
+		</select>
+	</div>
+    <div class="form-row" id="node-form-row-zip-filename" style="display: none">
+        <label for="node-input-filename"><i class="fa fa-file"></i> <span data-i18n="zip.label.filename"></span></label>
+        <input type="text" id="node-input-filename" data-i18n="[placeholder]zip.label.filename">
+    </div>
+    <div class="form-row" id="node-form-row-zip-compressionLevel" style="display: none">
+        <label for="node-input-compressionlevel"><i class="fa fa-compress"></i> <span data-i18n="zip.label.compressionlevel"></span></label>
+        <select type="text" id="node-input-compressionlevel">
+            <option value="0" data-i18n="zip.label.level.no"></option>
+            <option value="1" data-i18n="zip.label.level.fast"></option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6" data-i18n="zip.label.level.default"></option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9" data-i18n="zip.label.level.best"></option>
+        </select>
+    </div>
+	<div class="form-row" id="node-form-row-zip-outasstring" style="display: none">
+		<label>&nbsp;</label>
+		<input type="checkbox" id="node-input-outasstring" style="display: inline-block; width: auto; vertical-align: top;">
+		<label for="node-input-outasstring" style="width:70%;"><span data-i18n="zip.label.outasstring"></span></label>
+	</div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="zip.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]zip.label.name">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('zip',{
+        category: 'function',
+        color:"#DEBD5C",
+        defaults: {
+            name: {value: ""},
+            mode: {value: "compress"},
+            filename: {value: ""},
+            compressionlevel: {value: 6},
+            outasstring: {value: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "zip.png",
+        label: function() {
+            return this.name||this._('zip.mode.' + this.mode).toLowerCase();
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function() {
+            var filenameRow = $('#node-form-row-zip-filename');
+            var compressionRow = $('#node-form-row-zip-compressionLevel');
+            var outasstringRow = $('#node-form-row-zip-outasstring');
+            var modeInput = $('#node-input-mode');
+
+            if (this.compressionlevel === undefined) {
+                this.compressionlevel = 6;
+                $('#node-input-compressionlevel').val(6);
+            }
+
+            function updateUi() {
+                switch(modeInput.val()) {
+                    case "compress":
+                        outasstringRow.hide();
+                        filenameRow.show();
+                        compressionRow.show();
+                        break;
+                    case "decompress":
+                        outasstringRow.show();
+                        filenameRow.hide();
+                        compressionRow.hide();
+                        break;
+                }
+            }
+
+            modeInput.change(updateUi);
+            updateUi();
+        }
+    });
+</script>
+<script type="text/x-red" data-help-name="zip">
+    <p>Reads and creates ZIP files</p>
+
+    <h3>Inputs</h3>
+    <p><i>Compress</i> mode</p>
+	<dl class="message-properties">
+		<dt>payload<span class="property-type">string | Buffer</span></dt>
+		<dd>
+            The content to be compressed
+		</dd>
+
+		<dt>filename<span class="property-type">string</span></dt>
+		<dd>
+            Used to specify the file name that represents the content specified on <code>payload</code>.
+            Used only if the field in the configuration of the node is left empty
+		</dd>
+    </dl>
+
+    <p><i>Decompress</i> mode</p>
+	<dl class="message-properties">
+		<dt>payload<span class="property-type">Buffer</span></dt>
+		<dd>
+            A Buffer containing the ZIP file content to be decompressed
+		</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <p><i>Compress</i> mode</p>
+	<dl class="message-properties">
+		<dt>payload<span class="property-type">Buffer</span></dt>
+		<dd>
+            A Buffer with the ZIP file content
+		</dd>
+    </dl>
+
+    <p><i>Decompress</i> mode</p>
+	<dl class="message-properties">
+        <span>
+            Array of objects, each representing a file in the ZIP file, 
+            with the following properties:
+        </span>
+		<dt>payload<span class="property-type">Buffer | string</span></dt>
+		<dd>
+            The content of the file. If <i>Output payload as String</i>
+            is set, the Buffer is converted to string
+        </dd>
+        
+		<dt>filename<span class="property-type">string</span></dt>
+		<dd>
+            The name of the file
+		</dd>
+    </dl>
+    
+
+    <h3>Details</h3>
+    <p>
+        Node to zip one or more files given their contents (<i>Compress</i> mode), or unzips a file, returning all files 
+        inside it (<i>Decompress</i> mode).
+    </p>
+    <p>
+        When in <i>Compress</i> mode, the compression level can be set in the node's configuration, with 0 meaning no
+        compression at all, 1 meaning fastest method (but poor compression), and 9 meaning best compression (but poor performance)
+    </p>
+    <p>
+        Also in <i>Compress</i> mode, the node accepts an array of objects in <code>payload</code>, each with a <code>payload</code> and a 
+        <code>filename</code> property, that represents each a file that will be in the resulting zip file
+    </p>
+
+
+</script>
+<!-- --- [red-module:node-red-contrib-cron-plus/cronplus] --- -->
+
+<!--
+MIT License
+
+Copyright (c) 2019, 2020, 2021, 2022 Steve-Mcl
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+-->
+
+<script type="text/javascript">
+/* global RED, $, jQuery */
+/* global cartodb, L */
+(function ($) {
+    'use strict'
+
+    /*
+        cronBuilder - adapted for cron-plus from https://github.com/juliacscai/jquery-cron-quartz - License...
+        The MIT License (MIT)
+        Copyright (c) 2016 Julia Cai
+    */
+
+    const cronInputs = {
+        period: '<div class="cron-select-period"><label></label><select class="cron-period-select"></select></div>',
+        startTime: '<div class="cron-input cron-start-time">Start time <select class="cron-clock-hour"></select>:<select class="cron-clock-minute"></select></div>',
+        container: '<div class="cron-input"></div>',
+        minutes: {
+            tag: 'cron-minutes',
+            inputs: ['<p>Every <select class="cron-minutes-select"></select> minutes(s)</p>']
+        },
+        hourly: {
+            tag: 'cron-hourly',
+            inputs: ['<p><input type="radio" name="hourlyType" value="every"> Every <select class="cron-hourly-select"></select> hour(s)</p>',
+                '<p><input type="radio" name="hourlyType" value="clock"> Every day at <select class="cron-hourly-hour"></select>:<select class="cron-hourly-minute"></select></p>']
+        },
+        daily: {
+            tag: 'cron-daily',
+            inputs: ['<p><input type="radio" name="dailyType" value="every"> Every <select class="cron-daily-select"></select> day(s)</p>',
+                '<p><input type="radio" name="dailyType" value="clock"> Every week day</p>']
+        },
+        weekly: {
+            tag: 'cron-weekly',
+            inputs: ['<p><input type="checkbox" name="dayOfWeekMon"> Monday  <input type="checkbox" name="dayOfWeekTue"> Tuesday  ' +
+                '<input type="checkbox" name="dayOfWeekWed"> Wednesday  <input type="checkbox" name="dayOfWeekThu"> Thursday</p>',
+            '<p><input type="checkbox" name="dayOfWeekFri"> Friday  <input type="checkbox" name="dayOfWeekSat"> Saturday  ' +
+                '<input type="checkbox" name="dayOfWeekSun"> Sunday</p>']
+        },
+        monthly: {
+            tag: 'cron-monthly',
+            inputs: ['<p><input type="radio" name="monthlyType" value="byDay"> Day <select class="cron-monthly-day"></select> of every <select class="cron-monthly-month"></select> month(s)</p>',
+                '<p><input type="radio" name="monthlyType" value="byWeek"> The <select class="cron-monthly-nth-day"></select> ' +
+                '<select class="cron-monthly-day-of-week"></select> of every <select class="cron-monthly-month-by-week"></select> month(s)</p>']
+        },
+        yearly: {
+            tag: 'cron-yearly',
+            inputs: ['<p><input type="radio" name="yearlyType" value="byDay"> Every <select class="cron-yearly-month"></select> <select class="cron-yearly-day"></select></p>',
+                '<p><input type="radio" name="yearlyType" value="byWeek"> The <select class="cron-yearly-nth-day"></select> ' +
+                '<select class="cron-yearly-day-of-week"></select> of <select class="cron-yearly-month-by-week"></select></p>']
+        }
+    }
+
+    const periodOpts = arrayToOptions(['Minutes', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'])
+    const minuteOpts = rangeToOptions(1, 59)
+    const hourOpts = rangeToOptions(1, 24)
+    const dayOpts = rangeToOptions(1, 31)
+    const minuteClockOpts = rangeToOptions(0, 59, true)
+    const hourClockOpts = rangeToOptions(0, 23, true)
+    const dayInMonthOpts = rangeToOptions(1, 31)
+    const monthOpts = arrayToOptions(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    const monthNumOpts = rangeToOptions(1, 12)
+    const nthWeekOpts = arrayToOptions(['First', 'Second', 'Third', 'Forth', 'Last'], [1, 2, 3, 4, 'L'])
+    const dayOfWeekOpts = arrayToOptions(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'])
+
+    // Convert an array of values to options to append to select input
+    function arrayToOptions (opts, values) {
+        let inputOpts = ''
+        for (let i = 0; i < opts.length; i++) {
+            let value = opts[i]
+            if (values != null) value = values[i]
+            inputOpts += "<option value='" + value + "'>" + opts[i] + '</option>\n'
+        }
+        return inputOpts
+    }
+
+    // Convert an integer range to options to append to select input
+    function rangeToOptions (start, end, isClock) {
+        let inputOpts = ''; let label
+        for (let i = start; i <= end; i++) {
+            if (isClock && i < 10) label = '0' + i
+            else label = i
+            inputOpts += "<option value='" + i + "'>" + label + '</option>\n'
+        }
+        return inputOpts
+    }
+
+    // Add input elements to UI as defined in cronInputs
+    function addInputElements ($baseEl, inputObj, onFinish) {
+        $(cronInputs.container).addClass(inputObj.tag).appendTo($baseEl)
+        $baseEl.children('.' + inputObj.tag).append(inputObj.inputs)
+        if (typeof onFinish === 'function') onFinish()
+    }
+
+    const eventHandlers = {
+        periodSelect: function () {
+            const period = ($(this).val())
+            const $selector = $(this).parent()
+            $selector.siblings('div.cron-input').hide()
+            $selector.siblings().find('select option').removeAttr('selected')
+            $selector.siblings().find('select option:first').attr('selected', 'selected')
+            $selector.siblings('div.cron-start-time').show()
+            $selector.siblings('div.cron-start-time').children('select.cron-clock-hour').val('12')
+            switch (period) {
+            case 'Minutes':
+                $selector.siblings('div.cron-minutes')
+                    .show()
+                    .find('select.cron-minutes-select').val('1')
+                $selector.siblings('div.cron-start-time').hide()
+                break
+            case 'Hourly':{
+                const $hourlyEl = $selector.siblings('div.cron-hourly')
+                $hourlyEl.show()
+                    .find('input[name=hourlyType][value=every]').prop('checked', true)
+                $hourlyEl.find('select.cron-hourly-hour').val('12')
+                $selector.siblings('div.cron-start-time').hide() }
+                break
+            case 'Daily':{
+                const $dailyEl = $selector.siblings('div.cron-daily')
+                $dailyEl.show()
+                    .find('input[name=dailyType][value=every]').prop('checked', true) }
+                break
+            case 'Weekly':
+                $selector.siblings('div.cron-weekly')
+                    .show()
+                    .find('input[type=checkbox]').prop('checked', false)
+                break
+            case 'Monthly':{
+                const $monthlyEl = $selector.siblings('div.cron-monthly')
+                $monthlyEl.show()
+                    .find('input[name=monthlyType][value=byDay]').prop('checked', true) }
+                break
+            case 'Yearly':{
+                const $yearlyEl = $selector.siblings('div.cron-yearly')
+                $yearlyEl.show()
+                    .find('input[name=yearlyType][value=byDay]').prop('checked', true) }
+                break
+            }
+        }
+    }
+
+    // Public functions
+    $.cronBuilder = function (el, options) {
+        const base = this
+
+        // Access to jQuery and DOM versions of element
+        base.$el = $(el)
+        base.el = el
+
+        // Reverse reference to the DOM object
+        base.$el.data('cronBuilder', base)
+
+        // Initialization
+        base.init = function () {
+            base.options = $.extend({}, $.cronBuilder.defaultOptions, options)
+            base.$el.append(cronInputs.period)
+            base.$el.find('div.cron-select-period label').text(base.options.selectorLabel)
+            base.$el.find('select.cron-period-select')
+                .append(periodOpts)
+                .bind('change', eventHandlers.periodSelect)
+
+            addInputElements(base.$el, cronInputs.minutes, function () {
+                base.$el.find('select.cron-minutes-select').append(minuteOpts)
+            })
+
+            addInputElements(base.$el, cronInputs.hourly, function () {
+                base.$el.find('select.cron-hourly-select').append(hourOpts)
+                base.$el.find('select.cron-hourly-hour').append(hourClockOpts)
+                base.$el.find('select.cron-hourly-minute').append(minuteClockOpts)
+            })
+
+            addInputElements(base.$el, cronInputs.daily, function () {
+                base.$el.find('select.cron-daily-select').append(dayOpts)
+            })
+
+            addInputElements(base.$el, cronInputs.weekly)
+
+            addInputElements(base.$el, cronInputs.monthly, function () {
+                base.$el.find('select.cron-monthly-day').append(dayInMonthOpts)
+                base.$el.find('select.cron-monthly-month').append(monthNumOpts)
+                base.$el.find('select.cron-monthly-nth-day').append(nthWeekOpts)
+                base.$el.find('select.cron-monthly-day-of-week').append(dayOfWeekOpts)
+                base.$el.find('select.cron-monthly-month-by-week').append(monthNumOpts)
+            })
+
+            addInputElements(base.$el, cronInputs.yearly, function () {
+                base.$el.find('select.cron-yearly-month').append(monthOpts)
+                base.$el.find('select.cron-yearly-day').append(dayInMonthOpts)
+                base.$el.find('select.cron-yearly-nth-day').append(nthWeekOpts)
+                base.$el.find('select.cron-yearly-day-of-week').append(dayOfWeekOpts)
+                base.$el.find('select.cron-yearly-month-by-week').append(monthOpts)
+            })
+
+            base.$el.append(cronInputs.startTime)
+            base.$el.find('select.cron-clock-hour').append(hourClockOpts)
+            base.$el.find('select.cron-clock-minute').append(minuteClockOpts)
+
+            if (typeof base.options.onChange === 'function') {
+                base.$el.find('select, input').change(function () {
+                    base.options.onChange(base.getExpression())
+                })
+            }
+
+            base.$el.find('select.cron-period-select')
+                .triggerHandler('change')
+        }
+
+        base.getExpression = function () {
+            // var b = c.data("block");
+            const sec = 0 // ignoring seconds by default
+            const year = '*' // every year by default
+            let dow = '?'
+            let month = '*'; let dom = '*'
+            let min = base.$el.find('select.cron-clock-minute').val()
+            let hour = base.$el.find('select.cron-clock-hour').val()
+            const period = base.$el.find('select.cron-period-select').val()
+            switch (period) {
+            case 'Minutes':
+                {
+                    const $selector = base.$el.find('div.cron-minutes')
+                    const nmin = $selector.find('select.cron-minutes-select').val()
+                    if (nmin > 1) min = '0/' + nmin
+                    else min = '*'
+                    hour = '*'
+                }
+                break
+
+            case 'Hourly':
+                {
+                    const $selector = base.$el.find('div.cron-hourly')
+                    if ($selector.find('input[name=hourlyType][value=every]').is(':checked')) {
+                        min = 0
+                        hour = '*'
+                        const nhour = $selector.find('select.cron-hourly-select').val()
+                        if (nhour > 1) hour = '0/' + nhour
+                    } else {
+                        min = $selector.find('select.cron-hourly-minute').val()
+                        hour = $selector.find('select.cron-hourly-hour').val()
+                    }
+                }
+                break
+
+            case 'Daily':
+                {
+                    const $selector = base.$el.find('div.cron-daily')
+                    if ($selector.find('input[name=dailyType][value=every]').is(':checked')) {
+                        const ndom = $selector.find('select.cron-daily-select').val()
+                        if (ndom > 1) dom = '1/' + ndom
+                    } else {
+                        dom = '?'
+                        dow = 'MON-FRI'
+                    }
+                }
+                break
+
+            case 'Weekly':
+                {
+                    const $selector = base.$el.find('div.cron-weekly')
+                    const ndow = []
+                    if ($selector.find('input[name=dayOfWeekMon]').is(':checked')) { ndow.push('MON') }
+                    if ($selector.find('input[name=dayOfWeekTue]').is(':checked')) { ndow.push('TUE') }
+                    if ($selector.find('input[name=dayOfWeekWed]').is(':checked')) { ndow.push('WED') }
+                    if ($selector.find('input[name=dayOfWeekThu]').is(':checked')) { ndow.push('THU') }
+                    if ($selector.find('input[name=dayOfWeekFri]').is(':checked')) { ndow.push('FRI') }
+                    if ($selector.find('input[name=dayOfWeekSat]').is(':checked')) { ndow.push('SAT') }
+                    if ($selector.find('input[name=dayOfWeekSun]').is(':checked')) { ndow.push('SUN') }
+                    dow = '*'
+                    dom = '?'
+                    if (ndow.length < 7 && ndow.length > 0) dow = ndow.join(',')
+                }
+                break
+
+            case 'Monthly':
+                {
+                    const $selector = base.$el.find('div.cron-monthly')
+                    let nmonth
+                    let mnd
+                    if ($selector.find('input[name=monthlyType][value=byDay]').is(':checked')) {
+                        month = '*'
+                        nmonth = $selector.find('select.cron-monthly-month').val()
+                        dom = $selector.find('select.cron-monthly-day').val()
+                        dow = '?'
+                    } else {
+                        mnd = $selector.find('select.cron-monthly-nth-day').val()
+                        dow = $selector.find('select.cron-monthly-day-of-week').val() +
+                                (mnd === 'L' ? 'L' : '#' + mnd)
+                        nmonth = $selector.find('select.cron-monthly-month-by-week').val()
+                        dom = '?'
+                    }
+                    if (nmonth > 1) month = '1/' + nmonth
+                }
+                break
+
+            case 'Yearly':
+                {
+                    const $selector = base.$el.find('div.cron-yearly')
+                    let ynd
+                    if ($selector.find('input[name=yearlyType][value=byDay]').is(':checked')) {
+                        dom = $selector.find('select.cron-yearly-day').val()
+                        month = $selector.find('select.cron-yearly-month').val()
+                        dow = '?'
+                    } else {
+                        ynd = $selector.find('select.cron-yearly-nth-day').val()
+                        dow = $selector.find('select.cron-yearly-day-of-week').val() +
+                                (ynd === 'L' ? 'L' : '#' + ynd)
+                        month = $selector.find('select.cron-yearly-month-by-week').val()
+                        dom = '?'
+                    }
+                }
+                break
+
+            default:
+                break
+            }
+            return [sec, min, hour, dom, month, dow, year].join(' ')
+        }
+
+        base.init()
+    }
+
+    // Plugin default options
+    $.cronBuilder.defaultOptions = {
+        selectorLabel: 'Select period: '
+    }
+
+    // Plugin definition
+    $.fn.cronBuilder = function (options) {
+        return this.each(function () {
+            // eslint-disable-next-line no-new
+            (new $.cronBuilder(this, options))
+        })
+    }
+}(jQuery));
+
+(function () {
+    RED._cron_plus_debug = false // set true at runtime to enable debug output
+    let map, mapPopup, selectedLocation, selectedLocationInput
+    const filesAdded = [] // list of files already added
+
+    function toggleFullscreen(selector, callback) {
+        callback = callback || function () {}
+        const el = document.querySelector(selector || "#node-cronplus-tab-static-schedules");
+        const $el = $(el)
+        if (!document.fullscreenElement) {
+            el.requestFullscreen().then(() => {
+                $el.addClass('cron-plus-fullscreen-element').removeClass('cron-plus-expanded-element')
+                callback()
+            }).catch((err) => {
+                if (callback) {
+                    callback(err)
+                } else {
+                    alert( `Unable to get fullscreen mode: ${err.message}`, );
+                }
+            });
+        } else {
+            $el.removeClass('cron-plus-fullscreen-element').removeClass('cron-plus-expanded-element')
+            try {
+                document.exitFullscreen();
+            } finally {
+                callback()
+            }
+        }
+    }
+
+    function checkLoadJsCssFile (filename, filetype, callback) {
+        if (filesAdded.indexOf(filename) === -1) {
+            loadJsCssFile(filename, filetype, function () {
+                filesAdded.push(filename)
+                if (callback) callback()
+            })
+        } else {
+            if (callback) callback()
+        }
+    }
+
+    function loadJsCssFile (filename, filetype, callback) {
+        let fileRef
+        if (filetype === 'js') { // if filename is a external JavaScript file
+            fileRef = document.createElement('script')
+            fileRef.setAttribute('type', 'text/javascript')
+            fileRef.setAttribute('src', filename)
+        } else if (filetype === 'css') { // if filename is an external CSS file
+            fileRef = document.createElement('link')
+            fileRef.setAttribute('rel', 'stylesheet')
+            fileRef.setAttribute('type', 'text/css')
+            fileRef.setAttribute('href', filename)
+        }
+        if (typeof fileRef !== 'undefined') { document.getElementsByTagName('head')[0].appendChild(fileRef) }
+
+        fileRef.onload = function () {
+            if (callback) callback()
+        }
+    }
+
+    function safeFloat (value, def) {
+        if ((undefined === value) || (value === null)) {
+            return def || 0.0
+        }
+        try {
+            value = parseFloat(value)
+        } catch (e) {
+            value = def || 0.0
+        }
+        if (isNaN(value)) {
+            return def || 0.0
+        }
+        return value
+    }
+
+    function isCronLike (expression) {
+        if (typeof expression !== 'string') return false
+        if (expression.indexOf('*') >= 0) return true
+        const cleaned = expression.replace(/\s\s+/g, ' ')
+        const spaces = cleaned.split(' ')
+        return spaces.length >= 4 && spaces.length <= 6
+    }
+
+    function isDateSequenceLike (expression) {
+        try {
+            if (typeof expression !== 'string') return false
+            if (expression.indexOf('*') >= 0) return false
+            if (expression.indexOf('#') >= 0) return false
+            if (expression.indexOf('?') >= 0) return false
+            const cleaned = expression.replace(/\s\s+/g, ' ')
+            const parts = cleaned.split(',')
+            for (let index = 0; index < parts.length; index++) {
+                let part = parts[index]
+                if (parseInt(part) === part) part = parseInt(part)
+                const d = new Date(part)
+                const isDate = (d instanceof Date && !isNaN(d.valueOf()))
+                if (!isDate) return false
+            }
+            return true
+        } catch (error) {
+            return false
+        }
+    }
+
+    function showSidebarHelpPanel () {
+        if (RED.sidebar.help) {
+            RED.sidebar.help.show()//  >= V1.1.0
+        } else {
+            RED.sidebar.show('info')// <  V1.1.0
+        }
+    }
+
+    function showCronHelp () {
+        showSidebarHelpPanel()
+        $('#cron-plus-expression-info').get(0).scrollIntoView()
+    }
+
+    function showSolarHelp () {
+        showSidebarHelpPanel()
+        $('#cron-plus-solar-events-info').get(0).scrollIntoView()
+    }
+
+    const getIdealDialogHeight = function () {
+        return Math.min(800, ($(document).height() < 600) ? $(document).height() - 30 : $(document).height() - 100)
+    }
+
+    function initMap () {
+        // create map popup dialog
+        $('#cron-plus-map-dialog').dialog({
+            classes: {
+                'ui-dialog-content': 'cron-plus-map-dialog-content'
+            },
+            autoOpen: false,
+            height: getIdealDialogHeight(),
+            width: '75%',
+            minWidth: 300,
+            maxWidth: 1000,
+            modal: true,
+            buttons: {
+                Cancel: function () {
+                    $('#cron-plus-map-dialog').dialog('close')
+                },
+                OK: function () {
+                    $('#cron-plus-map-dialog').dialog('close')
+                    if (selectedLocation && selectedLocationInput) {
+                        if (selectedLocationInput.typedInput('instance')) {
+                            selectedLocationInput.typedInput('value', selectedLocation.lat + ' ' + selectedLocation.lng)
+                        } else {
+                            selectedLocationInput.val(selectedLocation.lat + ' ' + selectedLocation.lng)
+                        }
+                        selectedLocationInput.focus()
+                        // if selectedLocationInput is a typedInput, trigger focus on that
+                        if (selectedLocationInput.typedInput('instance')) {
+                            selectedLocationInput.typedInput('focus')
+                        }
+                        selectedLocationInput.change()
+                    }
+                }
+            },
+            show: {
+                effect: 'blind',
+                duration: 500
+            },
+            // eslint-disable-next-line no-unused-vars
+            open: function (event) {
+                $(this).css('padding', '0px 0px 0px 0px')
+                $('.ui-dialog-buttonpane').find('button:contains("OK")').addClass('primary')
+                $('#cron-plus-map-dialog').dialog('option', 'height', getIdealDialogHeight())
+                $('#cron-plus-dynamic-nodes-dialog').dialog('option', 'position', { my: 'center', at: 'center', of: window })
+            },
+            hide: {
+                effect: 'explode',
+                duration: 500
+            },
+            // eslint-disable-next-line no-unused-vars
+            close: function (event, ui) {
+                if (RED._cron_plus_debug) console.log('destroying map')
+                if (map) map.remove()
+            }
+        })
+    }
+
+    function createMap (srcInput) {
+        if (RED._cron_plus_debug) {
+            console.log('createMap', srcInput)
+        }
+        $('.cron-plus-map-loading').hide()
+        if (!window.L || navigator.onLine === false) {
+            $('.cron-plus-map-not-loaded').show()
+            $('#cron-plus-map').hide()
+            return
+        }
+        $('#cron-plus-map').show()
+        $('.cron-plus-map-not-loaded').hide()
+        let lat, lon
+        selectedLocationInput = srcInput
+        function getInputValue () {
+            if (selectedLocationInput.typedInput('instance')) {
+                return selectedLocationInput.typedInput('value')
+            }
+            return selectedLocationInput.val()
+        }
+        const latlon = getInputValue()
+        if (latlon && typeof latlon === 'string') {
+            let splitChar = ' '
+            if (latlon.includes(',')) splitChar = ','
+            const arrLatlon = latlon.split(splitChar)
+            if (arrLatlon.length >= 2) {
+                lat = arrLatlon[0]
+                lon = arrLatlon[1]
+            }
+        }
+        if (RED._cron_plus_debug) console.log('createMap', lat, lon)
+        let zoom = 3// by default, zoomed out
+        let showPopupOnOpen = false
+        if (lat && lon) {
+            showPopupOnOpen = true
+            zoom = 5// if location is set, zoom in a bit
+        }
+        lat = safeFloat(lat, 50.0)
+        lon = safeFloat(lon, 0.0)
+        if (RED._cron_plus_debug) console.log('lat/lon', lat, lon)
+        selectedLocation = window.L.latLng(lat, lon)
+        if (RED._cron_plus_debug) console.log('selectedLocation', selectedLocation.lat, selectedLocation.lng)
+
+        // create leaflet map
+        map = window.L.map('cron-plus-map', {
+            zoomControl: true,
+            center: selectedLocation, // [selectedLocation.lat,selectedLocation.lng],
+            zoom
+        })
+        mapPopup = window.L.popup()
+
+        map.on('click', function (e) {
+            if (RED._cron_plus_debug) console.log(e)
+            const normaliseLat = function (x) {
+                while (x > 90.0 || x < -90.0) {
+                    if (x > 90.0) { x = -(90.0 - (x - 90)) }
+                    if (x < -90.0) { x = (90.0 - ((-x) - 90)) }
+                }
+                return x
+            }
+            const normaliseLng = function (x) {
+                while (x > 180.0 || x < -180.0) {
+                    if (x > 180.0) { x = -(180.0 - (x - 180)) }
+                    if (x < -180.0) { x = (180.0 - ((-x) - 180)) }
+                }
+                return x
+            }
+            selectedLocation = {}
+            selectedLocation.lat = normaliseLat(e.latlng.lat)
+            selectedLocation.lng = normaliseLng(e.latlng.lng)
+            const content =
+            '<div><span>Lat:</span> <span>' + selectedLocation.lat + '</span></div>' +
+                '<div><span>Lon:</span> <span>' + selectedLocation.lng + '</span></div>'
+            showMapPopup(content, e.latlng.lat, e.latlng.lng, map)
+        })
+
+        function showMapPopup (content, lat, lon, map) {
+            mapPopup
+                .setLatLng([lat, lon])
+                .setContent(content)
+                .openOn(map)
+        }
+
+        // add a base layer
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        const layer = L.tileLayer(tileUrl, {})
+        layer.addTo(map)
+        // add cartodb layer with one sublayer
+        cartodb.createLayer(map, {
+            user_name: 'node-red',
+            type: 'namedmap',
+            options: {
+                named_map: {
+                    name: 'node-red@cronplus',
+                    params: {
+                        color: '#5CA2D1'
+                    },
+                    layers: [{}]
+                }
+            }
+        })
+            .addTo(map)
+            .done(function (layer) {
+                layer.setInteraction(true)
+                if (showPopupOnOpen) {
+                    const content =
+                        '<div><span>Lat:</span> <span>' + selectedLocation.lat + '</span></div>' +
+                        '<div><span>Lon:</span> <span>' + selectedLocation.lng + '</span></div>'
+                    showMapPopup(content, selectedLocation.lat, selectedLocation.lng, map)
+                }
+
+                // eslint-disable-next-line no-unused-vars
+                layer.on('featureClick', function (e, latlng, pos, data, layer) {
+                    if (RED._cron_plus_debug) console.log('click', latlng, data)
+                })
+                $('#cron-plus-map-dialog').dialog('option', 'position', { my: 'center', at: 'center', of: window })
+            })
+    }
+
+    function showMap (srcInput) {
+        $('#cron-plus-map-dialog').dialog('open')
+        if (navigator.onLine === true) {
+            $('.cron-plus-map-not-loaded').show()
+            $('.cron-plus-map-loading').hide()
+            $('#cron-plus-map').hide()
+            const proto = location.protocol === 'https:' ? location.protocol : 'http:'
+            checkLoadJsCssFile(proto + '//libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css', 'css', function () {
+                checkLoadJsCssFile(proto + '//libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.uncompressed.js', 'js', function () {
+                    createMap(srcInput)
+                })
+            })
+        } else {
+            $('.cron-plus-map-not-loaded').show()
+            $('.cron-plus-map-loading').hide()
+            $('#cron-plus-map').hide()
+        }
+    }
+
+    function updateEditorLayout () {
+         onSchedulesExpandCompress()
+
+        if (RED._cron_plus_debug) console.log('cronplus-updateEditorLayout')
+        const scheduleList = $('#node-cronplus-tab-static-schedules')
+        const scheduleListFullScreen = scheduleList.css('position') === 'fixed' || document.fullscreenElement
+        if (scheduleListFullScreen) {
+            return // don't update layout if schedules are fullscreen
+        }
+        const dlg = $('#dialog-form')
+        let height = dlg.height() - 5
+        const expandRow = dlg.find('.form-row-auto-height')
+        if (expandRow && expandRow.length) {
+            const childRows = dlg.find('.form-row:not(.form-row-auto-height)')
+            for (let i = 0; i < childRows.size(); i++) {
+                const cr = $(childRows[i])
+                if (cr.is(':visible')) { height -= cr.outerHeight(true) }
+            }
+            expandRow.css('height', height + 'px')
+        }
+        const show = $('#node-input-defaultLocation').typedInput('type') === 'default' || !$('#node-input-defaultLocation').typedInput('type')
+        $('.cron-node-input-option-location-div').toggleClass('cron-plus-hide-per-location', !show)
+    }
+
+    $.widget('custom.combobox', {
+        _create: function () {
+            const that = this
+            this.input = this.element
+            this.input.addClass('red-ui-typedInput-input')
+            this.elementDiv = $(this.input).wrap('<div>').parent().addClass('red-ui-typedInput-input-wrap')
+            this.uiSelect = $(this.elementDiv).wrap($('<div>', { style: this.options.style })).parent()
+            
+            const attrStyle = this.options.style || this.element.attr('style')
+            this.uiWidth = this.input.outerWidth()
+            this.input.css('paddingLeft', 5)
+
+            let m
+            if ((m = /width\s*:\s*(calc\s*\(.*\)|\d+(%|px))/i.exec(attrStyle)) !== null) {
+                this.input.css('width', 'calc(100% - 4px)')
+                this.uiSelect.width(m[1])
+                this.uiWidth = null
+            } else {
+                this.uiSelect.width(this.uiWidth)
+            }
+
+            ['Right', 'Left'].forEach(function (d) {
+                const m = that.element.css('margin' + d)
+                that.uiSelect.css('margin' + d, m)
+                that.input.css('margin' + d, 1)
+            })
+
+            this.uiSelect.addClass('red-ui-typedInput-container')
+
+            this.input.on('change', function () {
+                that.validate()
+            })
+
+            this.button = $('<button tabindex="0" class="red-ui-typedInput-option-expand" style="display:inline-block;width: 20px"><span class="red-ui-typedInput-option-caret"><i class="red-ui-typedInput-icon fa fa-caret-down"></i></span></button>').appendTo(this.uiSelect)
+            // this.buttonLabel = $('<span class="red-ui-typedInput-option-label"></span>').prependTo(this.button);
+            this.button.on('click', function (event) {
+                event.preventDefault()
+                event.stopPropagation()
+                that._showDropdownMenu()
+            }).on('keydown', function (evt) {
+                if (evt.keyCode === 40 /* down */) {
+                    that._showDropdownMenu()
+                }
+                evt.stopPropagation()
+            }).on('blur', function () {
+                that.uiSelect.removeClass('red-ui-typedInput-focus')
+            }).on('focus', function () {
+                that.uiSelect.addClass('red-ui-typedInput-focus')
+            })
+            this.menu = this._createMenu(this.options.menu)
+        },
+        _createMenu: function (options) {
+            if (RED._cron_plus_debug) console.log('combobox -> _createMenu  options:', options)
+            const that = this
+            this.disarmClick = false
+            options = options || {}
+            const menu = $('<div>').addClass('red-ui-typedInput-options red-ui-editor-dialog')
+            const callback = options.options ? options.options.callback : null
+            const beforeSelect = options.options ? options.options.beforeSelect : null
+            const menuItems = options.menu || []
+            menuItems.forEach(function (opt) {
+                if (typeof opt === 'string') {
+                    opt = { value: opt, label: opt }
+                }
+                const op = $('<a href="#"></a>').attr('value', opt.value).appendTo(menu)
+                if (opt.label) {
+                    op.text(opt.label)
+                }
+                if (opt.title) {
+                    op.prop('title', opt.title)
+                }
+                if (opt.icon) {
+                    if (opt.icon.indexOf('<') === 0) {
+                        $(opt.icon).prependTo(op)
+                    } else if (opt.icon.indexOf('/') !== -1) {
+                        $('<img>', { src: opt.icon, style: 'margin-right: 4px; height: 18px;' }).prependTo(op)
+                    } else {
+                        $('<i>', { class: 'red-ui-typedInput-icon ' + opt.icon }).prependTo(op)
+                    }
+                } else {
+                    op.css({ paddingLeft: '18px' })
+                }
+                if (!opt.icon && !opt.label) {
+                    op.text(opt.value)
+                }
+
+                op.on('click', function (event) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    let cancel = false
+                    if (beforeSelect) {
+                        cancel = beforeSelect(opt)
+                    }
+                    if (!cancel) {
+                        if (callback) {
+                            that.value(callback(opt.value))
+                        } else {
+                            that.value(opt.value)
+                        }
+                    }
+
+                    that._hideMenu(menu)
+                })
+            })
+            menu.css({ display: 'none' })
+            menu.appendTo(document.body)
+
+            menu.on('keydown', function (evt) {
+                if (evt.keyCode === 40/* down */) {
+                    evt.preventDefault()
+                    $(this).children(':focus').next().trigger('focus')
+                } else if (evt.keyCode === 38/* up */) {
+                    evt.preventDefault()
+                    $(this).children(':focus').prev().trigger('focus')
+                } else if (evt.keyCode === 27/* escape */) {
+                    evt.preventDefault()
+                    that._hideMenu(menu)
+                }
+                evt.stopPropagation()
+            })
+            return menu
+        },
+        _showDropdownMenu: function () {
+            if (this.menu) {
+                this.menu.css({
+                    minWidth: this.uiSelect.width()
+                })
+                this._showMenu(this.menu, this.button)
+            }
+        },
+        _hideMenu: function (menu) {
+            $(document).off('mousedown.red-ui-typedInput-close-property-select')
+            menu.hide()
+            menu.css({
+                height: 'auto'
+            })
+            this.input.trigger('focus')
+            // this.button.trigger("focus");
+        },
+        _showMenu: function (menu, relativeTo) {
+            if (this.disarmClick) {
+                this.disarmClick = false
+                return
+            }
+            const that = this
+            // var pos = relativeTo.offset();
+            // var height = relativeTo.height();
+            const pos = this.uiSelect.offset()
+            const height = this.uiSelect.height()
+            const menuHeight = menu.height()
+            const menuWidth = menu.width()
+            let top = (height + pos.top)
+            let left = pos.left
+            if (left + menuWidth > $(window).width()) {
+                left -= (left + menuWidth) - $(window).width() + 5
+            }
+            if (top + menuHeight > $(window).height()) {
+                top -= (top + menuHeight) - $(window).height() + 5
+            }
+            if (top < 0) {
+                menu.height(menuHeight + top)
+                top = 0
+            }
+            menu.css({
+                top: top + 'px',
+                left: (left) + 'px'
+            })
+            menu.slideDown(100)
+            this._delay(function () {
+                that.uiSelect.addClass('red-ui-typedInput-focus')
+                $(document).on('mousedown.red-ui-typedInput-close-property-select', function (event) {
+                    if (!$(event.target).closest(menu).length) {
+                        that._hideMenu(menu)
+                    }
+                    if ($(event.target).closest(relativeTo).length) {
+                        that.disarmClick = true
+                        event.preventDefault()
+                    }
+                })
+            })
+        },
+        _destroy: function () {
+            if (this.menu) {
+                this.menu.remove()
+            }
+            this.button.remove()
+            this.element.unwrap()
+            this.element.unwrap()
+            this.input.removeClass('red-ui-typedInput-input')
+        },
+        value: function (value) {
+            const that = this
+            if (!arguments.length) {
+                return that.input.val()
+            } else {
+                that.input.val(value)
+                that.validate()
+            }
+        },
+        validate: function () {
+            let ok
+            const value = this.value()
+            const _validate = this.options.validate// || this.validate;
+            if (!_validate || typeof _validate !== 'function') {
+                ok = true
+            } else {
+                ok = _validate(value)
+            }
+            if (ok) {
+                this.uiSelect.removeClass('input-error')
+            } else {
+                this.uiSelect.addClass('input-error')
+            }
+            return ok
+        },
+        showMenu: function () {
+            this.button.show()
+        },
+        hideMenu: function () {
+            this.button.hide()
+        },
+        show: function () {
+            this.uiSelect.show()
+        },
+        hide: function () {
+            this.uiSelect.hide()
+        }
+    })
+
+    RED.nodes.registerType('cronplus', {
+        category: 'input',
+        icon: 'timer.png',
+        color: '#a6bbcf',
+        inputs: 1,
+        outputs: 1,
+        defaults: {
+            name: { value: '' },
+            // FUTURE config: { type: "CRON-PLUS Config" },
+            outputField: { value: 'payload' },
+            timeZone: { value: '' },
+            persistDynamic: { value: undefined },
+            storeName: { value: '' },
+            commandResponseMsgOutput: { value: 'output1' },
+            defaultLocation: { value: '' },
+            defaultLocationType: { value: '' },
+            outputs: { value: 1 },
+            options: {
+                value: [{ payload: '', topic: '', expression: '' }],
+                validate: function (value) {
+                    const dupCheck = {}
+                    if (value.length) {
+                        for (let i = 0; i < value.length; i++) {
+                            if (!value[i].name && value[i].topic) {
+                                value[i].name = value[i].topic
+                            }
+                            if (!value[i].name) {
+                                console.warn('cron-plus: validation error - schedule name missing')
+                                $('#node-input-option-container > li:nth-child(' + (i + 1) + ')  .node-input-option-name').addClass('input-error')
+                                return false
+                            } else {
+                                $('#node-input-option-container > li:nth-child(' + (i + 1) + ')  .node-input-option-name').removeClass('input-error')
+                            }
+                            if (dupCheck[value[i].name]) {
+                                console.warn("cron-plus: validation error - duplicate schedule named '" + value[i].name + "'")
+                                $('#node-input-option-container > li:nth-child(' + (i + 1) + ')  .node-input-option-name').addClass('input-error')
+                                return false
+                            } else {
+                                $('#node-input-option-container > li:nth-child(' + (i + 1) + ')  .node-input-option-name').removeClass('input-error')
+                            }
+                            dupCheck[value[i].name] = true
+                            if (!value[i].expressionType || value[i].expressionType === 'cron') {
+                                if (!value[i].expression) {
+                                    console.warn('cron-plus: validation error - expression missing')
+                                    // $("#node-input-option-container > li:nth-child(" + (i+1) + ")  .node-input-option-expressionType").addClass("input-error");
+                                    return false
+                                }
+                            } else if (value[i].expressionType === 'solar') {
+                                if (value[i].solarType !== 'all' && value[i].solarType !== 'selected') {
+                                    console.warn("cron-plus: validation error - solarType is not 'all' or 'selected'")
+                                    // $("#node-input-option-container > li:nth-child(" + (i+1) + ")  .node-input-option-solarType").addClass("input-error");
+                                    return false
+                                }
+                                if (value[i].solarType === 'selected' && !value[i].solarEvents) {
+                                    console.warn('cron-plus: validation error - solarEvents missing')
+                                    return false
+                                }
+                            }
+                        }
+                    }
+                    return true
+                },
+                required: true
+            }
+        },
+        label: function () {
+            return this.name || 'cron-plus'
+        },
+        outputLabels: function (index) {
+            const node = this
+            const fanOut = node.commandResponseMsgOutput === 'fanOut'
+            const hasCommandOutputPin = !!((node.commandResponseMsgOutput === 'output2' || fanOut))
+            const optionCount = node.options ? node.options.length : 0
+            let dynOutputPinIndex = 0
+            let cmdOutputPinIndex = hasCommandOutputPin ? 1 : 0
+            if (fanOut) {
+                dynOutputPinIndex = optionCount
+                cmdOutputPinIndex = optionCount + 1
+            }
+            if (!fanOut && !hasCommandOutputPin) return 'All messages and events'
+            if (!fanOut && hasCommandOutputPin && index === 0) return 'Static and Dynamic schedule messages'
+            if (index === cmdOutputPinIndex) return 'Command responses only'
+            if (index === dynOutputPinIndex) return 'Dynamic schedules only'
+            const item = node.options && node.options[index]
+            if (item) return item.name + ' (' + item.expressionType + ')'
+        },
+
+        oneditprepare: function () {
+            if (RED._cron_plus_debug) { console.log('oneditprepare - cronplus') }
+            const node = this
+            const dupCheck = {}
+            let selectedLocationInput = null
+
+            node.commandResponseMsgOutput = ['output1', 'output2', 'fanOut'].indexOf(node.commandResponseMsgOutput) >= 0 ? node.commandResponseMsgOutput : 'output1'
+
+            // eslint-disable-next-line no-undef
+            initMap()
+            
+            // inherit/upgrade deprecated properties from config
+            const hasStoreNameProperty = Object.prototype.hasOwnProperty.call(node, 'storeName') && typeof node.storeName === 'string'
+            const hasDeprecatedPersistDynamic = Object.prototype.hasOwnProperty.call(node, 'persistDynamic') && typeof node.persistDynamic === 'boolean'
+            if (hasStoreNameProperty) {
+                // not an upgrade - accept node.storeName property value
+            } else if (hasDeprecatedPersistDynamic) {
+                // upgrade from older version
+                node.storeName = node.persistDynamic ? 'file' : '' // default to file - that was the only option before
+            }
+
+            // populate store names
+            const currentStore = node.storeName || ''
+            $('#node-input-storeName').empty()
+            $('#node-input-storeName').append(`<option value="">None: Don't persist state</option>`)
+            $('#node-input-storeName').append(`<option value="file">File: local file system</option>`)
+            RED.settings.context.stores.forEach(function(item){
+                const defaultStore = RED.settings.hasOwnProperty('context') ? RED.settings.context.default : ''
+                if (!item) {
+                    return // skip empty store names
+                }
+                let name = item 
+                if (item === defaultStore) {
+                    name += ' (default)'
+                }
+                const opt = $(`<option value="${item}">${"Node Context: " + name}</option>`)
+                $('#node-input-storeName').append(opt)
+            })
+
+            // if the store does not exist, add it to the dropdown and select it (appended with the text "NOT AVAILABLE!")
+            if (currentStore && currentStore !== 'file' && RED.settings.context.stores.indexOf(currentStore) === -1) {
+                const opt = $(`<option selected disabled style="color: var(--red-ui-text-color-error) !important;" value="${currentStore}">${"Node Context: " + currentStore + " (INVALID)"}</option>`)
+                $('#node-input-storeName').append(opt)
+            } else {
+                // select the current option
+                $('#node-input-storeName').val(currentStore)
+            }
+
+            // // hook up the persistDynamic change event - enable/disable storeName select
+            // $("#node-input-persistDynamic").on("change", function(e) { 
+            //     // $("#node-input-storeName").prop("disabled", !$(this).prop("checked"))
+            //     $('#node-input-storeName').toggle($(this).prop("checked"))
+            // });
+
+            // create common location typed input
+            $('#node-input-defaultLocation').typedInput({
+                default: 'default',
+                types: [
+                    {
+                        value: 'default',
+                        label: 'Location per schedule',
+                        hasValue: false,
+                        icon: 'fa fa-map-marker'
+                    },
+                    {
+                        value: 'fixed',
+                        label: 'Fixed Location',
+                        icon: 'fa fa-map-pin',
+                        expand: function () {
+                            // eslint-disable-next-line no-undef
+                            showMap($('#node-input-defaultLocation'))
+                        },
+                        validate: function (v, opt) { return !!v && v.length >= 3 }
+                    },
+                    'env'
+                ]
+            })
+            $('#node-input-defaultLocation').typedInput('type', node.defaultLocationType || 'default')
+            $('#node-input-defaultLocation').typedInput('value', node.defaultLocation || '')
+            $('#node-input-defaultLocation').on('change', function () {
+                const show = $('#node-input-defaultLocation').typedInput('type') === 'default' || !$('#node-input-defaultLocation').typedInput('type')
+                $('.cron-node-input-option-location-div').toggleClass('cron-plus-hide-per-location', !show)
+            })
+
+            // create the popup dialog for the cron builder
+            $('#cron-plus-expression-builder-dialog').dialog({
+                autoOpen: false,
+                height: 300,
+                width: 480,
+                minWidth: 400,
+                maxWidth: 600,
+                modal: true,
+                buttons: {
+                    Cancel: function () {
+                        $('#cron-plus-expression-builder-dialog').dialog('close')
+                    },
+                    OK: function () {
+                        const val = $('#cron-plus-expression-builder').data('cronBuilder').getExpression()
+                        const expressionField = $('#cron-plus-expression-builder-dialog').data('opener')
+                        if (expressionField && expressionField.length) {
+                            expressionField.combobox('value', val || '')
+                            // expressionField.focus();
+                        }
+                        $('#cron-plus-expression-builder-dialog').dialog('close')
+                    }
+                },
+                show: {
+                    effect: 'blind',
+                    duration: 500
+                },
+                // eslint-disable-next-line no-unused-vars
+                open: function (event) {
+                    // $(this).css('padding', '0px 0px 0px 0px');
+                    $('.ui-dialog-buttonpane').find('button:contains("OK")').addClass('primary')
+                    $('#cron-plus-expression-builder .cron-period-select').change()// cause cronBuilder UI to update
+                },
+                close: function () {
+                    const expressionField = $('#cron-plus-expression-builder-dialog').data('opener')
+                    if (expressionField && expressionField.data('customCombobox') && expressionField.data('customCombobox').input) {
+                        // expressionField.combobox("value", val || "");
+                        expressionField.data('customCombobox').input.focus()
+                    }
+                },
+                hide: {
+                    effect: 'explode',
+                    duration: 500
+                }
+            })
+
+            // build cron builder
+            if (!$('#cron-plus-expression-builder').data('cronBuilder')) {
+                $('#cron-plus-expression-builder').cronBuilder()
+            }
+
+            function StringBuilder () {
+                const strings = []
+                return {
+                    push: function (value) {
+                        if (value) {
+                            if (value instanceof StringBuilder) {
+                                strings.push(...value.strings)
+                            } else if (Array.isArray(value)) {
+                                strings.push(...value)
+                            } else {
+                                strings.push(value)
+                            }
+                        }
+                        return this
+                    },
+                    clear: function () {
+                        strings.length = 0
+                        return this
+                    },
+                    toString: function (joiner = '\n') {
+                        return strings.join(joiner)
+                    }
+                }
+            }
+
+            function drawDynamicSchedulesTable (nodeId, table, spinner, options, callback) {
+                if (RED._cron_plus_debug) console.log('drawDynamicSchedulesTable...')
+                const $table = $(table)
+                const $spinner = $(spinner)
+                $table.hide()
+                $spinner.show()
+                $table.empty()
+                $.ajax({
+                    type: 'POST',
+                    url: 'cronplus/' + nodeId + '/getDynamic',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    dataType: 'json',
+                    data: '{}' // dummy data
+                })
+                    .done(function (response) {
+                        if (RED._cron_plus_debug) console.log('cronplus/' + nodeId + '/getDynamic => response:', response)
+
+                        options = options || {}
+                        if (options.width) $table.width(options.width)
+                        if (options.height) $table.width(options.height)
+                        if (options.class) $table.addClass(options.class)
+
+                        if (!response || !response.length) {
+                            $spinner.hide()
+                            $table.show()
+                            $('<div/>' + (options.emptyMessage || 'no data') + '<div>').css({padding: '12px', 'font-size': '24px'}).appendTo($table)
+                            return
+                        }
+
+                        const itemsToHTML = (items) => {
+                            const styleBuilder = new StringBuilder()
+                            styleBuilder.push('<' + 'style' + '>')
+                            styleBuilder.push('    .accordion-container{')
+                            styleBuilder.push('        position: relative;')
+                            styleBuilder.push('        width: 100%;')
+                            styleBuilder.push('        height: auto;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container .accordion-item{')
+                            styleBuilder.push('        position: relative;')
+                            styleBuilder.push('        width: 100%;')
+                            styleBuilder.push('        height: auto;')
+                            styleBuilder.push('        background-color: var(--red-ui-form-button-background);')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container .accordion-item > a{')
+                            styleBuilder.push('        display: block;')
+                            styleBuilder.push('        padding: 10px 15px;')
+                            styleBuilder.push('        text-decoration: none;')
+                            styleBuilder.push('        color: var(--red-ui-primary-text-color);')
+                            styleBuilder.push('        font-weight: 600;')
+                            styleBuilder.push('        border-bottom: 1px solid var(--red-ui-primary-border-color);')
+                            styleBuilder.push('        -webkit-transition:all 0.2s linear;')
+                            styleBuilder.push('        -moz-transition:all 0.2s linear;')
+                            styleBuilder.push('        transition:all 0.2s linear;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container .accordion-item > a.active{')
+                            styleBuilder.push('        background-color: var(--red-ui-form-input-focus-color)')
+                            styleBuilder.push('        color: var(--red-ui-primary-text-color);')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container .accordion-item > div{')
+                            styleBuilder.push('        background-color: var(--red-ui-primary-background);')
+                            styleBuilder.push('        border-bottom: 1px solid var(--red-ui-primary-border-color);')
+                            styleBuilder.push('        display:none;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container .accordion-item > div {')
+                            styleBuilder.push('        padding: 10px 15px;')
+                            styleBuilder.push('        margin: 0;')
+                            styleBuilder.push('        color: var(--red-ui-primary-text-color);')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    div.accordion-container a > div {')
+                            styleBuilder.push('        display: flex;')
+                            styleBuilder.push('        flex-flow: row wrap;')
+                            styleBuilder.push('        justify-content: space-around;')
+                            styleBuilder.push('        padding: 0;')
+                            styleBuilder.push('        margin: 0;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container a > div > name,')
+                            styleBuilder.push('    .accordion-container a > div > topic,')
+                            styleBuilder.push('    .accordion-container a > div > desc{')
+                            styleBuilder.push('        flex-grow: 2;')
+                            styleBuilder.push('        flex: 2 0 5px;')
+                            styleBuilder.push('        white-space: break-word;')
+                            styleBuilder.push('        word-break: break-all;')
+                            styleBuilder.push('        overflow: hidden;')
+                            styleBuilder.push('        text-overflow: ellipsis;')
+                            styleBuilder.push('        min-width: 0;')
+                            styleBuilder.push('        padding: 0px 6px')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container a > div > name{')
+                            styleBuilder.push('        flex-grow: 3;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container a > div > topic{')
+                            styleBuilder.push('        flex-grow: 3;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container a > div > desc{')
+                            styleBuilder.push('        flex-grow: 4;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container  a .accordion-title > i {')
+                            styleBuilder.push('        flex: 0 1 20px;')
+                            styleBuilder.push('        -webkit-order: 0;')
+                            styleBuilder.push('        -ms-flex-order: 0;')
+                            styleBuilder.push('        order: 0;')
+                            styleBuilder.push('        -webkit-flex: 0 1 auto;')
+                            styleBuilder.push('        -ms-flex: 0 1 auto;')
+                            styleBuilder.push('        -webkit-align-self: auto;')
+                            styleBuilder.push('        -ms-flex-item-align: auto;')
+                            styleBuilder.push('        align-self: auto;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container a.active .accordion-title > :not(:first-child,:last-child){')
+                            styleBuilder.push('        display: none;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container a.active .accordion-title > name {')
+                            styleBuilder.push('        flex: 2;')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('    .accordion-container .accordion-content code {')
+                            styleBuilder.push('        color: var(--red-ui-text-color-code);')
+                            styleBuilder.push('    }')
+                            styleBuilder.push('<' + '/style' + '>')
+
+                            const scriptBuilder = new StringBuilder()
+                            scriptBuilder.push('<' + 'script' + '>')
+                            scriptBuilder.push('$(".accordion-container a").on("click", function() {')
+                            scriptBuilder.push('    if ($(this).hasClass("active")) {')
+                            scriptBuilder.push('    $(this).removeClass("active");')
+                            scriptBuilder.push('    $(this).siblings("div").slideUp(200);')
+                            scriptBuilder.push('    } else {')
+                            scriptBuilder.push('    $(this).addClass("active");')
+                            scriptBuilder.push('    $(this).siblings("div").slideDown(200);')
+                            scriptBuilder.push('    }')
+                            scriptBuilder.push('    $(".accordion-container a:not(.active) i")')
+                            scriptBuilder.push('        .removeClass("fa-minus")')
+                            scriptBuilder.push('        .addClass("fa-plus");')
+                            scriptBuilder.push('    $(".accordion-container a.active i")')
+                            scriptBuilder.push('        .removeClass("fa-plus")')
+                            scriptBuilder.push('        .addClass("fa-minus");')
+                            scriptBuilder.push('});')
+                            scriptBuilder.push('<' + '/script' + '>')
+
+                            const htmlBuilder = new StringBuilder()
+                            htmlBuilder.push('<div class="accordion-container">')
+                            items.forEach(item => {
+                                htmlBuilder.push('  <div class="accordion-item">')
+                                htmlBuilder.push('    <a href="#">')
+                                htmlBuilder.push('      <div class="accordion-title">')
+                                htmlBuilder.push(`        <name>${item.config.name}</name>`)
+                                htmlBuilder.push(`        <topic>${item.config.topic}</topic>`)
+                                htmlBuilder.push(`        <desc>${item.status.nextDescription}</desc>`)
+                                htmlBuilder.push('        <i class="fa fa-plus"></i>')
+                                htmlBuilder.push('      </div> ')
+                                htmlBuilder.push('    </a>')
+                                htmlBuilder.push('    <div class="accordion-content">')
+                                htmlBuilder.push('      <p>')
+                                htmlBuilder.push('        <code>config:</code>')
+                                htmlBuilder.push('        <code>')
+                                htmlBuilder.push(`          ${JSON.stringify(item.config, null, 1).replace(/\n/g, '')}`)
+                                htmlBuilder.push('        </code>')
+                                htmlBuilder.push('      </p>')
+                                htmlBuilder.push('      <p>')
+                                htmlBuilder.push('        <code>status:</code>')
+                                htmlBuilder.push('        <code>')
+                                htmlBuilder.push(`          ${JSON.stringify(item.status, null, 1).replace(/\n/g, '')}`)
+                                htmlBuilder.push('        </code>')
+                                htmlBuilder.push('      </p>')
+                                htmlBuilder.push('    </div>')
+                                htmlBuilder.push('  </div>')
+                            })
+                            htmlBuilder.push('</div>')
+                            const stringBuilder = new StringBuilder()
+                            stringBuilder.push(styleBuilder)
+                            stringBuilder.push(htmlBuilder)
+                            stringBuilder.push(scriptBuilder)
+                            return stringBuilder.toString()
+                        }
+
+                        // tidy up date for display
+                        const data = response.map(function (e, i) {
+                            e.item = i + 1
+                            if (e.type) {
+                                e.payloadType = e.type
+                                delete e.type
+                            }
+                            if (e.payloadType === 'default') e.payload = null
+
+                            if (e.payload && isObject(e.payload)) {
+                                try {
+                                    e.payload = JSON.stringify(e.payload, undefined, 2)
+                                } catch (error) {
+                                    e.payload = typeof e.payload
+                                }
+                            }
+                            return e
+                        })
+
+                        $table.html(itemsToHTML(data))
+                        $table.show()
+                        $spinner.hide()
+                        if (callback) callback()
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        if (callback) callback(errorThrown)
+                        console.error(jqXHR, textStatus, errorThrown)
+                    })
+            }
+
+            const dnRepositionResize = function () {
+                const w = ($(document).width() < 1025) ? '95%' : '60%'
+                if (RED._cron_plus_debug) console.log('dialog-open-drawDynamicSchedulesTable done - should now center and resize width', w)
+                $('#cron-plus-dynamic-nodes-dialog').dialog('option', 'width', w)
+                $('#cron-plus-dynamic-nodes-dialog').dialog('option', 'position', { my: 'center', at: 'center', of: window })
+            }
+
+            $('#cron-plus-dynamic-nodes-dialog').dialog({
+                autoOpen: false,
+                height: 630,
+                minHeight: 400,
+                minWidth: 300,
+                modal: true,
+                buttons: {
+                    Refresh: function () {
+                        const nodeId = $('#cron-plus-dynamic-nodes-dialog').data('_cron_node_id')
+                        drawDynamicSchedulesTable(nodeId, '#cron-plus-dynamic-nodes-table-placeholder', '#cron-plus-dynamic-nodes-loader', {}, dnRepositionResize)
+                    },
+                    Close: function () {
+                        $('#cron-plus-dynamic-nodes-dialog').dialog('close')
+                    }
+                },
+                // eslint-disable-next-line no-unused-vars
+                open: function (event) {
+                    $(this).css('padding', '0px 0px 0px 0px')
+                    $('.ui-dialog-buttonpane').find('button:contains("Close")').addClass('primary')
+                    const nodeId = $('#cron-plus-dynamic-nodes-dialog').data('_cron_node_id')
+                    dnRepositionResize()
+                    drawDynamicSchedulesTable(nodeId, '#cron-plus-dynamic-nodes-table-placeholder', '#cron-plus-dynamic-nodes-loader', dnRepositionResize)
+                },
+                show: {
+                    effect: 'fade',
+                    duration: 250
+                },
+                hide: {
+                    effect: 'fade',
+                    duration: 250
+                }
+            })
+
+            $('#cron-plus-dynamic-nodes-dialog').data('_cron_node_id', node.id)
+            dnRepositionResize()
+
+            let tzData
+            $.ajax({
+                type: 'POST',
+                url: 'cronplus/0/tz',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                dataType: 'json',
+                data: '{}' // dummy data
+            })
+                .done(function (data) {
+                    tzData = data
+                    $('#node-input-timeZone').autocomplete({
+                        source: function (request, response) {
+                            const matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), 'i')
+                            response($.map(tzData, function (item) {
+                                if (item && item.tz) {
+                                    const label = (item.code ? item.code + ', ' : '') + item.tz + ' (UTC: ' + item.UTCOffset + ', DST: ' + item.UTCDSTOffset + ')'
+                                    if (label && (!request.term || matcher.test(label))) {
+                                        return {
+                                            label,
+                                            value: item
+                                        }
+                                    }
+                                }
+                            }))
+                        },
+                        minLength: 1,
+                        open: function () {
+                            $(this).removeClass('ui-corner-all').addClass('ui-corner-top')
+                        },
+                        close: function () {
+                            $(this).removeClass('ui-corner-top').addClass('ui-corner-all')
+                        },
+                        focus: function (event, ui) {
+                            event.preventDefault()
+                            $('#node-input-timeZone').val(ui.item.label)
+                        },
+                        select: function (event, ui) {
+                            event.preventDefault()
+                            this.value = ui.item.value.tz
+                        }
+                    })
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error(jqXHR, textStatus, errorThrown)
+                })
+
+            const formatDateTimeWithTZ = function (date, tz) {
+                if (!date) {
+                    return ''
+                }
+                let dateString
+                const o = {
+                    timeZone: tz || undefined,
+                    timeZoneName: 'short',
+                    hour12: false,
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                }
+                try {
+                    dateString = new Intl.DateTimeFormat('default', o).format(new Date(date))
+                } catch (error) {
+                    dateString = 'Error. Check timezone setting'
+                }
+                return dateString
+            }
+
+            const makeSolarChoice = function (value, label, tooltip) {
+                return {
+                    label,
+                    value: value || label,
+                    title: tooltip,
+                    multiple: true
+                }
+            }
+
+            const solarChoices = [
+                makeSolarChoice('nightEnd', 'night end / astronomical dawn', 'night ends, astronomical twilight starts (-18°)'), // needed? same as astronomicalDawn
+                // makeSolarChoice("astronomicalDawn", "astronomical dawn", "night ends, astronomical twilight starts (-18°)"),
+                makeSolarChoice('nauticalDawn', 'nautical dawn', 'astronomical twilight ends, nautical twilight starts (-12°)'),
+                makeSolarChoice('civilDawn', 'civil dawn / golden hour', 'nautical twilight ends, civil twilight and golden hour starts (-6°)'),
+                // makeSolarChoice("morningGoldenHourStart", "golden hour starts", "when the sun is 6 degrees below the horizon (-6°)"), //needed? same as civilDawn
+                makeSolarChoice('sunrise', 'sunrise', 'top edge of the sun appears on the horizon (-0.833°)'),
+                makeSolarChoice('sunriseEnd', 'sunrise end', 'bottom edge of the sun touches the horizon (-0.3°)'),
+                makeSolarChoice('morningGoldenHourEnd', 'morning golden hour ends', 'when the sun is 6 degrees above the horizon (6°)'),
+                makeSolarChoice('solarNoon', 'solar noon', 'sun is at its highest position'),
+                makeSolarChoice('eveningGoldenHourStart', 'evening golden hour start', 'when the sun is 6 degrees above the horizon (6°)'),
+                makeSolarChoice('sunsetStart', 'sunset start', 'bottom edge of the sun touches the horizon (-0.3°)'),
+                makeSolarChoice('sunset', 'sunset', 'civil twilight starts, sun disappears below the horizon (-0.833°)'),
+                // makeSolarChoice("eveningGoldenHourEnd", "evening golden hour end","golden hour ends (-6°)"), //needed? same as civilDusk
+                makeSolarChoice('civilDusk', 'civil dusk / golden hour end', 'civil twilight and golden hour ends, nautical twilight starts (-6°)'),
+                makeSolarChoice('nauticalDusk', 'nautical dusk', 'nautical twilight ends, astronomical twilight starts (-12°)'),
+                // makeSolarChoice("astronomicalDusk", "astronomical dusk", "astronomical twilight ends, night starts (-18°)"),
+                makeSolarChoice('nightStart', 'astronomical dusk / night start', 'astronomical twilight ends, night starts (-18°)'), // needed? same as astronomicalDusk
+                makeSolarChoice('nadir', 'solar midnight', 'when the sun is closest to nadir and the night is equidistant from dusk and dawn')
+            ]
+
+            function isObject (o) {
+                return (typeof o === 'object' && o !== null)
+            }
+
+            /**
+             * Apply defaults to the cron schedule object
+             * @param {integer} optionIndex An index number to use for defaults
+             * @param {object} option The option object to update
+            */
+            function applyOptionDefaults (optionIndex, option) {
+                if (isObject(option) === false) {
+                    return// no point in continuing
+                }
+                optionIndex = optionIndex == null ? 0 : optionIndex
+                if (['cron', 'dates', 'solar'].indexOf(option.expressionType) < 0) {
+                    // if expressionType is not cron or solar - it may be sunrise or sunset
+                    if (option.expressionType === 'sunrise') {
+                        option.solarEvents = option.solarEvents || 'sunrise'
+                        option.expressionType = 'solar'
+                    } else if (option.expressionType === 'sunset') {
+                        option.solarEvents = option.solarEvents || 'sunset'
+                        option.expressionType = 'solar'
+                    } else {
+                        if (!option.expression) {
+                            option.expressionType = 'cron'
+                        } else {
+                            if (!isCronLike(option.expression)) {
+                                option.expressionType = 'dates'
+                            } else if (isDateSequenceLike(option.expression)) {
+                                option.expressionType = 'dates'
+                            } else {
+                                option.expressionType = 'cron'
+                            }
+                        }
+                    }
+                }
+                option.name = option.name || 'schedule' + (optionIndex + 1)
+                option.topic = option.topic || 'topic' + (optionIndex + 1)
+                option.payloadType = option.payloadType || option.type || 'default'
+                delete option.type
+                if (option.expressionType === 'cron' && !option.expression) option.expression = '0 * * * * * *'
+                if (!option.solarType) option.solarType = option.solarEvents ? 'selected' : 'all'
+                if (!option.solarEvents) option.solarEvents = 'sunrise,sunset'
+                if (!option.location) option.location = ''
+                // option.version = 1;
+            }
+
+            /**
+             * Generate an option row on the UI
+             * @param {integer} optionIndex the index number of this schedule
+             * @param {object} option The option object to present
+            */
+            function generateOption (optionIndex, option) {
+                if (RED._cron_plus_debug) { console.log('generating option', optionIndex, option) }
+                applyOptionDefaults(optionIndex, option)
+                function buildExpressionTip (title, desc, text, type) {
+                    const helpFunc = type === 'solar' ? 'showSolarHelp();' : 'showCronHelp();'
+                    const helpFuncPopOut = type === 'solar' ? "_popoutCronPlusHelp('cron-plus-solar-events-info');" : "_popoutCronPlusHelp('cron-plus-expression-info');"
+                    const helpFuncHtml = '<span style="float: right">' +
+                        '<button id="cron-plus-tt-help-button" class="cron-plus-link-button" onclick="' + helpFunc + '">help </button>&nbsp;' +
+                        '<button class="cron-plus-link-button" onclick="' + helpFuncPopOut + '"> <i class="fa fa-external-link"></i></button></span>'
+                    return '<div style="min-height:190px"><span style="font-size: 12px; font-weight: bold">' + title + '</span>' +
+                        helpFuncHtml +
+                        '<hr><div>' + desc + '</div>' +
+                        '<pre class="cron-plus-form-tip form-tips">' + text + '</pre></div>'
+                }
+                function initTooltip (selector, type, pos) {
+                    if (selector.typedInput('instance') && selector.typedInput('instance').input) {
+                        selector = selector.typedInput('instance').input
+                    }
+                    const $selector = $(selector)
+                    //clear any title attr to prevent default tooltip & permit the jquery tooltip plugin to work
+                    $selector.attr('title', ' ')
+                    $selector.off('mouseenter').tooltip({
+                        show: { effect: 'fade' },
+                        tooltipClass: 'cron-plus-expression-tip form-tips',
+                        position: pos,
+                        content: function () {
+                            return buildExpressionTip('Expression...', 'Getting description...', '', type)
+                        },
+                        disabled: true
+                    }).off('focusout').off('mouseleave').mouseleave(function (e) {
+                        if (RED._cron_plus_debug) console.log('initTooltip--mouseleave')
+                        if ($selector.is(':focus')) {
+                            if (RED._cron_plus_debug) console.log("initTooltip--mouseleave selector:is(':focus')")
+                            e.preventDefault()
+                            e.stopImmediatePropagation()
+                            // selector.tooltip('open');
+                            return false
+                        }
+                    }).on('blur', function (e) {
+                        if (RED._cron_plus_debug) console.log('initTooltip-->on-blur.  relatedTarget:', e.relatedTarget)
+                        if (e.relatedTarget && e.relatedTarget.id === 'cron-plus-tt-help-button') {
+                            if (RED._cron_plus_debug) console.log('blur-->e.relatedTarget.relatedTarget.className == "cron-plus-link-button"')
+                            if (type === 'cron') { showCronHelp() } else if (type === 'solar') { showSolarHelp() }
+                            $(this).focus()
+                            return false
+                        }
+                        $(this).tooltip('close').tooltip('disable')
+                    }).on('focusin change keyup', function (e) {
+                        if (RED._cron_plus_debug) console.log('initTooltip--focusin change keyup', e)
+                        const $this = $(this)
+
+                        const $timeZone = $('#node-input-timeZone')
+                        const $expressionType = $this.closest('li').find('.node-input-option-expressionType')
+                        const expressionType = $expressionType.val()
+                        const $location = $this.closest('li').find('.node-input-option-location')
+                        const $expression = $this.closest('li').find('.node-input-option-expression')
+                        let expression
+                        if (expressionType === 'solar') {
+                            const defLocation = $('#node-input-defaultLocation').typedInput('value')
+                            const defLocationType = $('#node-input-defaultLocation').typedInput('type')
+                            if (defLocationType === 'env' || defLocationType === 'fixed') {
+                                expression = defLocation
+                            } else {
+                                expression = $location.typedInput('value')
+                            }
+                        } else {
+                            expression = $expression.val()
+                        }
+                        if (!expression) {
+                            $this.tooltip('close').tooltip('disable')
+                            return
+                        }
+                        const $offset = $this.closest('li').find('.node-input-option-offset')
+                        const $solarEvents = $this.closest('li').find('.node-input-option-solarEvents')
+                        $this.tooltip('enable').tooltip('open')
+                        $this.tooltip('option', 'position', pos)
+                        $this.tooltip({
+                            position: pos,
+                            disabled: false,
+                            show: { effect: 'fade' },
+                            content: function (callback) {
+                                if (RED._cron_plus_debug) console.log('initTooltip-->content')
+
+                                const solarType = $solarEvents.typedInput('type')
+                                const solarEvents = $solarEvents.typedInput('value')
+                                const expressionType = $expressionType.val()
+                                const offset = $offset.val()
+                                const timeZone = $timeZone.val()
+                                let titleHtml
+                                const e = { expressionType }
+                                if (timeZone) e.timeZone = timeZone
+                                if (expressionType === 'solar') {
+                                    titleHtml = (expr) => {
+                                        const title = '<b>solar events</b> at <span class="cron-plus-expression">' + expr.slice(0, 100) + (expr.length > 100 ? '...' : '') + '</span>'
+                                        // eslint-disable-next-line eqeqeq
+                                        if (offset != null && offset !== '0' && offset !== 0) {
+                                            titleHtml += '<b>'
+                                            if (offset > 0) titleHtml += ' +'
+                                            titleHtml += offset + ' minute'
+                                            // eslint-disable-next-line eqeqeq
+                                            if (offset != '1' && offset != '-1') titleHtml += 's'
+                                            titleHtml += '</b>'
+                                        }
+                                        return title
+                                    }
+                                    e.offset = offset
+                                    e.location = expression
+                                    e.solarType = solarType
+                                    e.solarEvents = solarEvents
+                                    e.defaultLocationType = $('#node-input-defaultLocation').typedInput('type')
+                                    e.defaultLocation = $('#node-input-defaultLocation').typedInput('value')
+                                    e.flowId = node.z
+                                    e.nodeId = node.id
+                                    e.nodeGroupId = node.g
+                                    const env = []
+                                    if (node.g) {
+                                        let gId = node.g
+                                        let group = RED.nodes.group(gId)
+                                        while (group) {
+                                            if (group.env && group.env.length) {
+                                                env.push(...group.env)
+                                            }
+                                            gId = group.g
+                                            group = RED.nodes.group(gId)
+                                        }
+                                    }
+                                    if (node.z && RED.nodes.workspace(node.z) && RED.nodes.workspace(node.z).env) {
+                                        env.push(...RED.nodes.workspace(node.z).env)
+                                    }
+                                    e.env = env
+                                } else {
+                                    titleHtml = (expr) => 'Description of <span class="cron-plus-expression">' + expr.slice(0, 50) + (expr.length > 50 ? '...' : '') + '</span>'
+                                    e.expression = expression
+                                }
+                                if (RED._cron_plus_debug) console.log('initTooltip-->Ajax start, e...', e)
+                                $.ajax({
+                                    type: 'POST',
+                                    url: `cronplus/${node.id}/expressionTip`,
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    dataType: 'json',
+                                    data: JSON.stringify(e)
+                                })
+                                    .done(function (data) {
+                                        if (RED._cron_plus_debug) console.log('initTooltip-->Ajax done, data...', data)
+                                        let nextInfo = ''
+                                        const desc = data.description
+                                        if (data.prettyNext) {
+                                            nextInfo = 'Next event: ' + data.prettyNext
+                                            if (data.nextDates && data.nextDates.length) {
+                                                nextInfo = nextInfo + ' then...'
+                                                const makeTR = function (x) {
+                                                    let v = x; let s = '<i class="fa fa-clock-o"></i>'
+                                                    if (typeof x === 'object' && x.timeOffset) {
+                                                        v = x.timeOffset
+                                                        s = x.event || 'unknown'
+                                                    }
+                                                    const fd = formatDateTimeWithTZ(v, timeZone)
+                                                    v = fd || undefined
+                                                    return '<tr><td>' + s + '</td><td>' + v + '</td></tr>'
+                                                }
+                                                const map1 = data.nextDates.map(makeTR)
+                                                nextInfo += '<table class=>' + map1.join('\n') + '</table>'
+                                            }
+                                        }
+                                        const okContent = function () {
+                                            setTimeout(function () {
+                                                if (RED._cron_plus_debug) console.log('initTooltip-->callback-->setTimeout--> option-->position')
+                                                $this.tooltip('option', 'position', pos)
+                                                $this.tooltip('enable').tooltip('open')
+                                                $this.tooltip('option', 'position', pos)
+                                            }, 200)
+                                            const expr = data.expressionType === 'solar' ? data.location : data.expression
+                                            return buildExpressionTip(titleHtml(expr), desc, nextInfo, expressionType)
+                                        }
+                                        callback(okContent)
+                                        $this.tooltip('option', 'position', pos)
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        console.error(jqXHR, textStatus, errorThrown)
+                                        const errContent = buildExpressionTip('Error...', 'Cannot get description from node-red', '', expressionType)
+                                        callback(errContent)
+                                    })
+                            }
+                        })
+                    })
+                }
+                if (RED._cron_plus_debug) { console.log('setting up schedule fields') }
+                // styles for the option row 1
+                const nameStyle = 'display: flex; flex-grow: 0; flex-basis:128px; margin-right:5px;'
+                const topicStyle = 'display: flex; flex-grow: 1; flex-basis: 140px; margin-right: 5px;'
+                const payloadStyle = 'display: flex; flex-grow: 2; flex-basis: 250px;'
+                // styles for the option row 2
+                const scheduleTypeStyle = 'display: flex; flex-grow: 0; flex-basis:128px; margin-right:5px; padding-left: 2px; padding-right: 10px;' // padding hack for text alignment
+                const row2Col2Style = 'display: flex; flex-grow: 1;'
+                // row 2 col 2 child styles (for solar)
+                const solarEventsStyle = 'display: flex; flex-grow: 1; flex-basis: 140px; margin-right: 5px;'
+                const locationStyle = 'display: flex; flex-grow: 3; width:100%; margin-right:5px;'
+                const solarOffsetStyle = 'display: flex; flex-grow: 0; flex-basis:180px;'
+
+                // control buttons container styles
+                const controlsContainerStyle = 'float: right; height: 74px; margin-left: 5px; flex-direction: column; display: flex; justify-content: space-evenly; align-items: center; border-left: var(--red-ui-form-button-background) 1px solid; padding-left: 5px;'
+
+                // build options row
+                const container = $('<li/>')
+                // const container = $('<li/>', { style: 'max-width: 600px' })
+
+                // row buttons
+                const controlsContainer = $('<span/>', { style: controlsContainerStyle }).appendTo(container)
+                const deleteButton = $('<a/>', { href: '#', class: 'editor-button editor-button-small', style: '' }).appendTo(controlsContainer)
+                $('<i/>', { class: 'fa fa-remove' }).appendTo(deleteButton)
+                RED.popover.tooltip(deleteButton, 'Delete');
+                const sortHandle = $('<a/>', { href: '#', class: 'editor-button editor-button-small node-input-option-handle', style: 'cursor: grab' }).appendTo(controlsContainer)
+                $('<i/>', { class: 'fa fa-bars' }).appendTo(sortHandle)
+                RED.popover.tooltip(sortHandle, 'Move');
+
+                // #### ROW 1 ####
+                const row1 = $('<div style="display: flex; margin: 0px 0px 5px 0px"/>').appendTo(container)
+
+                // generate the name field
+                const nameClass = 'node-input-option-name' + ((!option.name || dupCheck[option.name]) ? ' input-error' : '')
+                const nameField = $('<input/>', { class: nameClass, type: 'text', style: nameStyle, placeholder: 'name', title: 'name', value: option.name }).appendTo(row1)
+                dupCheck[option.name] = true
+
+                // generate the topic field
+                const topicClass = 'node-input-option-topic' + ((!option.topic) ? ' input-error' : '')
+                const topicField = $('<input/>', { class: topicClass, type: 'text', style: topicStyle, placeholder: 'topic', title: 'topic', value: option.topic }).appendTo(row1)
+
+                // generate the payload field
+                const payloadDiv = $('<div/>', { style: payloadStyle }).appendTo(row1)
+                const payloadField = $('<input/>', { class: 'node-input-option-payload', type: 'text', style: 'width: 100%', placeholder: 'payload', value: option.payload || '' }).appendTo(payloadDiv)
+                payloadField.typedInput({
+                    default: option.payloadType || 'default',
+                    types: [{
+                        icon: 'fa fa-envelope',
+                        value: 'default',
+                        label: 'Default Payload',
+                        hasValue: false
+                    }, 'flow', 'global', 'str', 'num', 'bool', 'json', 'jsonata', 'bin', 'date', 'env']
+                })
+
+                // #### ROW 2 ####
+                const row2 = $('<div style="display: flex; margin: 0px 0px 5px 0px"/>').appendTo(container)
+
+                // generate a dropdown for schedule type
+                const scheduleType = option.expressionType || 'cron'
+                const scheduleTypeField = $('<select/>', { class: 'node-input-option-expressionType', type: 'text', placeholder: 'cron', style: scheduleTypeStyle }).appendTo(row2)
+                $('<option />', { value: 'cron', text: 'cron' }).appendTo(scheduleTypeField)
+                $('<option />', { value: 'dates', text: 'date sequence' }).appendTo(scheduleTypeField)
+                $('<option />', { value: 'solar', text: 'solar events' }).appendTo(scheduleTypeField)
+                scheduleTypeField.val(scheduleType)
+                scheduleTypeField.prop('title', 'Expression Type')
+
+                // generate cell2 
+                const cell2Cron = $('<div>', { style: row2Col2Style}).appendTo(row2)
+                const cell2Solar = $('<div>', { style: row2Col2Style}).appendTo(row2)
+
+
+                // generate a combo for cron expression
+                const expression = option.expression == null ? '0 * * * * * *' : option.expression
+                const expressionClass = 'node-input-option-expression' + ((!expression) ? ' input-error' : '')
+                const expressionMenuData = [
+                    { label: 'Easy Expression Builder', value: 'EEB' },
+                    { label: 'Every Second (* * * * * *)', value: '* * * * * *' },
+                    { label: 'Every minute (0 * * * * *)', value: '0 * * * * *' },
+                    { label: 'Every 10 minutes (0 */10 * * * *)', value: '0 */10 * * * *' },
+                    { label: 'Every day at noon - 12pm (0 0 12 * * *)', value: '0 0 12 * * *' },
+                    { label: 'Every 20 minutes, at 9:00 AM and 5:00 PM (0 */20 9,17 * * *)', value: '0 */20 9,17 * * *' },
+                    { label: 'At 15, 30, and 45 minutes past the hour (0 15,30,45 * * * *)', value: '0 15,30,45 * * * *' },
+                    { label: 'At 02:00 AM, on day 29 of Feb (0 0 2 29 FEB * 2020/4)', value: '0 0 2 29 FEB * 2020/4' },
+                    { label: 'At 07:00 AM, on the 1st Mon of the month (0 0 7 * * MON#1 *)', value: '0 0 7 * * MON#1 *' },
+                    { label: 'Every day at noon in Jan, Mar & Dec (0 0 12 * JAN,MAR,DEC *)', value: '0 0 12 * JAN,MAR,DEC *' },
+                    { label: 'Every minute, on the 1st weekday of the month (* * 1W * *)', value: '* * 1W * *' },
+                    { label: 'Every minute, on the third Tue of the month (* * * * Tue#3)', value: '* * * * Tue#3' },
+                    { label: 'At 12:00 PM, on the last Monday of the month (0 12 * * MONL)', value: '0 12 * * MONL' }
+                ]
+
+                const expressionField = $('<input/>', {
+                    class: expressionClass,
+                    type: 'text',
+                    placeholder: '* * * * * * *',
+                    list: 'cron-expression-example-list',
+                    title: 'cron expression',
+                    value: option.expression
+                })
+                expressionField.appendTo(cell2Cron)
+
+                // setup the expression combo
+                expressionField.combobox({
+                    style: 'width: 100%',
+                    menu: {
+                        menu: expressionMenuData,
+                        options: {
+                            beforeSelect: function (opt) {
+                                if (opt && opt.value === 'EEB') {
+                                    $('#cron-plus-expression-builder-dialog').data('opener', expressionField)
+                                    $('#cron-plus-expression-builder-dialog').dialog('open')
+                                    return true // return true to let widget know - we have handled this
+                                }
+                            }
+                        }
+                    },
+                    validate: function (value) {
+                        return (!!value) && value.length >= 9// better validation required?
+                    }
+                })
+                try {
+                    expressionField.combobox().button.prop('title', 'Expression examples...')
+                    expressionField.combobox('instance').button.prop('title', 'Expression examples...')
+                    // eslint-disable-next-line no-empty
+                } catch (error) { }
+                expressionField.combobox('value', option.expression || '')
+
+                // generate the solar events field
+                const solarEventsDiv = $('<div/>', { style: solarEventsStyle }).appendTo(cell2Solar)
+                const solarEventsField = $('<input/>', { class: 'node-input-option-solarEvents', type: 'text', style: 'width: 100%', placeholder: 'select solar events', value: option.solarEvents || '' }).appendTo(solarEventsDiv)
+                solarEventsField.typedInput({
+                    default: 'all',
+                    types: [
+                        {
+                            value: 'selected',
+                            label: 'Selected Solar Events',
+                            title: 'Selected Solar Events',
+                            icon: 'fa fa-list',
+                            showLabel: false,
+                            multiple: true,
+                            options: solarChoices,
+                            default: ['sunrise', 'sunset']
+                        },
+                        {
+                            value: 'all',
+                            label: 'All Solar Events',
+                            title: 'All Solar Events',
+                            icon: 'fa fa-sun-o',
+                            hasValue: false,
+                            showLabel: true
+                        }
+                    ]
+                })
+                solarEventsField.typedInput('type', option.solarType || 'all')
+                solarEventsField.typedInput('value', option.solarEvents || '')// added as setting value on invocation doesnt seem to set the "2 selected" text of the widget!
+
+                // generate location
+                const locationFieldDiv = $('<div/>', { class: 'cron-node-input-option-location-div', style: locationStyle }).appendTo(cell2Solar)
+                const locationField = $('<input/>', { class: 'node-input-option-location', type: 'text', style: 'width: 100%', placeholder: 'lat lng', value: option.location || '' }).appendTo(locationFieldDiv)
+                locationField.typedInput({
+                    default: 'fixed',
+                    types: [
+                        {
+                            value: 'fixed',
+                            label: 'Fixed Location',
+                            icon: 'fa fa-map-pin',
+                            expand: function () {
+                                // eslint-disable-next-line no-undef
+                                showMap(locationField)
+                            },
+                            validate: function (v, opt) { return !!v && v.length >= 3 }
+                        }
+                    ]
+                })
+                locationField.typedInput('value', option.location || '')
+
+                // const locationGroup = $('<div class="red-ui-typedInput-container node-input-option-location" style="' + locationStyle + '">' +
+                //     '<button class="red-ui-typedInput-type-select" style="width:25px" title="Show Map..."><i class="fa fa-map-marker "> </i></button>' +
+                //     '<div class="red-ui-typedInput-input red-ui-typedInput-input-wrap" style="left: 25px; right: 0px;">' +
+                //     '<input class="red-ui-typedInput-input node-input-option-location" type="text" value="" placeholder="lat lng"></div> </div>')
+                // const locationField = locationGroup.find('input')
+                // const locationButton = locationGroup.find('button')
+                // locationField.prop('title', 'Location coordinates...')
+                // locationButton.prop('title', 'Show Map...')
+                // if (!option.location) {
+                //     locationGroup.addClass('input-error')
+                // } else {
+                //     locationField.val(option.location)
+                // }
+                // locationGroup.appendTo(cell2)
+
+                // locationButton.on('click', function () {
+                //     $('#cron-plus-map-dialog').dialog('open')
+                //     selectedLocationInput = $(this).closest('li').find('.node-input-option-location')
+                //     if (navigator.onLine === true) {
+                //         $('.cron-plus-map-not-loaded').show()
+                //         $('.cron-plus-map-loading').hide()
+                //         $('#cron-plus-map').hide()
+                //         const proto = location.protocol === 'https:' ? location.protocol : 'http:'
+                //         checkLoadJsCssFile(proto + '//libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css', 'css', function () {
+                //             checkLoadJsCssFile(proto + '//libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.uncompressed.js', 'js', function () {
+                //             })
+                //             createMap(selectedLocationInput)
+                //         })
+                //     } else {
+                //         $('.cron-plus-map-not-loaded').show()
+                //         $('.cron-plus-map-loading').hide()
+                //         $('#cron-plus-map').hide()
+                //     }
+                // })
+
+                // offset fields
+                const offsetField = $('<input/>', { class: 'node-input-option-offset', type: 'number', min: -1439, max: 1439, style: solarOffsetStyle, value: option.offset || 0, placeholder: 'offset' }).appendTo(cell2Solar)
+                offsetField.prop('title', 'Minutes Offset +/- 1439')
+
+                // init tooltips
+                initTooltip(offsetField, 'solar', { my: 'middle top', at: 'middle bottom+5', of: cell2Solar, collision: 'flipfit' })
+                initTooltip(locationField, 'solar', { my: 'middle top', at: 'middle bottom+5', of: cell2Solar, collision: 'flipfit' })
+                initTooltip(expressionField, 'cron', { my: 'middle top', at: 'middle bottom+5', of: cell2Cron, collision: 'flipfit' })
+
+                // locationField.keyup(function () {
+                //     const f = $(this)
+                //     const fg = locationGroup
+                //     if (f.val() && fg.hasClass('input-error')) {
+                //         fg.removeClass('input-error')
+                //     } else if (!f.val()) {
+                //         fg.addClass('input-error')
+                //     }
+                // })
+
+                nameField.keyup(function () {
+                    if ($(this).val() && $(this).hasClass('input-error')) {
+                        $(this).removeClass('input-error')
+                    } else if (!$(this).val()) {
+                        $(this).addClass('input-error')
+                    }
+                })
+
+                // locationField.change(function () {
+                //     if ($(this).val() && locationGroup.hasClass('input-error')) {
+                //         locationGroup.removeClass('input-error')
+                //     } else if (!$(this).val()) {
+                //         locationGroup.removeClass('input-error')
+                //     }
+                // })
+
+                topicField.keyup(function () {
+                    if ($(this).val() && $(this).hasClass('input-error')) {
+                        $(this).removeClass('input-error')
+                    } else if (!$(this).val()) {
+                        $(this).addClass('input-error')
+                    }
+                })
+
+                deleteButton.click(function () {
+                    container.fadeOut(200, function () {
+                        $(this).remove()
+                    })
+                })
+
+                scheduleTypeField.change(function () {
+                    const value = scheduleTypeField.val()
+                    const showLocationGroup = $('#node-input-defaultLocation').typedInput('type') === 'default' || !$('#node-input-defaultLocation').typedInput('type')
+                    locationFieldDiv.toggleClass('cron-plus-hide-per-location', !showLocationGroup)
+                    switch (value) {
+                    case 'solar':
+                        cell2Cron.hide()
+                        cell2Solar.show()
+                        break
+                        case 'dates':
+                        cell2Cron.show()
+                        cell2Solar.hide()
+                        expressionField.combobox('hideMenu')
+                        break
+                    default: // cron
+                        cell2Cron.show()
+                        cell2Solar.hide()
+                        expressionField.combobox('showMenu')
+                        break
+                    }
+                })
+                scheduleTypeField.triggerHandler('change')
+                $('#node-input-option-container').append(container)
+            }
+
+            $('#node-input-outputField').typedInput({ types: [{ label: 'msg.', value: 'str' }] })
+
+            $('#node-input-add-option').click(function () {
+                generateOption($('#node-input-option-container').children().length, {})
+                $('#node-input-option-container-div').scrollTop($('#node-input-option-container-div').get(0).scrollHeight)
+                // focus the input with class .node-input-option-name in the last li added
+                $('#node-input-option-container').children().last().find('.node-input-option-name').focus().select()
+            })
+
+            $('#node-input-show-dynamic').click(function () {
+                $('#cron-plus-dynamic-nodes-dialog').dialog('open')
+            })
+
+            removeEventListener("fullscreenchange", onSchedulesExpandCompress);
+            addEventListener("fullscreenchange", onSchedulesExpandCompress)
+
+            $('#cronplus-expand-schedules-button').click(function (evt) {
+                const selector = '#node-cronplus-tab-static-schedules'
+                if (evt) {
+                    // prevent the default behaviour - we will handle it
+                    evt.preventDefault()
+                    evt.stopImmediatePropagation()
+                }
+
+                // if shift key or middle mouse button or already full screen then toggle full screen
+                if (evt.shiftKey || evt.button === 1 /* middle button */ || document.fullscreenElement) {
+                    toggleFullscreen(selector, function (err) {
+                        updateEditorLayout()
+                    })
+                } else {
+                    //CSS expansion/contraction
+                    const el = $(selector)
+                    const isSmall = el.css('position') !== 'fixed' && !document.fullscreenElement;
+                    if (isSmall) {
+                        // is small - make it big
+                        el.addClass('cron-plus-expanded-element').removeClass('cron-plus-fullscreen-element')
+                    } else {
+                        // is big - make it small
+                        el.removeClass('cron-plus-expanded-element').removeClass('cron-plus-fullscreen-element')
+                    }
+                    updateEditorLayout()
+                }
+            })
+
+            for (let i = 0; i < this.options.length; i++) {
+                const option = this.options[i]
+                try {
+                    generateOption(i, option)
+                } catch (error) {
+                    console.warn('generateOption caused an error: ', option, error)
+                }
+            }
+
+            $('#node-input-option-container').sortable({
+                axis: 'y',
+                handle: '.node-input-option-handle',
+                cursor: 'grabbing',
+                cursorAt: { right: 5 },
+                // placeholder: "ui-corner-all"
+                snap: "#node-input-option-container", snapMode: "inner",
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+                tolerance: 'pointer',
+                appendTo:  $('#node-input-option-container'),
+            })
+
+            updateEditorLayout()
+
+            // give the form a chance to render then remove the max width restriction
+            setTimeout(function () {
+                $('#node-cronplus-tab-static-schedules').css('max-width', '')
+            }, 200)
+
+        },
+        oneditsave: function () {
+            if (RED._cron_plus_debug) { console.log('oneditsave - cronplus') }
+            removeEventListener("fullscreenchange", onSchedulesExpandCompress);
+            const node = this
+            const options = $('#node-input-option-container').children()
+            delete node.persistDynamic // remove deprecated property
+
+            node.options = []
+            // eslint-disable-next-line no-unused-vars
+            options.each(function (i) {
+                const option = $(this)
+                const o = {
+                    name: option.find('.node-input-option-name').val(),
+                    topic: option.find('.node-input-option-topic').val(),
+                    payloadType: option.find('.node-input-option-payload').typedInput('type'),
+                    payload: option.find('.node-input-option-payload').typedInput('value'),
+                    expressionType: option.find('.node-input-option-expressionType').val(),
+                    expression: option.find('.node-input-option-expression').val(),
+                    location: option.find('.node-input-option-location').typedInput('value'),
+                    offset: option.find('.node-input-option-offset').val(),
+                    solarType: option.find('.node-input-option-solarEvents').typedInput('type') || 'all',
+                    solarEvents: option.find('.node-input-option-solarEvents').typedInput('value')
+                }
+                if (option.find('.node-input-option-value').typedInput('type') === 'num') {
+                    o.payload = Number(o.value)
+                }
+                if (option.find('.node-input-option-value').typedInput('type') === 'bool') {
+                    // eslint-disable-next-line eqeqeq
+                    o.payload = (o.value == 'true')
+                }
+                node.options.push(o)
+            })
+            const o = $('#node-input-commandResponseMsgOutput').val()
+            node.commandResponseMsgOutput = ['output1', 'output2', 'fanOut'].indexOf(o) >= 0 ? o : 'output1'
+            const fanOut = node.commandResponseMsgOutput === 'fanOut'
+            node.outputs = node.commandResponseMsgOutput === 'output1' ? 1 : 2
+            node.defaultLocationType = $('#node-input-defaultLocation').typedInput('type')
+            node.defaultLocation = $('#node-input-defaultLocation').typedInput('value')
+            if (fanOut && options && options.length) {
+                node.outputs = options.length + 2 // in fanout mode, we add a separate output for dynamic schedules & command responses
+            }
+            $('#node-input-timeZone').off()
+            $('#node-input-crontab').off()
+        },
+        oneditcancel: function() {
+            if (RED._cron_plus_debug) { console.log('oneditcancel - cronplus') }
+            removeEventListener("fullscreenchange", onSchedulesExpandCompress);
+            $('#node-input-timeZone').off()
+            $('#node-input-crontab').off()
+        },
+        button: {
+            visible: function () {
+                if (this.options && this.options.length === 1) {
+                    return true
+                }
+                return false
+            },
+            enabled: function () {
+                return !this.changed
+            },
+            onclick: function () {
+                if  (RED._cron_plus_debug) { console.log('button.onclick - cronplus') }
+                const node = this
+                if (node.changed) {
+                    return RED.notify(RED._('notification.warning', { message: RED._('notification.warnings.undeployedChanges') }), 'warning')
+                }
+                let label = node._def.label.call(node)
+                if (label.length > 30) {
+                    label = label.substring(0, 50) + '...'
+                }
+                label = label.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                $.ajax({
+                    url: 'cronplusinject/' + node.id,
+                    type: 'POST',
+                    // eslint-disable-next-line no-unused-vars
+                    success: function (response) {
+                        RED.notify(node._('inject.success', { label }), { type: 'success', id: 'inject' })
+                    },
+                    // eslint-disable-next-line no-unused-vars
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 404) {
+                            RED.notify(node._('common.notification.error', { message: node._('common.notification.errors.not-deployed') }), 'error')
+                        } else if (jqXHR.status === 500) {
+                            RED.notify(node._('common.notification.error', { message: node._('inject.errors.failed') }), 'error')
+                        } else if (jqXHR.status === 0) {
+                            RED.notify(node._('common.notification.error', { message: node._('common.notification.errors.no-response') }), 'error')
+                        } else {
+                            RED.notify(node._('common.notification.error', { message: node._('common.notification.errors.unexpected', { status: jqXHR.status, message: textStatus }) }), 'error')
+                        }
+                    }
+                })
+            }
+        },
+        oneditresize: function () {
+            // console.log("RESIZING")
+            updateEditorLayout()
+            // HACK for old versions of node-red - prior to typedInput resizing changed from code to CSS
+            if (RED.settings.version && RED.settings.version.split('.')[0] < 1) {
+                const tics = $('.red-ui-typedInput-container')
+                if (tics && tics.length) {
+                    for (let idx = 0; idx < tics.length; idx++) {
+                        const element = $(tics[idx])
+                        if (element && element.length && element.is(':visible')) {
+                            element.css('display', 'inline-block')
+                        }
+                    }
+                }
+            }
+        }
+    })
+})(jQuery)
+
+function _popoutCronPlusHelp(tag) {
+    const startTag = (name) => `<${name}>`
+    const endTag = (name) => `</${name}>`
+    const winHtml = `
+        ${startTag('html')}
+            ${startTag('head')}
+                ${startTag('title')}cron-plus help${endTag('title')}
+                ${startTag('style')}
+                .fade-in {
+                    transition: opacity 1.5s ease-in-out;
+                }
+                .hidden {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+                ${endTag('style')}
+            ${endTag('head')}
+            ${startTag('body')}
+                ${startTag('script')}
+                    const styles = ${JSON.stringify([].map.call(document.querySelectorAll('[rel="stylesheet"]'), e =>  e.href ))}
+                    const head = document.head || document.getElementsByTagName('head')[0]
+                    styles.forEach(href => {
+                        const el = document.createElement('link');
+                        el.rel="stylesheet"
+                        el.href = href
+                        head.appendChild(el);
+                    })
+                ${endTag('script')}
+                <div class="red-ui-editor help-content hidden" style="height: 100%">
+                    <div class="red-ui-sidebar-info">
+                        <div class="red-ui-sidebar-help-stack red-ui-panels" style="height: 100%;">
+                            <div class="red-ui-panel" style="overflow-y: auto;height: 100%;">
+                                <div class="red-ui-help" style="padding: 6px;height: 100%;">
+                                    <h1 class="red-ui-help-title">cron-plus</h1>
+                                    <div class="red-ui-help">
+                                        <span class="red-ui-text-bidi-aware">
+                                            ${RED.nodes.getNodeHelp('cronplus')}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ${startTag('script')}
+                    if (navigator.clipboard) {
+                        document.querySelector('.cron-plus-link-button').classList.add('hidden')
+                        const content = document.querySelector('.help-content');
+                        content.classList.add('hidden')
+                        content.classList.remove('hidden')
+                        content.classList.add('fade-in')
+                        const copyButtonLabel = "Copy"
+                        const blocks = document.querySelectorAll("pre.cron-plus-code")
+                        blocks.forEach((block) => {
+                            const button = document.createElement("button")
+                            button.innerText = copyButtonLabel
+                            button.classList.add('cron-plus-copy-button')
+                            button.addEventListener("click", copyCode)
+                            block.appendChild(button)
+                        })
+                    }
+                    async function copyCode(event) {
+                        const button = event.srcElement
+                        const pre = button.parentElement
+                        const code = pre.querySelector("code")
+                        const text = code.innerText
+                        await navigator.clipboard.writeText(text)
+                    }
+                ${endTag('script')}
+            ${endTag('body')}
+        ${endTag('html')}`
+
+    const BOM = new Uint8Array([0xEF,0xBB,0xBF])
+    const winUrl = URL.createObjectURL(
+        new Blob([BOM, winHtml], { encoding:"UTF-8",type:"text/html;charset=UTF-8" })
+    )
+    const win = window.open(
+        winUrl + (tag ? '#' + tag : ''),
+        'win',
+        'width=800,height=600'
+    )
+}
+
+function onSchedulesExpandCompress () {
+    const selector = '#node-cronplus-tab-static-schedules'
+    const el = $(selector)
+    const $buttonExpandIcon = $('#cronplus-expand-schedules-button').find('i.fa')
+    const isBig = el.css('position') === 'fixed' || document.fullscreenElement;
+    if (isBig) {
+        // is big - set the icon to compress & hide certain elements
+        $buttonExpandIcon.removeClass('fa-expand').addClass('fa-compress')
+        $('#node-input-show-dynamic').addClass('cron-plus-vanish-element')
+    } else {
+        // is small - set the icon to expand & show elements
+        $buttonExpandIcon.removeClass('fa-compress').addClass('fa-expand')
+        $('#node-input-show-dynamic').removeClass('cron-plus-vanish-element')
+    }
+}
+
+</script>
+
+<script type="text/html" data-template-name="cronplus">
+    <style>
+        #cron-plus-map > div.leaflet-map-pane > div.leaflet-objects-pane > div.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper,
+        #cron-plus-map > div.leaflet-map-pane > div.leaflet-objects-pane > div.leaflet-popup-pane > div > div.leaflet-popup-tip-container > div {
+            background-color: var(--red-ui-primary-background);
+            color: var(--red-ui-primary-text-color);
+        }
+        #cron-plus-map > div.leaflet-control-container > div.leaflet-top.leaflet-left > div > a.leaflet-control-zoom-in,
+        #cron-plus-map > div.leaflet-control-container > div.leaflet-top.leaflet-left > div > a.leaflet-control-zoom-out {
+            background-color: var(--red-ui-primary-background);
+            color: var(--red-ui-primary-text-color);
+        }
+
+        .cron-select-period {
+            padding: 5px 5px 0px 5px;
+        }
+
+        .cron-input {
+            padding: 5px 5px 0px 5px;
+        }
+
+        .cron-select-period select,
+        .cron-input select,
+        .cron-input input[type=radio], 
+        .cron-input input[type=checkbox] {
+            margin-left: 5px;
+            margin-right: 5px;
+        }        
+
+        table.cron-plus-table {
+            border: solid 1px var(--red-ui-secondary-background);
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        table.cron-plus-table th {
+            background-color: var(--red-ui-primary-background);
+            border: solid 1px var(--red-ui-secondary-background);
+            color: var(--red-ui-primary-text-color);
+            text-align: left;
+        }
+        table.cron-plus-table > tr > td {
+            font-family: monospace;
+            font-size: 10pt;
+            border: solid 1px var(--red-ui-secondary-background);
+            color: var(--red-ui-primary-text-color);
+            background: var(--red-ui-tertiary-background);
+        }
+        .cron-plus-form-row > label {
+            width: 120px !important;
+        }
+        .cron-plus-expression-tip {
+            background: var(--red-ui-primary-background);
+            color: var(--red-ui-primary-text-color);
+            width: 100%;
+            max-width: 500px;
+            max-height: 300px;
+            overflow: auto;
+            font-size: 10px;
+        }
+        .cron-plus-form-tip {
+            background: var(--red-ui-primary-background);
+            color: var(--red-ui-primary-text-color);
+            padding: 6px 6px;
+            vertical-align: middle;
+            font-size: 12px;
+            line-height: 20px;
+            box-sizing: border-box;
+            overflow: auto;
+            word-break: keep-all;
+        }
+        .cron-plus-form-tip > div {
+            white-space: pre-wrap;
+        }
+        span .cron-plus-form-tip {
+            border-radius: 2px;
+            border: 1px solid var(--red-ui-secondary-background);
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .cron-plus-form-tip-spacer {
+            display: inline-block;
+            width: 100px
+        }
+        .cron-plus-expression {
+            font-family: monospace;
+            padding-left: 5px;
+            padding-right: 5px;
+            text-align: left;
+            height: 30px;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--red-ui-primary-text-color)
+        }
+        #cron-plus-map {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        .cron-plus-hide-per-location {
+            display: none !important;
+            visibility: hidden;
+        }
+        .cron-plus-hide-location {
+            display: none !important;
+            visibility: hidden;
+        }
+        .cron-plus-fullscreen-element {
+            padding: 15px;
+            z-index: 99999;
+            background-color: var(--red-ui-form-background);
+        }
+        .cron-plus-expanded-element {
+            position: fixed;
+            z-index: 99999;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            visibility: visible;
+            height: unset !important;
+            width: unset !important;
+            padding: 15px;
+            margin: 0px;
+            background-color: var(--red-ui-form-background);
+        }
+        .cron-plus-vanish-element {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        .cron-plus-map-dialog-content {
+            padding: 0px 0px 0px 0px;
+        }
+        .cron-plus-map-not-loaded {
+            padding: 2px 10px 2px 10px;
+        }
+        .cron-plus-map-loading {
+            padding: 2px 10px 2px 10px;
+        }
+        .cron-plus-coordinates {
+            font-family: monospace;
+            background: var(--red-ui-primary-text-color);
+            color: var(--red-ui-primary-background);
+            padding-left: 5px;
+            padding-right: 5px;
+            border: 1px solid var(--red-ui-secondary-background);
+        }
+        .cron-plus-link-button {
+            background: none!important;
+            border: none!important;
+            padding: 0!important;
+            cursor: pointer!important;
+            color: var(--red-ui-primary-text-color);
+        }
+        .cron-plus-solar-events-table {
+            font-size: smaller;
+            padding: 0px !important;
+            margin: 0px !important;
+            width: 100%;
+            overflow-wrap: break-word;
+            border: 1px solid;
+        }
+        .cron-plus-solar-events-table tr td {
+            border: 1px dotted;
+        }
+        .cron-plus-solar-events-table tr th {
+            text-align: left;
+            border: 1px dotted;
+        }
+        pre.cron-plus-code {
+            white-space: pre;
+            font-size: 9px;
+            position: relative;
+            overflow: auto;
+            margin: 5px 0;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+    </style>  
+
+    <div id="cron-plus-map-dialog" style="display: none;" title="Choose location...">
+        <div class="cron-plus-map-loading" >
+            <h3>Attempting to load map... <i class="fa fa-spinner fa-spin" style="font-size:24px"></i></h3>
+            <p>The interactive Map is loaded via CDN at client side (to minimise installation size) and therefore requires an internet connection. Please wait 1 moment.</p>
+            <h4>Alternative ways to get coordinates...</h4>
+            <ul> 
+                <li>Visit <a href="https://www.latlong.net/" target="_blank" rel="noopener noreferrer">www.latlong.net</a> (on another device if required) then copy the "Lat Long" value provided into the cron-plus coordinates box</li>
+                <li>Visit google maps, MSN maps, almost any other maps website on another device to get GPS or longitude latitude value</li>
+                <li>Try one of the many longitude latitude apps available in the app store on your mobile phone</li>
+                <li>Check your satnav device - it may show coordinates</li>
+                <li>Use a topographic map</li>
+                <li>Ask a friend</li>
+            </ul>
+            <h4>Accepted formats...</h4> 
+            <ul>
+                <li>Decimal Degrees E.g: <code class="cron-plus-coordinates">54.9992500,-1.4170300</code> or <code class="cron-plus-coordinates">54.9992500° N 1.4170300° W</code></li>
+                <li>Degrees Minutes Seconds E.g: <code class="cron-plus-coordinates">54° 59' 57.3'' N 1° 25' 1.308'' W</code></li>
+                <li>Decimal Minutes E.g: <code class="cron-plus-coordinates">54° 59.955' , -1° 25.0218'</code></li>
+                <li>GPS E.g: <code class="cron-plus-coordinates">N54°59'57.3, W1°25'1.308"</code>, <code class="cron-plus-coordinates">54°59'57.3"N, 1°25'1.308"W</code>, <code class="cron-plus-coordinates">54d 59' 57" N 1d 25' 1" W</code> or <code class="cron-plus-coordinates">54:59:57.3N 1:25:1.308W</code></li>
+            </ul>    
+        </div>
+        <div class="cron-plus-map-not-loaded"  style="display:hidden" >
+            <h3>No internet on this device?</h3>
+            <p>The interactive Map is loaded via CDN at client side (to minimise installation size) and therefore requires an internet connection. As you are seeing this message, it is likely this device does not have access to the internet.</p>
+            <h4>Alternative ways to get coordinates...</h4>
+            <ul> 
+                <li>Visit <a href="https://www.latlong.net/" target="_blank" rel="noopener noreferrer">www.latlong.net</a> (on another device if required) then copy the "Lat Long" value provided into the cron-plus coordinates box</li>
+                <li>Visit google maps, MSN maps, almost any other maps website on another device to get GPS or longitude latitude value</li>
+                <li>Try one of the many longitude latitude apps available in the app store on your mobile phone</li>
+                <li>Check your satnav device - it may show coordinates</li>
+                <li>Use a topographic map</li>
+                <li>Ask a friend</li>
+            </ul>
+            <h4>Accepted formats...</h4>
+            <ul>
+                <li>Decimal Degrees E.g: <code class="cron-plus-coordinates">54.9992500,-1.4170300</code> or <code class="cron-plus-coordinates">54.9992500° N 1.4170300° W</code></li>
+                <li>Degrees Minutes Seconds E.g: <code class="cron-plus-coordinates">54° 59' 57.3'' N 1° 25' 1.308'' W</code></li>
+                <li>Decimal Minutes E.g: <code class="cron-plus-coordinates">54° 59.955' , -1° 25.0218'</code></li>
+                <li>GPS E.g: <code class="cron-plus-coordinates">N54°59'57.3, W1°25'1.308"</code>, <code class="cron-plus-coordinates">54°59'57.3"N, 1°25'1.308"W</code>, <code class="cron-plus-coordinates">54d 59' 57" N 1d 25' 1" W</code> or <code class="cron-plus-coordinates">54:59:57.3N 1:25:1.308W</code></li>
+            </ul>
+        </div>
+        <div id="cron-plus-map"></div>
+    </div>
+
+    <div id="cron-plus-dynamic-nodes-dialog" style="display: none;" title="Dynamic schedules...">
+        <div id="cron-plus-dynamic-nodes-table-placeholder"  style="display: flex;align-items: center;/*justify-content: center;*/">
+        </div>
+        <div id="cron-plus-dynamic-nodes-loader" style="position: absolute;  left: 46%;  top: 46%;">
+            <i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+        </div>
+    </div>
+
+    <div id="cron-plus-expression-builder-dialog" style="display: none;" title="Easy Expression Builder...">
+        <div id="cron-plus-expression-builder" >
+        </div>
+    </div>
+
+    <!-- For Rows -->
+    <div class="form-row cron-plus-form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name">Name</span></label>
+        <input type="text" id="node-input-name" style="width: calc(100% - 130px)" placeholder="Name">
+    </div>
+    <div class="form-row cron-plus-form-row">
+        <label for="node-input-outputField"><i class="fa fa-sign-out"></i> Output property</label>
+        <input type="text" id="node-input-outputField" style="width: calc(100% - 130px)" placeholder="payload">
+    </div>
+    <div class="form-row cron-plus-form-row">
+        <label for="node-input-timeZone"><i class="fa fa-globe"></i> Timezone</label>
+        <input type="text" id="node-input-timeZone" style="width: calc(100% - 130px)" placeholder="Leave empty for none/system">
+    </div>
+    <div class="form-row cron-plus-form-row">
+        <label for="node-input-defaultLocation"><i class="fa fa-map-marker"></i> Location</label>
+        <input type="text" id="node-input-defaultLocation" style="width: calc(100% - 130px)" placeholder="lat lng (optional)">
+    </div>
+    <div class="form-row cron-plus-form-row">
+        <label for="node-input-commandResponseMsgOutput"><i class="fa fa-dot-circle-o"></i> Outputs</label>
+        <select style="width: calc(100% - 130px)" id="node-input-commandResponseMsgOutput">
+          <option value="output1">1 output: All messages to output 1</option>
+          <option value="output2">2 outputs: Schedule messages to output 1, command responses to output 2</option>
+          <option value="fanOut" >Fan out: Separate outputs for static, dynamic and command messages</option>
+        </select>
+    </div>
+    <div class="form-row cron-plus-form-row">
+        <label for="node-input-storeName"><i class="fa fa-database"></i> Save State</label>
+        <select type="text" id="node-input-storeName" style="width: calc(100% - 130px);"></select>
+    </div>
+
+    <div id="node-cronplus-tab-static-schedules" class="form-row cron-plus-form-row form-row-auto-height"
+        style="width: 100%; min-height: 200px; display: flex; flex-flow: column nowrap; max-width: min-content">
+        <!-- Row 1 -->
+        <div style="display: flex; justify-content: space-between;">
+            <label for="node-input-option-container-div" style="vertical-align:top;flex-basis: 120px;">
+                <i class="fa fa-list-alt"></i> 
+                Schedules
+            </label>
+            <div style="flex-grow: 1; column-gap: 2px; margin-bottom: 2px; margin-top: 0px; display: flex; padding: 0px 0px 0px 4px;">
+                <!-- Toolbar -->
+                <a href="#" accesskey="a" title="Add a new schedule [A]" class="editor-button editor-button-small" id="node-input-add-option">
+                    <span><i class="fa fa-plus" style="margin-right: 2px;"></i> <u>a</u>dd</span>
+                </a>
+                <a href="#"  accesskey="s" title="Show dynamic schedules [S]" class="editor-button editor-button-small" id="node-input-show-dynamic">
+                    <span><i class="fa fa-table" style="margin-right: 2px;"></i> dynamic <u>s</u>chedules</span>
+                </a>
+                <a href="#" accesskey="x" class="editor-button editor-button-small" id="cronplus-expand-schedules-button" title="Hold the shift key for fullscreen [X]" style="margin-left: auto;">
+                    <span class="expand-icon"><i class="fa fa-expand" style="margin-right: 2px;"></i> e<u>x</u>pand</span>
+                </a>
+            </div>
+        </div>
+        <!-- Row 2 (the list) -->
+        <div class="red-ui-editableList-border red-ui-editableList-container" id="node-input-option-container-div"
+            style="min-width: 300px;box-sizing: border-box;border-radius: 5px;padding: 5px;overflow-y:scroll;display: inline-block;height: calc(100% - -4px);min-height: 150px;">
+            <ol id="node-input-option-container" style=" list-style-type:none; margin: 0;" class="ui-sortable"></ol>
+        </div>
+    </div>
+
+</script>
+
+<script type="text/html" data-help-name="cronplus">
+    <style>
+        .cron-plus-link-button {
+            background: none!important;
+            border: none!important;
+            padding: 0!important;
+            cursor: pointer!important;
+            color: var(--red-ui-primary-text-color);
+        }
+        pre.cron-plus-code button.cron-plus-copy-button {
+            position: absolute;
+            padding: 2px;
+            background-color: var(--red-ui-primary-text-color);
+            color: var(--red-ui-primary-background);
+            border: ridge 1px var(--red-ui-secondary-text-color);
+            border-radius: 15px;
+            opacity: 0.35;
+            top: 0px;
+            right: 4px;
+            scale: 70%;
+            transform-origin: right;
+        }
+        pre.cron-plus-code button.cron-plus-copy-button:hover{
+            cursor: pointer;
+            opacity: 0.9;
+        }
+        .red-ui-help pre.cron-plus-code {
+            position: relative;
+        }
+    </style>
+    <p>Schedule the injection of a payload to start a flow <span style="float: right"><button class="cron-plus-link-button" onclick="_popoutCronPlusHelp()">pop out <i class="fa fa-external-link"></i></button></span></p>
+    <h3>Properties</h3>
+    <dl class="message-properties">
+        <h4>Output property</h4>
+        <div style="padding-left: 15px">
+            The <code>msg.</code> property to send the payload to.  Typically this would be payload.
+        </div>
+        <h4>Timezone (optional)</h4>
+        <div style="padding-left: 15px">
+            A timezone to use. Leave blank for system timezone. Alternatively, enter UTC or a timezone in the format of Region/Area (<a target="_blank" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list</a>)
+            <br>
+            TIP: Timezone should be perceived from your own perspective. See the <a href="#understanding-timezone">Understanding Timezone</a> example below.
+        </div>    
+        <h4>Location (optional)</h4>
+        <div style="padding-left: 15px">
+            Here you can chose to set a common location for all solar events (optional)
+        </div>    
+        <h4>Outputs</h4>
+        <div style="padding-left: 15px">
+            <ul>
+                <li>1 output: All messages to output 1 (schedules + command responses)</li>
+                <li>2 outputs: Schedule messages to output 1, command responses to output 2</li>
+                <li>Fan out: Separate outputs for static, dynamic and command messages</li>
+            </ul>
+        </div>    
+        <h4>Persist dynamic schedules</h4>
+        <div style="padding-left: 15px">
+            Enabling this option causes dynamic schedules to be saved to file and re-loaded when the cron-plus node is loaded or re-deployed. <br>
+            NOTES...
+            <ul>
+                <li>Any time an update to any dynamic schedule occurs, all dynamic schedules are saved to file</li>
+                <li>The schedules are saved in a directory called <code>cronplusdata</code> under your node-red folder</li>
+            </ul>
+        </div>    
+        <h4>Schedules</h4>
+        <div style="padding-left: 15px">
+            A table of schedules. Entries here are considered static and will be reloaded when node-red starts or the cron-plus node is (re)deployed.
+        </div>
+        <h4>Schedules - Name</h4>
+        <div style="padding-left: 15px">
+            The name is used to identify the schedule. Dynamic adjustments to an individual schedule will need to specify this name.
+        </div>
+        <h4>Schedules - Topic</h4>
+        <div style="padding-left: 15px">
+            The topic will be sent in <code>msg.topic</code> when the schedule triggers. This is to permit the flow to act on the triggered schedule.
+        </div>
+        <h4>Schedules - Payload</h4>
+        <div style="padding-left: 15px">
+            The value to send in the payload when the schedule triggers. (NOTE: the property that the payload gets written to is determined by "Output property").
+        </div>
+        <h4>Schedules - Type</h4>
+        <div style="padding-left: 15px">
+            The type determines what type of schedule. Options are <code>cron</code>, <code>dates sequence</code> or <code>solar events</code>
+        </div>
+        <h4 id="cron-plus-expression-info">Schedules - Expression</h4>
+        <div style="padding-left: 15px">
+            <i>NOTE: Only displayed when the type is set to <b>cron</b> or <b>date sequence</b></i><br>
+            A CRON expression, a date, a comma separated list of dates or an array of dates<br><br>
+            <p> Date or Date Sequence Format...<br>
+                When you wish to use a fixed date or sequence of dates, the expression can be a string date, comma separated list of dates, an array of dates (The array can contain a mix of string, date objects and timestamps).
+                When specifying a string date, you can use timezone e.g. "2020-01-01 00:00 GMT+2".
+                You can even mix time zones e.g. "2020-01-01 00:00 GMT+2, 2020-01-01 00:00 GMT-7"
+            </p>
+            <p>CRON Format...</p>
+            <pre style="white-space: pre; padding: 0px; font-size: smaller;"> * * * * * * *    Field              Allowed values    Special symbols
+ | | | | | | |    -----------------  ---------------   ---------------
+ `-|-|-|-|-|-|->  Second (optional)  0-59              * / , -
+   `-|-|-|-|-|->  Minute             0-59              * / , -
+     `-|-|-|-|->  Hour               0-23              * / , -
+       `-|-|-|->  Day of Month       1-31              * / , - ? L W
+         `-|-|->  Month              1-12 or JAN-DEC   * / , -
+           `-|->  Day of Week        0-7 or SUN-SAT    * / , - ? L #
+             `->  Year (optional)    1970-2099         * / , -</pre>
+            <p>Notes...</p>
+            <ul>
+                <li><code>*</code> Asterisks indicate that the cron expression matches for all values of the field. For example, "*" in the minute field means every minute</li>
+                <li><code>?</code> Question marks are used to specify 'no specific value' and is allowed for the day-of-month and day-of-week fields. It is used instead of the asterisk (*) for leaving either day-of-month or day-of-week blank.</li>
+                <li><code>-</code> Hyphens are used to define ranges. For example, "10-12" in the hour field means the hours of 10, 11, and 12.</li>
+                <li><code>,</code> Commas are used to separate items of a list. For example, "MON,WED,FRI" in the day-of-week field means the days Monday, Wednesday, and Friday.</li>
+                <li><code>/</code> Forward slash are used to indicate increments. For example. "0/15" in the seconds field means the seconds 0, 15, 30, and 45. Additionally, "1/3" in the day-of-month field means every 3 days starting on the first day of the month.</li>
+                <li><code>L</code> Short-hand for "last" and is allowed for the day-of-month and day-of-week fields. The "L" character has a different meaning in each of the two fields. For example, "L" in the day-of-month field means the last day of the month. If used in the day-of-week field, it means 7 or SAT. However, if used in the day-of-week field after another value, it means the last xxx day of the month. For example, "6L" in the day-of-week field means the last Friday of the month</li>
+                <li><code>W</code> Short-hand for "weekday" and is allowed for the day-of-month field. The "W" character is used to specify the weekday nearest the given day. For example, "15W" in the day-of-month field means the nearest weekday to the 15th of the month. Therefore, if the 15th is a Saturday, the job runs on Friday the 14th. The "L" and "W" characters can be combined in the day-of-month field. For example, "LW" means the last weekday of the month.</li>
+                <li><code>#</code> Hash marks specify constructs. For example, "6#3' in the day-of-week field means the third Friday of the month.</li>
+            </ul>        
+            <p>Examples...</p>
+            <ul>
+                <li><code>* * * * * *</code> Every Second</li>
+                <li><code>0 * * * * *</code> Every minute</li>
+                <li><code>0 */10 * * * *</code> Every 10 minutes</li>
+                <li><code>0 */20 1 * * *</code> Every 20 minutes, between 01:00 AM and 01:59 AM</li>
+                <li><code>0 15,30,45 * * * *</code> At 15, 30, and 45 minutes past the hour</li>
+                <li><code>0 0 12 * * *</code> Every day at noon - 12pm</li>
+                <li><code>0 0 2 29 FEB * 2020/4</code> At 02:00 AM, on day 29 of February (leap years)</li>
+                <li><code>0 0 7 * * MON#1 *</code> At 07:00 AM, on the first Monday of the month</li>
+                <li><code>0 0 12 * JAN,FEB,MAR,APR *</code> Every day at noon in January, February, March and April</li>
+                <li><code>* * 1W * *</code> Every minute, on the first weekday of the month</li>
+                <li><code>* * * * Tue#3</code> Every minute, on the third Tuesday of the month</li>
+                <li><code>0 12 * * MONL</code> At 12:00 PM, on the last Monday of the month</li>
+                <li>See <a href="https://github.com/jaclarke/cronosjs">here</a> for more examples and info</li>
+            </ul>
+        </div>
+        <h4 id="cron-plus-solar-events-info">Schedules - Solar Events</h4>
+        <div style="padding-left: 15px">
+            <i>NOTE: Only displayed when the type is set to <b>solar events</b></i><br>
+            The Solar Events field permits you to chose which solar events you want a schedule to fire upon.<br>
+            Solar Events...
+            <table class="cron-plus-solar-events-table">
+                <tr><th>Event ID</th><th>Event</th><th>Information</th></tr>
+                <tr><td>nightEnd</td><td>night end / astronomical dawn</td><td>night ends, astronomical twilight starts (-18°)</td></tr>
+                <!-- <tr><td>astronomicalDawn</td><td>astronomical dawn</td><td>night ends, astronomical twilight starts (-18°)")</td></tr> -->
+                <tr><td>nauticalDawn</td><td>nautical dawn</td><td>astronomical twilight ends, nautical twilight starts (-12°)</td></tr>
+                <tr><td>civilDawn</td><td>civil dawn / golden hour</td><td>nautical twilight ends, civil twilight and golden hour starts (-6°)</td></tr>
+                <!-- <tr><td>morningGoldenHourStart</td><td>golden hour starts</td><td>when the sun is 6 degrees below the horizon (-6°)")</td></tr> -->
+                <tr><td>sunrise</td><td>sunrise</td><td>top edge of the sun appears on the horizon (-0.833°)</td></tr>
+                <tr><td>sunriseEnd</td><td>sunrise end</td><td>bottom edge of the sun touches the horizon (-0.3°)</td></tr>
+                <tr><td>morningGoldenHourEnd</td><td>morning golden hour ends</td><td>when the sun is 6 degrees above the horizon (6°)</td></tr>
+                <tr><td>solarNoon</td><td>solar noon</td><td>sun is at its highest position</td></tr>
+                <tr><td>eveningGoldenHourStart</td><td>evening golden hour start</td><td>when the sun is 6 degrees above the horizon (6°)</td></tr>
+                <tr><td>sunsetStart</td><td>sunset start</td><td>bottom edge of the sun touches the horizon (-0.3°)</td></tr>
+                <tr><td>sunset</td><td>sunset</td><td>civil twilight starts, sun disappears below the horizon (-0.833°)</td></tr>
+                <!-- <tr><td>eveningGoldenHourEnd</td><td>evening golden hour end</td><td>golden hour ends (-6°)")</td></tr> -->
+                <tr><td>civilDusk</td><td>civil dusk / golden hour end</td><td>civil twilight and golden hour ends, nautical twilight starts (-6°)</td></tr>
+                <tr><td>nauticalDusk</td><td>nautical dusk</td><td>nautical twilight ends, astronomical twilight starts (-12°)</td></tr>
+                <!-- <tr><td>astronomicalDusk</td><td>astronomical dusk</td><td>astronomical twilight ends, night starts (-18°)</td></tr> -->
+                <tr><td>nightStart</td><td>astronomical dusk / night start</td><td>astronomical twilight ends, night starts (-18°)</td></tr>
+                <tr><td>nadir</td><td>solar midnight</td><td>when the sun is closest to nadir and the night is equidistant from dusk and dawn</td></tr>
+            </table>
+        </div>
+        <h4>Schedules - Location</h4>
+        <div style="padding-left: 15px">
+            <i>NOTE: Only displayed when the type is set to <b>solar events</b></i><br>
+            The location field is expected to contain longitude and latitude coordinates for the calculation of solar events.<br>
+            Accepted formats...
+            <ul>
+                <li>Decimal Degrees E.g: <code class="cron-plus-coordinates">54.9992500,-1.4170300</code> or <code class="cron-plus-coordinates">54.9992500° N 1.4170300° W</code></li>
+                <li>Degrees Minutes Seconds E.g: <code class="cron-plus-coordinates">54° 59' 57.3'' N 1° 25' 1.308'' W</code></li>
+                <li>Decimal Minutes E.g: <code class="cron-plus-coordinates">54° 59.955' , -1° 25.0218'</code></li>
+                <li>GPS E.g: <code class="cron-plus-coordinates">N54°59'57.3, W1°25'1.308"</code>, <code class="cron-plus-coordinates">54°59'57.3"N, 1°25'1.308"W</code>, <code class="cron-plus-coordinates">54d 59' 57" N 1d 25' 1" W</code> or <code class="cron-plus-coordinates">54:59:57.3N 1:25:1.308W</code></li>
+            </ul>
+        </div>        
+        <h4>Schedules - Offset</h4>
+        <div style="padding-left: 15px">
+            <i>NOTE: Only displayed when the type is set to <b>solar events</b></i><br>
+            The offset field can be used to add a positive or negative offset in minutes to the sunrise or sunset time.
+        </div>        
+
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt><i>payload (see 'Output property')</i> <span class="property-type">number|string|boolean|object|buffer</span></dt>
+        <dd>msg.[Output property] will contain whatever is configured in 'payload'</dd>
+        <dd>e.g. if 'Output property' is set to <b>data.value</b> then <code>msg.data.value</code> will contain the value of the <i>payload</i></dd>
+        <dd>msg.topic will contain the name of the schedule. This simplifies separating out which schedule has triggered</dd>
+        <dd>Additional properties are also added to the msg object. Check the debug output (use show complete msg)</dd>
+    </dl>
+
+    <h3>Inputs <i>(Advanced Usage)</i></h3>
+    <dl class="message-properties">
+        <dt><i>topic</i> <span class="property-type">string</span></dt>
+        <dd>Most of the commands can be provided in the topic with the name of schedule in the payload (where appropriate). <br>Supported command topics... 
+                    <ul>
+                        <li>trigger</li>
+                        <li>status</li>
+                        <li>export</li>
+                        <li>remove</li>
+                        <li>pause</li>
+                        <li>stop</li>
+                        <li>start</li>
+            </ul>
+            This includes the <code>-all</code>, <code>-all-dynamic</code>, <code>-all-static</code>, <code>-active</code>,  <code>-active-dynamic</code>,  <code>-active-static</code>, <code>-inactive</code>, <code>-inactive-dynamic</code> and <code>-inactive-static</code> command topics (e.g. export-all, stop-all-dynamic, start-all-static, remove-inactive-dynamic)<br>
+            See <a href="#cron-plus-commands-info">commands</a> below for details.
+        </dd>
+    </dl>
+    <dl class="message-properties">
+        <dt><i>payload</i> <span class="property-type">string|object|Array</span></dt>
+        <dd>It is possible to dynamically add, remove and control schedules by injecting a payload into the node. The format of the payload object (or array of objects) depends on the operation. See below for details.</dd>
+        <dd>
+            <p><b>Adding one (or more) schedules</b><br>
+                Example...<br>
+                <pre class="cron-plus-code"><code>payload: [
+  {
+    "command": "add",
+    "name": "every 6",
+    "expression": "*/6 * * * * * *",
+    "expressionType": "cron",
+    "payloadType": "default",
+    "limit": 3 
+  },
+  {
+    "command": "add",
+    "name": "new years eve 2030",
+    "expression": "2030-01-01",
+    "expressionType": "dates",
+    "payloadType": "default"
+  },
+  {
+    "command": "add",
+    "name": "alarm1",
+    "expressionType": "solar",
+    "solarType": "selected",
+    "solarEvents": "civilDawn,sunrise,sunset",
+    "location": "54.999320540937035 -1.417407989501953",
+    "offset": "-60",
+    "payloadType": "str",
+    "payload": "In 60 mins, it will be a great time to take photographs",
+    "limit": null
+  }
+]</code></pre>
+                
+                <p><i>Details...</i><br>
+                    Adding a CRON expression
+                    <ul>
+                        <li>Multiple schedules can be added if the payload is an array of objects</li>
+                        <li>command: (string|required) The operation to perform - in this case "add"</li>
+                        <li>name: (string|required) This will identify schedule</li>
+                        <li>topic: (string|required) This will be used as the topic when the schedule triggers</li>
+                        <li>expression: (string|required) A CRON expression, a date, a comma separated list of dates or an array of dates</li>
+                        <li>expressionType: (string|optional) specify the schedule type. (if omitted, "cron" is the default)</li>
+                        <li>payloadType: (string|optional) The payload type (e.g. 'default', 'flow', 'global', 'str', 'num', 'bool', 'json', 'bin', 'date' or 'env')</li>
+                        <li>payload: (any|optional) What to send when schedule triggers</li>
+                        <li>limit: (number|optional) Maximum number of times the schedule should trigger</li>
+                    </ul><br>
+                    Adding a date sequence
+                    <ul>
+                        <li>Multiple schedules can be added if the payload is an array of objects</li>
+                        <li>command: (string|required) The operation to perform - in this case "add"</li>
+                        <li>name: (string|required) This will identify schedule</li>
+                        <li>topic: (string|required) This will be used as the topic when the schedule triggers</li>
+                        <li>expression: (string|array|required) A date, a comma separated list of dates or an array of dates</li>
+                        <li>expressionType: (string|required) specify the schedule type - in this case "dates"</li>
+                        <li>payloadType: (string|optional) The payload type (e.g. 'default', 'flow', 'global', 'str', 'num', 'bool', 'json', 'bin', 'date' or 'env')</li>
+                        <li>payload: (any|optional) What to send when schedule triggers</li>
+                        <li>limit: (number|optional) Maximum number of times the schedule should trigger</li>
+                    </ul><br>
+                    Adding a solar event schedule
+                    <ul>
+                        <li>Multiple schedules can be added if the payload is an array of objects</li>
+                        <li>command: (string|required) The operation to perform - in this case "add"</li>
+                        <li>name: (string|required) This will identify schedule</li>
+                        <li>topic: (string|required) This will be used as the topic when the schedule triggers</li>
+                        <li>expressionType: (string|required) specify the schedule type. Set to "solar" for solar events</li>
+                        <li>solarType: (string|required) specify the events to fire.  Accepted values are "all" or "selected"</li>
+                        <li>solarEvents: (string|optional) specify the events to fire. Only required when solarType == "selected". Accepted values are listed under <b>Schedules - Solar Events</b> <a href="#cron-plus-solar-events-info">see above</a> </li>
+                        <li>location: (string|required) longitude latitude, DNS, DMM or GPS coordinates for sunrise or sunset</li>
+                        <li>offset: (number|optional) number of minutes to offset a sunrise or sunset</li>
+                        <li>payloadType: (string|optional) The payload type (e.g. 'default', 'flow', 'global', 'str', 'num', 'bool', 'json', 'bin', 'date' or 'env')</li>
+                        <li>payload: (any|optional) What to send when schedule triggers</li>
+                        <li>limit: (number|optional) Maximum number of times the schedule should trigger</li>
+                    </ul>
+                </p>
+            </p>
+            <p><i>Notes...</i><br>
+                <ul>
+                    <li>This option has no output.</li>
+                </ul>
+            </p>
+
+            <p id="cron-plus-commands-info"><b>Getting status of a schedule or removing / stopping / pausing / starting a schedule</b><br><br>
+                Topic Method...<br>
+                <pre class="cron-plus-code"><code>msg.topic = "command"; // command name - *see details below*,
+msg.payload = "name"; //  name of the schedule</code></pre>
+                Payload Method...<br>
+                <pre class="cron-plus-code"><code>payload: {
+  "command": "*see details below*",
+  "name": "* name of schedule",
+}</code></pre>
+                <p><i>Details...</i><br>
+                    <ul>
+                        <li>command: (string|required) The operation to perform - this can be one of the following...
+                            <ul>
+                                <li>"trigger"</li>
+                                <li>"status"</li>
+                                <li>"export"</li>
+                                <li>"remove"</li>
+                                <li>"stop"</li>
+                                <li>"pause"</li>
+                                <li>"start"</li>
+                            </ul>
+                        </li>
+                        <li>name: (string|optional) The name of the schedule to affect (not required when using the -all, -active or -inactive filters)</li>
+                    </ul>
+                </p>
+                <p><i>Notes...</i><br>
+                    <ul>
+                        <li><code>trigger</code> fires schedule named in <code>msg.payload</code> </li>
+                        <li><code>status</code> returns an object with the config and status of the named schedule</li>
+                        <li><code>export</code> returns an object with the config of the named schedule</li>
+                        <li><code>remove</code> will stop and remove the schedule. This option has no output.</li>
+                        <li><code>stop</code> will stop the schedule specified by <code>name</code> and reset its internal counter. This option has no output.</li>
+                        <li><code>pause</code> will stop the schedule specified by <code>name</code> but will not reset its internal counter. This option has no output.</li>
+                        <li><code>start</code> will (re)start all schedules. Any schedule that reached its limit will start from the beginning. Paused schedules will resume. This option has no output.</li>
+                        <li>FILTER: adding <code>-all</code> to any of these commands will operate on all schedules. e.g. <code>status-all</code> will return the status of all schedules</li>
+                        <li>FILTER: adding <code>-all-dynamic</code> to any of these commands will only affect dynamic schedules e.g. <code>remove-all-dynamic</code> will remove all dynamic schedules</li>
+                        <li>FILTER: adding <code>-all-static</code> to any of these commands will only affect static schedules e.g. <code>stop-all-static</code></li>
+                        <li>FILTER: adding <code>-active</code> to status, export and remove commands will operate on all active schedules. e.g. <code>status-active</code> </li>
+                        <li>FILTER: adding <code>-active-static</code> to status, export and remove commands will operate on all static schedules that are active. e.g. <code>status-active-static</code></li>
+                        <li>FILTER: adding <code>-active-dynamic</code> to status, export and remove commands will operate on all dynamic schedules that are active. e.g. <code>status-active-dynamic</code></li>
+                        <li>FILTER: adding <code>-inactive</code> to status, export and remove commands will operate on all inactive schedules. e.g. <code>status-inactive</code> </li>
+                        <li>FILTER: adding <code>-inactive-static</code> to status, export and remove commands will operate on all static schedules that are inactive. e.g. <code>status-inactive-static</code></li>
+                        <li>FILTER: adding <code>-inactive-dynamic</code> to status, export and remove commands will operate on all dynamic schedules that are inactive. e.g. <code>status-inactive-dynamic</code></li>
+                    </ul>
+                </p>
+                <p><i>Examples...</i><br>
+                    Example : Using a simple topic command to manually trigger a schedule named "schedule1"<br>
+                    <pre class="cron-plus-code"><code>msg: {
+  "topic": "trigger",
+  "payload": "schedule1"
+}</code></pre>                    
+                    Example : Using a simple topic command to export all dynamically added schedules...<br>
+                    <pre class="cron-plus-code"><code>msg: {
+  "topic": "export-all-dynamic"
+}</code></pre>                    
+                    Example : Using a simple topic command to delete a schedule named "schedule1"<br>
+                    <pre class="cron-plus-code"><code>msg: {
+  "topic": "remove",
+  "payload": "schedule1"
+}</code></pre>                    
+                    Example : Using a cmd payload to pause all schedules...<br>
+                    <pre class="cron-plus-code"><code>payload: {
+  "command": "pause-all"
+}</code></pre> 
+                    Example : Using a simple topic command to delete all dynamic schedules that have finished <br>
+                    <pre class="cron-plus-code"><code>msg: {
+  "topic": "remove-inactive-dynamic"
+}</code></pre>                    
+                </p>
+            </p>
+            </p>
+
+                 
+
+            <p><b>Describe</b><br>
+                Example : cmd payload to describe a cron expression...<br>
+                <pre class="cron-plus-code"><code>{
+  "command": "describe",
+  "expressionType": "cron",
+  "expression": "0 */5 * * * MON *",
+  "timeZone": "Europe/London"
+}</code></pre>
+                Example : cmd payload to get all solar event times + solar state at this time...<br>
+<pre class="cron-plus-code"><code>{
+  "command": "describe",
+  "expressionType": "solar",
+  "location": "54.9992500,-1.4170300",
+  "solarType": "all",
+  "timeZone": "Europe/London"
+}</code></pre>
+                Example : cmd payload to get 4 solar event times + solar for a specific point in time...<br>
+    <pre class="cron-plus-code"><code>{
+  "command": "describe",
+  "expressionType": "solar",
+  "time": "2020-03-22 18:40",
+  "location": "54.9992500,-1.4170300",
+  "solarType": "selected",
+  "solarEvents": "civilDawn,sunrise,sunset,civilDusk",
+  "timeZone": "Europe/London"
+}</code></pre>
+                <p><i>Details...</i><br>
+                    Returns an object in payload containing human readable info for the given expression.
+                    <ul>
+                        <li>command: (string|required) The operation to perform</li>
+                        <li>expression: (string|required) The expression to describe</li>
+                        <li>timeZone: (string|optional) A timezone to use. Leave blank for system timezone. Alternatively, enter UTC or a timezone in the format of Region/Area (<a target="_blank" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list</a>) </li>
+                    </ul>
+                </p>
+            </p>                
+        </dd>
+        <dd>GENERAL NOTES...<br>
+            <ul>
+                <li>Adding a schedule with the same name as an existing schedule will replace the existing one</li>
+                <li>Adding a schedule with property <code>"limit":3</code> will cause that schedule to be stopped after the third trigger. It can be started again by injecting a payload of <code>{"command":"start" "name": "schedule name"}</code></li>
+                <li>Static (UI added) schedules can be also be updated by using the name specified in the UI</li>
+                <li>When a cron-plus-plus node is modified and deployed (or node-red is restarted), dynamic entries are discarded and must be injected again</li>
+                <li>When a cron-plus-plus node outputs a msg in response to a command, <code>msg.commandResponse</code> will be <code>true</code> to indicate the message is in response to a command and not a scheduled event</li>
+                <li>When a cron-plus-plus node outputs a msg for a cron/solar event, <code>msg.scheduledEvent</code> will be <code>true</code> to indicate the message is due to a scheduled event and not a control response</li>
+                <li>The status indicator will be shown as a "ring" for dynamic schedules or shown as a "dot" for static schedules</li>
+                <li>if the payload is to "Default Payload", then the content of <code>msg.cronplus</code> is moved to <code>msg.payload</code></li>
+            </ul>
+        </dd>
+    </dl>
+
+    <h3 id="understanding-timezone">Understanding Timezone...</h3>
+    <dl class="message-properties">
+        <h4>Foreword</h4>
+        <p>Timezone should be perceived from your current point of view. For example, regardless of where your node-red runs, you can "fake it" by setting the Timezone entry to your own Timezone location where/when you expect the event to occur.
+        </p>
+
+        <h4><b>Example 1...</b></h4>
+        <p>Trigger a flow when the NYSE stock exchange starts and stops trading.
+        </p>
+
+        <h4 id="notes">NOTES</h4>
+        <ul>
+            <li>This example will work all year around but was written on 15th Apr with <code>GMT+1 / BST</code> and <code>GMT-4 / EDT</code> as a point of reference</li>
+            <li>Server is in London (GMT+1 / BST)</li>
+            <li>NYSE Stock exchange runs 09:30 ~ 16:00 Monday to Friday</li>
+        </ul>
+
+        <h4 id="details">DETAILS</h4>
+        <ul>
+            <li>NY time 09:30 (GMT-4 / EDT) - this is the time the market opens in New York</li>
+            <li>Server time 14:30 (GMT+1 / BST equivalent) - the start event will happen at this time in london</li>
+            <li>NY time 16:00 (GMT-4 / EDT) - this is the time the market closes in New York</li>
+            <li>Server time 21:00 (GMT+1 / BST equivalent) - the stop event will happen at this time in london</li>
+        </ul>
+
+        <h4 id="setup">SETUP</h4>
+        <ul>
+            <li>Enter <code>America/New_York</code> in the <code>Timezone</code> field</li>
+            <li>Add a new schedule...
+                <ul>
+                    <li>Field 1 (name)      : Enter &quot;NYSEOPEN &quot;</li>
+                    <li>Field 2 (topic)     : Enter &quot;stocks/nyse/trading&quot;</li>
+                    <li>Field 3 (payload)   : Select boolean - true</li>
+                    <li>Field 4 (type)      : Select &quot;cron&quot;</li>
+                    <li>Field 5 (expression): Enter the expression <code>0 30 9 * * 1-5</code></li>                    
+                </ul>
+            </li>
+            <li>Add a new schedule...
+                <ul>
+                    <li>Field 1 (name)      : Enter &quot;NYSECLOSE &quot;</li>
+                    <li>Field 2 (topic)     : Enter &quot;stocks/nyse/trading&quot;</li>
+                    <li>Field 3 (payload)   : Select boolean - false</li>
+                    <li>Field 4 (type)      : Select &quot;cron&quot;</li>
+                    <li>Field 5 (expression): Enter the expression <code>0 0 16 * * 1-5</code></li>
+                </ul>
+            </li>
+        </ul>  
+        
+        <p></p>         
+
+        <h4><b>Example 2...</b></h4>
+        <p>Get an reminder (in Moscow) to call my wife 30 mins after the sun rises in Cairo.</p>
+
+        <h4 id="notes">NOTES</h4>
+        <ul>
+            <li>This example will work all year around but was written on 15th Apr as a point of reference</li>
+            <li>Server is in London (GMT+1 / BST)</li>
+            <li>My wife in on holiday in Cairo (GMT+2)
+                <ul>
+                    <li>sunrise is at 05:27 in Cairo on 15-Apr</li>
+                </ul>
+            </li>
+            <li>I am away on business in Moscow (GMT+3)
+                <ul>
+                    <li>I need an alert to call wife 30 mins after Cairo sunrise</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4 id="details">DETAILS</h4>
+        <ul>
+            <li>Cairo sunrise time 05:27 (15-apr) - 30 mins later at 05:57, my wife expects a call.</li>
+            <li>Server time 04:57 (GMT+1 equivalent) - the event will happen at this time in london</li>
+            <li>Moscow time 06:57 (GMT+3 equivalent) - this is the time it will be in Moscow</li>
+        </ul>
+
+        <h4 id="setup">SETUP</h4>
+        <ul>
+            <li>Enter <code>Europe/Moscow</code> in the <code>Timezone</code> field</li>
+            <li>Add a new schedule...
+                <ul>
+                    <li>Field 1 (name)    : Enter &quot;call reminder&quot;</li>
+                    <li>Field 2 (topic)   : Enter &quot;call/wife&quot;</li>
+                    <li>Field 3 (payload) : Select default</li>
+                    <li>Field 4 (type)    : Select &quot;solar events&quot;</li>
+                    <li>Field 5 (Events)  : Select &quot;sunrise&quot;</li>
+                    <li>Field 6 (location): Enter the coordinates for sunrise location (Cairo) <code>30.04905845622014 31.229496002197262</code></li>
+                    <li>Field 7 (offset)  : Enter an offset of 30 (allow her time to make a coffee)</li>
+                </ul>
+            </li>
+        </ul>   
+
+    </dl>
+    
+</script>

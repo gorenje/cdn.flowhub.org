@@ -55,3 +55,45 @@ for lcls in editor infotips node-red jsonata ; do
     echo "==> locales/${lcls}"
     curl -s "${NODERED_URL}/locales/${lcls}?lng=en-US" | $PyTHON .py/json_pretty.py > locales/${lcls}
 done
+
+for lnk in blockly-contrib/npm/blockly/blockly_compressed.js \
+              blockly-contrib/npm/blockly/msg/en.js \
+              blockly-contrib/npm/blockly/blocks_compressed.js \
+              blockly-contrib/npm/blockly/javascript_compressed.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___plugin-workspace-search/dist/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___zoom-to-fit/dist/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___workspace-backpack/dist/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___toolbox-search/dist/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___workspace-minimap/dist/index.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/nodered/nodeRedBlocksCodeGen.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/nodered/nodeRedBlocksDefs.js \
+              blockly-contrib/npm/node-red-contrib-blockly/messages/en.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/json/objectBlocksCodeGen.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/json/objectBlocksDefs.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/buffer/bufferBlocksCodeGen.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/buffer/bufferBlocksDefs.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___field-date/dist/index.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/datetime/dateTimeBlocksCodeGen.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/datetime/dateTimeBlocksDefs.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/timer/timerBlocksCodeGen.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/timer/timerBlocksDefs.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/extra/extraBlocksCodeGen.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/extra/extraBlocksDefs.js \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/nodered/toolbox.xml \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/json/toolbox.xml \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/buffer/toolbox.xml \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/datetime/toolbox.xml \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/timer/toolbox.xml \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/extra/toolbox.xml \
+              blockly-contrib/npm/node-red-contrib-blockly/lib/basic/toolbox.xml \
+              blockly-contrib/npm/@blockly___SEPARATOR___theme-dark/src/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___theme-deuteranopia/src/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___theme-highcontrast/src/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___theme-modern/src/index.js \
+              blockly-contrib/npm/@blockly___SEPARATOR___theme-tritanopia/src/index.js \
+           ; do
+
+    echo "==> ${lnk}"
+    mkdir -p `dirname ${lnk}`
+    curl -s ${NODERED_URL}/${lnk} > ${lnk}
+done

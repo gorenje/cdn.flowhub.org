@@ -1,0 +1,72 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="Node-RED" colour="#BB8FCE">
+    <block type="node_object_get"> 
+      <value name="field_name">
+        <shadow type="text">
+          <field name="TEXT">payload</field>
+        </shadow>
+      </value>
+      <value name="object">
+        <shadow type="node_msg">
+        </shadow>
+      </value>
+    </block>
+    <block type="node_object_set">
+      <value name="field_name">
+        <shadow type="text">
+          <field name="TEXT">payload</field>
+        </shadow>
+      </value>    
+      <value name="object_field">
+        <shadow type="node_msg">
+        </shadow>
+      </value>
+      <value name="value_field">
+        <shadow type="text">
+        </shadow>
+      </value>       
+    </block>  
+    <block type="node_send">
+      <value name="MESSAGE_INPUT">
+        <shadow type="node_msg"></shadow>
+      </value>       
+    </block>
+    <block type="node_msg"></block>
+    <block type="node_flow_memory"></block>
+    <block type="node_global_memory"></block>
+    <block type="node_context_memory"></block>
+    <block type="node_env">
+      <value name="VARIABLE_NAME">
+        <shadow type="text">
+        </shadow>
+      </value> 
+    </block>
+    <block type="node_return_message">
+      <value name="MESSAGE_INPUT">
+        <shadow type="node_msg"></shadow>
+      </value>
+    </block>
+    <block type="node_return"></block> 
+    <block type="node_status">
+      <field name="COLOUR">#0000FF</field>
+      <value name="TEXT_INPUT">
+        <shadow type="text">
+        </shadow>
+      </value> 
+    </block>   
+    <block type="node_remove_status"></block>    
+    <block type="node_log">
+      <value name="LOG_MESSAGE_INPUT">
+        <shadow type="text"></shadow>
+      </value> 
+    </block>
+    <block type="node_clone">
+      <value name="OBJECT_INPUT">
+        <shadow type="node_msg"></shadow>
+      </value> 
+    </block>
+    <block type="node_properties"></block>
+    <block type="node_done"></block>
+    <block type="node_close"></block>
+  </category>
+</xml>

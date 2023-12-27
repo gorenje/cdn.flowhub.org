@@ -1524,5 +1524,29 @@
         ],
         "user": false,
         "version": "0.1.8"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-zip/zip",
+        "local": true,
+        "module": "node-red-contrib-zip",
+        "name": "zip",
+        "types": [
+            "zip"
+        ],
+        "user": false,
+        "version": "1.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-cron-plus/cronplus",
+        "local": true,
+        "module": "node-red-contrib-cron-plus",
+        "name": "cronplus",
+        "types": [
+            "cronplus"
+        ],
+        "user": false,
+        "version": "2.1.0"
     }
 ]

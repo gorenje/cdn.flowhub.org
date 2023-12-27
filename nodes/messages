@@ -136,6 +136,7 @@
     },
     "node-red-contrib-blockly/blockly": {},
     "node-red-contrib-blockly/blockly-config": {},
+    "node-red-contrib-cron-plus/cronplus": {},
     "node-red-contrib-gzip/markdown": {},
     "node-red-contrib-i2c/i2c": {},
     "node-red-contrib-osc/osc": {},
@@ -189,6 +190,33 @@
     "node-red-contrib-web-babylonjs/scene": {},
     "node-red-contrib-web-babylonjs/sphere": {},
     "node-red-contrib-web-babylonjs/transform": {},
+    "node-red-contrib-zip/zip": {
+        "zip": {
+            "error": {
+                "filename-type-string": "Filename type must be a String",
+                "parse": "Error parsing zip file: __err__",
+                "payload-type-buffer": "Payload type must be a Buffer",
+                "payload-type-buffer-string": "Payload type must be a Buffer or a String"
+            },
+            "label": {
+                "compressionlevel": "Compression",
+                "filename": "File name",
+                "level": {
+                    "best": "9 (best)",
+                    "default": "6 (default)",
+                    "fast": "1 (fast)",
+                    "no": "0 (no compression)"
+                },
+                "mode": "Mode",
+                "name": "Name",
+                "outasstring": "Output payload as String"
+            },
+            "mode": {
+                "compress": "Compress",
+                "decompress": "Decompress"
+            }
+        }
+    },
     "node-red-dashboard/ui_audio": {},
     "node-red-dashboard/ui_base": {
         "ui_base": {
