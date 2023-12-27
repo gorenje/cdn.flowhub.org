@@ -153,19 +153,31 @@ var DEADRED = (function() {
             case "csv":
 
                 if ( typeof msg.payload == "object" ) {
-                    msg.payload = Papa.unparse( msg.payload )
+                    var cfg = {
+                        header: nde.hdrout != "none",
+                        newline: nde.ret,
+                    }
+                    msg.payload = Papa.unparse( msg.payload, cfg )
                     passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
                     return
                 } else {
+                    var cfg = {
+                        delimiter: nde.spe,
+                        skipFirstNLines: parseInt(nde.skip),
+                        header: nde.hdrin,
+                        skipEmptyLines: !nde.include_empty_strings,
+                    }
+
                     if ( nde.multi == "one" ) {
-                        Papa.parse( msg.payload ).forEach( d => {
+                        Papa.parse( msg.payload, cfg ).forEach( d => {
                             msg.payload = d
                             passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
                         })
                     } else {
-                        msg.payload = Papa.parse( msg.payload )
+                        msg.payload = Papa.parse( msg.payload, cfg )
                         passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
                     }
+
                     return
                 }
 
@@ -182,20 +194,31 @@ var DEADRED = (function() {
                 }
 
                 if ( nde.tosidebar ) {
-                    // TODO: debugs don't work in subflows since the
-                    // TODO: path setting is wrong
-                    RED.comms.emit([{
-                        "topic":"debug",
-                        "data":{
-                            "id": nde.id,
-                            "z": nde.z,
-                            "path": nde.z,
-                            "name":nde._def.label.call(nde),
-                            "topic":msg.topic,
-                            "property":"",
-                            "msg":JSON.stringify(msg),
-                            "format":"Object"
-                        }}])
+                    var debugData = {
+                        "id":       nde.id,
+                        "z":        nde.z,
+                        "path":     nde.z,
+                        "name":     nde._def.label.call(nde),
+                        "topic":    msg.topic,
+                        "property": "",
+                        "msg":      JSON.stringify(msg),
+                        "format":   "Object"
+                    }
+
+                    // if a debug appears in a subflow, it needs to have
+                    // more details to identify it.
+                    if ( msg._subflowOut && msg._subflowOut.length > 0 ) {
+                        var evnt      = msg._subflowOut[msg._subflowOut.length-1]
+                        var origNdeId = evnt.split(":")[1]
+                        var wrkSpId   = RED.nodes.node(origNdeId).z
+
+                        debugData["_alias"] = nde.id
+                        debugData["id"]     = origNdeId + "-" + nde.id
+                        debugData["z"]      = origNdeId
+                        debugData["path"]   = wrkSpId + "/" + origNdeId
+                    }
+
+                    RED.comms.emit([{ "topic": "debug", "data": debugData }])
                     donesomething = true
                 }
 
@@ -219,8 +242,8 @@ var DEADRED = (function() {
                 }
 
                 if ( donesomething ) return
-                break
 
+                break
 
             case "delay":
 
@@ -628,7 +651,10 @@ var DEADRED = (function() {
             if ( !nde ) {
                 console.error("*** NO target found for LINK", lnk)
             }
-            captureExceptionExecuteNode(nde, msg)
+            // off-thread
+            setTimeout( () => {
+                captureExceptionExecuteNode(nde, msg)
+            },0)
         })
     }
 
@@ -767,10 +793,13 @@ var DEADRED = (function() {
             jqXHR.abort();
             options.success({})
 
-            DEADRED.executeFlow(mth[1], {
-                ...JSON.parse(options.data),
-                payload: Date.now()
-            })
+            // execute off-thread ...
+            setTimeout( () => {
+                DEADRED.executeFlow(mth[1], {
+                    ...JSON.parse(options.data),
+                    payload: Date.now()
+                })
+            }, 10);
         }
 
         // a click on the deploy button, an update of the flow. Pass
