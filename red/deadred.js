@@ -47,20 +47,24 @@ var DEADRED = (function() {
         }
     }
 
+    function cloneIt(obj) {
+        if ( typeof structuredClone != "undefined" ) { //looking at your Opera...
+            try {
+                return structuredClone(obj)
+            } catch ( ex ) {
+                return JSON.parse(JSON.stringify(obj))
+            }
+        } else {
+            return JSON.parse(JSON.stringify(obj))
+        }
+    }
+
     function executeNode(nde, msg) {
         // d ==> disabled
         if ( stopExecution || nde.d ) { return; }
 
         // clone the message, handle exceptions with shallower clone
-        if ( typeof structuredClone != "undefined" ) { //looking at your Opera...
-            try {
-                msg = structuredClone(msg)
-            } catch ( ex ) {
-                msg = JSON.parse( JSON.stringify(msg))
-            }
-        } else {
-            msg = JSON.parse( JSON.stringify(msg))
-        }
+        msg = cloneIt(msg)
 
         // message tracing can be deactivated using the __notrace property
         // on the msg object.
@@ -157,8 +161,15 @@ var DEADRED = (function() {
                         header: nde.hdrout != "none",
                         newline: nde.ret,
                     }
+
+
+                    if ( !Array.isArray(msg.payload) ) {
+                        msg.payload = [msg.payload]
+                    }
+
                     msg.payload = Papa.unparse( msg.payload, cfg )
-                    passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg)
+
                     return
                 } else {
                     var cfg = {
@@ -169,12 +180,14 @@ var DEADRED = (function() {
                     }
 
                     if ( nde.multi == "one" ) {
-                        Papa.parse( msg.payload, cfg ).forEach( d => {
+                        Papa.parse( msg.payload, cfg ).data.forEach( d => {
+                            msg = cloneIt(msg)
                             msg.payload = d
+                            msg._msgid = RED.nodes.id()
                             passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
                         })
                     } else {
-                        msg.payload = Papa.parse( msg.payload, cfg )
+                        msg.payload = Papa.parse( msg.payload, cfg ).data
                         passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
                     }
 
@@ -246,6 +259,17 @@ var DEADRED = (function() {
                 break
 
             case "delay":
+
+                if ( nde.pauseType === "delayv" ) {
+                    var vDur = Number( msg.delay )
+                    vDur = vDur > 0 ? vDur : 0
+
+                    setTimeout( () => {
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg)
+                    }, vDur);
+
+                    return
+                }
 
                 if ( nde.pauseType === "delay" ) {
                     let duration = nde.timeout * 1000;
@@ -653,7 +677,7 @@ var DEADRED = (function() {
             }
             // off-thread
             setTimeout( () => {
-                captureExceptionExecuteNode(nde, msg)
+                captureExceptionExecuteNode(nde, cloneIt(msg))
             },0)
         })
     }
@@ -793,13 +817,22 @@ var DEADRED = (function() {
             jqXHR.abort();
             options.success({})
 
+            var ndeid = mth[1];
+            var data = options.data;
             // execute off-thread ...
             setTimeout( () => {
-                DEADRED.executeFlow(mth[1], {
-                    ...JSON.parse(options.data),
+                DEADRED.executeFlow(ndeid, {
+                    ...JSON.parse(data),
                     payload: Date.now()
                 })
             }, 10);
+        }
+
+        // capture disable and enable events
+        mth = options.url.match(/^debug\/([a-z0-9]{16})\/?(.+)?/i)
+        if ( mth ) {
+            jqXHR.abort();
+            options.success({},"",{ status: mth[2] == "enable" ? 200 : 201 })
         }
 
         // a click on the deploy button, an update of the flow. Pass
