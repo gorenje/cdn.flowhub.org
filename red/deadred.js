@@ -162,7 +162,6 @@ var DEADRED = (function() {
                         newline: nde.ret,
                     }
 
-
                     if ( !Array.isArray(msg.payload) ) {
                         msg.payload = [msg.payload]
                     }
@@ -494,6 +493,11 @@ var DEADRED = (function() {
                 break
 
             case 'subflow':
+                // we get here from the inside of a subflow. A subflow
+                // calls this and eventually it ends with an out node
+                // which then triggers the original node with the msg.
+                // The status node triggers a status update for the original
+                // node.
                 if ( nde.direction == "out" ) {
                     var evtId = msg._subflowOut.pop()
                     var ndeId = evtId.split(":")[1]
@@ -650,15 +654,6 @@ var DEADRED = (function() {
         }
     }
 
-    // this is called by inject when its button is pressed...
-    function executeFlow(nodeid, msg) {
-        let nde = RED.nodes.node(nodeid)
-        if ( nde.type == "inject" ) {
-            msg._msgid = RED.nodes.id()
-            captureExceptionExecuteNode(nde, msg)
-        }
-    }
-
     function passMsgToLinks(links, msg) {
         links.forEach( lnk => {
             let nde = (
@@ -680,17 +675,6 @@ var DEADRED = (function() {
                 captureExceptionExecuteNode(nde, cloneIt(msg))
             },0)
         })
-    }
-
-    // called once the deploy restart flow is called.
-    function reloadFlows() {
-        stopExecution = true;
-
-        setTimeout( () => {
-            stopExecution = false
-            executionState = {};
-            RED.nodes.eachNode( (nde) => { clearStatusForNode(nde.id) });
-        }, 2000);
     }
 
     function compareFlows(msg) {
@@ -828,7 +812,7 @@ var DEADRED = (function() {
             }, 10);
         }
 
-        // capture disable and enable events
+        // capture disable and enable events for the debug node
         mth = options.url.match(/^debug\/([a-z0-9]{16})\/?(.+)?/i)
         if ( mth ) {
             jqXHR.abort();
@@ -839,7 +823,8 @@ var DEADRED = (function() {
         // through but handle a reload and stop the flows.
         if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")
           && options.type == "POST") {
-            if ( options.headers["Node-RED-Deployment-Type"] == "reload" ){
+            if ( options.headers &&
+                 options.headers["Node-RED-Deployment-Type"] == "reload" ) {
                 reloadFlows()
             } else {
                 RED.settings.setLocal( "flowdata", options.data)
@@ -925,6 +910,26 @@ var DEADRED = (function() {
                 }
             });
         });
+    }
+
+    // called once the deploy restart flow is called.
+    function reloadFlows() {
+        stopExecution = true;
+
+        setTimeout( () => {
+            stopExecution = false
+            executionState = {};
+            RED.nodes.eachNode( (nde) => { clearStatusForNode(nde.id) });
+        }, 2000);
+    }
+
+    // this is called by inject when its button is pressed...
+    function executeFlow(nodeid, msg) {
+        let nde = RED.nodes.node(nodeid)
+        if ( nde.type == "inject" ) {
+            msg._msgid = RED.nodes.id()
+            captureExceptionExecuteNode(nde, msg)
+        }
     }
 
     function init() {
