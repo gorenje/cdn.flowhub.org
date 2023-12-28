@@ -1515,18 +1515,6 @@
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
-        "name": "flowtomermaid",
-        "types": [
-            "Flow2MermaidCfg"
-        ],
-        "user": false,
-        "version": "0.1.8"
-    },
-    {
-        "enabled": true,
         "id": "node-red-contrib-zip/zip",
         "local": true,
         "module": "node-red-contrib-zip",
@@ -1548,5 +1536,17 @@
         ],
         "user": false,
         "version": "2.1.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
+        "name": "flowtomermaid",
+        "types": [
+            "Flow2MermaidCfg"
+        ],
+        "user": false,
+        "version": "0.1.9"
     }
 ]
