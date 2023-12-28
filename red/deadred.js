@@ -962,6 +962,11 @@ var DEADRED = (function() {
             },1000)
         })
 
+        // simulate the heartbeat packet from server
+        setInterval( () => {
+            RED.comms.emit({ topic: 'hb', data: Date.now() })
+        }, 15000)
+
         console.log( "DEADRED initialised" )
     }
 
