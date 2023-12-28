@@ -40,8 +40,10 @@ done
 
 for typ in nodes plugins ; do
 
-    echo "==> ${typ}/messages"
-    curl -s "${NODERED_URL}/${typ}/messages?lng=en-US&_=${CBSTMP}" | $PyTHON .py/json_pretty.py > ${typ}/messages
+    for lng in en-GB en en-US ; do
+        echo "==> ${typ}/messages/${lng}"
+        curl -s "${NODERED_URL}/${typ}/messages?lng=${lng}&_=${CBSTMP}" | $PyTHON .py/json_pretty.py > ${typ}/messages.${lng}
+    done
 
     echo "==> ${typ}/nodes.json"
     curl -s "${NODERED_URL}/${typ}?_=${CBSTMP}" -H 'Accept: application/json' | $PyTHON .py/json_pretty.py > ${typ}/${typ}.json
@@ -52,8 +54,10 @@ for typ in nodes plugins ; do
 done
 
 for lcls in editor infotips node-red jsonata ; do
-    echo "==> locales/${lcls}"
-    curl -s "${NODERED_URL}/locales/${lcls}?lng=en-US" | $PyTHON .py/json_pretty.py > locales/${lcls}
+    for lng in en-GB en en-US ; do
+        echo "==> locales/${lcls}/${lng}"
+        curl -s "${NODERED_URL}/locales/${lcls}?lng=${lng}" | $PyTHON .py/json_pretty.py > locales/${lcls}.${lng}
+    done
 done
 
 for lnk in blockly-contrib/npm/blockly/blockly_compressed.js \

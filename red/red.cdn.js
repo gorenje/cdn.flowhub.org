@@ -1363,7 +1363,7 @@ RED.i18n = (function() {
             var opts = {
                 compatibilityJSON: 'v3',
                 backend: {
-                    loadPath: apiRootUrl+'locales/__ns__?lng=__lng__',
+                    loadPath: apiRootUrl+'locales/__ns__.__lng__',
                 },
                 lng: 'en-US',
                 // debug: true,
@@ -34452,6 +34452,7 @@ RED.editor = (function() {
                     keys[i] = prefix+ns+":"+key;
                 }
             }
+
             $(this).attr("data-i18n",keys.join(";"));
         });
 
