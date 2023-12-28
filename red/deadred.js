@@ -47,6 +47,18 @@ var DEADRED = (function() {
         }
     }
 
+    // code taken from
+    // https://developer.mozilla.org/en-US/docs/Glossary/Base64#the_unicode_problem
+    function base64ToBytes(base64) {
+        const binString = atob(base64);
+        return Uint8Array.from(binString, (m) => m.codePointAt(0));
+    }
+
+    function bytesToBase64(bytes) {
+        const binString = String.fromCodePoint(...bytes);
+        return btoa(binString);
+    }
+
     function cloneIt(obj) {
         if ( typeof structuredClone != "undefined" ) { //looking at your Opera...
             try {
@@ -111,6 +123,75 @@ var DEADRED = (function() {
         // that the node is not supported. A 'return' will mean the node
         // has been completely applied.
         switch ( nde.type ) {
+            case 'base64':
+                if ( nde.action == "b64" ) {
+                    var atobUtf8 = (content) => {
+                        return new TextDecoder().decode(base64ToBytes(content));
+                    };
+
+                    NodeRedBackendCode.setMessageProperty(
+                        msg,
+                        nde.property,
+                        atobUtf8(NodeRedBackendCode.getMessageProperty(
+                            msg, nde.property
+                        ))
+                    )
+
+                    passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    return
+                }
+
+                if ( nde.action == "str" ) {
+                    var btoaUtf8 = (content) => {
+                        return bytesToBase64(new TextEncoder().encode(content))
+                    }
+
+                    NodeRedBackendCode.setMessageProperty(
+                        msg,
+                        nde.property,
+                        btoaUtf8(NodeRedBackendCode.getMessageProperty(
+                            msg, nde.property
+                        ))
+                    )
+
+                    passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                    return
+                }
+
+                if ( nde.action == "" ) {
+                    var val = NodeRedBackendCode.getMessageProperty(
+                        msg, nde.property
+                    )
+
+                    if ( typeof val == "string" ) {
+                        NodeRedBackendCode.setMessageProperty(
+                            msg,
+                            nde.property,
+                            base64ToBytes(val)
+                        )
+
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                        return
+
+                    } else if ( typeof val == "object") {
+                        NodeRedBackendCode.setMessageProperty(
+                            msg,
+                            nde.property,
+                            bytesToBase64(val)
+                        )
+
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                        return
+
+                    } else if ( !val ) {
+                        // silently ignore doing anything
+                        passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                        return
+                    }
+                }
+
+                break
+
             case "ClientCode":
                 RED.comms.emit([{
                     "topic":"introspect:client-code-perform",
@@ -146,7 +227,7 @@ var DEADRED = (function() {
                             msg[rle.p] = jsonata(rle.to).evaluate({msg:msg})
                         }
                         if ( rle.pt == "msg" && rle.tot == "msg" ) {
-                            msg[rle.p] = NodeRedBackendCode.getObjectProperty(
+                            msg[rle.p] = NodeRedBackendCode.getMessageProperty(
                                 msg, rle.to
                             )
                         }
@@ -221,6 +302,28 @@ var DEADRED = (function() {
                         "property": "",
                         "msg":      JSON.stringify(msg),
                         "format":   "Object"
+                    }
+
+                    if ( nde.complete != "true" ) {
+                        debugData["property"] = nde.complete
+                        var val = NodeRedBackendCode.getMessageProperty(
+                            msg, nde.complete
+                        )
+
+                        if ( typeof val === "string" ) {
+                            debugData["msg"] = val
+                            debugData["format"] = "string[" + val.length + "]"
+                        } else if ( Array.isArray(val) ) {
+                            debugData["msg"] = JSON.stringify(val)
+                            debugData["format"] = "array[" + val.length + "]"
+                        } else if ( val.__proto__ == Uint8Array.prototype ) {
+                            debugData["format"] = "array[" + val.length + "]"
+                            val = Array.of( ...val )
+                            debugData["msg"] = JSON.stringify(val)
+                        } else {
+                            debugData["msg"] = JSON.stringify(val)
+                            debugData["format"] = "Object"
+                        }
                     }
 
                     // if a debug appears in a subflow, it needs to have
@@ -531,7 +634,7 @@ var DEADRED = (function() {
             case 'switch':
 
                 if ( nde.property && nde.propertyType == "msg" ) {
-                    let val = NodeRedBackendCode.getObjectProperty(
+                    let val = NodeRedBackendCode.getMessageProperty(
                         msg,nde.property
                     )
 

@@ -196,6 +196,84 @@ var NodeRedBackendCode = (function(){
         return result;
     }
 
+    function getMessageProperty(msg,expr) {
+        if (expr.indexOf('msg.')===0) {
+            expr = expr.substring(4);
+        }
+        return getObjectProperty(msg,expr);
+    }
+
+    function setObjectProperty(msg,prop,value,createMissing) {
+        if (typeof createMissing === 'undefined') {
+            createMissing = (typeof value !== 'undefined');
+        }
+        var msgPropParts = normalisePropertyExpression(prop, msg);
+        var depth = 0;
+        var length = msgPropParts.length;
+        var obj = msg;
+        var key;
+        for (var i=0;i<length-1;i++) {
+            key = msgPropParts[i];
+            if (typeof key === 'string' || (typeof key === 'number' && !Array.isArray(obj))) {
+                if (hasOwnProperty.call(obj, key)) {
+                    if (length > 1 && ((typeof obj[key] !== "object" && typeof obj[key] !== "function") || obj[key] === null)) {
+                        // Break out early as we cannot create a property beneath
+                        // this type of value
+                        return false;
+                    }
+                    obj = obj[key];
+                } else if (createMissing) {
+                    if (typeof msgPropParts[i+1] === 'string') {
+                        obj[key] = {};
+                    } else {
+                        obj[key] = [];
+                    }
+                    obj = obj[key];
+                } else {
+                    return false;
+                }
+            } else if (typeof key === 'number') {
+                // obj is an array
+                if (obj[key] === undefined) {
+                    if (createMissing) {
+                        if (typeof msgPropParts[i+1] === 'string') {
+                            obj[key] = {};
+                        } else {
+                            obj[key] = [];
+                        }
+                        obj = obj[key];
+                    } else {
+                        return false;
+                    }
+                } else {
+                    obj = obj[key];
+                }
+            }
+        }
+        key = msgPropParts[length-1];
+        if (typeof value === "undefined") {
+            if (typeof key === 'number' && Array.isArray(obj)) {
+                obj.splice(key,1);
+            } else {
+                delete obj[key]
+            }
+        } else {
+            if (typeof obj === "object" && obj !== null) {
+                obj[key] = value;
+            } else {
+                // Cannot set a property of a non-object/array
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function setMessageProperty(msg,prop,value,createMissing) {
+        if (prop.indexOf('msg.')===0) {
+            prop = prop.substring(4);
+        }
+        return setObjectProperty(msg,prop,value,createMissing);
+    }
 
     const switchOperators = {
         'eq': function(a, b) { return a == b; },
@@ -262,9 +340,9 @@ var NodeRedBackendCode = (function(){
         'else': function(a) { return a === true; }
     };
 
-
     return {
-        getObjectProperty: getObjectProperty,
-        switchOperators: switchOperators
+        switchOperators: switchOperators,
+        getMessageProperty: getMessageProperty,
+        setMessageProperty: setMessageProperty
     }
 })();
