@@ -1424,6 +1424,7 @@ RED.i18n = (function() {
                     cache: false,
                     url: apiRootUrl+'nodes/'+namespace+'/messages?lng='+lang,
                     success: function(data) {
+                        if ( typeof data == "string" ) data = JSON.parse(data)
                         i18next.addResourceBundle(lang,namespace,data);
                         toLoad--;
                         if (toLoad === 0) {
@@ -1447,6 +1448,7 @@ RED.i18n = (function() {
                     cache: false,
                     url: apiRootUrl+'nodes/messages?lng='+lang,
                     success: function(data) {
+                        if ( typeof data == "string" ) data = JSON.parse(data)
                         var namespaces = Object.keys(data);
                         namespaces.forEach(function(ns) {
                             i18next.addResourceBundle(lang,ns,data[ns]);
@@ -1472,6 +1474,7 @@ RED.i18n = (function() {
                     cache: false,
                     url: apiRootUrl+'plugins/messages?lng='+lang,
                     success: function(data) {
+                        if ( typeof data == "string" ) data = JSON.parse(data)
                         var namespaces = Object.keys(data);
                         namespaces.forEach(function(ns) {
                             i18next.addResourceBundle(lang,ns,data[ns]);
