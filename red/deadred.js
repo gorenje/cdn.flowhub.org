@@ -591,15 +591,19 @@ var DEADRED = (function() {
                         case "bool":
                         case "json":
                             msg[prp.p] = JSON.parse( prp.v )
-                            break;
+                            break
+
+                        case "jsonata":
+                            msg[prp.p] = jsonata(prp.v).evaluate({msg:msg})
+                            break
 
                         case "str":
                             msg[prp.p] = prp.v
-                            break;
+                            break
 
                         case "date":
                             msg[prp.p] = Date.now()
-                            break;
+                            break
 
                         case "bin":
                             var data = JSON.parse(prp.v);
@@ -613,7 +617,7 @@ var DEADRED = (function() {
                     }
                 };
 
-                nde.props.forEach( prp => {
+                nde.props.concat(msg.__user_inject_props__ || []).forEach(prp => {
                     if ( prp.p == "payload" ) {
                         handleType(nde, { p: prp.p,
                                           v: nde.payload,
@@ -626,6 +630,8 @@ var DEADRED = (function() {
                         handleType(nde, prp, msg)
                     }
                 })
+
+                delete msg.__user_inject_props__
 
                 // Intentionally no break or return here, its meant to
                 // fall through.
@@ -805,10 +811,7 @@ var DEADRED = (function() {
             var data = options.data;
             // execute off-thread ...
             setTimeout( () => {
-                DEADRED.executeFlow(ndeid, {
-                    ...JSON.parse(data),
-                    payload: Date.now()
-                })
+                DEADRED.executeFlow(ndeid, JSON.parse(data))
             }, 10);
         }
 
