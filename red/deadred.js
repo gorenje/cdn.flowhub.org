@@ -927,14 +927,6 @@ var DEADRED = (function() {
             }, 10);
         }
 
-        // locales and messages - convert parameter to be part of the file
-        // name - differentiate between languages.
-        mth = options.url.match(/^(nodes|plugins)\/messages/i)
-        if ( mth ) {
-            var d = new URLSearchParams(options.url.split("?")[1])
-            options.url = mth[1] + "/messages." + d.get("lng")
-        }
-
         // capture disable and enable events for the debug node
         mth = options.url.match(/^debug\/([a-z0-9]{16})\/?(.+)?/i)
         if ( mth ) {

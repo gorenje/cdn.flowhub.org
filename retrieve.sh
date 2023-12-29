@@ -40,9 +40,9 @@ done
 
 for typ in nodes plugins ; do
 
-    for lng in en-GB en en-US ; do
+    for lng in en-US ; do
         echo "==> ${typ}/messages/${lng}"
-        curl -s "${NODERED_URL}/${typ}/messages?lng=${lng}&_=${CBSTMP}" | $PyTHON .py/json_pretty.py > ${typ}/messages.${lng}
+        curl -s "${NODERED_URL}/${typ}/messages?lng=${lng}&_=${CBSTMP}" | $PyTHON .py/json_pretty.py > ${typ}/messages
     done
 
     echo "==> ${typ}/nodes.json"
@@ -54,9 +54,9 @@ for typ in nodes plugins ; do
 done
 
 for lcls in editor infotips node-red jsonata ; do
-    for lng in en-GB en en-US ; do
+    for lng in en-US ; do
         echo "==> locales/${lcls}/${lng}"
-        curl -s "${NODERED_URL}/locales/${lcls}?lng=${lng}" | $PyTHON .py/json_pretty.py > locales/${lcls}.${lng}
+        curl -s "${NODERED_URL}/locales/${lcls}?lng=${lng}" | $PyTHON .py/json_pretty.py > locales/${lcls}
     done
 done
 
