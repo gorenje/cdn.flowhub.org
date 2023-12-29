@@ -1,0 +1,1147 @@
+{
+    "batch": {
+        "batch": "Regrouper",
+        "concat": {
+            "topic": "sujet",
+            "topics-label": "Sujets"
+        },
+        "count": {
+            "count": "nombre",
+            "invalid": "Comptage et chevauchement invalides",
+            "label": "Nombre de messages",
+            "overlap": "Chevauchement"
+        },
+        "error": {
+            "invalid-count": "Compte invalide",
+            "invalid-interval": "Intervalle invalide",
+            "invalid-overlap": "Recouvrement invalide"
+        },
+        "interval": {
+            "empty": "Envoyer un message vide lorsqu'aucun message n'arrive",
+            "label": "Intervalle",
+            "seconds": "secondes"
+        },
+        "mode": {
+            "concat": "Concat\u00e9ner des s\u00e9quences",
+            "interval": "Regrouper par intervalle de temps",
+            "label": "Mode",
+            "num-msgs": "Regrouper par nombre de messages"
+        },
+        "no-parts": "Aucune propri\u00e9t\u00e9 de pi\u00e8ces dans le message",
+        "too-many": "Trop de messages en attente dans le noeud batch",
+        "unexpected": "Mode inattendu"
+    },
+    "catch": {
+        "catch": "catch : tout",
+        "catchGroup": "catch: group",
+        "catchNodes": "catch : __number__",
+        "catchUncaught": "catch : non captur\u00e9",
+        "label": {
+            "selectAll": "Tout s\u00e9lectionner",
+            "source": "D\u00e9tecter les erreurs de",
+            "uncaught": "Ignorer les erreurs g\u00e9r\u00e9es par les autres noeuds Catch"
+        },
+        "scope": {
+            "all": "tous les noeuds",
+            "group": "dans le m\u00eame groupe",
+            "selected": "noeuds s\u00e9lectionn\u00e9s"
+        }
+    },
+    "change": {
+        "action": {
+            "change": "Remplacer",
+            "delete": "Supprimer",
+            "move": "D\u00e9placer",
+            "replace": "Remplacer par",
+            "search": "Rechercher",
+            "set": "D\u00e9finir",
+            "to": "vers",
+            "toValue": "sur la valeur"
+        },
+        "errors": {
+            "invalid-expr": "Expression JSONata invalide : __error__",
+            "invalid-from": "Propri\u00e9t\u00e9 'depuis' invalide : __error__",
+            "invalid-json": "Propri\u00e9t\u00e9 JSON 'vers' invalide",
+            "invalid-json-data": "Donn\u00e9es JSON invalides : __error__",
+            "invalid-prop": "Expression de propri\u00e9t\u00e9 invalide : __property__",
+            "no-override": "Impossible de d\u00e9finir la propri\u00e9t\u00e9 de type non objet : __property__"
+        },
+        "label": {
+            "change": "remplacer __property__",
+            "changeCount": "remplacer : __count__ r\u00e8gles",
+            "deepCopy": "Copie profonde de la valeur",
+            "delete": "supprimer __property__",
+            "move": "d\u00e9placer __property__",
+            "regex": "Utiliser des expressions r\u00e9guli\u00e8res",
+            "rule": "r\u00e8gle",
+            "rules": "R\u00e8gles",
+            "set": "d\u00e9finir __property__"
+        }
+    },
+    "comment": {
+        "comment": "commentaire"
+    },
+    "common": {
+        "errors": {
+            "nooverride": "Avertissement : les propri\u00e9t\u00e9s du msg ne peuvent plus remplacer les propri\u00e9t\u00e9s du noeud d\u00e9finies. Voir bit.ly/nr-override-msg-props"
+        },
+        "label": {
+            "expand": "D\u00e9velopper",
+            "name": "Nom",
+            "password": "Mot de passe",
+            "payload": "Charge utile",
+            "property": "Propri\u00e9t\u00e9",
+            "selectNodes": "S\u00e9lectionner les noeuds...",
+            "topic": "Sujet",
+            "username": "Nom d'utilisateur"
+        },
+        "notification": {
+            "error": "<strong>Erreur</strong> : __message__",
+            "errors": {
+                "no-response": "pas de r\u00e9ponse du serveur",
+                "not-deployed": "noeud non d\u00e9ploy\u00e9",
+                "unexpected": "erreur inattendue (__status__) __message__"
+            }
+        },
+        "status": {
+            "connected": "Connect\u00e9",
+            "connecting": "Connexion",
+            "disconnected": "D\u00e9connect\u00e9",
+            "error": "Erreur",
+            "not-connected": "Pas connect\u00e9",
+            "ok": "OK"
+        }
+    },
+    "complete": {
+        "completeNodes": "achev\u00e9 : __number__",
+        "errors": {
+            "scopeUndefined": "port\u00e9e ind\u00e9finie"
+        }
+    },
+    "csv": {
+        "errors": {
+            "bad_csv": "Donn\u00e9es CSV mal form\u00e9es - sortie probablement corrompue.",
+            "csv_js": "Ce noeud ne g\u00e8re que les cha\u00eenes CSV ou les objets js.",
+            "obj_csv": "Aucun mod\u00e8le de colonnes sp\u00e9cifi\u00e9 pour l'objet -> CSV."
+        },
+        "hdrout": {
+            "all": "toujours envoyer les en-t\u00eates de colonne",
+            "none": "ne jamais envoyer d'en-t\u00eates de colonne",
+            "once": "envoyer les en-t\u00eates une fois, jusqu'\u00e0 msg.reset"
+        },
+        "label": {
+            "c2o": "Options CSV vers objet",
+            "columns": "Colonnes",
+            "entr\u00e9e": "Entr\u00e9e",
+            "firstrow": "La premi\u00e8re ligne contient les noms des colonnes",
+            "include_empty_strings": "Inclure les cha\u00eenes vides",
+            "include_null_values": "Inclure les valeurs nulles",
+            "includerow": "Inclure la ligne du nom de la colonne",
+            "input": "Input",
+            "newline": "Nouvelle ligne",
+            "o2c": "Options Objet vers CSV",
+            "output": "Sortie",
+            "separator": "S\u00e9parateur",
+            "skip-e": "lignes",
+            "skip-s": "Passer en premier",
+            "usestrings": "Analyser les valeurs num\u00e9riques"
+        },
+        "newline": {
+            "linux": "Linux (\\n)",
+            "mac": "Mac (\\r)",
+            "windows": "Windows (\\r\\n)"
+        },
+        "output": {
+            "array": "un seul message [tableau]",
+            "row": "un message par ligne"
+        },
+        "placeholder": {
+            "columns": "noms de colonnes s\u00e9par\u00e9s par des virgules"
+        },
+        "separator": {
+            "colon": "colonne",
+            "comma": "virgule",
+            "hashtag": "hashtag",
+            "other": "autre...",
+            "semicolon": "point-virgule",
+            "space": "espace",
+            "tab": "tabulation"
+        }
+    },
+    "debug": {
+        "autostatus": "identique \u00e0 la sortie de d\u00e9bogage",
+        "debtab": "onglet de d\u00e9bogage",
+        "invalid-exp": "Expression JSONata non valide : __error__",
+        "messageCount": "nombre de messages",
+        "messageMenu": {
+            "clearFilter": "Effacer le filtre",
+            "clearPinned": "Supprimer les chemins \u00e9pingl\u00e9s",
+            "collapseAll": "R\u00e9duire tous les chemins",
+            "filterNode": "Filtrer ce noeud"
+        },
+        "msgobj": "objet complet du message",
+        "msgprop": "propri\u00e9t\u00e9 du message",
+        "node": "noeud",
+        "none": "aucun",
+        "notification": {
+            "activated": "Activ\u00e9 avec succ\u00e8s : __label__",
+            "deactivated": "D\u00e9sactiv\u00e9 avec succ\u00e8s : __label__"
+        },
+        "output": "Sortie",
+        "severity": "Niveau",
+        "sidebar": {
+            "all": "Tout",
+            "clearFilteredLog": "Les messages filtr\u00e9s",
+            "clearLog": "Tous les messages",
+            "copyPath": "Copier le chemin",
+            "copyPayload": "Copier la valeur",
+            "debugNodes": "noeuds de d\u00e9bogage",
+            "filterAll": "Tous les noeuds",
+            "filterCurrent": "Flux actuel",
+            "filterLog": "Filtrer les messages",
+            "filterSelected": "Noeuds s\u00e9lectionn\u00e9s",
+            "filtered": "Filtr\u00e9s",
+            "label": "D\u00e9bogage",
+            "name": "Messages de d\u00e9bogage",
+            "openWindow": "Ouvrir dans une nouvelle fen\u00eatre",
+            "pinPath": "\u00c9pingler le chemin",
+            "selectAll": "Tout s\u00e9lectionner",
+            "selectNone": "Ne rien s\u00e9lectionner"
+        },
+        "status": "statut",
+        "tabcon": "onglet et console de d\u00e9bogage",
+        "to": "Vers",
+        "toConsole": "console du syst\u00e8me",
+        "toSidebar": "fen\u00eatre de d\u00e9bogage",
+        "toStatus": "\u00e9tat du noeud (32 caract\u00e8res)"
+    },
+    "delay": {
+        "action": "Action",
+        "allowrate": "Autoriser msg.rate (en ms) \u00e0 remplacer le d\u00e9bit",
+        "and": "et",
+        "between": "Entre",
+        "day": "Jour",
+        "days": "Jours",
+        "delayfixed": "D\u00e9lai fixe",
+        "delaymsg": "Retarder chaque message",
+        "delayvarmsg": "Remplacer le d\u00e9lai par msg.delay",
+        "dropmsg": "Supprimer les messages interm\u00e9diaires",
+        "errors": {
+            "invalid-random-first": "Premi\u00e8re valeur al\u00e9atoire invalide",
+            "invalid-random-last": "Derni\u00e8re valeur al\u00e9atoire invalide",
+            "invalid-rate": "Valeur de taux invalide",
+            "invalid-rate-unit": "Valeur de d\u00e9bit invalide",
+            "invalid-timeout": "Valeur de d\u00e9lai invalide",
+            "too-many": "Trop de messages en attente dans le noeud 'Delay'"
+        },
+        "fairqueue": "Envoyer chaque sujet \u00e0 tour de r\u00f4le",
+        "for": "Pour",
+        "hour": "Heure",
+        "hours": "Heures",
+        "label": {
+            "delay": "retard",
+            "limit": "limite",
+            "limitTopic": "limiter le sujet",
+            "random": "al\u00e9atoire",
+            "random-first": "premi\u00e8re valeur al\u00e9atoire",
+            "random-last": "derni\u00e8re valeur al\u00e9atoire",
+            "rate": "d\u00e9bit",
+            "units": {
+                "day": {
+                    "plural": "Jours",
+                    "singular": "Jour"
+                },
+                "hour": {
+                    "plural": "Heures",
+                    "singular": "Heure"
+                },
+                "minute": {
+                    "plural": "Minutes",
+                    "singular": "Minute"
+                },
+                "second": {
+                    "plural": "Secondes",
+                    "singular": "Seconde"
+                }
+            },
+            "variable": "variable"
+        },
+        "limitall": "Tous les messages",
+        "limitrate": "Limite de d\u00e9bit",
+        "limittopic": "Pour chaque msg.topic",
+        "milisecs": "Millisecondes",
+        "min": "Minute",
+        "mins": "Minutes",
+        "msgper": "msg(s) par",
+        "queuemsg": "Mettre en file d'attente les messages interm\u00e9diaires",
+        "randomdelay": "D\u00e9lai al\u00e9atoire",
+        "rate": "D\u00e9bit",
+        "sec": "Seconde",
+        "secs": "Secondes",
+        "sendmsg": "Envoyer les messages interm\u00e9diaires sur la 2\u00e8me sortie",
+        "timedqueue": "Envoyer tous les sujets"
+    },
+    "exec": {
+        "exec": "exec",
+        "label": {
+            "append": "Joindre",
+            "command": "Commande",
+            "retcode": "code retourn\u00e9",
+            "return": "Sortie",
+            "seconds": "secondes",
+            "stderr": "stderr",
+            "stdout": "stdout",
+            "timeout": "Temps mort",
+            "timeoutplace": "Facultatif",
+            "winHide": "Masquer la console"
+        },
+        "oldrc": "Utiliser l'ancien style de sortie (mode de compatibilit\u00e9)",
+        "opt": {
+            "exec": "lorsque la commande est termin\u00e9e - mode exec",
+            "spawn": "pendant que la commande est en cours d'ex\u00e9cution - mode spawn"
+        },
+        "placeholder": {
+            "extraparams": "Param\u00e8tres d'entr\u00e9e suppl\u00e9mentaires"
+        },
+        "spawn": "spawn"
+    },
+    "file": {
+        "action": {
+            "append": "ajouter au fichier",
+            "delete": "supprimer le fichier",
+            "overwrite": "\u00e9craser le fichier"
+        },
+        "encoding": {
+            "chinese": "Chinois",
+            "ibm": "Pages de codes IBM",
+            "iso": "Pages de code ISO",
+            "japanese": "Japonais",
+            "koi8": "Pages de codes KOI8",
+            "korean": "Cor\u00e9en",
+            "mac": "Pages de codes Mac",
+            "misc": "Divers",
+            "native": "Natif",
+            "none": "Par d\u00e9faut",
+            "setbymsg": "D\u00e9fini par msg.encoding",
+            "taiwan": "Ta\u00efwan/Hong Kong",
+            "unicode": "Unicode",
+            "windows": "Pages de codes Windows"
+        },
+        "errors": {
+            "appendfail": "\u00c9chec de l'ajout au fichier : __error__",
+            "createfail": "\u00c9chec de la cr\u00e9ation du fichier : __error__",
+            "deletefail": "\u00c9chec de la suppression du fichier : __error__",
+            "invaliddelete": "Attention : suppression non valide. Veuiller utiliser une option de suppression sp\u00e9cifique dans la bo\u00eete de dialogue de configuration.",
+            "nofilename": "Aucun nom de fichier sp\u00e9cifi\u00e9",
+            "writefail": "\u00c9chec de l'\u00e9criture dans le fichier : __error__"
+        },
+        "label": {
+            "action": "Action",
+            "addnewline": "Ajouter une nouvelle ligne (\\n) \u00e0 chaque charge ?",
+            "allProps": "inclure toutes les propri\u00e9t\u00e9s existantes dans chaque message",
+            "binaryBuffer": "tampon binaire",
+            "binaryBuffer_plural": "tampons binaires",
+            "breakchunks": "D\u00e9couper en morceaux",
+            "breaklines": "D\u00e9couper en lignes",
+            "createdir": "Cr\u00e9er un r\u00e9pertoire s'il n'existe pas ?",
+            "deletelabel": "supprimer __file__",
+            "encoding": "Encodage",
+            "filename": "Nom du fichier",
+            "outputas": "Sortie",
+            "path": "chemin",
+            "read": "Lire le fichier",
+            "sendError": "Envoyer un message en cas d'erreur (mode h\u00e9rit\u00e9)",
+            "utf8String": "Cha\u00eene UTF8",
+            "utf8String_plural": "Cha\u00eenes UTF8",
+            "write": "\u00c9crire le fichier"
+        },
+        "output": {
+            "buffer": "un seul objet Tampon",
+            "lines": "un msg par ligne",
+            "stream": "un flux de Tampons",
+            "utf8": "une seule cha\u00eene UTF8"
+        },
+        "status": {
+            "appendedfile": "ajout\u00e9 au fichier : __file__",
+            "deletedfile": "fichier supprim\u00e9 : __file__",
+            "wrotefile": "\u00e9crit dans le fichier : __file__"
+        },
+        "tip": "Astuce : Le nom du fichier doit \u00eatre un chemin absolu, sinon il sera relatif au r\u00e9pertoire de travail du processus Node-RED."
+    },
+    "function": {
+        "error": {
+            "externalModuleLoadError": "Le noeud de fonction n'a pas r\u00e9ussi \u00e0 charger les modules externes",
+            "externalModuleNotAllowed": "Le noeud de fonction n'est pas autoris\u00e9 \u00e0 charger des modules externes",
+            "inputListener": "Impossible d'ajouter un \u00e9couteur \u00e0 l'\u00e9v\u00e9nement 'input' dans la fonction",
+            "invalid-js": "Erreur dans le code JavaScript",
+            "missing-module": "Module __module__ manquant",
+            "moduleLoadError": "\u00c9chec du chargement du module __module__ : __error__",
+            "moduleNameError": "Nom de la variable du module invalide : __name__",
+            "moduleNameReserved": "Nom de la variable r\u00e9serv\u00e9e : __name__",
+            "moduleNotAllowed": "Module __module__ non autoris\u00e9",
+            "non-message-returned": "La fonction a tent\u00e9 d'envoyer un message de type __type__"
+        },
+        "function": "fonction",
+        "label": {
+            "finalize": "\u00c0 l'arr\u00eat",
+            "function": "Message re\u00e7u",
+            "initialize": "Au d\u00e9marrage",
+            "modules": "Modules",
+            "outputs": "Sorties",
+            "setup": "Configurations",
+            "timeout": "Timeout"
+        },
+        "require": {
+            "importAs": "Import\u00e9 comme",
+            "module": "module",
+            "moduleName": "Nom du module",
+            "var": "variable"
+        },
+        "text": {
+            "finalize": "// Le code ajout\u00e9 ici sera ex\u00e9cut\u00e9 lorsque le\n// noeud sera arr\u00eat\u00e9 ou red\u00e9ploy\u00e9.\n",
+            "initialize": "// Le code ajout\u00e9 ici sera ex\u00e9cut\u00e9 une fois\n// \u00e0 chaque d\u00e9marrage du noeud.\n"
+        }
+    },
+    "global-config": {
+        "label": {
+            "open-conf": "Ouvrir la configuration"
+        }
+    },
+    "html": {
+        "format": {
+            "multi": "sous forme de messages multiples, un pour chaque \u00e9l\u00e9ment",
+            "single": "comme un seul message contenant un tableau"
+        },
+        "label": {
+            "in": "dans",
+            "output": "Sortie",
+            "select": "S\u00e9lecteur"
+        },
+        "output": {
+            "attr": "un objet de n'importe quel attribut des \u00e9l\u00e9ments",
+            "html": "le contenu html des \u00e9l\u00e9ments",
+            "text": "uniquement le contenu textuel des \u00e9l\u00e9ments"
+        }
+    },
+    "httpin": {
+        "basic": "authentification de base",
+        "basicauth": "Utiliser l'authentification",
+        "bearer": "authentification du porteur",
+        "binary": "un tampon binaire",
+        "digest": "authentification par r\u00e9sum\u00e9",
+        "errors": {
+            "deprecated-call": "Appel obsol\u00e8te \u00e0 __method__",
+            "invalid-payload": "Charge utile invalide",
+            "invalid-transport": "transport non-http demand\u00e9",
+            "invalid-url": "URL invalide",
+            "json-error": "Erreur d'analyse JSON",
+            "missing-path": "chemin manquant",
+            "no-response": "Aucun objet de r\u00e9ponse",
+            "no-url": "Aucune URL sp\u00e9cifi\u00e9e",
+            "not-created": "Impossible de cr\u00e9er un noeud http-in lorsque httpNodeRoot est d\u00e9fini sur faux",
+            "timeout-isnan": "La valeur du d\u00e9lai d'attente n'est pas un nombre valide, ignor\u00e9e",
+            "timeout-isnegative": "La valeur du d\u00e9lai d'attente est n\u00e9gative, ignor\u00e9e"
+        },
+        "httpreq": "requ\u00eate http",
+        "insecureHTTPParser": "D\u00e9sactiver l'analyse HTTP stricte",
+        "json": "un objet JSON analys\u00e9",
+        "label": {
+            "authType": "Type",
+            "bearerToken": "Jeton",
+            "binaryBuffer": "tampon binaire",
+            "doc": "Docs",
+            "headers": "En-t\u00eates",
+            "jsonObject": "objet JSON analys\u00e9",
+            "method": "M\u00e9thode",
+            "other": "Autre",
+            "paytoqs": {
+                "body": "Envoyer en tant que corps de requ\u00eate",
+                "ignore": "Ignorer",
+                "query": "Joindre aux param\u00e8tres de cha\u00eene de requ\u00eate"
+            },
+            "return": "Retourne",
+            "status": "Code d'\u00e9tat",
+            "upload": "Accepter les t\u00e9l\u00e9chargements de fichiers ?",
+            "url": "URL",
+            "utf8String": "cha\u00eene UTF8"
+        },
+        "noproxy-hosts": "Ignorer les h\u00f4tes",
+        "persist": "Activer le maintien de la connexion",
+        "proxy-config": "Configuration du proxy",
+        "senderr": "N'envoyer que des r\u00e9ponses non-2xx au noeud Catch",
+        "setby": "- d\u00e9finir par msg.method -",
+        "status": {
+            "requesting": "en cours de demande"
+        },
+        "tip": {
+            "in": "L'url sera relative \u00e0 ",
+            "req": "Astuce : si l'analyse JSON \u00e9choue, la cha\u00eene r\u00e9cup\u00e9r\u00e9e est renvoy\u00e9e telle quelle.",
+            "res": "Les messages envoy\u00e9s \u00e0 ce noeud <b>doivent</b> provenir d'un noeud <i>http in</i>"
+        },
+        "tls-config": "Configuration TLS",
+        "use-proxy": "Utiliser un proxy",
+        "use-proxyauth": "Utiliser l'authentification proxy",
+        "use-tls": "Activer la connexion s\u00e9curis\u00e9e (SSL/TLS)",
+        "utf8": "une cha\u00eene UTF-8"
+    },
+    "inject": {
+        "and": "et",
+        "at": "\u00e0",
+        "between": "entre",
+        "crontab": "crontab = __crontab__",
+        "days": [
+            "Lundi",
+            "Mardi",
+            "Mercredi",
+            "Jeudi",
+            "Vendredi",
+            "Samedi",
+            "Dimanche"
+        ],
+        "errors": {
+            "failed": "l'injection a \u00e9chou\u00e9, voir le journal pour plus de d\u00e9tails",
+            "invalid-expr": "Expression JSONata invalide : __error__",
+            "invalid-json": "__prop__: donn\u00e9es JSON invalides : __error__",
+            "invalid-jsonata": "__prop__: expression de propri\u00e9t\u00e9 invalide : __error__",
+            "invalid-prop": "__prop__: expression de propri\u00e9t\u00e9 invalide : __error__",
+            "invalid-repeat": "Valeur de r\u00e9p\u00e9tition invalide",
+            "toolong": "Intervalle trop grande"
+        },
+        "every": "chaque",
+        "failed": "\u00c9chec de l'injection : __error__",
+        "hours": "heures",
+        "inject": "Injecter",
+        "injectNow": "Injecter maintenant",
+        "interval": "intervalle",
+        "interval-time": "intervalle entre les heures",
+        "label": {
+            "Array": "tableau",
+            "bin": "tampon",
+            "bool": "bool\u00e9en",
+            "boolean": "bool\u00e9en",
+            "date": "horodatage",
+            "env": "variable d'environnement",
+            "flow": "contexte de flux",
+            "global": "contexte global",
+            "invalid": "Objet JSON non valide",
+            "json": "objet",
+            "num": "nombre",
+            "number": "nombre",
+            "object": "objet",
+            "properties": "Propri\u00e9t\u00e9s",
+            "repeat": "R\u00e9p\u00e9ter",
+            "str": "cha\u00eene de caract\u00e8res",
+            "string": "cha\u00eene de caract\u00e8res"
+        },
+        "minutes": "minutes",
+        "none": "non",
+        "on": "les",
+        "onceDelay": "secondes, puis",
+        "onstart": "Injecter une fois apr\u00e8s",
+        "previous": "valeur pr\u00e9c\u00e9dente",
+        "repeat": "r\u00e9p\u00e9ter = __repeat__",
+        "seconds": "secondes",
+        "stopped": "arr\u00eat\u00e9",
+        "success": "Inject\u00e9 avec succ\u00e8s : __label__",
+        "time": "\u00e0 une heure pr\u00e9cise",
+        "timestamp": "horodatage"
+    },
+    "join": {
+        "afterCount": "Apr\u00e8s un nombre de parties du message",
+        "afterTimeout": "Apr\u00e8s un d\u00e9lai d'attente apr\u00e8s le premier message",
+        "combine": "Combiner chaque",
+        "complete": "Apr\u00e8s un message avec la propri\u00e9t\u00e9 <code>msg.complete</code> d\u00e9finie",
+        "completeMessage": "message complet",
+        "count": "nombre",
+        "create": "Cr\u00e9er",
+        "errors": {
+            "invalid-expr": "Expression JSONata non valide: __error__",
+            "invalid-type": "Impossible de joindre __error__ au tampon"
+        },
+        "join": "joindre",
+        "joinedUsing": "joint en utilisant",
+        "key": "comme cl\u00e9",
+        "merge": {
+            "on-change": "Envoyer un message fusionn\u00e9 \u00e0 l'arriv\u00e9e d'un nouveau sujet",
+            "topic": "sujet",
+            "topics": "sujets",
+            "topics-label": "Sujets fusionn\u00e9s"
+        },
+        "message-prop": "propri\u00e9t\u00e9 du message",
+        "mode": {
+            "auto": "automatique",
+            "custom": "manuel",
+            "merge": "fusionner des s\u00e9quences",
+            "mode": "Mode",
+            "reduce": "r\u00e9duire la s\u00e9quence"
+        },
+        "reduce": {
+            "exp": "R\u00e9duire l'expression",
+            "exp-value": "expression",
+            "fixup": "Fixer l'expression",
+            "init": "Valeur initiale",
+            "right": "\u00c9valuer dans l'ordre inverse (du dernier au premier)"
+        },
+        "seconds": "secondes",
+        "send": "Envoyer le message :",
+        "subsequent": "Et tous les messages suivants.",
+        "tip": "Ce mode suppose que ce noeud est soit associ\u00e9 \u00e0 un noeud <i>split</i> ou que les messages re\u00e7us auront une propri\u00e9t\u00e9 <code>msg.parts</code> correctement configur\u00e9e.",
+        "too-many": "trop de messages en attente dans le noeud join",
+        "type": {
+            "array": "un Tableau",
+            "buffer": "un Tampon",
+            "merged": "un Objet fusionn\u00e9",
+            "object": "un Objet cl\u00e9/valeur",
+            "string": "une Cha\u00eene"
+        },
+        "using": "En utilisant la valeur du"
+    },
+    "json": {
+        "errors": {
+            "dropped": "Type de charge utile non pris en charge ignor\u00e9e",
+            "dropped-error": "\u00c9chec de la conversion de la charge utile",
+            "dropped-object": "Charge utile de type non objet ignor\u00e9e",
+            "schema-error": "Erreur de sch\u00e9ma JSON",
+            "schema-error-compile": "Erreur de sch\u00e9ma JSON : \u00e9chec de la compilation du sch\u00e9ma"
+        },
+        "label": {
+            "action": "Action",
+            "actions": {
+                "obj": "Toujours convertir en objet JavaScript",
+                "str": "Toujours convertir en cha\u00eene JSON",
+                "toggle": "Convertir entre cha\u00eene JSON et objet"
+            },
+            "o2j": "Objet vers JSON",
+            "pretty": "Formater la cha\u00eene JSON",
+            "property": "Propri\u00e9t\u00e9"
+        }
+    },
+    "link": {
+        "dynamicLinkCall": "Lien dynamique (msg.target)",
+        "dynamicLinkLabel": "Dynamique",
+        "errors": {
+            "linkUndefined": "Lien ind\u00e9fini",
+            "missingReturn": "Informations manquantes sur le noeud de retour"
+        },
+        "linkCall": "Appel de lien",
+        "linkCallType": "Type de liaison",
+        "linkIn": "Lien entrant",
+        "linkOut": "Lien sortant",
+        "linkOutReturn": "Retour de lien",
+        "outMode": "Mode",
+        "returnToCaller": "Retour au noeud de liaison appelant",
+        "sendToAll": "Envoyer \u00e0 tous les noeuds de liaison connect\u00e9s",
+        "staticLinkCall": "Lien fixe",
+        "timeout": "Temps mort"
+    },
+    "mqtt": {
+        "errors": {
+            "invalid-action-action": "Action invalide sp\u00e9cifi\u00e9e",
+            "invalid-action-alreadyconnected": "D\u00e9connectez-vous du courtier avant de vous connecter",
+            "invalid-action-badsubscription": "msg.topic est manquant ou invalide",
+            "invalid-client-id": "Identifiant client manquant",
+            "invalid-json-parse": "\u00c9chec de l'analyse de la cha\u00eene JSON",
+            "invalid-json-string": "Cha\u00eene JSON invalide",
+            "invalid-topic": "Sujet invalide sp\u00e9cifi\u00e9",
+            "missing-config": "Configuration du courtier manquante",
+            "nonclean-missingclientid": "Aucun ID client d\u00e9fini, utilisation d'une session propre",
+            "not-defined": "Sujet non d\u00e9fini"
+        },
+        "false": "faux",
+        "label": {
+            "action": "Action",
+            "auto-connect": "Se connecter automatiquement",
+            "auto-mode-depreciated": "Cette option est d\u00e9pr\u00e9ci\u00e9e. Veuiller utiliser le nouveau mode de d\u00e9tection automatique.",
+            "autoUnsubscribe": "Se d\u00e9sabonner automatiquement lors de la d\u00e9connexion",
+            "broker": "Serveur",
+            "cleansession": "Utiliser une session propre",
+            "cleanstart": "Utiliser un d\u00e9marrage propre",
+            "clientid": "Client ID",
+            "compatmode": "Utiliser la prise en charge h\u00e9rit\u00e9e du MQTT 3.1",
+            "contentType": "Type de contenu",
+            "correlationData": "Donn\u00e9es de corr\u00e9lation",
+            "delay": "Retard",
+            "dynamicTopic": "Abonnement dynamique",
+            "example": "expl. localhost",
+            "expiry": "Expiration (secs)",
+            "flags": "Drapeaux",
+            "keepalive": "Rester en vie",
+            "maximumPacketSize": "Taille maximale des paquets",
+            "nl": "Ne pas recevoir les messages publi\u00e9s par ce client",
+            "none": "aucun",
+            "other": "autre",
+            "output": "Sortie",
+            "payloadFormatIndicator": "Formater",
+            "payloadFormatIndicatorFalse": "Octets non sp\u00e9cifi\u00e9s (par d\u00e9faut)",
+            "payloadFormatIndicatorTrue": "Charge utile encod\u00e9e en UTF-8",
+            "port": "Port",
+            "protocolVersion": "Protocole",
+            "protocolVersion3": "MQTT V3.1 (h\u00e9rit\u00e9)",
+            "protocolVersion4": "MQTT V3.1.1",
+            "protocolVersion5": "MQTT V5",
+            "qos": "QoS",
+            "rap": "Conserver l'indicateur de conservation de la publication d'origine",
+            "receiveMaximum": "Recevoir Max",
+            "responseTopic": "Sujet de la r\u00e9ponse",
+            "retain": "Conserver",
+            "rh": "Gestion des messages conserv\u00e9s",
+            "rh0": "Envoyer les messages retenus",
+            "rh1": "Envoyer uniquement pour les nouveaux abonnements",
+            "rh2": "Ne pas envoyer",
+            "session": "Session",
+            "sessionExpiry": "Expiration de la session (secondes)",
+            "staticTopic": "S'abonner \u00e0 un seul sujet",
+            "subscriptionIdentifier": "ID d'abonnement",
+            "tls-config": "Configuration TLS",
+            "topicAlias": "Alias",
+            "topicAliasMaximum": "Alias Max",
+            "use-tls": "Utiliser TLS",
+            "userProperties": "Propri\u00e9t\u00e9s utilisateur",
+            "verify-server-cert": "V\u00e9rifier le certificat du serveur"
+        },
+        "output": {
+            "auto": "d\u00e9tection automatique (cha\u00eene ou tampon)",
+            "auto-detect": "d\u00e9tection automatique (objet JSON analys\u00e9, cha\u00eene ou tampon)",
+            "base64": "une cha\u00eene encod\u00e9e en Base64",
+            "buffer": "un Tampon",
+            "json": "un objet JSON analys\u00e9",
+            "string": "une Cha\u00eene"
+        },
+        "placeholder": {
+            "birth-topic": "Laisser vide pour d\u00e9sactiver le message au d\u00e9marrage",
+            "clientid": "Laisser vide pour s'auto g\u00e9n\u00e9rer",
+            "clientid-nonclean": "Doit \u00eatre d\u00e9fini pour les sessions non propres",
+            "close-topic": "Laisser vide pour d\u00e9sactiver le message de fermeture",
+            "will-topic": "Laisser vide pour d\u00e9sactiver le message perte de connexion"
+        },
+        "retain": "Conserver",
+        "sections-label": {
+            "birth-message": "Message envoy\u00e9 \u00e0 la connexion (message au d\u00e9marrage)",
+            "close-message": "Message envoy\u00e9 avant la d\u00e9connexion (message \u00e0 la fermeture)",
+            "will-message": "Message envoy\u00e9 lors d'une d\u00e9connexion inattendue (perte de connexion)"
+        },
+        "state": {
+            "broker-disconnected": "Client d\u00e9connect\u00e9 du courtier __broker__ : __reasonCode__ __reasonString__",
+            "connect-failed": "\u00c9chec de la connexion au courtier : __broker__",
+            "connected": "Connect\u00e9 au courtier : __broker__",
+            "disconnected": "D\u00e9connect\u00e9 du courtier : __broker__"
+        },
+        "tabs-label": {
+            "connection": "Connexion",
+            "messages": "Messages",
+            "security": "S\u00e9curit\u00e9"
+        },
+        "tip": "Conseil : laisser le sujet, le qos ou le contenu vide si vous souhaitez les d\u00e9finir via les propri\u00e9t\u00e9s du msg.",
+        "true": "vraie"
+    },
+    "range": {
+        "errors": {
+            "notnumber": "Pas un nombre"
+        },
+        "label": {
+            "action": "Action",
+            "from": "depuis",
+            "inputrange": "Mapper la plage d'entr\u00e9e",
+            "maxin": "entr\u00e9e maximale",
+            "maxout": "sortie maximale",
+            "minin": "entr\u00e9e minimale",
+            "minout": "sortie minimale",
+            "resultrange": "\u00e0 la plage cible",
+            "roundresult": "Arrondir le r\u00e9sultat \u00e0 l'entier le plus proche ?",
+            "to": "vers"
+        },
+        "placeholder": {
+            "maxin": "expl. 99",
+            "maxout": "expl. 255",
+            "min": "expl. 0"
+        },
+        "range": "intervalle",
+        "scale": {
+            "drop": "Mettre \u00e0 l'\u00e9chelle, mais supprimer le message s'il est en dehors de la plage d'entr\u00e9e",
+            "limit": "Mettre \u00e0 l'\u00e9chelle et limiter \u00e0 la plage cible",
+            "payload": "Mettre \u00e0 l'\u00e9chelle la propri\u00e9t\u00e9 du message",
+            "wrap": "Mettre \u00e0 l'\u00e9chelle et envelopper dans la plage cible"
+        },
+        "tip": "Remarque : Ce noeud fonctionne UNIQUEMENT avec des nombres."
+    },
+    "rbe": {
+        "label": {
+            "func": "Mode",
+            "gap": "changement de valeur",
+            "init": "Envoyer la valeur initiale",
+            "name": "Nom",
+            "property": "propri\u00e9t\u00e9",
+            "septopics": "Appliquer le mode s\u00e9par\u00e9ment pour chaque ",
+            "start": "Valeur de d\u00e9part",
+            "topic": "sujet"
+        },
+        "opts": {
+            "deadband": "bloquer sauf si le changement de valeur est sup\u00e9rieur \u00e0",
+            "deadbandEq": "bloquer sauf si le changement de valeur est sup\u00e9rieur ou \u00e9gal \u00e0",
+            "in": "par rapport \u00e0 la derni\u00e8re valeur d'entr\u00e9e",
+            "narrowband": "bloquer si le changement de valeur est sup\u00e9rieur \u00e0",
+            "narrowbandEq": "bloquer si le changement de valeur est sup\u00e9rieur ou \u00e9gal \u00e0",
+            "out": "par rapport \u00e0 la derni\u00e8re valeur de sortie valide",
+            "rbe": "bloquer sauf si la valeur change",
+            "rbei": "bloquer sauf si la valeur change (ignorer la valeur initiale)"
+        },
+        "placeholder": {
+            "bandgap": "expl. 10 ou 5%",
+            "start": "laisser vide pour utiliser les premi\u00e8res donn\u00e9es re\u00e7ues"
+        },
+        "rbe": "filtrer",
+        "warn": {
+            "nonumber": "Aucun num\u00e9ro trouv\u00e9 dans la charge utile"
+        }
+    },
+    "sort": {
+        "as-number": "Comme nombre",
+        "ascending": "croissant",
+        "clear": "Effacer le message en attente dans le noeud sort",
+        "descending": "descendant",
+        "elem": "valeur de l'\u00e9l\u00e9ment",
+        "invalid-exp": "Expression JSONata invalide dans le noeud sort: __message__",
+        "key": "Cl\u00e9",
+        "order": "Sens",
+        "seq": "s\u00e9quence de messages",
+        "sort": "trier",
+        "target": "Trier",
+        "too-many": "Trop de messages en attente dans le noeud sort"
+    },
+    "split": {
+        "addname": " Copier la cl\u00e9 vers ",
+        "array": "<b>Tableau</b>",
+        "intro": "Diviser <code>msg.payload</code> en fonction du type :",
+        "object": "<b>Objet</b>",
+        "objectSend": "Envoie un message pour chaque paire cl\u00e9/valeur",
+        "split": "diviser",
+        "splitLength": "Longueur fixe de",
+        "splitUsing": "Diviser en utilisant",
+        "strBuff": "<b>Cha\u00eene</b> / <b>Tampon</b>",
+        "stream": "G\u00e9rer comme un flux de messages"
+    },
+    "status": {
+        "label": {
+            "sortByType": "Trier par type",
+            "source": "Signaler l'\u00e9tat de"
+        },
+        "scope": {
+            "all": "tous les noeuds",
+            "group": "dans le m\u00eame groupe",
+            "selected": "noeuds s\u00e9lectionn\u00e9s"
+        },
+        "status": "statut : tout",
+        "statusGroup": "status: group",
+        "statusNodes": "statut : __number__"
+    },
+    "switch": {
+        "and": "et",
+        "checkall": "V\u00e9rifier toutes les r\u00e8gles",
+        "errors": {
+            "invalid-expr": "Expression JSONata non valide : __error__",
+            "too-many": "Trop de messages en attente dans le noeud de commutation"
+        },
+        "ignorecase": "Ignorer la casse",
+        "label": {
+            "property": "Propri\u00e9t\u00e9",
+            "repair": "Recr\u00e9er des s\u00e9quences du messages",
+            "rule": "r\u00e8gle",
+            "sequence-rules": "R\u00e8gles de s\u00e9quence",
+            "value-rules": "R\u00e8gles de valeur"
+        },
+        "previous": "valeur pr\u00e9c\u00e9dente",
+        "rules": {
+            "btwn": "est entre",
+            "cont": "contient",
+            "else": "autrement",
+            "empty": "est vide",
+            "exp": "Exp JSONata",
+            "false": "est faux",
+            "hask": "a une cl\u00e9",
+            "head": "t\u00eate",
+            "index": "index entre",
+            "istype": "est de type",
+            "nempty": "n'est pas vide",
+            "nnull": "n'est pas nul",
+            "null": "est nul",
+            "regex": "correspond au regex",
+            "tail": "queue",
+            "true": "est vrai"
+        },
+        "stopfirst": "Arr\u00eater apr\u00e8s la premi\u00e8re concordance",
+        "switch": "commuter"
+    },
+    "tcpin": {
+        "errors": {
+            "bad-string": "\u00c9chec de la conversion en cha\u00eene",
+            "cannot-listen": "Impossible d'\u00e9couter sur le port __port__, erreur : __error__",
+            "connect-fail": "La connexion a \u00e9chou\u00e9",
+            "connect-timeout": "D\u00e9lai de connexion",
+            "connection-lost": "Connexion perdue avec __host__:__port__",
+            "error": "Erreur : __error__",
+            "invalid-host": "H\u00f4te invalide",
+            "invalid-port": "Port invalide",
+            "no-host": "H\u00f4te et/ou port non d\u00e9fini",
+            "socket-error": "Erreur de courtier depuis __host__:__port__",
+            "timeout": "D\u00e9lai d'expiration du port __port__ du socket ferm\u00e9"
+        },
+        "label": {
+            "chars": "caract\u00e8res",
+            "close": "Fermer",
+            "close-connection": "Fermer la connexion apr\u00e8s l'envoi de chaque message ?",
+            "decode-base64": "D\u00e9coder le message Base64 ?",
+            "delimited": "d\u00e9limit\u00e9 par",
+            "host": "chez l'h\u00f4te",
+            "ms": "ms",
+            "optional": "(facultatif)",
+            "output": "Sortie",
+            "payload": "payload(s)",
+            "port": "port",
+            "reattach": "Rattacher le d\u00e9limiteur",
+            "return": "Retourne",
+            "server": "Serveur",
+            "type": "Type"
+        },
+        "output": {
+            "base64": "Cha\u00eene en Base64",
+            "buffer": "Tampon",
+            "single": "Unique",
+            "stream": "Flux de",
+            "string": "Cha\u00eene"
+        },
+        "return": {
+            "character": "lorsque le caract\u00e8re re\u00e7u est",
+            "immed": "imm\u00e9diatement - ne pas attendre de r\u00e9ponse",
+            "never": "jamais - garder la connexion ouverte",
+            "number": "apr\u00e8s un nombre fixe de caract\u00e8res",
+            "timeout": "apr\u00e8s un d\u00e9lai fixe de"
+        },
+        "status": {
+            "connected": "connect\u00e9 \u00e0 __host__:__port__",
+            "connecting": "connection \u00e0 __host__:__port__",
+            "connection-closed": "connexion ferm\u00e9e depuis __host__:__port__",
+            "connection-from": "connexion depuis __host__:__port__",
+            "connections": "__count__ connexion",
+            "connections_plural": "__count__ connexions",
+            "listening-port": "\u00e9coute sur le port __port__",
+            "stopped-listening": "a cess\u00e9 d'\u00e9couter sur le port"
+        },
+        "type": {
+            "connect": "Se connecte au",
+            "listen": "\u00c9coute sur",
+            "reply": "R\u00e9pondre sur TCP"
+        }
+    },
+    "template": {
+        "label": {
+            "format": "Syntaxe Highlight",
+            "json": "JSON analys\u00e9",
+            "mustache": "Mod\u00e8le Mustache",
+            "none": "aucun",
+            "output": "Sortie comme",
+            "plain": "Texte brut",
+            "property": "Propri\u00e9t\u00e9",
+            "syntax": "Format",
+            "template": "Mod\u00e8le",
+            "yaml": "YAML analys\u00e9"
+        },
+        "template": "mod\u00e8le",
+        "templatevalue": "C'est la charge utile : {{charge-utile}} !"
+    },
+    "tls": {
+        "error": {
+            "invalid-cert": "Certificat non sp\u00e9cifi\u00e9",
+            "invalid-key": "Cl\u00e9 priv\u00e9e non sp\u00e9cifi\u00e9e",
+            "missing-file": "Aucun certificat/fichier de cl\u00e9 fourni"
+        },
+        "label": {
+            "alpnprotocol": "Protocole ALPN",
+            "ca": "Certificat CA",
+            "cert": "Certificat",
+            "key": "Cl\u00e9 Priv\u00e9e",
+            "passphrase": "Phrase de passe",
+            "servername": "Nom du Serveur",
+            "upload": "Charger",
+            "use-local-files": "Utiliser la cl\u00e9 et les certificats depuis des fichiers locaux",
+            "verify-server-cert": "V\u00e9rifier le certificat du serveur"
+        },
+        "placeholder": {
+            "alpnprotocol": "\u00e0 utiliser avec ALPN",
+            "ca": "chemin d'acc\u00e8s au certificat CA (format PEM)",
+            "cert": "chemin d'acc\u00e8s au certificat (format PEM)",
+            "key": "chemin vers la cl\u00e9 priv\u00e9e (format PEM)",
+            "passphrase": "phrase de passe de la cl\u00e9 priv\u00e9e (facultatif)",
+            "servername": "\u00e0 utiliser avec SNI"
+        },
+        "tls": "Param\u00e9trage TLS"
+    },
+    "trigger": {
+        "alltopics": "tous les messages",
+        "bytopics": "chaque",
+        "duration": {
+            "h": "Heures",
+            "m": "Minutes",
+            "ms": "Millisecondes",
+            "s": "Secondes"
+        },
+        "extend": " Prolonger le d\u00e9lai si un nouveau message arrive",
+        "for": "Pour",
+        "label": {
+            "duration": "dur\u00e9e",
+            "reset": "R\u00e9initialiser le d\u00e9clencheur si :",
+            "resetMessage": "msg.reset est d\u00e9fini",
+            "resetPayload": "msg.payload est le m\u00eame",
+            "resetprompt": "facultatif",
+            "topic": "sujet",
+            "trigger": "d\u00e9clencher",
+            "trigger-block": "d\u00e9clencher et bloquer",
+            "trigger-loop": "renvoyer chaque"
+        },
+        "output": {
+            "existing": "l'objet msg existant",
+            "latest": "le dernier objet msg",
+            "nothing": "rien",
+            "number": "le nombre",
+            "original": "l'objet msg d'origine",
+            "string": "la cha\u00eene"
+        },
+        "override": "Remplacer le d\u00e9lai avec msg.delay",
+        "second": " Envoyer un deuxi\u00e8me message \u00e0 une sortie s\u00e9par\u00e9e",
+        "send": "Envoyer",
+        "then": "Puis",
+        "then-send": "Puis envoyer",
+        "wait-for": "attendre",
+        "wait-loop": "le renvoyer chaque",
+        "wait-reset": "attendre d'\u00eatre r\u00e9initialis\u00e9"
+    },
+    "udp": {
+        "bcmsg": "message diffus\u00e9",
+        "bind": {
+            "local": "se lier au port local",
+            "random": "se lier \u00e0 un port local al\u00e9atoire",
+            "target": "se lier au port cible"
+        },
+        "errors": {
+            "access-error": "Erreur d'acc\u00e8s UDP, vous aurez peut-\u00eatre besoin d'un acc\u00e8s root pour les ports inf\u00e9rieurs \u00e0 1024",
+            "alreadyused": "udp : port __port__ d\u00e9j\u00e0 utilis\u00e9",
+            "bad-mcaddress": "Mauvaise adresse de multidiffusion",
+            "error": "Erreur : __erreur__",
+            "ifnotfound": "udp : interface __iface__ introuvable",
+            "interface": "Doit \u00eatre l'adresse IP de l'interface requise",
+            "invalid-group": "Groupe de multidiffusion invalide",
+            "ip-notset": "udp : adresse IP non d\u00e9finie",
+            "port-invalid": "udp : num\u00e9ro de port non valide",
+            "port-notset": "udp : port non d\u00e9fini"
+        },
+        "label": {
+            "address": "Adresse",
+            "decode-base64": "D\u00e9coder la charge utile encod\u00e9e en Base64 ?",
+            "group": "Groupe",
+            "interface": "IP Locale",
+            "listen": "\u00c9couter",
+            "onport": "sur le port",
+            "output": "Sortie",
+            "port": "port",
+            "send": "Envoyer un",
+            "toport": "au port",
+            "using": "utilisant"
+        },
+        "mcmsg": "message multidiffusion",
+        "mcmsgs": "messages multidiffusion",
+        "output": {
+            "base64": "une cha\u00eene encod\u00e9e en Base64",
+            "buffer": "un Tampon",
+            "string": "une Cha\u00eene"
+        },
+        "placeholder": {
+            "address": "IP de destination",
+            "interface": "(facultatif) interface locale ou adresse \u00e0 laquelle se lier",
+            "interfaceprompt": "(facultatif) interface locale ou adresse \u00e0 laquelle se lier"
+        },
+        "status": {
+            "bc-ready": "udp broadcast pr\u00eat : __outport__ -> __host__:__port__",
+            "listener-at": "\u00e9couteur udp sur __host__:__port__",
+            "listener-stopped": "\u00e9couteur udp arr\u00eat\u00e9",
+            "mc-group": "groupe de multidiffusion udp __group__",
+            "mc-ready": "udp multicast pr\u00eat : __iface__:__outport__ -> __host__:__port__",
+            "output-stopped": "sortie udp arr\u00eat\u00e9e",
+            "re-use": "socket de r\u00e9utilisation udp : __outport__ -> __host__:__port__",
+            "ready": "udp pr\u00eat : __outport__ -> __host__:__port__",
+            "ready-nolocal": "udp pr\u00eat : __host__:__port__"
+        },
+        "tip": {
+            "in": "Conseil : Assurez-vous que votre pare-feu autorise l'entr\u00e9e des donn\u00e9es.",
+            "out": "Conseil : laisser l'adresse et le port vides si vous souhaitez d\u00e9finir \u00e0 l'aide de <code>msg.ip</code> et <code>msg.port</code>.",
+            "port": "Ports d\u00e9j\u00e0 utilis\u00e9s : "
+        },
+        "udpmsg": "message UDP",
+        "udpmsgs": "messages UDP"
+    },
+    "unknown": {
+        "label": {
+            "unknown": "inconnu"
+        },
+        "tip": "<p>Ce noeud est un type inconnu de votre installation Node-RED.</p><p><i>Si vous d\u00e9ployez avec le noeud dans cet \u00e9tat, sa configuration sera pr\u00e9serv\u00e9e, mais le flux ne d\u00e9marrera pas avant que le type manquant soit install\u00e9.</i></p><p>Consulter la barre lat\u00e9rale d'informations pour plus d'aide</p>"
+    },
+    "watch": {
+        "label": {
+            "files": "Fichier(s)",
+            "recursive": "Surveiller les sous-r\u00e9pertoires de mani\u00e8re r\u00e9cursive"
+        },
+        "placeholder": {
+            "files": "Liste de fichiers et/ou r\u00e9pertoires s\u00e9par\u00e9s par des virgules"
+        },
+        "tip": "Sous Windows, vous devez utiliser des doubles barres obliques inverses \\\\ dans tous les noms de r\u00e9pertoire.",
+        "watch": "surveiller"
+    },
+    "websocket": {
+        "connectto": "Se connecte \u00e0",
+        "errors": {
+            "connect-error": "Une erreur s'est produite lors de la connexion au ws : ",
+            "duplicate-path": "Impossible d'avoir deux \u00e9couteurs WebSocket sur le m\u00eame chemin : __path__",
+            "missing-client": "Configuration client manquante",
+            "missing-conf": "Configuration du serveur manquante",
+            "missing-server": "Configuration du serveur manquante",
+            "send-error": "Une erreur s'est produite lors de l'envoi : "
+        },
+        "label": {
+            "path": "Chemin",
+            "subprotocol": "Subprotocol",
+            "type": "Type",
+            "url": "URL"
+        },
+        "listenon": "\u00c9coute sur",
+        "message": "message entier",
+        "payload": "msg.payload",
+        "sendheartbeat": "Envoyer un ping",
+        "sendrec": "Envoyer/Recevoir",
+        "status": {
+            "connected": "__count__ connect\u00e9",
+            "connected_plural": "__count__ connect\u00e9s"
+        },
+        "tip": {
+            "path1": "Par d\u00e9faut, <code>payload</code> contiendra les donn\u00e9es \u00e0 envoyer ou \u00e0 recevoir d'un websocket. L'\u00e9couteur peut \u00eatre configur\u00e9 pour envoyer ou recevoir l'int\u00e9gralit\u00e9 de l'objet message sous forme de cha\u00eene au format JSON.",
+            "path2": "Ce chemin sera relatif \u00e0 <code>__path__</code>.",
+            "url1": "L'URL doit utiliser le sch\u00e9ma ws:&#47;&#47; ou wss:&#47;&#47; et pointer vers un \u00e9couteur websocket existant.",
+            "url2": "Par d\u00e9faut, <code>payload</code> contiendra les donn\u00e9es \u00e0 envoyer ou \u00e0 recevoir d'un websocket. Le client peut \u00eatre configur\u00e9 pour envoyer ou recevoir l'int\u00e9gralit\u00e9 de l'objet message sous forme de cha\u00eene au format JSON."
+        }
+    },
+    "xml": {
+        "errors": {
+            "xml_js": "Ce noeud ne g\u00e8re que les cha\u00eenes XML ou les objets js."
+        },
+        "label": {
+            "advanced": "Options avanc\u00e9es",
+            "prefix": "Nom de la propri\u00e9t\u00e9 pour le contenu du texte de la balise",
+            "represent": "Nom de la propri\u00e9t\u00e9 pour les attributs de balise XML",
+            "x2o": "Options XML vers objet"
+        }
+    },
+    "yaml": {
+        "errors": {
+            "dropped": "Type de charge utile non pris en charge ignor\u00e9",
+            "dropped-error": "\u00c9chec de la conversion de la charge utile",
+            "dropped-object": "Charge utile de type non objet ignor\u00e9e"
+        }
+    }
+}

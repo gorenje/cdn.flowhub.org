@@ -1,0 +1,278 @@
+{
+    "$abs": {
+        "args": "number",
+        "desc": "Renvoie la valeur absolue du param\u00e8tre `nombre`."
+    },
+    "$append": {
+        "args": "array, array",
+        "desc": "Combine deux tableaux"
+    },
+    "$assert": {
+        "args": "arg, str",
+        "desc": "Si `arg` est vrai, la fonction renvoie undefined. Si `arg` est faux, une exception est lanc\u00e9e avec `str` comme message de l'exception."
+    },
+    "$average": {
+        "args": "array",
+        "desc": "Renvoie la valeur moyenne d'un `tableau` de nombres. C'est une erreur si l'entr\u00e9e `array` contient un \u00e9l\u00e9ment qui n'est pas un nombre."
+    },
+    "$base64decode": {
+        "args": "string",
+        "desc": "Convertit les octets encod\u00e9s en base 64 en une cha\u00eene, \u00e0 l'aide d'une page de codes Unicode UTF-8."
+    },
+    "$base64encode": {
+        "args": "string",
+        "desc": "Convertit une cha\u00eene ASCII en une repr\u00e9sentation en base 64. Chaque caract\u00e8re de la cha\u00eene est trait\u00e9 comme un octet de donn\u00e9es binaires. Cela n\u00e9cessite que tous les caract\u00e8res de la cha\u00eene se trouvent dans la plage 0x00 \u00e0 0xFF, qui inclut tous les caract\u00e8res des cha\u00eenes encod\u00e9es en URI. Les caract\u00e8res Unicode en dehors de cette plage ne sont pas pris en charge."
+    },
+    "$boolean": {
+        "args": "arg",
+        "desc": "Transforme l'argument en bool\u00e9en en utilisant les r\u00e8gles suivantes :\n\n - `Boolean` : inchang\u00e9\n - `string` : vide : `false`\n - `string` : non vide : `true`\n - `number` : `0` : `false`\n - `number` : non nul : `true`\n - `null` : `false`\n - `array` : vide : `false`\n - `array` : contient un membre qui convertit en `true` : `true`\n - `array` : tous les membres sont transform\u00e9s en `false` : `false`\n - `object` : vide : `false`\n - `object` : non vide : `true`\n - `function` : `false`"
+    },
+    "$ceil": {
+        "args": "number",
+        "desc": "Renvoie la valeur de `number` arrondie \u00e0 l'entier le plus proche sup\u00e9rieur ou \u00e9gal \u00e0 `number`."
+    },
+    "$clone": {
+        "args": "valeur",
+        "desc": "Cloner un objet en toute s\u00e9curit\u00e9."
+    },
+    "$contains": {
+        "args": "str, pattern",
+        "desc": "Renvoie `true` si `str` correspond \u00e0 `pattern`, sinon il renvoie `false`. Si `str` n'est pas sp\u00e9cifi\u00e9 (c'est-\u00e0-dire que cette fonction est invoqu\u00e9e avec un argument), alors la valeur de contexte est utilis\u00e9e comme valeur de `str`. Le param\u00e8tre `pattern` peut \u00eatre une cha\u00eene ou une expression r\u00e9guli\u00e8re."
+    },
+    "$count": {
+        "args": "array",
+        "desc": "Renvoie le nombre d'\u00e9l\u00e9ments du tableau"
+    },
+    "$decodeUrl": {
+        "args": "str",
+        "desc": "D\u00e9code une URL (Uniform Resource Locator) pr\u00e9c\u00e9demment cr\u00e9\u00e9e par encodeUrl.\n\nExemple : `$decodeUrl(\"https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B\")` => `\"https://mozilla.org/?x=\u0448\u0435\u043b\u043b\u044b\"`"
+    },
+    "$decodeUrlComponent": {
+        "args": "str",
+        "desc": "D\u00e9code un composant URL (Uniform Resource Locator) pr\u00e9c\u00e9demment cr\u00e9\u00e9 par encodeUrlComponent.\n\nExemple : `$decodeUrlComponent(\"%3Fx%3Dtest\")` => `\"?x=test\"`"
+    },
+    "$distinct": {
+        "args": "array",
+        "desc": "Renvoie un tableau avec les valeurs en double supprim\u00e9es de `array`"
+    },
+    "$each": {
+        "args": "object, function",
+        "desc": "Renvoie un tableau contenant les valeurs renvoy\u00e9es par la `fonction` lorsqu'elle est appliqu\u00e9e \u00e0 chaque paire cl\u00e9/valeur dans l'`objet`."
+    },
+    "$encodeUrl": {
+        "args": "str",
+        "desc": "Encode une URL (Uniform Resource Locator) en rempla\u00e7ant chaque instance de certains caract\u00e8res par une, deux, trois ou quatre s\u00e9quences d'\u00e9chappement repr\u00e9sentant l'encodage UTF-8 du caract\u00e8re.\n\nExemple : `$encodeUrl(\"https://mozilla.org/?x=\u0448\u0435\u043b\u043b\u044b\")` => `\"https://mozilla.org/?x=%D1%88%D0% B5%D0%BB%D0%BB%D1%8B\"`"
+    },
+    "$encodeUrlComponent": {
+        "args": "str",
+        "desc": "Encode un composant URL (Uniform Resource Locator) en rempla\u00e7ant chaque instance de certains caract\u00e8res par une, deux, trois ou quatre s\u00e9quences d'\u00e9chappement repr\u00e9sentant l'encodage UTF-8 du caract\u00e8re.\n\nExemple : `$encodeUrlComponent(\"?x =test\")` => `\"%3Fx%3Dtest\"`"
+    },
+    "$env": {
+        "args": "arg",
+        "desc": "Renvoie la valeur d'une variable d'environnement.\n\nCeci est une fonction d\u00e9finie par Node-RED."
+    },
+    "$error": {
+        "args": "[str]",
+        "desc": "G\u00e9n\u00e8re une erreur avec un message. Le `str` facultatif remplacera le message par d\u00e9faut de la fonction `$error() \u00e9valu\u00e9e`"
+    },
+    "$eval": {
+        "args": "expr [, context]",
+        "desc": "Analyse et \u00e9value la cha\u00eene `expr` qui contient un JSON litt\u00e9ral ou une expression JSONata en utilisant le contexte actuel comme contexte d'\u00e9valuation."
+    },
+    "$exists": {
+        "args": "arg",
+        "desc": "Renvoie la valeur bool\u00e9enne `true` si l'expression `arg` est \u00e9valu\u00e9e \u00e0 une valeur, ou `false` si l'expression ne correspond \u00e0 rien (par exemple, un chemin vers une r\u00e9f\u00e9rence de champ inexistante)."
+    },
+    "$filter": {
+        "args": "array, function",
+        "desc": "Renvoie un tableau contenant uniquement les valeurs du param\u00e8tre `array` qui satisfont le pr\u00e9dicat `function`.\n\nLa `function` fournie comme second param\u00e8tre doit avoir la signature suivante :\n\n`function(value [ , indice [, tableau]])`"
+    },
+    "$floor": {
+        "args": "number",
+        "desc": "Renvoie la valeur de `number` arrondie \u00e0 l'entier le plus proche inf\u00e9rieur ou \u00e9gal \u00e0 `number`."
+    },
+    "$flowContext": {
+        "args": "string[, string]",
+        "desc": "R\u00e9cup\u00e8re une propri\u00e9t\u00e9 de contexte de flux.\n\nCeci est une fonction d\u00e9finie par Node-RED."
+    },
+    "$formatBase": {
+        "args": "number [, radix]",
+        "desc": "Convertit le `number` en une cha\u00eene et le formate en un entier repr\u00e9sent\u00e9 dans la base num\u00e9rique sp\u00e9cifi\u00e9e par l'argument `radix`. Si `radix` n'est pas sp\u00e9cifi\u00e9, la valeur par d\u00e9faut est la base 10. `radix` peut \u00eatre compris entre 2 et 36, sinon une erreur est renvoy\u00e9e."
+    },
+    "$formatInteger": {
+        "args": "number, picture",
+        "desc": "Transforme le `nombre` en une cha\u00eene et le formate en une repr\u00e9sentation enti\u00e8re comme sp\u00e9cifi\u00e9 par la cha\u00eene `image`. Le param\u00e8tre de cha\u00eene d'image d\u00e9finit la fa\u00e7on dont le nombre est format\u00e9 et a la m\u00eame syntaxe que `fn:format-integer` de la sp\u00e9cification XPath F&O 3.1."
+    },
+    "$formatNumber": {
+        "args": "number, picture [, options]",
+        "desc": "Convertit le `number` en une cha\u00eene et le formate en une repr\u00e9sentation d\u00e9cimale comme sp\u00e9cifi\u00e9 par la cha\u00eene `picture`.\n\n Le comportement de cette fonction est coh\u00e9rent avec la fonction XPath/XQuery `fn:format-number` telle que d\u00e9finie dans le Sp\u00e9cification XPath F&O 3.1. Le param\u00e8tre de cha\u00eene d'image d\u00e9finit la fa\u00e7on dont le nombre est format\u00e9 et a la m\u00eame syntaxe que `fn:format-number`.\n\nLe troisi\u00e8me argument facultatif `options` est utilis\u00e9 pour remplacer les caract\u00e8res de formatage sp\u00e9cifiques aux param\u00e8tres r\u00e9gionaux par d\u00e9faut, tels que le s\u00e9parateur d\u00e9cimal. S'il est fourni, cet argument doit \u00eatre un objet contenant des paires nom/valeur sp\u00e9cifi\u00e9es dans la section de format d\u00e9cimal de la sp\u00e9cification XPath F&O 3.1."
+    },
+    "$fromMillis": {
+        "args": "number, [, picture [, timezone]]",
+        "desc": "Convertisser le \u00ab nombre \u00bb repr\u00e9sentant les millisecondes depuis l'\u00e9poque Unix (1er janvier 1970 UTC) en une repr\u00e9sentation sous forme de cha\u00eene format\u00e9e de l'horodatage tel que sp\u00e9cifi\u00e9 par la cha\u00eene d'image.\n\nSi le param\u00e8tre facultatif \u00ab image \u00bb est omis, l'horodatage est format\u00e9 au format ISO 8601.\n\nSi la cha\u00eene facultative `image` est fournie, l'horodatage est format\u00e9 selon la repr\u00e9sentation sp\u00e9cifi\u00e9e dans cette cha\u00eene. Le comportement de cette fonction est coh\u00e9rent avec la version \u00e0 deux arguments de la fonction XPath/XQuery `format-dateTime` telle que d\u00e9finie dans la sp\u00e9cification XPath F&O 3.1. Le param\u00e8tre de cha\u00eene d'image d\u00e9finit la fa\u00e7on dont l'horodatage est format\u00e9 et a la m\u00eame syntaxe que `format-dateTime`.\n\nSi la cha\u00eene facultative `timezone` est fournie, alors l'horodatage format\u00e9 sera dans ce fuseau horaire. La cha\u00eene `timezone` doit \u00eatre au format '\u00b1HHMM', o\u00f9 \u00b1 est le signe plus ou moins et HHMM est le d\u00e9calage en heures et minutes par rapport \u00e0 UTC. D\u00e9calage positif pour les fuseaux horaires \u00e0 l'est de UTC, d\u00e9calage n\u00e9gatif pour les fuseaux horaires \u00e0 l'ouest de UTC."
+    },
+    "$globalContext": {
+        "args": "string[, string]",
+        "desc": "R\u00e9cup\u00e8re une propri\u00e9t\u00e9 de contexte globale.\n\nCeci est une fonction d\u00e9finie par Node-RED."
+    },
+    "$join": {
+        "args": "array[, separator]",
+        "desc": "Joint un tableau de cha\u00eenes de composants en une seule cha\u00eene concat\u00e9n\u00e9e, chaque cha\u00eene de composants \u00e9tant s\u00e9par\u00e9e par le param\u00e8tre facultatif `separator`. C'est une erreur si l'entr\u00e9e `array` contient un \u00e9l\u00e9ment qui n'est pas une cha\u00eene. Si `s\u00e9parateur` n'est pas sp\u00e9cifi\u00e9, il est suppos\u00e9 \u00eatre la cha\u00eene vide, c'est-\u00e0-dire qu'il n'y a pas de `s\u00e9parateur` entre les cha\u00eenes de composants. C'est une erreur si `separator` n'est pas une cha\u00eene."
+    },
+    "$keys": {
+        "args": "object",
+        "desc": "Renvoie un tableau contenant les cl\u00e9s de l'objet. Si l'argument est un tableau d'objets, le tableau renvoy\u00e9 contient une liste d\u00e9dupliqu\u00e9e de toutes les cl\u00e9s de tous les objets."
+    },
+    "$length": {
+        "args": "str",
+        "desc": "Renvoie le nombre de caract\u00e8res dans la cha\u00eene `str`. Une erreur est renvoy\u00e9e si `str` n'est pas une cha\u00eene de caract\u00e8res."
+    },
+    "$lookup": {
+        "args": "object, key",
+        "desc": "Renvoie la valeur associ\u00e9e \u00e0 la cl\u00e9 dans l'objet. Si le premier argument est un tableau d'objets, tous les objets du tableau sont recherch\u00e9s et les valeurs associ\u00e9es \u00e0 toutes les occurrences de key sont renvoy\u00e9es."
+    },
+    "$lowercase": {
+        "args": "str",
+        "desc": "Renvoie une cha\u00eene avec tous les caract\u00e8res de `str` convertis en minuscules."
+    },
+    "$map": {
+        "args": "array, function",
+        "desc": "Renvoie un tableau contenant les r\u00e9sultats de l'application du param\u00e8tre `function` \u00e0 chaque valeur du param\u00e8tre `array`.\n\nLa `function` fournie comme second param\u00e8tre doit avoir la signature suivante :\n\n`function( valeur [, indice [, tableau]])`"
+    },
+    "$match": {
+        "args": "str, pattern [, limit]",
+        "desc": "Applique la cha\u00eene `str` \u00e0 l'expression r\u00e9guli\u00e8re `pattern` et renvoie un tableau d'objets, chaque objet contenant des informations sur chaque occurrence d'une correspondance dans `str`."
+    },
+    "$max": {
+        "args": "array",
+        "desc": "Renvoie le nombre maximal dans un `tableau` de nombres. C'est une erreur si l'entr\u00e9e `array` contient un \u00e9l\u00e9ment qui n'est pas un nombre."
+    },
+    "$merge": {
+        "args": "array&lt;object&gt;",
+        "desc": "Fusionne un tableau d'`objets` en un seul `objet` contenant toutes les paires cl\u00e9/valeur de chacun des objets du tableau d'entr\u00e9e. Si l'un des objets d'entr\u00e9e contient la m\u00eame cl\u00e9, alors l'`objet` renvoy\u00e9 contiendra la valeur du dernier dans le tableau. C'est une erreur si le tableau d'entr\u00e9e contient un \u00e9l\u00e9ment qui n'est pas un objet."
+    },
+    "$millis": {
+        "args": "",
+        "desc": "Renvoie le nombre de millisecondes depuis l'\u00e9poque Unix (1er janvier 1970 UTC) sous forme de nombre. Tous les appels de `$millis()` dans une \u00e9valuation d'une expression renverront toutes la m\u00eame valeur."
+    },
+    "$min": {
+        "args": "array",
+        "desc": "Renvoie le nombre minimum dans un `tableau` de nombres. C'est une erreur si l'entr\u00e9e `array` contient un \u00e9l\u00e9ment qui n'est pas un nombre."
+    },
+    "$moment": {
+        "args": "[str]",
+        "desc": "Obtient un objet de date \u00e0 l'aide de la biblioth\u00e8que Moment."
+    },
+    "$not": {
+        "args": "arg",
+        "desc": "Renvoie un bool\u00e9en r\u00e9sultat de la n\u00e9gation logique de l'argument"
+    },
+    "$now": {
+        "args": "$[picture [, timezone]]",
+        "desc": "G\u00e9n\u00e8re un horodatage au format compatible ISO 8601 et le renvoie sous forme de cha\u00eene. Si les param\u00e8tres optionnels d'image et de fuseau horaire sont fournis, alors l'horodatage actuel est format\u00e9 comme d\u00e9crit par la fonction `$fromMillis()`"
+    },
+    "$number": {
+        "args": "arg",
+        "desc": "Convertit le param\u00e8tre `arg` en un nombre en utilisant les r\u00e8gles de conversion suivantes :\n\n - Les nombres sont inchang\u00e9s\n - Les cha\u00eenes qui contiennent une s\u00e9quence de caract\u00e8res repr\u00e9sentant un nombre JSON l\u00e9gal sont converties en ce nombre\n - Toutes les autres valeurs provoquer l'envoi d'une erreur."
+    },
+    "$pad": {
+        "args": "string, width [, char]",
+        "desc": "Renvoie une copie de la `cha\u00eene` avec un rembourrage suppl\u00e9mentaire, si n\u00e9cessaire, de sorte que son nombre total de caract\u00e8res corresponde au moins \u00e0 la valeur absolue du param\u00e8tre `width`.\n\nSi `width` est un nombre positif, alors la cha\u00eene est rembourr\u00e9 \u00e0 droite; s'il est n\u00e9gatif, il est rempli vers la gauche.\n\nL'argument optionnel `char` sp\u00e9cifie le(s) caract\u00e8re(s) de remplissage \u00e0 utiliser. S'il n'est pas sp\u00e9cifi\u00e9, la valeur par d\u00e9faut est le caract\u00e8re espace."
+    },
+    "$parseInteger": {
+        "args": "string, picture",
+        "desc": "Analyse le contenu du param\u00e8tre `string` en un entier (comme un nombre JSON) en utilisant le format sp\u00e9cifi\u00e9 par la cha\u00eene `picture`. Le param\u00e8tre de cha\u00eene `picture` a le m\u00eame format que `$formatInteger`."
+    },
+    "$power": {
+        "args": "base, exponent",
+        "desc": "Renvoie la valeur de `base` \u00e9lev\u00e9e \u00e0 la puissance de `exponent`."
+    },
+    "$random": {
+        "args": "",
+        "desc": "Renvoie un nombre pseudo-al\u00e9atoire sup\u00e9rieur ou \u00e9gal \u00e0 z\u00e9ro et inf\u00e9rieur \u00e0 un."
+    },
+    "$reduce": {
+        "args": "array, function [, init]",
+        "desc": "Renvoie une valeur agr\u00e9g\u00e9e d\u00e9riv\u00e9e de l'application successive du param\u00e8tre `function` \u00e0 chaque valeur de `array` en combinaison avec le r\u00e9sultat de l'application pr\u00e9c\u00e9dente de la fonction.\n\nLa fonction doit accepter deux arguments et se comporte comme un op\u00e9rateur infixe entre chaque valeur dans le `tableau`. La signature de `function` doit \u00eatre de la forme : `myfunc($accumulator, $value[, $index[, $array]])`\n\nLe param\u00e8tre facultatif `init` est utilis\u00e9 comme valeur initiale dans l'agr\u00e9gation ."
+    },
+    "$replace": {
+        "args": "str, pattern, replacement [, limit]",
+        "desc": "Trouve les occurrences de `pattern` dans `str` et les remplace par `replacement`.\n\nLe param\u00e8tre facultatif `limit` est le nombre maximum de remplacements."
+    },
+    "$reverse": {
+        "args": "array",
+        "desc": "Renvoie un tableau contenant toutes les valeurs du param\u00e8tre `array`, mais dans l'ordre inverse."
+    },
+    "$round": {
+        "args": "number [, precision]",
+        "desc": "Renvoie la valeur du param\u00e8tre `number` arrondie au nombre de d\u00e9cimales sp\u00e9cifi\u00e9 par le param\u00e8tre facultatif `precision`."
+    },
+    "$shuffle": {
+        "args": "array",
+        "desc": "Renvoie un tableau contenant toutes les valeurs du param\u00e8tre `array`, mais m\u00e9lang\u00e9es dans un ordre al\u00e9atoire."
+    },
+    "$sift": {
+        "args": "object, function",
+        "desc": "Renvoie un objet qui contient uniquement les paires cl\u00e9/valeur du param\u00e8tre `object` qui satisfont le pr\u00e9dicat `function` transmis comme second param\u00e8tre.\n\nLa `function` qui est fournie comme second param\u00e8tre doit avoir la signature suivante :\n\n`fonction(valeur [, cl\u00e9 [, objet]])`"
+    },
+    "$single": {
+        "args": "array, function",
+        "desc": "Renvoie la seule et unique valeur du param\u00e8tre `array` qui satisfait le pr\u00e9dicat `function` (c'est-\u00e0-dire que la `function` renvoie la valeur bool\u00e9enne `true` lorsqu'elle est transmise \u00e0 la valeur). L\u00e8ve une exception si le nombre de valeurs correspondantes n'est pas exactement un.\n\nLa fonction doit \u00eatre fournie dans la signature suivante : `function(value [, index [, array]])` o\u00f9 value est chaque entr\u00e9e du tableau, index est la position de cette valeur et le tableau entier est pass\u00e9 comme troisi\u00e8me argument"
+    },
+    "$sort": {
+        "args": "array [, function]",
+        "desc": "Renvoie un tableau contenant toutes les valeurs du param\u00e8tre `array`, mais tri\u00e9es dans l'ordre.\n\nSi un comparateur `function` est fourni, alors il doit s'agir d'une fonction qui prend deux param\u00e8tres :\n\n`function(left , droite)`\n\nCette fonction est invoqu\u00e9e par l'algorithme de tri pour comparer deux valeurs \u00e0 gauche et \u00e0 droite. Si la valeur de `left` doit \u00eatre plac\u00e9e apr\u00e8s la valeur de `right` dans l'ordre de tri souhait\u00e9, la fonction doit renvoyer un bool\u00e9en `true` pour indiquer un \u00e9change. Sinon, il doit renvoyer `false`."
+    },
+    "$split": {
+        "args": "str[, separator][, limit]",
+        "desc": "Divise le param\u00e8tre `str` en un tableau de sous-cha\u00eenes. C'est une erreur si `str` n'est pas une cha\u00eene. Le param\u00e8tre facultatif `separator` sp\u00e9cifie les caract\u00e8res \u00e0 l'int\u00e9rieur de `str` \u00e0 propos desquels il doit \u00eatre divis\u00e9 en cha\u00eene ou en expression r\u00e9guli\u00e8re. Si `separator` n'est pas sp\u00e9cifi\u00e9, la cha\u00eene vide est suppos\u00e9e et `str` sera divis\u00e9 en un tableau de caract\u00e8res uniques. C'est une erreur si `separator` n'est pas une cha\u00eene. Le param\u00e8tre facultatif `limit` est un nombre qui sp\u00e9cifie le nombre maximum de sous-cha\u00eenes \u00e0 inclure dans le tableau r\u00e9sultant. Toutes les sous-cha\u00eenes suppl\u00e9mentaires sont ignor\u00e9es. Si `limit` n'est pas sp\u00e9cifi\u00e9, alors `str` est enti\u00e8rement divis\u00e9 sans limite \u00e0 la taille du tableau r\u00e9sultant. C'est une erreur si `limit` n'est pas un nombre non n\u00e9gatif."
+    },
+    "$spread": {
+        "args": "object",
+        "desc": "Divise un objet contenant des paires cl\u00e9/valeur en un tableau d'objets, chacun ayant une seule paire cl\u00e9/valeur de l'objet d'entr\u00e9e. Si le param\u00e8tre est un tableau d'objets, alors le tableau r\u00e9sultant contient un objet pour chaque paire cl\u00e9/valeur dans chaque objet du tableau fourni."
+    },
+    "$sqrt": {
+        "args": "number",
+        "desc": "Renvoie la racine carr\u00e9e de la valeur du param\u00e8tre `number`."
+    },
+    "$string": {
+        "args": "arg[, prettify]",
+        "desc": "Convertit le param\u00e8tre `arg` en une cha\u00eene de caract\u00e8res en utilisant les r\u00e8gles de typage suivantes :\n\n - Les cha\u00eenes de caract\u00e8res sont inchang\u00e9es\n - Les fonctions sont converties en une cha\u00eene vide\n - L'infini num\u00e9rique et NaN renvoient une erreur car ils ne peuvent pas \u00eatre repr\u00e9sent\u00e9s comme un Num\u00e9ro JSON\n - Toutes les autres valeurs sont converties en une cha\u00eene JSON \u00e0 l'aide de la fonction `JSON.stringify`. Si `prettify` est vrai, alors le JSON \"prettified\" est produit. c'est-\u00e0-dire une ligne par champ et les lignes seront en retrait en fonction de la profondeur du champ."
+    },
+    "$substring": {
+        "args": "str, start[, length]",
+        "desc": "Renvoie une cha\u00eene contenant les caract\u00e8res du premier param\u00e8tre `str` commen\u00e7ant \u00e0 la position `start` (pas de d\u00e9calage). Si `length` est sp\u00e9cifi\u00e9, alors la sous-cha\u00eene contiendra un maximum de caract\u00e8res `length`. Si `start` est n\u00e9gatif alors il indique le nombre de caract\u00e8res \u00e0 partir de la fin de `str`."
+    },
+    "$substringAfter": {
+        "args": "str, chars",
+        "desc": "Renvoie la sous-cha\u00eene apr\u00e8s la premi\u00e8re occurrence de la s\u00e9quence de caract\u00e8res `chars` dans `str`. Si `str` ne contient pas `chars`, alors il renvoie `str`."
+    },
+    "$substringBefore": {
+        "args": "str, chars",
+        "desc": "Renvoie la sous-cha\u00eene avant la premi\u00e8re occurrence de la s\u00e9quence de caract\u00e8res `chars` dans `str`. Si `str` ne contient pas `chars`, alors il renvoie `str`."
+    },
+    "$sum": {
+        "args": "array",
+        "desc": "Renvoie la somme arithm\u00e9tique d'un `tableau` de nombres. C'est une erreur si l'entr\u00e9e `array` contient un \u00e9l\u00e9ment qui n'est pas un nombre."
+    },
+    "$toMillis": {
+        "args": "timestamp",
+        "desc": "Convertit une cha\u00eene `timestamp` au format ISO 8601 en nombre de millisecondes depuis l'\u00e9poque Unix (1er janvier 1970 UTC) sous forme de nombre. Une erreur est renvoy\u00e9e si la cha\u00eene n'est pas au format correct."
+    },
+    "$trim": {
+        "args": "str",
+        "desc": "Normalise et supprime tous les caract\u00e8res d'espacement dans `str` en appliquant les \u00e9tapes suivantes :\n\n - Toutes les tabulations, retours \u00e0 la ligne et sauts de ligne sont remplac\u00e9s par des espaces.\n- Les s\u00e9quences contigu\u00ebs d'espaces sont r\u00e9duites \u00e0 un seul espace.\n- Les espaces de fin et de d\u00e9but sont supprim\u00e9s.\n\n Si `str` n'est pas sp\u00e9cifi\u00e9 (c'est-\u00e0-dire que cette fonction est invoqu\u00e9e sans argument), alors la valeur de contexte est utilis\u00e9e comme valeur de `str`. Une erreur est renvoy\u00e9e si `str` n'est pas une cha\u00eene."
+    },
+    "$type": {
+        "args": "value",
+        "desc": "Renvoie le type de `value` sous forme de cha\u00eene. Si `value` n'est pas d\u00e9fini, cela renverra `undefined`"
+    },
+    "$uppercase": {
+        "args": "str",
+        "desc": "Renvoie une cha\u00eene avec tous les caract\u00e8res de `str` convertis en majuscules."
+    },
+    "$zip": {
+        "args": "array, ...",
+        "desc": "Renvoie un tableau convolu\u00e9 (zipp\u00e9) contenant des tableaux group\u00e9s de valeurs des arguments `array1`...`arrayN` d'index 0, 1, 2...."
+    }
+}

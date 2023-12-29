@@ -1,0 +1,278 @@
+{
+    "$abs": {
+        "args": "number",
+        "desc": "Gibt den absoluten Wert von `number` zur\u00fcck."
+    },
+    "$append": {
+        "args": "array, array",
+        "desc": "Verkettet zwei Arrays miteinander."
+    },
+    "$assert": {
+        "args": "arg, str",
+        "desc": "Wenn `arg` gleich `true` ist, liefert die Function `undefined` zur\u00fcck. Wenn `arg` gleich `false` ist, wird ein Ausnahmefehler gemeldet mit dem String_Parameter `str` als Meldetext."
+    },
+    "$average": {
+        "args": "array",
+        "desc": "Gibt den Mittelwert eines `array` von Zahlen zur\u00fcck. Es ergibt einen Fehler, wenn `array` ein Element enth\u00e4lt, das keine Zahl ist."
+    },
+    "$base64decode": {
+        "args": "str",
+        "desc": "Konvertiert den Basis-64-codierten `str` in eine Zeichenfolge unter Verwendung einer UTF-8-Unicode-Codepage."
+    },
+    "$base64encode": {
+        "args": "str",
+        "desc": "Konvertiert eine ASCII-Zeichenfolge `str` in eine Basis-64-Darstellung. Jedes Zeichen in `str` wird als Byte mit bin\u00e4ren Daten behandelt. Dies setzt voraus, dass alle Zeichen in der Zeichenfolge im Bereich von 0x00 bis 0xFF liegen, der alle Zeichen in URI-codierten Zeichenfolgen enth\u00e4lt. Unicode-Zeichen au\u00dferhalb dieses Bereichs werden nicht unterst\u00fctzt."
+    },
+    "$boolean": {
+        "args": "arg",
+        "desc": "Wandelt `arg` gem\u00e4\u00df folgender Regeln in einen booleschen Wert um:\n\n- `Boolean`: unver\u00e4ndert\n- `string`: leer \u2192 `false`, nicht leer \u2192 `true`\n- `Zahl`: `0` \u2192 `falsch`, Nicht-Null \u2192 `true`\n- `null` \u2192 `false`\n- `array`: leer \u2192 `false`, enth\u00e4lt mindestens ein Element, das `true` ist \u2192 `true`, alle Elemente sind `false` \u2192 `false`\n- `object`: leer \u2192 `false`, nicht leer \u2192 `true`\n- `function`: `false`"
+    },
+    "$ceil": {
+        "args": "number",
+        "desc": "Gibt `number` aufgerundet auf die n\u00e4chste ganze Zahl zur\u00fcck, die gr\u00f6\u00dfer oder gleich `number` ist."
+    },
+    "$clone": {
+        "args": "value",
+        "desc": "Safely clone an object."
+    },
+    "$contains": {
+        "args": "str, pattern",
+        "desc": "Gibt `false` zur\u00fcck, wenn `pattern` als Teilzeichenfolge in `str` enthalten ist, sonst gibt sie `false` zur\u00fcck. Wenn `str` nicht vorgegeben ist (d. h. Diese Funktion wird mit einem Parameter aufgerufen), dann wird der Kontextwert als Wert von `str` verwendet. `pattern` kann entweder eine Zeichenfolge oder ein regul\u00e4rer Ausdruck sein."
+    },
+    "$count": {
+        "args": "array",
+        "desc": "Gibt die Anzahl der Elemente in dem Array `array` zur\u00fcck."
+    },
+    "$decodeUrl": {
+        "args": "str",
+        "desc": "Dekodiert eine URL (Uniform Resource Locator) zuvor erzeugt von encodeUrl.\n\nBeispiel: `$decodeUrl(\"https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B\")` => `\"https://mozilla.org/?x=\u0448\u0435\u043b\u043b\u044b\"`"
+    },
+    "$decodeUrlComponent": {
+        "args": "str",
+        "desc": "Dekodiert eine URL-Komponente (Uniform Resource Locator) zuvor erzeugt von encodeUrlComponent.\n\nBeispiel: `$decodeUrlComponent(\"%3Fx%3Dtest\")` => `\"?x=test\"`"
+    },
+    "$distinct": {
+        "args": "array",
+        "desc": "Liefert ein `array` zur\u00fcck, bei dem doppelte Elemente entfernt wurden."
+    },
+    "$each": {
+        "args": "object, function",
+        "desc": "Gibt ein Array zur\u00fcck, das die Werte enth\u00e4lt, die von der Funktion `function` zur\u00fcckgegeben werden, wenn sie auf jedes Schl\u00fcssel/Wert-Paar im `object` angewendet werden."
+    },
+    "$encodeUrl": {
+        "args": "str",
+        "desc": "Kodiert eine URL (Uniform Resource Locator), indem jedes Vorkommen bestimmter Zeichen durch eine, zwei, drei oder vier Escape-Sequenzen ersetzt wird, die die UTF-8-Kodierung des Zeichens darstellen.\n\nBeispiel: `$encodeUrl(\"https://mozilla.org/?x=\u0448\u0435\u043b\u043b\u044b\")` => `\"https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B\"`"
+    },
+    "$encodeUrlComponent": {
+        "args": "str",
+        "desc": "Kodiert eine URL-Komponente (Uniform Resource Locator), indem jedes Vorkommen bestimmter Zeichen durch eine, zwei, drei oder vier Escape-Sequenzen ersetzt wird, die die UTF-8-Kodierung des Zeichens darstellen.\n\nBeispiel: `$encodeUrlComponent(\"?x=test\")` => `\"%3Fx%3Dtest\"`"
+    },
+    "$env": {
+        "args": "arg",
+        "desc": "Gibt den Wert einer Umgebungsvariablen zur\u00fcck.\n\nDies ist eine definierte Funktion vom Typ `Node-RED`."
+    },
+    "$error": {
+        "args": "[str]",
+        "desc": "Erzeugt eine Fehlermeldung. Der optionale String `str` ersetzt die Standardmeldung `$error() function evaluated`."
+    },
+    "$eval": {
+        "args": "expr [, context]",
+        "desc": "Analysiert (parse) und evaluiert den String `expr`, welcher JSON or a JSONata Ausdr\u00fccke enth\u00e4lt, unter Benutzung des aktuellen Kontextes f\u00fcr die Evaluierung."
+    },
+    "$exists": {
+        "args": "arg",
+        "desc": "Gibt den booleschen Wert `true` zur\u00fcck, wenn der Ausdruck `arg` zu einem Wert ausgewertet wird, oder `false`, wenn der Ausdruck nicht mit einem anderen Ausdruck \u00fcbereinstimmt (z.B. ein Pfad zu einer nicht vorhandenen Feldreferenz)."
+    },
+    "$filter": {
+        "args": "array, function",
+        "desc": "Gibt ein Array zur\u00fcck, das nur die Elemente von `array` enth\u00e4lt, die das Eigenschaft `function` erf\u00fcllen.\n\nDie Funktion `function`, die als zweiter Parameter vorgegeben wird, muss die folgende Signatur aufweisen:\n\n`function(value [, index [, array]])`"
+    },
+    "$floor": {
+        "args": "number",
+        "desc": "Gibt `number` abgerundet auf die n\u00e4chste ganze Zahl zur\u00fcck, die kleiner oder gleich `number` ist."
+    },
+    "$flowContext": {
+        "args": "str [, str]",
+        "desc": "Ruft eine Flow-Kontexteigenschaft ab.\n\nDies ist eine definierte Funktion vom Typ `Node-RED`."
+    },
+    "$formatBase": {
+        "args": "number [, radix]",
+        "desc": "Wandelt `number` in eine Zeichenfolge um und formatiert sie in eine ganze Zahl, die in der durch den `radix`-Parameter vorgegebenen Zahlenbasis dargestellt wird. Wenn `radix` nicht vorgegeben wird, wird standardm\u00e4\u00dfig die Basis 10 verwendet. `radix` kann zwischen 2 und 36 liegen, andernfalls wird ein Fehler ausgel\u00f6st."
+    },
+    "$formatInteger": {
+        "args": "number, picture",
+        "desc": "Wandelt `number` in eine Zeichenfolge um und formatiert sie in einer Ganzzahl-Darstellung, spezifiziert durch den `picture`-String-Parameter. Der `picture`-String-Parameter definiert, wie die Zahl `number` formatiert werden soll und hat den selben Syntax wie `fn:format-integer` der XPath F&O 3.1 Spezifikation."
+    },
+    "$formatNumber": {
+        "args": "number, picture [, options]",
+        "desc": "Wandelt `number` in eine Zeichenfolge um und formatiert sie in eine dezimale Darstellung, wie im `picture`-String-Parameter vorgegeben.\n\nDas Verhalten dieser Funktion ist mit der XPath/XQuery-Funktion `fn:formatnummer` konsistent, wie sie in der XPath F&O 3.1-Spezifikation definiert ist. Der `picture`-String-Parameter definiert, wie die Zahl formatiert ist und hat die gleiche Syntax wie `fn:format-number`.\n\nDer optionale dritte Parameter `options` wird verwendet, um die standardm\u00e4\u00dfigen l\u00e4nderspezifischen Formatierungszeichen, wie z.B. das Dezimaltrennzeichen, zu \u00fcberschreiben. Wenn dieser Parameter vorgegeben wird, muss es sich um ein Objekt handeln, das Name/Wert-Paare enth\u00e4lt, die im Abschnitt mit dem Dezimalformat der XPath F&O 3.1-Spezifikation vorgegeben sind."
+    },
+    "$fromMillis": {
+        "args": "number",
+        "desc": "Konvertiert `number`, die die Millisekunden seit Beginn der Unix-Zeitrechnung (1. Januar 1970 UTC) enth\u00e4lt, in eine Zeitangabe im ISO 8601-Format."
+    },
+    "$globalContext": {
+        "args": "str [, str]",
+        "desc": "Ruft eine globale Kontexteigenschaft ab.\n\nDies ist eine definierte Funktion vom Typ `Node-RED`."
+    },
+    "$join": {
+        "args": "array [, separator]",
+        "desc": "Verkettet ein Array von Zeichenfolgen zu einer einzigen Zeichenfolge, wobei die einzelnen Zeichenfolgen durch den optionalen Trennzeichen-Parameter `separator` getrennt sind. Es ergibt einen Fehler, wenn das `array` ein Element enth\u00e4lt, das keine Zeichenfolge ist. Wenn `separator` nicht vorgegeben wird, wird davon ausgegangen, dass es sich um eine leere Zeichenfolge handelt, d.h. zwischen den einzelnen Zeichenfolgen wird kein Trennzeichen eingef\u00fcgt. Es handelt sich um einen Fehler, wenn `separator` keine Zeichenfolge ist."
+    },
+    "$keys": {
+        "args": "object",
+        "desc": "Gibt ein Array zur\u00fcck, das die Schl\u00fcssel in dem Objekt `object` enth\u00e4lt. Wenn es sich bei dem Parameter um ein Array von Objekten handelt, enth\u00e4lt das zur\u00fcckgegebene Array eine deduplizierte Liste aller Schl\u00fcssel in allen Objekten."
+    },
+    "$length": {
+        "args": "str",
+        "desc": "Gibt die Zeichenanzahl von `str` zur\u00fcck. Es wird ein Fehler ausgel\u00f6st, wenn `str` keine Zeichenfolge ist."
+    },
+    "$lookup": {
+        "args": "object, key",
+        "desc": "Gibt den Wert zur\u00fcck, der dem Schl\u00fcssel `key` im Objekt `object` zugeordnet ist. Wenn es sich bei dem ersten Parameter um ein Array von Objekten handelt, werden alle Objekte im Array durchsucht, und die Werte, die mit allen Vorkommen des Schl\u00fcssels verkn\u00fcpft sind, werden zur\u00fcckgegeben."
+    },
+    "$lowercase": {
+        "args": "str",
+        "desc": "Gibt ver\u00e4nderten `str` zur\u00fcck, bei dem allen Zeichen in Kleinbuchstaben umgewandelt wurden."
+    },
+    "$map": {
+        "args": "array, function",
+        "desc": "Gibt ein Array zur\u00fcck, das die Ergebnisse von `function`, angewendet auf jedes Element von `array`, enth\u00e4lt.\n\nDie Funktion `function`, die als zweiter Parameter vorgegeben wird, muss die folgende Signatur aufweisen:\n\n`function(value [, index [, array]])`"
+    },
+    "$match": {
+        "args": "str, pattern [, limit]",
+        "desc": "Wendet den regul\u00e4ren Ausdruck `pattern` auf die Zeichenfolge `str` an und gibt ein Array von Objekten zur\u00fcck, die Informationen zu jedem Vorkommen von `pattern` in `str` enth\u00e4lt."
+    },
+    "$max": {
+        "args": "array",
+        "desc": "Gibt die gr\u00f6\u00dfte Zahl von einem `array` von Zahlen zur\u00fcck. Es ergibt einen Fehler, wenn `array` ein Element enth\u00e4lt, das keine Zahl ist."
+    },
+    "$merge": {
+        "args": "array&lt;object&gt;",
+        "desc": "F\u00fcgt ein Array von Objekt-Elementen `object` in ein einzelnes Objekt `object` zusammen, das alle Schl\u00fcssel/Wert-Paare aus jedem der Objekte in dem Ausgangs-Array enth\u00e4lt. Wenn eines der Ausgangs-Objekte denselben Schl\u00fcssel enth\u00e4lt, enth\u00e4lt das zur\u00fcckgegebene Objekt den Wert des letzten Objekts des Arrays. Es handelt sich um einen Fehler, wenn das Ausgangs-Array ein Element enth\u00e4lt, das kein Objekt ist."
+    },
+    "$millis": {
+        "args": "",
+        "desc": "Gibt die aktuelle Anzahl der Millisekunden seit Beginn der Unix-Zeitrechnung (1. Januar 1970 UTC) als Zahl zur\u00fcck. Alle Aufrufe von `$millis()` innerhalb der Auswertung eines Ausdrucks geben alle denselben Wert zur\u00fcck."
+    },
+    "$min": {
+        "args": "array",
+        "desc": "Gibt die kleinste Zahl von einem `array` von Zahlen zur\u00fcck. Es ergibt einen Fehler, wenn `array` ein Element enth\u00e4lt, das keine Zahl ist."
+    },
+    "$moment": {
+        "args": "[str]",
+        "desc": "Liefert ein `date` Objekt unter Benutzung der Moment Library."
+    },
+    "$not": {
+        "args": "arg",
+        "desc": "Gibt den invertierten booleschen Wert von `arg` zur\u00fcck. `arg` wird zuerst in einen booleschen Wert umgesetzt."
+    },
+    "$now": {
+        "args": "$[picture [, timezone]]",
+        "desc": "Generiert einen Zeitstempel im ISO-8601-kompatiblen Format und gibt sie als Zeichenfolge zur\u00fcck."
+    },
+    "$number": {
+        "args": "arg",
+        "desc": "Wandelt `arg` unter Verwendung der folgenden Regeln in eine Zahl um:\n\n- Zahlen bleiben unver\u00e4ndert\n- Zeichenfolgen, die eine Folge von Zeichen enthalten, die einen echten JSON-Zahlenwert darstellen, werden in die entsprechende Zahl konvertiert.\n- Alle anderen Werte bewirken, dass ein Fehler ausgel\u00f6st wird."
+    },
+    "$pad": {
+        "args": "str, width [, char]",
+        "desc": "Gibt eine aufgef\u00fcllte Kopie von `str` zur\u00fcck, so dass (falls erforderlich) die Gesamtzahl der Zeichen mindestens dem absoluten Wert von `width` entspricht.\n\nWenn `width` eine positive Zahl ist, wird die Zeichenfolge nach rechts aufgef\u00fcllt. Wenn sie negativ ist, wird sie nach links aufgef\u00fcllt.\n\nDer optionale Parameter `char` gibt die Auff\u00fcll-Zeichen an, die verwendet werden sollen. Wenn keine Angabe gemacht wird, wird standardm\u00e4\u00dfig mit Leerzeichen aufgef\u00fcllt."
+    },
+    "$parseInteger": {
+        "args": "str, picture",
+        "desc": "Wandelt den Inhalt von `str` in eine Ganzzahl `integer` (als JSON Zahl), spezifiziert durch den `picture`-String-Parameter. Der `picture`-String-Parameter hat das selbe Format wie `$formatInteger`."
+    },
+    "$power": {
+        "args": "base, exponent",
+        "desc": "Gibt `base` potenziert mit `exponent` zur\u00fcck."
+    },
+    "$random": {
+        "args": "",
+        "desc": "Gibt eine Pseudozufallszahl gr\u00f6\u00dfer-gleich null und kleiner als eins zur\u00fcck."
+    },
+    "$reduce": {
+        "args": "array, function [, init]",
+        "desc": "Gibt einen aggregierten Wert zur\u00fcck, der aus der Anwendung des Parameters `function` nacheinander auf jedes Element in `array` in Kombination mit dem Ergebnis der vorherigen Anwendung der Funktion angewendet wurde.\n\nDie Funktion muss zwei Parameter akzeptieren und verh\u00e4lt sich wie ein Infix-Operator zwischen jedem Element innerhalb des `array`.\n\nDer optionale Parameter `init` wird als Anfangswert in der Aggregation verwendet."
+    },
+    "$replace": {
+        "args": "str, pattern, replacement [, limit]",
+        "desc": "Findet Vorkommen von `pattern` in `str` und ersetzt sie durch `replacement`.\n\nDer optionale Parameter `limit` ist die maximale Anzahl an Ersetzungen."
+    },
+    "$reverse": {
+        "args": "array",
+        "desc": "Gibt ein Array zur\u00fcck, das alle Elemente vom `array` in umgekehrter Reihenfolge enth\u00e4lt."
+    },
+    "$round": {
+        "args": "number [, precision]",
+        "desc": "Gibt `number` gerundet auf die Anzahl der Nachkommastellen zur\u00fcck, welche durch den optionalen Parameter `precision` vorgegeben ist."
+    },
+    "$shuffle": {
+        "args": "array",
+        "desc": "Gibt ein Array zur\u00fcck, das alle Elemente vom `array` in zuf\u00e4lliger Reihenfolge enth\u00e4lt."
+    },
+    "$sift": {
+        "args": "object, function",
+        "desc": "Gibt ein Objekt zur\u00fcck, das nur die Schl\u00fcssel/Wert-Paare aus dem Parameter `object` enth\u00e4lt, die die Pr\u00e4dikat `function` erf\u00fcllen, die als zweiter Parameter \u00fcbergeben wird.\n\nDie Funktion `function`, die als zweiter Parameter vorgegeben wird, muss die folgende Signatur aufweisen:\n\n`function(value [, key [, object]])`"
+    },
+    "$single": {
+        "args": "array, function",
+        "desc": "Gibt ein einziges Element aus `array` zur\u00fcck, welches die Bedingung `function` erf\u00fcllt (d.h. die Funktion `function` gibt den booleschen Wert `true` zur\u00fcck, wenn das Element \u00fcbergeben werden soll). Sie meldet einen Ausnahmefehler, wenn die Anzahl der Elemente mit erf\u00fcllter Bedingung (`function` ist `true`) nicht genau eins ist.\n\nDie Funktion `function` sollte in der folgenden Art vorgegeben werden: `function(value [, index [, array]])` wobei `value` f\u00fcr jedes Element des Arrays gilt, `index` ist die Position dieses Elements und das gesamte Array `array` wird als dritter Parameter \u00fcbergeben."
+    },
+    "$sort": {
+        "args": "array [, function]",
+        "desc": "Gibt ein Array zur\u00fcck, das alle Elemente vom `array` in sortierter Reihenfolge enth\u00e4lt.\n\nWenn ein Vergleichsoperator `function` vorgegeben wird, muss es sich um eine Funktion handeln, die zwei Parameter ben\u00f6tigt:\n\n`function(left, right)`\n\nDiese Funktion wird durch den Sortieralgorithmus aufgerufen, um zwei Elemente links und rechts zu vergleichen. Wenn das linke Element nach dem rechten in der gew\u00fcnschten Sortierreihenfolge platziert werden soll, muss die Funktion den booleschen Wert `true` zur\u00fcckgeben, um eine Vertauschung anzuzeigen. Andernfalls muss `false` zur\u00fcckgegeben werden."
+    },
+    "$split": {
+        "args": "str [, separator] [, limit]",
+        "desc": "Teilt `str` in einem Array mit Teilzeichenfolgen. Es ergibt einen Fehler, wenn `str` keine Zeichenfolge ist.\n\nDer optionale Parameter `separator` gibt die Zeichen in der `str` an, anhand dem, vorgegeben entweder als Zeichenfolge oder als regul\u00e4rer Ausdruck, `str` geteilt werden soll. Wenn `separator` nicht vorgegeben wird, wird ein leerer String als `separator` angenommen und `str` wird in ein Array aus einzelnen Zeichen aufgeteilt. Es handelt sich um einen Fehler, wenn `separator` leer ist.\n\nDer optionale Parameter `limit` ist eine Zahl, die die maximale Anzahl von Teilzeichenfolgen angibt, die in dem r\u00fcckzugebenen Array enthalten sein sollen. Alle zus\u00e4tzlichen Teilzeichenfolgen werden verworfen. Wenn `limit` nicht vorgegeben wird, wird `str` vollst\u00e4ndig geteilt, wobei die Gr\u00f6\u00dfe des resultierenden Arrays nicht begrenzt ist. Es handelt sich um einen Fehler, wenn `limit` eine negative Zahl ist."
+    },
+    "$spread": {
+        "args": "object",
+        "desc": "Teilt ein Objekt `object`, das Schl\u00fcssel/Wert-Paare enth\u00e4lt, in ein Array von Objekten, von denen jedes ein einzelnes Schl\u00fcssel/Wert-Paar aus dem Eingabeobjekt hat. Wenn es sich bei dem Parameter um ein Array von Objekten handelt, enth\u00e4lt die resultierende Feldgruppe ein Objekt f\u00fcr jedes Schl\u00fcssel/Wert-Paar in jedem Objekt in der vorgegebenen Feldgruppe."
+    },
+    "$sqrt": {
+        "args": "number",
+        "desc": "Gibt die Quadratwurzel von `number` zur\u00fcck."
+    },
+    "$string": {
+        "args": "arg[, prettify]",
+        "desc": "Wandelt `arg` in eine Zeichenfolge um gem\u00e4\u00df der folgenden Regeln:\n\n- Zeichenfolgen (string) bleiben unver\u00e4ndert\n- Funktionen werden in eine leere Zeichenfolge konvertiert\n- Numerische Unendlichkeit und NaN l\u00f6sen einen Fehler aus, da sie nicht als JSON-Zahlenwert dargestellt werden k\u00f6nnen.\n- Alle anderen Werte werden mit Hilfe der Funktion `JSON.stringify` in eine JSON-Zeichenfolge konvertiert. Wenn `prettify` `true` ist, wird \"prettified\" JSON erzeugt. Z.B. Eine Zeile pro Feld und Zeilen werden eingeschoben basierend auf der Feldtiefe."
+    },
+    "$substring": {
+        "args": "str, start [, length]",
+        "desc": "Gibt eine Teilzeichenfolge zur\u00fcck, die die Zeichen in `str` beginnend bei Position `start` (Null-Offset) enth\u00e4lt. Wenn `length` vorgegeben ist, enth\u00e4lt die r\u00fcckgegebene Zeichenfolge maximal die in `length` vorgegebene Zeichenanzahl. Wenn `start` negativ ist, werden die Zeichen vom Ende aus gez\u00e4hlt von `str` zur\u00fcckgegeben."
+    },
+    "$substringAfter": {
+        "args": "str, chars",
+        "desc": "Gibt die Teilzeichenfolge nach dem ersten Auftreten der Zeichenfolge `chars` in `str` zur\u00fcck. Falls `str` nicht `chars` enth\u00e4lt, wird `str` zur\u00fcckgegeben."
+    },
+    "$substringBefore": {
+        "args": "str, chars",
+        "desc": "Gibt die Teilzeichenfolge vor dem ersten Auftreten der Zeichenfolge `chars` in `str` zur\u00fcck. Falls `str` nicht `chars` enth\u00e4lt, wird `str` zur\u00fcckgegeben."
+    },
+    "$sum": {
+        "args": "array",
+        "desc": "Gibt die arithmetische Summe eines `array` von Zahlen zur\u00fcck. Es ergibt einen Fehler, wenn `array` ein Element enth\u00e4lt, das keine Zahl ist."
+    },
+    "$toMillis": {
+        "args": "timestamp",
+        "desc": "Konvertiert eine Zeitangabe `timestamp` im ISO 8601-Format in die Anzahl der Millisekunden seit Beginn der Unix-Zeitrechnung (1. Januar 1970 UTC). Es wird ein Fehler ausgel\u00f6st, wenn die Zeichenfolge nicht das richtige Format hat."
+    },
+    "$trim": {
+        "args": "[str]",
+        "desc": "Normalisiert und trimmt alle Leerzeichen in `str` durch Anwenden der folgenden Schritte:\n\n- Alle Tabulatoren, Wagenr\u00fcckl\u00e4ufe (returns) und Zeilenvorsch\u00fcbe (line feeds) werden durch Leerzeichen ersetzt.\n- Zusammenh\u00e4ngende Folgen von Leerzeichen werden auf ein einzelnes Leerzeichen reduziert.\n- Leerzeichen am Anfang und am Ende werden entfernt.\n\nWenn `str` nicht vorgegeben ist (d.h. diese Funktion wird ohne Parameter aufgerufen), dann wird der Kontextwert als Wert von `str` verwendet. Es wird ein Fehler ausgel\u00f6st, wenn `str` keine Zeichenfolge ist."
+    },
+    "$type": {
+        "args": "value",
+        "desc": "Liefert den Typ von `value` als String. When `value` undefiniert ist, wird `undefined` zur\u00fcckgeliefert."
+    },
+    "$uppercase": {
+        "args": "str",
+        "desc": "Gibt ver\u00e4nderten `str` zur\u00fcck, bei dem allen Zeichen in Gro\u00dfbuchstaben umgewandelt wurden."
+    },
+    "$zip": {
+        "args": "array, ...",
+        "desc": "Gibt ein gepacktes (geziptes) Array zur\u00fcck, das gruppierte Arrays der Elemente von `array1` ... `arrayN` aus Index 0, 1, 2 ... enth\u00e4lt."
+    }
+}

@@ -1,0 +1,389 @@
+{
+    "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/advantage": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/analogy": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/aphorism": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/author": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/base": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blog-post": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogchanges": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogcontent": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogdetails": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogpages": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/book": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/codebase": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/comment": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/consequence": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/definition": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/disadvantage": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/humour": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/idea": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/inspiration": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/observation": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/poesie": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/pubmedium": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/question": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/quote": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/sketch": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/text": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/thought": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/topic": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {},
+    "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
+    "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
+    "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg": {},
+    "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/clientcode": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/getflows": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/seeker": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/sendflow": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/sink": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile": {},
+    "@gregoriusrippenstein/node-red-contrib-tarball/tarball": {},
+    "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
+    "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
+    "node-red-contrib-aedes/aedes-mqtt-broker": {},
+    "node-red-contrib-blockly/blockly": {},
+    "node-red-contrib-blockly/blockly-config": {},
+    "node-red-contrib-cron-plus/cronplus": {},
+    "node-red-contrib-gzip/markdown": {},
+    "node-red-contrib-i2c/i2c": {},
+    "node-red-contrib-osc/osc": {},
+    "node-red-contrib-postgresql/postgresql": {},
+    "node-red-contrib-web-babylonjs/box": {},
+    "node-red-contrib-web-babylonjs/cone": {},
+    "node-red-contrib-web-babylonjs/events": {},
+    "node-red-contrib-web-babylonjs/material": {},
+    "node-red-contrib-web-babylonjs/plane": {},
+    "node-red-contrib-web-babylonjs/scene": {},
+    "node-red-contrib-web-babylonjs/sphere": {},
+    "node-red-contrib-web-babylonjs/transform": {},
+    "node-red-contrib-zip/zip": {},
+    "node-red-dashboard/ui_audio": {},
+    "node-red-dashboard/ui_base": {
+        "ui_base": {
+            "auto": "\u81ea\u52d5",
+            "base": {
+                "colour": "\u8272",
+                "font": "\u30d5\u30a9\u30f3\u30c8"
+            },
+            "font": {
+                "system": "\u30b7\u30b9\u30c6\u30e0\u30d5\u30a9\u30f3\u30c8 (\u30c7\u30d5\u30a9\u30eb\u30c8)"
+            },
+            "label": {
+                "angular": "Angular",
+                "category": "dashboard",
+                "dashboard": "\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9",
+                "date-format": "\u65e5\u4ed8\u5f62\u5f0f",
+                "group-padding": "\u30b0\u30eb\u30fc\u30d7\u30d1\u30c7\u30a3\u30f3\u30b0",
+                "group-spacing": "\u30b0\u30eb\u30fc\u30d7\u9593\u9694",
+                "horizontal": "\u6a2a",
+                "layout": "\u914d\u7f6e",
+                "options": "\u30aa\u30d7\u30b7\u30e7\u30f3",
+                "site": "\u30b5\u30a4\u30c8",
+                "sizes": "\u30b5\u30a4\u30ba",
+                "theme": "\u30c6\u30fc\u30de",
+                "title": "\u30bf\u30a4\u30c8\u30eb",
+                "vertical": "\u7e26",
+                "widget-size": "\u6700\u5c0fWidget\u30b5\u30a4\u30ba",
+                "widget-spacing": "Widget\u9593\u9694"
+            },
+            "layout": {
+                "auto": "\u81ea\u52d5\u30b5\u30a4\u30ba\u8abf\u6574",
+                "edit": "\u7de8\u96c6",
+                "group": "\u30b0\u30eb\u30fc\u30d7",
+                "layout": "\u30ec\u30a4\u30a2\u30a6\u30c8",
+                "layout-editor": "\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u30ec\u30a4\u30a2\u30a6\u30c8\u30a8\u30c7\u30a3\u30bf",
+                "link": "\u30ea\u30f3\u30af",
+                "manual": "\u624b\u52d5\u30b5\u30a4\u30ba\u5909\u66f4",
+                "spacer": "\u30b9\u30da\u30fc\u30b5",
+                "tab": "\u30bf\u30d6",
+                "tab-and-link": "\u30bf\u30d6 & \u30ea\u30f3\u30af",
+                "width": "\u5e45"
+            },
+            "lock": {
+                "clicked": "\u30b5\u30a4\u30c9\u30e1\u30cb\u30e5\u30fc\u3092\u30af\u30ea\u30c3\u30af\u3067\u8868\u793a",
+                "locked": "\u30b5\u30a4\u30c9\u30e1\u30cb\u30e5\u30fc\u3092\u8868\u793a\u3057\u305f\u307e\u307e\u306b\u3059\u308b",
+                "locked-icon": "\u5e38\u306b\u30a2\u30a4\u30b3\u30f3\u306e\u307f\u3092\u8868\u793a"
+            },
+            "site": {
+                "date-format": "YYYY/MM/DD",
+                "title": "Node-RED \u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9"
+            },
+            "style": {
+                "accents": "\u30a2\u30af\u30bb\u30f3\u30c8",
+                "background": "\u80cc\u666f",
+                "custom": "\u30ab\u30b9\u30bf\u30e0",
+                "dark": "\u30c0\u30fc\u30af",
+                "light": "\u30e9\u30a4\u30c8 (\u30c7\u30d5\u30a9\u30eb\u30c8)",
+                "palette": "\u30e9\u30a4\u30c8/\u30c0\u30fc\u30af",
+                "primary": "\u30d7\u30e9\u30a4\u30de\u30ea",
+                "warnings": "\u8b66\u544a"
+            },
+            "swipe": {
+                "allow-swipe": "\u30b9\u30ef\u30a4\u30d7\u306b\u3088\u308b\u30bf\u30d6\u5207\u308a\u66ff\u3048\u3092\u3059\u308b",
+                "allow-swipe-mouse": "Allow swipe (+mouse) between tabs",
+                "no-swipe": "\u30b9\u30ef\u30a4\u30d7\u306b\u3088\u308b\u30bf\u30d6\u5207\u308a\u66ff\u3048\u3092\u3057\u306a\u3044",
+                "show-menu": "Swipe to open/close menu"
+            },
+            "temp": {
+                "allow-theme": "ui_template\u3067\u30c6\u30fc\u30de\u8a2d\u5b9a\u3092\u8a31\u53ef\u3059\u308b",
+                "no-theme": "ui_template\u3067\u30c6\u30fc\u30de\u8a2d\u5b9a\u3092\u8a31\u53ef\u3057\u306a\u3044",
+                "none": "Angular\u30c6\u30fc\u30de\u3092\u5168\u3066\u306e\u7b87\u6240\u3067\u4f7f\u7528"
+            },
+            "theme": {
+                "base-settings": "\u57fa\u672c\u8a2d\u5b9a",
+                "custom-profile": "\u30ab\u30b9\u30bf\u30e0\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb",
+                "custom-profile-name": "\u540d\u79f0\u672a\u8a2d\u5b9a\u30c6\u30fc\u30de 1",
+                "group": {
+                    "background": "\u30b0\u30eb\u30fc\u30d7\u80cc\u666f\u8272",
+                    "border": "\u30b0\u30eb\u30fc\u30d7\u30dc\u30fc\u30c0\u30fc\u8272",
+                    "text": "\u30b0\u30eb\u30fc\u30d7\u6587\u5b57\u8272"
+                },
+                "group-settings": "\u30b0\u30eb\u30fc\u30d7\u8a2d\u5b9a",
+                "page": {
+                    "page": "\u30da\u30fc\u30b8\u80cc\u666f\u8272",
+                    "side": "\u30b5\u30a4\u30c9\u30d0\u30fc\u80cc\u666f\u8272",
+                    "title": "\u30bf\u30a4\u30c8\u30eb\u30d0\u30fc\u80cc\u666f\u8272"
+                },
+                "page-settings": "\u30da\u30fc\u30b8\u8a2d\u5b9a",
+                "style": "\u30b9\u30bf\u30a4\u30eb",
+                "widget": {
+                    "background": "Widget\u80cc\u666f\u8272",
+                    "colour": "Widget\u8272",
+                    "text": "Widget\u6587\u5b57\u8272"
+                },
+                "widget-settings": "Widget\u8a2d\u5b9a"
+            },
+            "title": "Node-RED\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9",
+            "title-bar": {
+                "hide": "\u30bf\u30a4\u30c8\u30eb\u30d0\u30fc\u975e\u8868\u793a",
+                "show": "\u30bf\u30a4\u30c8\u30eb\u30d0\u30fc\u8868\u793a"
+            }
+        }
+    },
+    "node-red-dashboard/ui_button": {},
+    "node-red-dashboard/ui_chart": {
+        "ui_chart": {
+            "label": {
+                "HHmm": "HH:mm",
+                "HHmmss": "HH:mm:ss",
+                "asUTC": "UTC\u3092\u4f7f\u7528",
+                "automatic": "\u81ea\u52d5",
+                "barChart": " &#xf080; \u68d2\u30b0\u30e9\u30d5",
+                "barChartH": " &#xf080; \u68d2\u30b0\u30e9\u30d5(\u6a2a)",
+                "bezier": "\u30d9\u30b8\u30a7",
+                "blankLabel": "\u521d\u671f\u30e9\u30d9\u30eb",
+                "className": "\u7a2e\u985e",
+                "classNamePlaceholder": "\u30a6\u30a3\u30b8\u30a7\u30c3\u30c8\u7528\u306eCSS\u30af\u30e9\u30b9\u540d\uff08\u30aa\u30d7\u30b7\u30e7\u30f3\uff09",
+                "cubic": "3\u6b21\u88dc\u9593",
+                "cubicMono": "\u5358\u8abf3\u6b21\u88dc\u9593",
+                "custom": "\u30ab\u30b9\u30bf\u30e0",
+                "cutout": "\u4e2d\u5fc3\u306e\u5207\u629c\u304d\u7387",
+                "dateMonth": "\u65e5/\u6708",
+                "dayHHmm": "\u66dc\u65e5 HH:mm",
+                "days": "\u65e5",
+                "displayThisTextBeforeValidDataArrives": "\u6709\u52b9\u306a\u30c7\u30fc\u30bf\u304c\u5c4a\u304f\u524d\u306b\u672c\u6587\u5b57\u5217\u3092\u8868\u793a",
+                "enlargePoints": "\u30dd\u30a4\u30f3\u30c8\u3092\u8868\u793a",
+                "group": "\u30b0\u30eb\u30fc\u30d7",
+                "hours": "\u6642\u9593",
+                "interpolate": "\u88dc\u5b8c",
+                "label": "\u30e9\u30d9\u30eb",
+                "last": "\u76f4\u8fd1",
+                "legend": "\u51e1\u4f8b",
+                "lineChart": " &#xf201; \u6298\u308c\u7dda\u30b0\u30e9\u30d5",
+                "linear": "\u76f4\u7dda",
+                "max": "\u6700\u5927",
+                "min": "\u6700\u5c0f",
+                "minutes": "\u5206",
+                "none": "\u975e\u8868\u793a",
+                "optionalChartTitle": "\u4efb\u610f\u306e\u30b0\u30e9\u30d5\u30bf\u30a4\u30c8\u30eb",
+                "or": "\u53c8\u306f",
+                "pieChart": " &#xf200; \u5186\u30b0\u30e9\u30d5",
+                "points": "\u30dd\u30a4\u30f3\u30c8",
+                "polarAreaChart": " &#xf200; \u9d8f\u982d\u56f3",
+                "radarChart": " &#xf200; \u30ec\u30fc\u30c0\u30fc\u30c1\u30e3\u30fc\u30c8",
+                "seconds": "\u79d2",
+                "seriesColours": "\u914d\u8272",
+                "show": "\u8868\u793a",
+                "size": "\u30b5\u30a4\u30ba",
+                "step": "\u6bb5\u968e",
+                "type": "\u7a2e\u985e",
+                "useDifferentColor": "\u30b7\u30ea\u30fc\u30ba\u306b\u5225\u306e\u8272\u3092\u4f7f\u7528",
+                "useFirstColourForAllBars": "\u6700\u521d\u306e\u8272\u3092\u5168\u30b0\u30e9\u30d5\u3067\u4f7f\u7528",
+                "weeks": "\u9031",
+                "xAxis": "X\u8ef8",
+                "xAxisLabel": "X\u8ef8\u30e9\u30d9\u30eb",
+                "yAxis": "Y\u8ef8",
+                "yearMonthDate": "\u5e74-\u6708-\u65e5"
+            }
+        }
+    },
+    "node-red-dashboard/ui_colour_picker": {},
+    "node-red-dashboard/ui_date_picker": {},
+    "node-red-dashboard/ui_dropdown": {},
+    "node-red-dashboard/ui_form": {
+        "ui_form": {
+            "label": {
+                "buttons": "\u30dc\u30bf\u30f3",
+                "cancelButtonText": "\u30ad\u30e3\u30f3\u30bb\u30eb\u30dc\u30bf\u30f3\u306e\u6587\u5b57\u5217",
+                "checkbox": "\u30c1\u30a7\u30c3\u30af\u30dc\u30c3\u30af\u30b9",
+                "className": "\u7a2e\u985e",
+                "classNamePlaceholder": "\u30a6\u30a3\u30b8\u30a7\u30c3\u30c8\u7528\u306eCSS\u30af\u30e9\u30b9\u540d\uff08\u30aa\u30d7\u30b7\u30e7\u30f3\uff09",
+                "date": "\u65e5\u4ed8",
+                "egName": "\u4f8b) \u540d\u524d",
+                "egName2": "\u4f8b) name",
+                "element": "\u8981\u7d20",
+                "email": "E-\u30e1\u30fc\u30eb",
+                "formElements": "\u30d5\u30a9\u30fc\u30e0\u306e\u8981\u7d20",
+                "group": "\u30b0\u30eb\u30fc\u30d7",
+                "label": "\u30e9\u30d9\u30eb",
+                "multiline": "\u8907\u6570\u884c",
+                "number": "\u6570\u5024",
+                "optionalLabel": "\u4efb\u610f\u306e\u30e9\u30d9\u30eb",
+                "optionalMsgTopic": "\u4efb\u610f\u306emsg.topic",
+                "password": "\u30d1\u30b9\u30ef\u30fc\u30c9",
+                "remove": "\u524a\u9664",
+                "required": "\u5fc5\u9808",
+                "rows": "\u884c\u6570",
+                "size": "\u30b5\u30a4\u30ba",
+                "splitLayout": "\u30d5\u30a9\u30fc\u30e0\u8981\u7d20\u30922\u5217\u306b\u914d\u7f6e",
+                "submitButtonText": "\u9001\u4fe1\u30dc\u30bf\u30f3\u306e\u6587\u5b57\u5217",
+                "switch": "\u30b9\u30a4\u30c3\u30c1",
+                "text": "\u6587\u5b57\u5217",
+                "time": "\u6642\u9593",
+                "topic": "\u30c8\u30d4\u30c3\u30af",
+                "type": "\u7a2e\u985e"
+            }
+        }
+    },
+    "node-red-dashboard/ui_gauge": {},
+    "node-red-dashboard/ui_group": {
+        "ui_group": {
+            "collapse-name": "\u30b0\u30eb\u30fc\u30d7\u306e\u6298\u308a\u305f\u305f\u307f\u3092\u6709\u52b9\u306b\u3059\u308b",
+            "display-name": "\u30b0\u30eb\u30fc\u30d7\u540d\u3092\u8868\u793a\u3059\u308b",
+            "label": {
+                "className": "\u7a2e\u985e",
+                "classNamePlaceholder": "\u30a6\u30a3\u30b8\u30a7\u30c3\u30c8\u7528\u306eCSS\u30af\u30e9\u30b9\u540d\uff08\u30aa\u30d7\u30b7\u30e7\u30f3\uff09",
+                "default": "\u30c7\u30d5\u30a9\u30eb\u30c8",
+                "group": "\u30b0\u30eb\u30fc\u30d7",
+                "name": "\u540d\u524d",
+                "tab": "\u30bf\u30d6",
+                "unassigned": "\u672a\u8a2d\u5b9a",
+                "width": "\u5e45"
+            }
+        }
+    },
+    "node-red-dashboard/ui_link": {
+        "ui_link": {
+            "label": {
+                "className": "\u7a2e\u985e",
+                "classNamePlaceholder": "\u30a6\u30a3\u30b8\u30a7\u30c3\u30c8\u7528\u306eCSS\u30af\u30e9\u30b9\u540d\uff08\u30aa\u30d7\u30b7\u30e7\u30f3\uff09",
+                "icon": "\u30a2\u30a4\u30b3\u30f3",
+                "iframe": "iframe",
+                "link": "\u30ea\u30f3\u30af",
+                "name": "\u540d\u524d",
+                "new-tab": "\u65b0\u898f\u30bf\u30d6",
+                "open-in": "\u958b\u304f\u65b9\u6cd5",
+                "this-tab": "\u3053\u306e\u30bf\u30d6"
+            },
+            "tip": "<b>\u30a2\u30a4\u30b3\u30f3</b>\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u306f <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design icon</a> <i>(\u4f8b: 'check', 'close')</i>\u3001<a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(\u4f8b: 'fa-fire')</i>\u3001\u3082\u3057\u304f\u306f <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Weather icon</a> <i>(\u4f8b: 'wi-wu-sunny')</i>\u3092\u6307\u5b9a\u3067\u304d\u307e\u3059\u3002</p>"
+        }
+    },
+    "node-red-dashboard/ui_numeric": {},
+    "node-red-dashboard/ui_slider": {},
+    "node-red-dashboard/ui_spacer": {},
+    "node-red-dashboard/ui_switch": {},
+    "node-red-dashboard/ui_tab": {
+        "ui_tab": {
+            "info": {
+                "disabled": " \u30bf\u30d6\u3092\u7121\u52b9\u5316\u3057\u307e\u3059",
+                "hidden": " \u30bf\u30d6\u3092\u79fb\u52d5\u30e1\u30cb\u30e5\u30fc\u306b\u8868\u793a\u3057\u307e\u305b\u3093"
+            },
+            "label": {
+                "disabled": "\u7121\u52b9",
+                "enabled": "\u6709\u52b9",
+                "hidden": "\u975e\u8868\u793a",
+                "home": "\u30db\u30fc\u30e0",
+                "icon": "\u30a2\u30a4\u30b3\u30f3",
+                "name": "\u540d\u524d",
+                "navmenu": "\u30e1\u30cb\u30e5\u30fc",
+                "state": "\u72b6\u614b",
+                "tab": "\u30bf\u30d6",
+                "visible": "\u8868\u793a"
+            },
+            "tip": "<b>\u30a2\u30a4\u30b3\u30f3</b>\u30d5\u30a3\u30fc\u30eb\u30c9\u306b\u306f <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design icon</a> <i>(\u4f8b: 'check', 'close')</i>\u3001<a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(\u4f8b: 'fa-fire')</i>\u3001\u3082\u3057\u304f\u306f <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Weather icon</a> <i>(\u4f8b: 'wi-wu-sunny')</i>\u3092\u6307\u5b9a\u3067\u304d\u307e\u3059\u3002</p>"
+        }
+    },
+    "node-red-dashboard/ui_template": {
+        "ui_template": {
+            "label": {
+                "className": "\u7a2e\u985e",
+                "classNamePlaceholder": "\u30a6\u30a3\u30b8\u30a7\u30c3\u30c8\u7528\u306eCSS\u30af\u30e9\u30b9\u540d\uff08\u30aa\u30d7\u30b7\u30e7\u30f3\uff09",
+                "expand": "\u5c55\u958b\u3059\u308b",
+                "global": "<head>\u30d8\u30c3\u30c9\u30bb\u30af\u30b7\u30e7\u30f3\u3078\u8ffd\u52a0",
+                "group": "\u30b0\u30eb\u30fc\u30d7",
+                "local": "\u30b0\u30eb\u30fc\u30d7\u5185\u306eWidget",
+                "name": "\u540d\u524d",
+                "pass-through": "\u5165\u529b\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u305d\u306e\u307e\u307e\u6e21\u3059",
+                "resend": "\u66f4\u65b0\u6642\u306b\u6700\u5f8c\u306e\u5024\u3092\u518d\u5ea6\u8aad\u307f\u8fbc\u3080",
+                "size": "\u30b5\u30a4\u30ba",
+                "store-state": "\u51fa\u529b\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u72b6\u614b\u3068\u3057\u3066\u4fdd\u5b58",
+                "template": "HTML\u30b3\u30fc\u30c9",
+                "type": "\u30b3\u30fc\u30c9\u7a2e\u5225"
+            }
+        }
+    },
+    "node-red-dashboard/ui_text": {},
+    "node-red-dashboard/ui_text_input": {},
+    "node-red-dashboard/ui_toast": {},
+    "node-red-dashboard/ui_ui_control": {
+        "ui_ui_control": {
+            "events": {
+                "all": "connect, lost, \u30bf\u30d6\u5909\u66f4\u3082\u3057\u304f\u306f\u30b0\u30eb\u30fc\u30d7\u30a4\u30d9\u30f3\u30c8",
+                "change": "\u30bf\u30d6\u5909\u66f4\u3082\u3057\u304f\u306f\u30b0\u30eb\u30fc\u30d7\u30a4\u30d9\u30f3\u30c8\u306e\u307f",
+                "connect": "Connect\u30a4\u30d9\u30f3\u30c8\u306e\u307f"
+            },
+            "label": {
+                "name": "\u540d\u524d",
+                "output": "\u51fa\u529b"
+            },
+            "placeholder": {
+                "name": "\u540d\u524d"
+            }
+        }
+    },
+    "node-red-node-base64/base64": {
+        "base64": {
+            "base64": "base64",
+            "convert": {
+                "buffer": "\u30d0\u30c3\u30d5\u30a1 <-> Base64\u306e\u5909\u63db",
+                "decode": "Base64\u304b\u3089\u6587\u5b57\u5217\u3078\u5909\u63db",
+                "encode": "Base64\u3078\u30a8\u30f3\u30b3\u30fc\u30c9"
+            },
+            "error": {
+                "invalid": "\u4e0d\u6b63\u306aBase64\u6587\u5b57\u5217\u3067\u3059\u3002",
+                "nonbase64": "Base64\u6587\u5b57\u5217\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002"
+            },
+            "label": {
+                "action": "\u52d5\u4f5c"
+            },
+            "log": {
+                "nonbase64encode": "Base64\u6587\u5b57\u5217\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u304c\u3001\u5909\u63db\u3057\u307e\u3059\u3002"
+            },
+            "warn": {
+                "cannothandle": "\u3053\u306e\u30ce\u30fc\u30c9\u306f\u6587\u5b57\u5217\u304b\u30d0\u30c3\u30d5\u30a1\u3057\u304b\u5909\u63db\u3067\u304d\u307e\u305b\u3093\u3002",
+                "noproperty": "\u51e6\u7406\u3059\u308b\u305f\u3081\u306e\u30d7\u30ed\u30d1\u30c6\u30a3\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3002"
+            }
+        }
+    },
+    "node-red-node-markdown/markdown": {}
+}

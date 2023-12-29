@@ -934,6 +934,25 @@ var DEADRED = (function() {
             options.success({},"",{ status: mth[2] == "enable" ? 200 : 201 })
         }
 
+        // locales and messages - convert parameter to be part of the file
+        // name - differentiate between languages.
+
+        // LoCaLeS is taken from retrieve.sh and should be kept in sync.
+        const LoCaLeS="en-US en-GB en de-DE de fr ja ko pt-BR ru zh-CN zh-TW"
+
+        // convert from /messages?lng=xx-YY to /messages.xx-YY but this means
+        // missing locale files will halt loading of the editor (at loading
+        // plugins) so we need to ensure the locale files for a specific locale
+        // _always_ exist. (Conversion to .xx-YY allows for support of
+        // multiple locales on a _static_ server).
+        mth = options.url.match(/^(nodes|plugins)\/messages/i)
+        if ( mth ) {
+            var d = new URLSearchParams(options.url.split("?")[1])
+            if ( LoCaLeS.split(/[\t \n]+/).indexOf(d.get("lng")) > -1 ) {
+                options.url = mth[1] + "/messages." + d.get("lng")
+            }
+        }
+
         // a click on the deploy button, an update of the flow. Pass
         // through but handle a reload and stop the flows.
         if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")

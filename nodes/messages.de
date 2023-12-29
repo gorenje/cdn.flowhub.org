@@ -1,0 +1,412 @@
+{
+    "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/advantage": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/analogy": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/aphorism": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/author": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/base": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blog-post": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogchanges": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogcontent": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogdetails": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogpages": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/book": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/codebase": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/comment": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/consequence": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/definition": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/disadvantage": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/humour": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/idea": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/inspiration": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/observation": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/poesie": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/pubmedium": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/question": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/quote": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/sketch": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/text": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/thought": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/topic": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {},
+    "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
+    "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
+    "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg": {},
+    "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/clientcode": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/getflows": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/seeker": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/sendflow": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/sink": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile": {},
+    "@gregoriusrippenstein/node-red-contrib-tarball/tarball": {},
+    "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
+    "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
+    "node-red-contrib-aedes/aedes-mqtt-broker": {},
+    "node-red-contrib-blockly/blockly": {},
+    "node-red-contrib-blockly/blockly-config": {},
+    "node-red-contrib-cron-plus/cronplus": {},
+    "node-red-contrib-gzip/markdown": {},
+    "node-red-contrib-i2c/i2c": {},
+    "node-red-contrib-osc/osc": {},
+    "node-red-contrib-postgresql/postgresql": {},
+    "node-red-contrib-web-babylonjs/box": {},
+    "node-red-contrib-web-babylonjs/cone": {},
+    "node-red-contrib-web-babylonjs/events": {},
+    "node-red-contrib-web-babylonjs/material": {},
+    "node-red-contrib-web-babylonjs/plane": {},
+    "node-red-contrib-web-babylonjs/scene": {},
+    "node-red-contrib-web-babylonjs/sphere": {},
+    "node-red-contrib-web-babylonjs/transform": {},
+    "node-red-contrib-zip/zip": {},
+    "node-red-dashboard/ui_audio": {},
+    "node-red-dashboard/ui_base": {
+        "ui_base": {
+            "auto": "Auto",
+            "base": {
+                "colour": "Farbe",
+                "font": "Schriftart"
+            },
+            "font": {
+                "system": "System-Schriftart (Standard)"
+            },
+            "label": {
+                "angular": "Angular",
+                "category": "Dashboard",
+                "dashboard": "Dashboard",
+                "date-format": "Datumsformat",
+                "group-padding": "Gruppenabst\u00e4nde innen",
+                "group-spacing": "Gruppenabst\u00e4nde au\u00dfen",
+                "horizontal": "Horizontal",
+                "layout": "Layout",
+                "options": "Optionen",
+                "site": "Site",
+                "sizes": "Gr\u00f6\u00dfen",
+                "theme": "Theme",
+                "title": "Titel",
+                "vertical": "Vertikal",
+                "widget-size": "1x1 Widget-Gr\u00f6\u00dfe",
+                "widget-spacing": "Widget-Abst\u00e4nde"
+            },
+            "layout": {
+                "auto": "Automatische Gr\u00f6\u00dfenanpassung",
+                "edit": "Bearbeiten",
+                "group": "Gruppe",
+                "layout": "Layout",
+                "layout-editor": "Dashboard Layout-Editor",
+                "link": "Link",
+                "manual": "Manuelle Gr\u00f6\u00dfenanpassung",
+                "spacer": "Abstand",
+                "tab": "Tab",
+                "tab-and-link": "Tabs & Links",
+                "width": "Breite"
+            },
+            "lock": {
+                "clicked": "Klicken, um das Seitenmen\u00fc anzuzeigen",
+                "locked": "Seitenmen\u00fc immer anzeigen",
+                "locked-icon": "Nur Icons anzeigen"
+            },
+            "site": {
+                "date-format": "DD.MM.YYYY",
+                "title": "Node-RED Dashboard"
+            },
+            "style": {
+                "accents": "Akzente",
+                "background": "Hintergrund",
+                "custom": "Benutzerdefiniert",
+                "dark": "Dunkel",
+                "light": "Hell (Standard)",
+                "palette": "Hell / Dunkel",
+                "primary": "Prim\u00e4r",
+                "warnings": "Warnungen"
+            },
+            "swipe": {
+                "allow-swipe": "Wischen zwischen Tabs zulassen",
+                "allow-swipe-mouse": "Allow swipe (+mouse) between tabs",
+                "no-swipe": "Kein Wischen zwischen Tabs",
+                "show-menu": "Swipe to open/close menu"
+            },
+            "temp": {
+                "allow-theme": "Node-RED-Erscheinungsbild",
+                "no-theme": "Angular-Erscheinungsbild in ui_template",
+                "none": "Angular-Erscheinungsbild"
+            },
+            "theme": {
+                "base-settings": "Basiseinstellungen",
+                "custom-profile": "Benutzerdefiniertes Profil",
+                "custom-profile-name": "Erscheinungsbild ohne Titel 1",
+                "group": {
+                    "background": "Gruppenhintergrund",
+                    "border": "Gruppenrand",
+                    "text": "Gruppentext"
+                },
+                "group-settings": "Gruppeneinstellungen",
+                "page": {
+                    "page": "Hintergrund Seite",
+                    "side": "Hintergrund Seitenleiste",
+                    "title": "Hintergrund Titelleiste"
+                },
+                "page-settings": "Seiteneinstellungen",
+                "style": "Stil",
+                "widget": {
+                    "background": "Widget-Hintergrund",
+                    "colour": "Widget-Farbe",
+                    "text": "Widget-Text"
+                },
+                "widget-settings": "Widget-Einstellungen"
+            },
+            "title": "Node-RED Dashboard",
+            "title-bar": {
+                "hide": "Titelleiste verbergen",
+                "show": "Titelleiste anzeigen"
+            }
+        }
+    },
+    "node-red-dashboard/ui_button": {
+        "ui_button": {
+            "label": {
+                "background": "Hintergrund",
+                "className": "Klasse",
+                "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) f\u00fcr das Widget",
+                "color": "Farbe",
+                "emulateClick": "Emuliere einen Klick bei einer eingehenden Nachricht:",
+                "group": "Gruppe",
+                "icon": "Icon",
+                "label": "Beschriftung",
+                "optionalBackgroundColor": "Optionale Hintergrundfarbe",
+                "optionalColor": "Optionale Text/Icon-Farbe",
+                "optionalIcon": "Optionales Icon",
+                "optionalLabel": "Optionale Beschriftung",
+                "optionalTooltip": "Optionaler Tooltipp",
+                "payload": "Payload",
+                "size": "Gr\u00f6\u00dfe",
+                "tooltip": "Tooltipp",
+                "topic": "Topic",
+                "whenClicked": "Sende beim Klicken:"
+            }
+        }
+    },
+    "node-red-dashboard/ui_chart": {
+        "ui_chart": {
+            "label": {
+                "HHmm": "HH:mm",
+                "HHmmss": "HH:mm:ss",
+                "asUTC": "als UTC",
+                "automatic": "automatisch",
+                "barChart": " &#xf080; Balkendiagramm",
+                "barChartH": " &#xf080; Balkendiagramm (H)",
+                "bezier": "Bezier",
+                "blankLabel": "Leer-Text",
+                "className": "Klasse",
+                "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) f\u00fcr das Widget",
+                "cubic": "Kubisch",
+                "cubicMono": "Kubisch-Mono",
+                "custom": "benutzerdefiniert",
+                "cutout": "Ausschnitt",
+                "dateMonth": "Tag/Monat",
+                "dayHHmm": "Wochentag HH:mm",
+                "days": "Tage",
+                "displayThisTextBeforeValidDataArrives": "Anzuzeigender Text bevor g\u00fcltige Daten eintreffen",
+                "enlargePoints": "Punkte vergr\u00f6\u00dfern",
+                "group": "Gruppe",
+                "hours": "Stunden",
+                "interpolate": "Interpolation",
+                "label": "Beschriftung",
+                "last": "Letzten",
+                "legend": "Legende",
+                "lineChart": " &#xf201; Liniendiagramm",
+                "linear": "Linear",
+                "max": "max",
+                "min": "min",
+                "minutes": "Minuten",
+                "none": "Keine",
+                "optionalChartTitle": "Optionaler Diagrammtitel",
+                "or": "oder",
+                "pieChart": " &#xf200; Kreisdiagramm",
+                "points": "Punkte",
+                "polarAreaChart": " &#xf200; Polargebietskarte",
+                "radarChart": " &#xf200; Radarkarte",
+                "seconds": "Sekunden",
+                "seriesColours": "Serienfarben",
+                "show": "Anzeigen",
+                "size": "Gr\u00f6\u00dfe",
+                "step": "Stufen",
+                "type": "Typ",
+                "useDifferentColor": "Unterschiedliche Farben f\u00fcr Datenserie verwenden",
+                "useFirstColourForAllBars": "Erste Farbe f\u00fcr alle Balken verwenden",
+                "weeks": "Wochen",
+                "xAxis": "X-Achse",
+                "xAxisLabel": "X-Beschriftung",
+                "yAxis": "Y-Achse",
+                "yearMonthDate": "Jahr-Monat-Tag"
+            }
+        }
+    },
+    "node-red-dashboard/ui_colour_picker": {},
+    "node-red-dashboard/ui_date_picker": {},
+    "node-red-dashboard/ui_dropdown": {},
+    "node-red-dashboard/ui_form": {
+        "ui_form": {
+            "label": {
+                "buttons": "Schaltfl\u00e4chen",
+                "cancelButtonText": "Text Abbrechen-Schaltfl\u00e4che",
+                "checkbox": "Auswahlk\u00e4stchen",
+                "className": "Klasse",
+                "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) f\u00fcr das Widget",
+                "date": "Datum",
+                "egName": "z.B. Name",
+                "egName2": "z.B. Name",
+                "element": "Element",
+                "email": "E-Mail",
+                "formElements": "Formular- elemente",
+                "group": "Gruppe",
+                "label": "Beschriftung",
+                "multiline": "Mehrzeilig",
+                "number": "Zahl",
+                "optionalLabel": "Optionale Beschriftung",
+                "optionalMsgTopic": "Optionaler msg.topic",
+                "password": "Kennwort",
+                "remove": "Entfernen",
+                "required": "Erforderlich",
+                "rows": "UiZeilen",
+                "size": "Gr\u00f6\u00dfe",
+                "splitLayout": "Platzieren sie die formularelemente in 2 spalten",
+                "submitButtonText": "Text Absenden-Schaltfl\u00e4che",
+                "switch": "Schalter",
+                "text": "Text",
+                "time": "Zeit",
+                "topic": "Topic",
+                "type": "Typ"
+            }
+        }
+    },
+    "node-red-dashboard/ui_gauge": {},
+    "node-red-dashboard/ui_group": {
+        "ui_group": {
+            "collapse-name": "Gruppenreduzierung zulassen",
+            "display-name": "Gruppenname anzeigen",
+            "label": {
+                "className": "Klasse",
+                "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) f\u00fcr das Widget",
+                "default": "Standard",
+                "group": "Gruppe",
+                "name": "Name",
+                "tab": "Tab",
+                "unassigned": "nicht zugewiesen",
+                "width": "Breite"
+            }
+        }
+    },
+    "node-red-dashboard/ui_link": {
+        "ui_link": {
+            "label": {
+                "className": "Klasse",
+                "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) f\u00fcr das Widget",
+                "icon": "Icon",
+                "iframe": "iframe",
+                "link": "Link",
+                "name": "Name",
+                "new-tab": "neuen Tab",
+                "open-in": "\u00d6ffnen im",
+                "this-tab": "selben Tab"
+            },
+            "tip": "Das <b>Icon</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material-Design-Icon</a> (z.B. <code>check</code> oder <code>close</code>), ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font-Awesome-Icon</a> (z.B. <code>fa-fire</code>) oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter-Icon</a> (z.B. <code>wi-wu-sunny</code>) sein.</p><p>Des Weiteren k\u00f6nnen alle Google-Material-Icons verwendet werden, indem dem Icon-Namen <code>mi-</code> vorangestellt wird (z.B. <code>mi-videogame_asset</code>).</p>"
+        }
+    },
+    "node-red-dashboard/ui_numeric": {},
+    "node-red-dashboard/ui_slider": {},
+    "node-red-dashboard/ui_spacer": {},
+    "node-red-dashboard/ui_switch": {},
+    "node-red-dashboard/ui_tab": {
+        "ui_tab": {
+            "info": {
+                "disabled": " Tab im Dashboard deaktiviert.",
+                "hidden": " Tab im Nav.-Men\u00fc versteckt."
+            },
+            "label": {
+                "disabled": "Deaktivert",
+                "enabled": "Aktiviert",
+                "hidden": "Versteckt",
+                "home": "Home",
+                "icon": "Icon",
+                "name": "Name",
+                "navmenu": "Nav. Men\u00fc",
+                "state": "Status",
+                "tab": "Tab",
+                "visible": "Sichtbar"
+            },
+            "tip": "Das <b>Icon</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material-Design-Icon</a> (z.B. <code>check</code> oder <code>close</code>), ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font-Awesome-Icon</a> (z.B. <code>fa-fire</code>) oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter-Icon</a> (z.B. <code>wi-wu-sunny</code>) sein.</p><p>Des Weiteren k\u00f6nnen alle Google-Material-Icons verwendet werden, indem dem Icon-Namen <code>mi-</code> vorangestellt wird (z.B. <code>mi-videogame_asset</code>).</p>"
+        }
+    },
+    "node-red-dashboard/ui_template": {
+        "ui_template": {
+            "label": {
+                "className": "Klasse",
+                "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) f\u00fcr das Widget",
+                "expand": "Erweitern",
+                "global": "Hinzugef\u00fcgt zur <head>-Sektion der Seite",
+                "group": "Gruppe",
+                "local": "Widget in Gruppe",
+                "name": "Name",
+                "pass-through": "Nachrichten vom Eingang weiterleiten",
+                "resend": "Letzten Wert beim Aktualisieren neuladen",
+                "size": "Gr\u00f6\u00dfe",
+                "store-state": "Ausgehende Nachrichten speichern",
+                "template": "Vorlage",
+                "type": "Vorlagentyp"
+            }
+        }
+    },
+    "node-red-dashboard/ui_text": {},
+    "node-red-dashboard/ui_text_input": {},
+    "node-red-dashboard/ui_toast": {},
+    "node-red-dashboard/ui_ui_control": {
+        "ui_ui_control": {
+            "events": {
+                "all": "Connect, lost, change tab or group events",
+                "change": "Change tab or group events only",
+                "connect": "Connect event only"
+            },
+            "label": {
+                "name": "Name",
+                "output": "Output"
+            },
+            "placeholder": {
+                "name": "Name"
+            }
+        }
+    },
+    "node-red-node-base64/base64": {
+        "base64": {
+            "base64": "base64",
+            "convert": {
+                "buffer": "Konvertierung Buffer <-> Base64",
+                "decode": "Konvertierung Base64 zu String",
+                "encode": "Kodierung als Base64"
+            },
+            "error": {
+                "invalid": "Ung\u00fcltiger Base64-String",
+                "nonbase64": "Kein Base64-String"
+            },
+            "label": {
+                "action": "Aktion"
+            },
+            "log": {
+                "nonbase64encode": "Kein Base64-String - m\u00f6glicherweise soll es kodiert werden..."
+            },
+            "warn": {
+                "cannothandle": "Dieser Node kann nur Strings oder Buffer verarbeiten",
+                "noproperty": "Keine Eigenschaft zur Verarbeitung gefunden"
+            }
+        }
+    },
+    "node-red-node-markdown/markdown": {}
+}

@@ -1,0 +1,23 @@
+{
+    "info": {
+        "tip0": "Voc\u00ea pode remover os n\u00f3s ou links selecionados com {{core:delete-selection}}",
+        "tip1": "Procure por n\u00f3s usando {{core:search}}",
+        "tip10": "[shift] [click] e arraste em uma porta de n\u00f3 para mover todos os fios conectados ou apenas o selecionado",
+        "tip11": "Mostre a guia Informa\u00e7\u00f5es com {{core:show-info-tab}} ou a guia Depurar com {{core:show-debug-tab}}",
+        "tip12": "[ctrl] [click] na \u00e1rea de trabalho para abrir a caixa de di\u00e1logo de adi\u00e7\u00e3o r\u00e1pida",
+        "tip13": "Mantenha pressionado [ctrl] enquanto voc\u00ea [click] em uma porta de n\u00f3 para habilitar a liga\u00e7\u00e3o r\u00e1pida",
+        "tip14": "Mantenha pressionado [shift] enquanto voc\u00ea [click] em um n\u00f3 para tamb\u00e9m selecionar todos os seus n\u00f3s conectados",
+        "tip15": "Mantenha pressionado [ctrl] enquanto voc\u00ea [click] em um n\u00f3 para adicion\u00e1-lo ou remov\u00ea-lo da sele\u00e7\u00e3o atual",
+        "tip16": "Alternar guias de fluxo com {{core:show-previous-tab}} e {{core:show-next-tab}}",
+        "tip17": "Voc\u00ea pode confirmar suas altera\u00e7\u00f5es na bandeja de edi\u00e7\u00e3o do n\u00f3 com {{core:confirm-edit-tray}} ou cancele-os com {{core:cancel-edit-tray}}",
+        "tip18": "Pressionando {{core:edit-selected-node}} ir\u00e1 editar o primeiro n\u00f3 na sele\u00e7\u00e3o atual",
+        "tip2": "{{core:toggle-sidebar}} ir\u00e1 alternar a visualiza\u00e7\u00e3o desta barra lateral",
+        "tip3": "Voc\u00ea pode gerenciar sua paleta de n\u00f3s com {{core:manage-palette}}",
+        "tip4": "Seus n\u00f3s de configura\u00e7\u00e3o de fluxo s\u00e3o listados no painel da barra lateral. Pode ser acessado a partir do menu ou com{{core:show-config-tab}}",
+        "tip5": "Habilite ou desabilite essas dicas na op\u00e7\u00e3o nas configura\u00e7\u00f5es",
+        "tip6": "Mova os n\u00f3s selecionados usando o [left] [up] [down] e [right] chaves. Segure [shift] para empurr\u00e1-los ainda mais",
+        "tip7": "Arrastar um n\u00f3 para um fio o unir\u00e1 no link",
+        "tip8": "Exporte os n\u00f3s selecionados ou a guia atual com {{core:show-export-dialog}}",
+        "tip9": "Importe um fluxo arrastando seu JSON para o editor ou com {{core:show-import-dialog}}"
+    }
+}

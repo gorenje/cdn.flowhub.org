@@ -1,0 +1,278 @@
+{
+    "$abs": {
+        "args": "number",
+        "desc": "Retorna o valor absoluto do par\u00e2metro `number`."
+    },
+    "$append": {
+        "args": "array, array",
+        "desc": "Anexa duas matrizes"
+    },
+    "$assert": {
+        "args": "arg, str",
+        "desc": "Se `arg` for verdadeiro, a fun\u00e7\u00e3o retorna indefinido. Se `arg` for falso, uma exce\u00e7\u00e3o \u00e9 gerada com `str` como a mensagem da exce\u00e7\u00e3o."
+    },
+    "$average": {
+        "args": "array",
+        "desc": "Retorna o valor m\u00e9dio de uma `array` de n\u00fameros. \u00c9 um erro se o `array` de entrada contiver um item que n\u00e3o seja um n\u00famero."
+    },
+    "$base64decode": {
+        "args": "string",
+        "desc": "Converte bytes codificados de base 64 em uma cadeia de caracteres, usando uma p\u00e1gina de c\u00f3digo UTF-8 Unicode."
+    },
+    "$base64encode": {
+        "args": "string",
+        "desc": "Converte uma cadeia de caracteres ASCII em uma representa\u00e7\u00e3o de base 64. Cada caractere na cadeia de caracteres \u00e9 tratado como um byte de dados bin\u00e1rios. Isso requer que todos os caracteres na cadeia de caracteres estejam no intervalo de 0x00 a 0xFF, o que inclui todos os caracteres em cadeias de caracteres codificadas em URI. Caracteres Unicode fora desse intervalo n\u00e3o s\u00e3o suportados."
+    },
+    "$boolean": {
+        "args": "arg",
+        "desc": "Converte o argumento em um booliano usando as seguintes regras:\n\n - `Boolean` : inalterado\n - `string`: vazio : `false`\n - `string`: n\u00e3o-vazio : `true`\n - `number`: `0` : `false`\n - `number`: n\u00e3o-zero : `true`\n - `null` : `false`\n - `array`: vazio : `false`\n - `array`: cont\u00e9m um membro que converte de tipo para `true` : `true`\n - `array`: todos os membros convertidos de tipo para `false` : `false`\n - `object`: vazio : `false`\n - `object`: n\u00e3o-vazio : `true`\n - `function` : `false`"
+    },
+    "$ceil": {
+        "args": "number",
+        "desc": "Retorna o valor de `number` arredondado para o n\u00famero inteiro mais pr\u00f3ximo que \u00e9 maior ou igual a `number`."
+    },
+    "$clone": {
+        "args": "value",
+        "desc": "Safely clone an object."
+    },
+    "$contains": {
+        "args": "str, pattern",
+        "desc": "Retorna `true` se `str` tiver correspondente em `pattern`, caso contr\u00e1rio, retorna `false`. Se `str` n\u00e3o for especificado (isto \u00e9, esta fun\u00e7\u00e3o \u00e9 chamada com um argumento), ent\u00e3o o valor do contexto \u00e9 usado como o valor de `str`. O par\u00e2metro `pattern` pode ser uma cadeia de caracteres ou uma express\u00e3o regular."
+    },
+    "$count": {
+        "args": "array",
+        "desc": "Retorna o n\u00famero de itens na matriz"
+    },
+    "$decodeUrl": {
+        "args": "str",
+        "desc": "Decodifica um Localizador Uniforme de Recursos (URL) criado anteriormente por encodeUrl.\n\nExemplo: `$decodeUrl(\"https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B\")` => `\"https://mozilla.org/?x=\u0448\u0435\u043b\u043b\u044b\"`"
+    },
+    "$decodeUrlComponent": {
+        "args": "str",
+        "desc": "Decodifica um componente Localizador Uniforme de Recursos (URL) criado anteriormente por encodeUrlComponent.\n\nExemplo: `$decodeUrlComponent(\"%3Fx%3Dtest\")` => `\"?x=test\"`"
+    },
+    "$distinct": {
+        "args": "array",
+        "desc": "Retorna uma matriz com valores duplicados removidos da `array`"
+    },
+    "$each": {
+        "args": "object, function",
+        "desc": "Retorna uma matriz contendo os valores retornados por `function` quando aplicado a cada par chave/valor no `object`."
+    },
+    "$encodeUrl": {
+        "args": "str",
+        "desc": "Codifica um Localizador Uniforme de Recursos (URL) substituindo cada inst\u00e2ncia de certos caracteres por uma, duas, tr\u00eas ou quatro sequ\u00eancias de escape que representam a codifica\u00e7\u00e3o UTF-8 do caractere.\n\nExemplo: `$encodeUrl(\"https://mozilla.org/?x=\u0448\u0435\u043b\u043b\u044b\")` => `\"https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B\"`"
+    },
+    "$encodeUrlComponent": {
+        "args": "str",
+        "desc": "Codifica um componente Localizador Uniforme de Recursos (URL) substituindo cada inst\u00e2ncia de certos caracteres por uma, duas, tr\u00eas ou quatro sequ\u00eancias de escape que representam a codifica\u00e7\u00e3o UTF-8 do caractere.\n\nExemplo: `$encodeUrlComponent(\"?x=test\")` => `\"%3Fx%3Dtest\"`"
+    },
+    "$env": {
+        "args": "arg",
+        "desc": "Retorna o valor de uma vari\u00e1vel de ambiente.\n\nEsta \u00e9 uma fun\u00e7\u00e3o definida pelo Node-RED."
+    },
+    "$error": {
+        "args": "[str]",
+        "desc": "Gera um erro com uma mensagem. O (par\u00e2metro) opcional `str` substituir\u00e1 a mensagem padr\u00e3o de `$error() function evaluated`"
+    },
+    "$eval": {
+        "args": "expr [, context]",
+        "desc": "Analisa e avalia a cadeia de caracteres `expr` que cont\u00e9m um JSON literal ou uma express\u00e3o JSONata usando o contexto atual como o contexto para avalia\u00e7\u00e3o."
+    },
+    "$exists": {
+        "args": "arg",
+        "desc": "Retorna booliano `true` se a express\u00e3o `arg` for avaliada como um valor, ou `false` se a express\u00e3o n\u00e3o corresponder a nada (por exemplo, um caminho para uma refer\u00eancia de campo inexistente)."
+    },
+    "$filter": {
+        "args": "array, function",
+        "desc": "Retorna uma matriz contendo apenas os valores no par\u00e2metro `array` que satisfazem o predicado `function`.\n\nThe `function` que \u00e9 fornecido como o segundo par\u00e2metro deve ter a seguinte assinatura:\n\n`function(value [, index [, array]])`"
+    },
+    "$floor": {
+        "args": "number",
+        "desc": "Retorna o valor de `number` arredondado para baixo para o inteiro mais pr\u00f3ximo que seja menor ou igual a `number`."
+    },
+    "$flowContext": {
+        "args": "string[, string]",
+        "desc": "Recupera uma propriedade de contexto de fluxo.\n\nEsta \u00e9 uma fun\u00e7\u00e3o definida pelo Node-RED."
+    },
+    "$formatBase": {
+        "args": "number [, radix]",
+        "desc": "Converte o `number` em uma cadeia de caracteres e o formata em um inteiro representado na base do n\u00famero especificada pelo argumento `radix`. Se `radix` n\u00e3o for especificado, o padr\u00e3o \u00e9 a base 10. `radix` pode estar entre 2 e 36, caso contr\u00e1rio, um erro ser\u00e1 gerado."
+    },
+    "$formatInteger": {
+        "args": "number, picture",
+        "desc": "Converte o tipo de `number` em uma cadeia de caracteres e o formata em uma representa\u00e7\u00e3o inteira conforme especificado pela cadeia de caracteres `picture`. O par\u00e2metro da cadeia de caracteres de imagem define como o n\u00famero \u00e9 formatado e tem a mesma sintaxe de `fn:format-integer` do Especifica\u00e7\u00e3o XPath F&O 3.1."
+    },
+    "$formatNumber": {
+        "args": "number, picture [, options]",
+        "desc": "Converte o tipo de `number` em uma cadeia de caracteres e o formata em uma representa\u00e7\u00e3o decimal conforme especificado pela cadeia de caracteres `picture`.\n\n O comportamento desta fun\u00e7\u00e3o \u00e9 consistente com a fun\u00e7\u00e3o XPath/XQuery `fn:format-number` conforme definido na especifica\u00e7\u00e3o XPath F&O 3.1. O par\u00e2metro de cadeia de caracteres de imagem define como o n\u00famero \u00e9 formatado e tem a mesma sintaxe de `fn:format-number`.\n\nO terceiro argumento opcional `options` \u00e9 usado para substituir os caracteres de formata\u00e7\u00e3o espec\u00edficos da localidade padr\u00e3o, como o separador decimal. Se fornecido, este argumento deve ser um objeto contendo pares de nome/valor especificados na se\u00e7\u00e3o de formato decimal da especifica\u00e7\u00e3o XPath F&O 3.1."
+    },
+    "$fromMillis": {
+        "args": "number, [, picture [, timezone]]",
+        "desc": "Converta o `number` que representa os milissegundos desde a \u00e9poca do Unix (1 January, 1970 UTC) em uma representa\u00e7\u00e3o de cadeia de caracteres formatada do carimbo de data/hora conforme especificado pela cadeia de caracteres de imagem.\n\nSe o par\u00e2metro opcional `image` for omitido, o carimbo de data/hora ser\u00e1 formatado no formato ISO 8601.\n\nSe a cadeia de caracteresopcional `picture` for fornecida, o carimbo de data/hora \u00e9 formatado de acordo com a representa\u00e7\u00e3o especificada nessa cadeia de caracteres. O comportamento desta fun\u00e7\u00e3o \u00e9 consistente com a vers\u00e3o de dois argumentos da fun\u00e7\u00e3o XPath/XQuery `format-dateTime` conforme definido na especifica\u00e7\u00e3o XPath F&O 3.1. O par\u00e2metro de cadeia de caracteres de imagem define como o carimbo de data/hora \u00e9 formatado e tem a mesma sintaxe de `format-dateTime`.\n\nSe a cadeia de caracteres opcional `timezone` for fornecida, o carimbo de data/hora formatado estar\u00e1 nesse fuso hor\u00e1rio. A cadeia de caracteres `timezone` deve estar no formato '\u00b1 HHMM', onde \u00b1 \u00e9 o sinal de mais ou menos e HHMM \u00e9 o deslocamento em horas e minutos do UTC. Deslocamento positivo para fusos hor\u00e1rios a leste do UTC, deslocamento negativo para fusos hor\u00e1rios a oeste do UTC."
+    },
+    "$globalContext": {
+        "args": "string[, string]",
+        "desc": "Recupera uma propriedade de contexto global.\n\nEsta \u00e9 uma fun\u00e7\u00e3o definida pelo Node-RED."
+    },
+    "$join": {
+        "args": "array[, separator]",
+        "desc": "Une uma matriz de cadeias de caracteres de componentes em uma \u00fanica cadeia de caracteres concatenada com cada cadeia de caracteres de componente separada pelo par\u00e2metro opcional `separator`. \u00c9 um erro se a `matriz` de entrada contiver um item que n\u00e3o seja uma cadeia de caracteres. Se `separator` for n\u00e3o especificado, assume-se que \u00e9 uma cadeia de caracteres vazia, ou seja, nenhum `separator` entre as cadeias de caracteres do componente. \u00c9 um erro se `separator` n\u00e3o for uma cadeia de caracteres."
+    },
+    "$keys": {
+        "args": "object",
+        "desc": "Retorna uma matriz contendo as chaves do objeto. Se o argumento for uma matriz de objetos, ent\u00e3o a matriz retornada cont\u00e9m uma lista n\u00e3o duplicada de todas as chaves em todos os objetos."
+    },
+    "$length": {
+        "args": "str",
+        "desc": "Retorna o n\u00famero de caracteres na cadeia de caracteres `str`. Um erro \u00e9 gerado se `str` n\u00e3o for uma cadeia de caracteres."
+    },
+    "$lookup": {
+        "args": "object, key",
+        "desc": "Retorna o valor associado \u00e0 chave no objeto. Se o primeiro argumento for uma matriz de objetos, todos os objetos na matriz s\u00e3o pesquisados e os valores associados a todas as ocorr\u00eancias da chave s\u00e3o retornados."
+    },
+    "$lowercase": {
+        "args": "str",
+        "desc": "Retorna uma cadeia de caracteres com todos os caracteres de `string` convertidos em min\u00fasculas."
+    },
+    "$map": {
+        "args": "array, function",
+        "desc": "Retorna uma matriz contendo os resultados da aplica\u00e7\u00e3o do par\u00e2metro `function` a cada valor no par\u00e2metro `array`.\n\nA `function` que \u00e9 fornecido como o segundo par\u00e2metro deve ter a seguinte assinatura:\n\n`function(value [, index [, array]])`"
+    },
+    "$match": {
+        "args": "str, pattern [, limit]",
+        "desc": "Aplica a cadeia de caracteres `str` \u00e0 express\u00e3o regular `pattern` e retorna uma matriz de objetos, com cada objeto contendo informa\u00e7\u00f5es sobre cada ocorr\u00eancia de uma correspond\u00eancia dentro de `str`."
+    },
+    "$max": {
+        "args": "array",
+        "desc": "Retorna o n\u00famero m\u00e1ximo em uma `array` de n\u00fameros. \u00c9 um erro se o `array` de entrada contiver um item que n\u00e3o seja um n\u00famero."
+    },
+    "$merge": {
+        "args": "array&lt;object&gt;",
+        "desc": "Mescla uma matriz de `objects` em um \u00fanico `object` contendo todos os pares de chave/valor de cada um dos objetos na matriz de entrada. Se qualquer um dos objetos de entrada contiver a mesma chave, ent\u00e3o o `object` retornado conter\u00e1 o valor do \u00faltimo na matriz. \u00c9 um erro se a matriz de entrada contiver um item que n\u00e3o seja um objeto."
+    },
+    "$millis": {
+        "args": "",
+        "desc": "Retorna o n\u00famero de milissegundos desde o Unix Epoch (1\u00ba de janeiro de 1970 UTC) como um n\u00famero. Todas as invoca\u00e7\u00f5es de `$millis()` dentro de uma avalia\u00e7\u00e3o de uma express\u00e3o retornar\u00e3o todas o mesmo valor."
+    },
+    "$min": {
+        "args": "array",
+        "desc": "Retorna o n\u00famero m\u00ednimo em uma `array` de n\u00fameros. \u00c9 um erro se o `array` de entrada contiver um item que n\u00e3o seja um n\u00famero."
+    },
+    "$moment": {
+        "args": "[str]",
+        "desc": "Obt\u00e9m um objeto de dados usando a biblioteca 'Moment'."
+    },
+    "$not": {
+        "args": "arg",
+        "desc": "Retorna booliano NOT no argumento. `Arg` \u00e9 convertido de tipo primeiro para um booliano"
+    },
+    "$now": {
+        "args": "$[picture [, timezone]]",
+        "desc": "Gera um carimbo de data/hora em formato compat\u00edvel com ISO 8601 e o retorna como uma cadeia de caracteres. Se os par\u00e2metros opcionais de imagem e fuso hor\u00e1rio forem fornecidos, o carimbo de data/hora atual \u00e9 formatado conforme descrito pela fun\u00e7\u00e3o `$fromMillis()`"
+    },
+    "$number": {
+        "args": "arg",
+        "desc": "Converte o par\u00e2metro `arg` em um n\u00famero usando as seguintes regras de convers\u00e3o:\n\n - Os n\u00fameros permanecem inalterados\n - Cadeias de caracteres que cont\u00eam uma sequ\u00eancia de caracteres que representam um n\u00famero JSON v\u00e1lido s\u00e3o convertidos para esse n\u00famero\n - Todos os outros valores causam a gera\u00e7\u00e3o de um erro."
+    },
+    "$pad": {
+        "args": "string, width [, char]",
+        "desc": "Retorna uma c\u00f3pia da `string` com preenchimento extra, se necess\u00e1rio, de forma que seu n\u00famero total de caracteres seja pelo menos o valor absoluto do par\u00e2metro `width`.\n\nSe `width` for um n\u00famero positivo, a cadeia de caracteres ser\u00e1 preenchida \u00e0 direita; se negativo, \u00e9 preenchida \u00e0 esquerda.\n\nO argumento opcional `char` especifica os caracteres de preenchimento a serem usados. Se n\u00e3o for especificado, o padr\u00e3o \u00e9 o caractere de espa\u00e7o."
+    },
+    "$parseInteger": {
+        "args": "string, picture",
+        "desc": "Examina e troca o conte\u00fado do par\u00e2metro `string` para um inteiro (como um n\u00famero JSON) usando o formato especificado pela cadeia de caracteres `picture`. O par\u00e2metro da cadeia de caracteres `picture` tem o mesmo formato que `$formatInteger`."
+    },
+    "$power": {
+        "args": "base, exponent",
+        "desc": "Retorna o valor de `base` elevado \u00e0 pot\u00eancia de `exponent`."
+    },
+    "$random": {
+        "args": "",
+        "desc": "Retorna um n\u00famero pseudoaleat\u00f3rio maior ou igual a zero e menor que um."
+    },
+    "$reduce": {
+        "args": "array, function [, init]",
+        "desc": "Retorna um valor agregado derivado da aplica\u00e7\u00e3o do par\u00e2metro `function` sucessivamente a cada valor em `array` em combina\u00e7\u00e3o com o resultado da aplica\u00e7\u00e3o anterior da fun\u00e7\u00e3o.\n\nA fun\u00e7\u00e3o deve aceitar dois argumentos e se comportar como um operador inserido entre cada valor dentro de `array`. A assinatura da `function` deve estar no formato: `myfunc($accumulator, $value[, $index[, $array]])`\n\nO par\u00e2metro opcional `init` \u00e9 usado como o valor inicial na agrega\u00e7\u00e3o."
+    },
+    "$replace": {
+        "args": "str, pattern, replacement [, limit]",
+        "desc": "Encontra ocorr\u00eancias de `pattern` dentro de `str` e as substitui por `replacement`.\n\nO par\u00e2metro opcional `limit` \u00e9 o n\u00famero m\u00e1ximo de substitui\u00e7\u00f5es."
+    },
+    "$reverse": {
+        "args": "array",
+        "desc": "Retorna uma matriz contendo todos os valores do par\u00e2metro `array`, mas na ordem reversa."
+    },
+    "$round": {
+        "args": "number [, precision]",
+        "desc": "Retorna o valor do par\u00e2metro `number` arredondado para o n\u00famero de casas decimais especificado pelo par\u00e2metro opcional `precision`."
+    },
+    "$shuffle": {
+        "args": "array",
+        "desc": "Retorna uma matriz contendo todos os valores do par\u00e2metro `array`, mas misturados em ordem aleat\u00f3ria."
+    },
+    "$sift": {
+        "args": "object, function",
+        "desc": "Retorna um objeto que cont\u00e9m apenas os pares de chave/valor do par\u00e2metro `object` que satisfazem o predicado `function` passado como o segundo par\u00e2metro.\n\nA `function` que \u00e9 fornecida como o segundo par\u00e2metro deve ter o seguinte assinatura:\n\n`function(value [, key [, object]])`"
+    },
+    "$single": {
+        "args": "array, function",
+        "desc": "Retorna o \u00fanico valor no par\u00e2metro `array` que satisfaz o predicado `function` (isto \u00e9, O (par\u00e2metro) `function` retorna o booliano `true` quando passado o valor). Gera uma exce\u00e7\u00e3o se o n\u00famero de valores correspondentes n\u00e3o for exatamente um .\n\nA fun\u00e7\u00e3o deve ser fornecida na seguinte assinatura: `function(value [, index [, array]])` onde 'value' \u00e9 cada entrada da matriz, 'index' \u00e9 a posi\u00e7\u00e3o desse valor e toda a matriz \u00e9 passada como o terceiro argumento"
+    },
+    "$sort": {
+        "args": "array [, function]",
+        "desc": "Retorna uma matriz contendo todos os valores no par\u00e2metro `array`, mas classificados em ordem.\n\nSe um comparador `function` for fornecido, ent\u00e3o deve ser uma fun\u00e7\u00e3o que leva dois par\u00e2metros:\n\n`function(left, right)`\n\nEsta fun\u00e7\u00e3o \u00e9 invocada pelo algoritmo de classifica\u00e7\u00e3o para comparar dois valores \u00e0 esquerda e \u00e0 direita. Se o valor de esquerda deve ser colocado ap\u00f3s o valor de direita na ordem de classifica\u00e7\u00e3o desejada, a fun\u00e7\u00e3o deve retornar o booliano `true` para indicar uma troca. Caso contr\u00e1rio, deve retornar `false`."
+    },
+    "$split": {
+        "args": "str[, separator][, limit]",
+        "desc": "Divide o par\u00e2metro `str` em uma matriz de sub cadeia de caracteres. \u00c9 um erro se `str` n\u00e3o for uma cadeia de caracteres. O par\u00e2metro opcional `separator` especifica os caracteres dentro de `str` sobre os quais devem ser divididos como uma cadeia de caracteres ou express\u00e3o regular. Se `separator` n\u00e3o for especificado, a cadeia de caracteres vazia ser\u00e1 assumida e `str` ser\u00e1 dividido em uma matriz de caracteres \u00fanicos. \u00c9 um erro se `separador` n\u00e3o for uma cadeia de caracteres. O par\u00e2metro opcional `limit` \u00e9 um n\u00famero que especifica o n\u00famero m\u00e1ximo de sub cadeia de caracteres a serem inclu\u00eddas na matriz resultante. Quaisquer sub cadeia de caracteres adicionais s\u00e3o descartadas. Se `limit` n\u00e3o for especificado, ent\u00e3o `str` ser\u00e1 totalmente dividido sem limite para o tamanho da matriz resultante . \u00c9 um erro se `limit` n\u00e3o for um n\u00famero n\u00e3o negativo."
+    },
+    "$spread": {
+        "args": "object",
+        "desc": "Divide um objeto que cont\u00e9m pares de chave/valor em uma matriz de objetos, cada um com um \u00fanico par de chave/valor do objeto de entrada. Se o par\u00e2metro for uma matriz de objetos, a matriz resultante conter\u00e1 um objeto para cada par de chave/valor em todo objeto na matriz fornecida."
+    },
+    "$sqrt": {
+        "args": "number",
+        "desc": "Retorna a raiz quadrada do valor do par\u00e2metro `number`."
+    },
+    "$string": {
+        "args": "arg[, prettify]",
+        "desc": "Converte o tipo do par\u00e2metro `arg` em uma cadeia de caracteres usando as seguintes regras de convers\u00e3o de tipo:\n\n - Cadeia de caracteres n\u00e3o s\u00e3o alteradas\n - As fun\u00e7\u00f5es s\u00e3o convertidas para uma cadeia de caracteres vazia\n - os tipos num\u00e9rico infinito e NaN geram um erro porque n\u00e3o podem ser representados como um n\u00famero JSON\n - Todos os outros valores s\u00e3o convertidos para uma cadeia de caracteres JSON usando a fun\u00e7\u00e3o `JSON.stringify`. Se `prettify` for verdadeira, ent\u00e3o o JSON \"prettified\" \u00e9 produzido. Isto \u00e9, uma linha por campo e as linhas ser\u00e3o indentadas com base na profundidade do campo."
+    },
+    "$substring": {
+        "args": "str, start[, length]",
+        "desc": "Retorna uma cadeia de caracteres contendo os caracteres no primeiro par\u00e2metro `str` come\u00e7ando na posi\u00e7\u00e3o `start` (deslocamento zero). Se` length` for especificado, ent\u00e3o a sub cadeia de caracteres conter\u00e1 o m\u00e1ximo `length` de caracteres. Se` start` for negativo isso indica o n\u00famero de caracteres a partir do fim de `str`."
+    },
+    "$substringAfter": {
+        "args": "str, chars",
+        "desc": "Retorna a sub cadeia de caracteres ap\u00f3s a primeira ocorr\u00eancia da sequ\u00eancia de caracteres `chars` em `string`. Se `string` n\u00e3o contiver `chars`, ent\u00e3o retorna `str`."
+    },
+    "$substringBefore": {
+        "args": "str, chars",
+        "desc": "Retorna a sub cadeia de caracteres antes da primeira ocorr\u00eancia da sequ\u00eancia de caracteres `chars` em `string`. Se` string` n\u00e3o contiver `chars`, ent\u00e3o retorna `str`."
+    },
+    "$sum": {
+        "args": "array",
+        "desc": "Retorna a soma aritm\u00e9tica de uma `array` de n\u00fameros. \u00c9 um erro se o `array` de entrada contiver um item que n\u00e3o seja um n\u00famero."
+    },
+    "$toMillis": {
+        "args": "timestamp",
+        "desc": "Converta o tipo de uma cadeia de caracteres `timestamp` no formato ISO 8601 para o n\u00famero de milissegundos desde a \u00e9poca do Unix (1 January, 1970 UTC) como um n\u00famero. Um erro \u00e9 gerado se a cadeia de caracteres n\u00e3o estiver no formato correto."
+    },
+    "$trim": {
+        "args": "str",
+        "desc": "Normaliza e retira todos os caracteres de espa\u00e7o em branco em `str` aplicando as seguintes etapas:\n\n - Todas as tabula\u00e7\u00f5es, retornos de carro e avan\u00e7os de linha s\u00e3o substitu\u00eddos por espa\u00e7os.\n- Sequ\u00eancias cont\u00edguas de espa\u00e7os s\u00e3o reduzidas a um \u00fanico espa\u00e7o.\n- Espa\u00e7os \u00e0 direita e \u00e0 esquerda s\u00e3o removidos.\n\n Se `str` n\u00e3o for especificado (isto \u00e9, esta fun\u00e7\u00e3o \u00e9 chamada sem argumentos), ent\u00e3o o valor do contexto \u00e9 usado como o valor de `str`. Um erro \u00e9 gerado se `str` n\u00e3o for uma cadeia de caracteres."
+    },
+    "$type": {
+        "args": "value",
+        "desc": "Retorna o tipo de `value` como uma cadeia de caracteres. Se `value` for indefinido, retornar\u00e1 `undefined`"
+    },
+    "$uppercase": {
+        "args": "str",
+        "desc": "Retorna uma cadeia de caracteres com todos os caracteres de `string` convertidos em mai\u00fasculas."
+    },
+    "$zip": {
+        "args": "array, ...",
+        "desc": "Retorna uma matriz convolucional (compactada) contendo matrizes agrupadas de valores dos argumentos `array1`\u2026 `arrayN` do \u00edndice 0, 1, 2 ...."
+    }
+}

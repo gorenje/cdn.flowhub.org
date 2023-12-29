@@ -1,0 +1,562 @@
+{
+    "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/advantage": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/analogy": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/aphorism": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/author": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/base": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blog-post": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogchanges": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogcontent": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogdetails": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/blogpages": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/book": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/codebase": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/comment": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/consequence": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/definition": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/disadvantage": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/humour": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/idea": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/inspiration": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/observation": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/poesie": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/pubmedium": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/question": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/quote": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/sketch": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/text": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/thought": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/topic": {},
+    "@gorenje/node-red-contrib-writermap-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {
+        "aisbreaker": {
+            "access_token": {
+                "label": "Access Token",
+                "placeholder": "< API access token/key/secret for AIsBreaker or AI service >"
+            },
+            "endpoint": {
+                "label": "Server URL",
+                "placeholder": "Service Endpoint"
+            },
+            "serviceid": {
+                "chat_dummy": "Chat Dummy",
+                "chat_echo_mirror": "Echo+Mirror Chat",
+                "chat_gtp_compatiable": "OpenAI ChatGPT compatible servers (e.g., Azure OpenAI GPT)",
+                "chat_huggingface_co_any_model": "HuggingFace - Any Account, Any Model",
+                "chat_huggingface_co_microsoft_dialogpt_large": "HuggingFace (MS DialoGPT) Large",
+                "chat_huggingface_co_microsoft_dialogpt_small": "HuggingFace (MS DialoGPT) Small",
+                "chat_openai_com": "OpenAI (default)",
+                "chat_openai_com_gpt_3_5_turbo": "OpenAI (ChatGPT 3.5 Turbo)",
+                "chat_openai_com_gpt_4": "OpenAI (ChatGPT 4)",
+                "label": "Service",
+                "own_json": "Define own Json",
+                "text_to_image_dummy": "Text to Image (Dummy)",
+                "text_to_image_openai_com": "OpenAI Text to Image",
+                "text_to_image_stability_ai": "StabilityAI Text to Image"
+            },
+            "status": {
+                "asking": "Asking...",
+                "error": "Error Occurred"
+            }
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
+    "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
+    "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg": {},
+    "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/clientcode": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/getflows": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/seeker": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/sendflow": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/sink": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile": {},
+    "@gregoriusrippenstein/node-red-contrib-tarball/tarball": {
+        "tarball": {
+            "error": {
+                "compressfailed": "tar creation failed",
+                "formatnotsupported": "format not supported",
+                "general": "error occurred",
+                "nopayload": "no payload set on msg",
+                "unknownpayload": "type of msg.payload is not supported",
+                "untar": "error while untarring file",
+                "xzcorrupt": "Lzma/Xz data corrupt"
+            },
+            "info": {
+                "complete_archive": "archive complete",
+                "complete_extraction": "extraction complete"
+            }
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
+    "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
+    "node-red-contrib-aedes/aedes-mqtt-broker": {
+        "aedes-mqtt-broker": {
+            "label": {
+                "cert": "Certificate",
+                "dburl": "DB Url",
+                "key": "Private Key",
+                "mqtt_port": "MQTT port",
+                "mqtt_ws_path": "WS path",
+                "mqtt_ws_port": "WS port",
+                "persistence_bind": "Persistence",
+                "persistence_level": "LevelDB",
+                "persistence_memory": "Memory",
+                "persistence_mongodb": "MongoDB",
+                "tls-config": "TLS Configuration",
+                "upload": "Upload",
+                "use-tls": "Enable secure (SSL/TLS) connection"
+            },
+            "placeholder": {
+                "cert": "path to certificate (PEM format)",
+                "dburl": "mongodb://localhost:27017/mqtt",
+                "key": "path to private key (PEM format)",
+                "mqtt_port": "Enter MQTT port",
+                "mqtt_ws_path": "Enter Websocket path. Leave blank to disable Websocket support",
+                "mqtt_ws_port": "Enter Websocket port. Leave blank to disable Websocket support",
+                "password": "leave blank to disable authentication",
+                "username": "leave blank to disable authentication"
+            },
+            "status": {
+                "connected": "connected __count__",
+                "connected_plural": "connected __count__"
+            },
+            "tabs-label": {
+                "connection": "Connection",
+                "security": "Security"
+            }
+        }
+    },
+    "node-red-contrib-blockly/blockly": {},
+    "node-red-contrib-blockly/blockly-config": {},
+    "node-red-contrib-cron-plus/cronplus": {},
+    "node-red-contrib-gzip/markdown": {},
+    "node-red-contrib-i2c/i2c": {},
+    "node-red-contrib-osc/osc": {},
+    "node-red-contrib-postgresql/postgresql": {
+        "postgresql": {
+            "label": {
+                "applicationName": "Application name",
+                "connectionTimeout": "Connection Timeout",
+                "database": "Database",
+                "host": "Host",
+                "idle": "Idle Timeout",
+                "max": "Maximum size",
+                "name": "Name",
+                "password": "Password",
+                "port": "Port",
+                "query": "Query",
+                "rowsPerMsg": "Number of rows per message",
+                "server": "Server",
+                "split": "Split results in multiple messages",
+                "ssl": "SSL",
+                "user": "User"
+            },
+            "placeholder": {
+                "applicationName": "",
+                "connectionTimeout": "10000 (Milliseconds)",
+                "database": "dbExample",
+                "host": "127.0.0.1",
+                "idle": "1000 (Milliseconds)",
+                "max": "10",
+                "name": "dbConnection",
+                "password": "dbPassword",
+                "port": "5432",
+                "user": "dbUser"
+            },
+            "tab": {
+                "connection": "Connection",
+                "pool": "Pool",
+                "security": "Security"
+            },
+            "title": {
+                "applicationName": "The name of the application that created this Client instance.",
+                "max": "Maximum number of physical database connections that this connection pool can contain."
+            }
+        }
+    },
+    "node-red-contrib-web-babylonjs/box": {},
+    "node-red-contrib-web-babylonjs/cone": {},
+    "node-red-contrib-web-babylonjs/events": {},
+    "node-red-contrib-web-babylonjs/material": {},
+    "node-red-contrib-web-babylonjs/plane": {},
+    "node-red-contrib-web-babylonjs/scene": {},
+    "node-red-contrib-web-babylonjs/sphere": {},
+    "node-red-contrib-web-babylonjs/transform": {},
+    "node-red-contrib-zip/zip": {
+        "zip": {
+            "error": {
+                "filename-type-string": "Filename type must be a String",
+                "parse": "Error parsing zip file: __err__",
+                "payload-type-buffer": "Payload type must be a Buffer",
+                "payload-type-buffer-string": "Payload type must be a Buffer or a String"
+            },
+            "label": {
+                "compressionlevel": "Compression",
+                "filename": "File name",
+                "level": {
+                    "best": "9 (best)",
+                    "default": "6 (default)",
+                    "fast": "1 (fast)",
+                    "no": "0 (no compression)"
+                },
+                "mode": "Mode",
+                "name": "Name",
+                "outasstring": "Output payload as String"
+            },
+            "mode": {
+                "compress": "Compress",
+                "decompress": "Decompress"
+            }
+        }
+    },
+    "node-red-dashboard/ui_audio": {},
+    "node-red-dashboard/ui_base": {
+        "ui_base": {
+            "auto": "auto",
+            "base": {
+                "colour": "Colour",
+                "font": "Font"
+            },
+            "font": {
+                "system": "System Font (default)"
+            },
+            "label": {
+                "angular": "Angular",
+                "category": "dashboard",
+                "dashboard": "dashboard",
+                "date-format": "Date Format",
+                "group-padding": "Group Padding",
+                "group-spacing": "Group Spacing",
+                "horizontal": "Horizontal",
+                "layout": "Layout",
+                "options": "Options",
+                "site": "Site",
+                "sizes": "Sizes",
+                "theme": "Theme",
+                "title": "Title",
+                "vertical": "Vertical",
+                "widget-size": "1x1 Widget Size",
+                "widget-spacing": "Widget Spacing"
+            },
+            "layout": {
+                "auto": "auto-sizing",
+                "edit": "edit",
+                "group": "group",
+                "layout": "layout",
+                "layout-editor": "Dashboard layout editor",
+                "link": "link",
+                "manual": "manual resize",
+                "spacer": "spacer",
+                "tab": "tab",
+                "tab-and-link": "Tabs & Links",
+                "width": "Width"
+            },
+            "lock": {
+                "clicked": "Click to show side menu",
+                "locked": "Always show side menu",
+                "locked-icon": "Always show icons only"
+            },
+            "site": {
+                "date-format": "DD/MM/YYYY",
+                "title": "Node-RED Dashboard"
+            },
+            "style": {
+                "accents": "Accents",
+                "background": "Background",
+                "custom": "Custom",
+                "dark": "Dark",
+                "light": "Light (default)",
+                "palette": "Light / Dark",
+                "primary": "Primary",
+                "warnings": "Warnings"
+            },
+            "swipe": {
+                "allow-swipe": "Allow swipe between tabs",
+                "allow-swipe-mouse": "Allow swipe (+mouse) between tabs",
+                "no-swipe": "No swipe between tabs",
+                "show-menu": "Swipe to open/close menu"
+            },
+            "temp": {
+                "allow-theme": "Node-RED theme everywhere",
+                "no-theme": "Use Angular theme in ui_template",
+                "none": "Angular theme everywhere"
+            },
+            "theme": {
+                "base-settings": "Base Settings",
+                "custom-profile": "Custom Profile",
+                "custom-profile-name": "Untitled Theme 1",
+                "group": {
+                    "background": "Group Background",
+                    "border": "Group Border",
+                    "text": "Group Text"
+                },
+                "group-settings": "Group Settings",
+                "page": {
+                    "page": "Page Background",
+                    "side": "Side Bar Background",
+                    "title": "Title Bar Background"
+                },
+                "page-settings": "Page Settings",
+                "style": "Style",
+                "widget": {
+                    "background": "Widget Background",
+                    "colour": "Widget Colour",
+                    "text": "Widget Text"
+                },
+                "widget-settings": "Widget Settings"
+            },
+            "title": "Node-RED Dashboard",
+            "title-bar": {
+                "hide": "Hide the title bar",
+                "show": "Show the title bar"
+            }
+        }
+    },
+    "node-red-dashboard/ui_button": {
+        "ui_button": {
+            "label": {
+                "background": "Background",
+                "className": "Class",
+                "classNamePlaceholder": "Optional CSS class name(s) for widget",
+                "color": "Color",
+                "emulateClick": "If msg arrives on input, emulate a button click:",
+                "group": "Group",
+                "icon": "Icon",
+                "label": "Label",
+                "optionalBackgroundColor": "optional background color",
+                "optionalColor": "optional text/icon color",
+                "optionalIcon": "optional icon",
+                "optionalLabel": "optional label",
+                "optionalTooltip": "optional tooltip",
+                "payload": "Payload",
+                "size": "Size",
+                "tooltip": "Tooltip",
+                "topic": "Topic",
+                "whenClicked": "When clicked, send:"
+            }
+        }
+    },
+    "node-red-dashboard/ui_chart": {
+        "ui_chart": {
+            "label": {
+                "HHmm": "HH:mm",
+                "HHmmss": "HH:mm:ss",
+                "asUTC": "as UTC",
+                "automatic": "automatic",
+                "barChart": " &#xf080; Bar chart",
+                "barChartH": " &#xf080; Bar chart (H)",
+                "bezier": "bezier",
+                "blankLabel": "Blank label",
+                "className": "Class",
+                "classNamePlaceholder": "Optional CSS class name(s) for widget",
+                "cubic": "cubic",
+                "cubicMono": "cubic-mono",
+                "custom": "custom",
+                "cutout": "Cutout",
+                "dateMonth": "Date/Month",
+                "dayHHmm": "Day HH:mm",
+                "days": "days",
+                "displayThisTextBeforeValidDataArrives": "display this text before valid data arrives",
+                "enlargePoints": "enlarge points",
+                "group": "Group",
+                "hours": "hours",
+                "interpolate": "Interpolate",
+                "label": "Label",
+                "last": "last",
+                "legend": "Legend",
+                "lineChart": " &#xf201; Line chart",
+                "linear": "linear",
+                "max": "max",
+                "min": "min",
+                "minutes": "minutes",
+                "none": "None",
+                "optionalChartTitle": "optional chart title",
+                "or": "OR",
+                "pieChart": " &#xf200; Pie chart",
+                "points": "points",
+                "polarAreaChart": " &#xf200; Polar area chart",
+                "radarChart": " &#xf200; Radar chart",
+                "seconds": "seconds",
+                "seriesColours": "Series Colours",
+                "show": "Show",
+                "size": "Size",
+                "step": "step",
+                "type": "Type",
+                "useDifferentColor": "Use different colour for series data",
+                "useFirstColourForAllBars": "Use first colour for all bars",
+                "weeks": "weeks",
+                "xAxis": "X-axis",
+                "xAxisLabel": "X-axis Label",
+                "yAxis": "Y-axis",
+                "yearMonthDate": "Year-Month-Date"
+            }
+        }
+    },
+    "node-red-dashboard/ui_colour_picker": {},
+    "node-red-dashboard/ui_date_picker": {},
+    "node-red-dashboard/ui_dropdown": {},
+    "node-red-dashboard/ui_form": {
+        "ui_form": {
+            "label": {
+                "buttons": "Buttons",
+                "cancelButtonText": "cancel button text",
+                "checkbox": "Checkbox",
+                "className": "Class",
+                "classNamePlaceholder": "Optional CSS class name(s) for widget",
+                "date": "Date",
+                "egName": "e.g. Name",
+                "egName2": "e.g. name",
+                "element": "element",
+                "email": "E-mail",
+                "formElements": "Form elements",
+                "group": "Group",
+                "label": "Label",
+                "multiline": "Multiline",
+                "number": "Number",
+                "optionalLabel": "optional label",
+                "optionalMsgTopic": "optional msg.topic",
+                "password": "Password",
+                "remove": "Remove",
+                "required": "Required",
+                "rows": "UiRows",
+                "size": "Size",
+                "splitLayout": "Place the form elements in two columns",
+                "submitButtonText": "submit button text",
+                "switch": "Switch",
+                "text": "Text",
+                "time": "Time",
+                "topic": "Topic",
+                "type": "Type"
+            }
+        }
+    },
+    "node-red-dashboard/ui_gauge": {},
+    "node-red-dashboard/ui_group": {
+        "ui_group": {
+            "collapse-name": "Allow group to be collapsed",
+            "display-name": "Display group name",
+            "label": {
+                "className": "Class",
+                "classNamePlaceholder": "Optional CSS class name(s) for widget",
+                "default": "Default",
+                "group": "Group",
+                "name": "Name",
+                "tab": "Tab",
+                "unassigned": "unassigned",
+                "width": "Width"
+            }
+        }
+    },
+    "node-red-dashboard/ui_link": {
+        "ui_link": {
+            "label": {
+                "className": "Class",
+                "classNamePlaceholder": "Optional CSS class name(s) for widget",
+                "icon": "Icon",
+                "iframe": "iframe",
+                "link": "Link",
+                "name": "Name",
+                "new-tab": "New Tab",
+                "open-in": "Open in",
+                "this-tab": "This Tab"
+            },
+            "tip": "The <b>Icon</b> field can be either a <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design icon</a> <i>(e.g. 'check', 'close')</i> or a <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>, or a <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Weather icon</a> <i>(e.g. 'wi-wu-sunny')</i>.</p><p>You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>"
+        }
+    },
+    "node-red-dashboard/ui_numeric": {},
+    "node-red-dashboard/ui_slider": {},
+    "node-red-dashboard/ui_spacer": {},
+    "node-red-dashboard/ui_switch": {},
+    "node-red-dashboard/ui_tab": {
+        "ui_tab": {
+            "info": {
+                "disabled": " Tab is inactive in Dashboard.",
+                "hidden": " Tab is not shown in Navigation Menu."
+            },
+            "label": {
+                "disabled": "Disabled",
+                "enabled": "Enabled",
+                "hidden": "Hidden",
+                "home": "Home",
+                "icon": "Icon",
+                "name": "Name",
+                "navmenu": "Nav. Menu",
+                "state": "State",
+                "tab": "Tab",
+                "visible": "Visible"
+            },
+            "tip": "The <b>Icon</b> field can be either a <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design icon</a> <i>(e.g. 'check', 'close')</i> or a <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>, or a <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Weather icon</a> <i>(e.g. 'wi-wu-sunny')</i>.</p><p>You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>"
+        }
+    },
+    "node-red-dashboard/ui_template": {
+        "ui_template": {
+            "label": {
+                "className": "Class",
+                "classNamePlaceholder": "Optional CSS class name(s) for widget",
+                "expand": "Expand",
+                "global": "Added to site <head> section",
+                "group": "Group",
+                "local": "Widget in group",
+                "name": "Name",
+                "pass-through": "Pass through messages from input.",
+                "resend": "Reload last value on refresh.",
+                "size": "Size",
+                "store-state": "Add output messages to stored state.",
+                "template": "Template",
+                "type": "Template type"
+            }
+        }
+    },
+    "node-red-dashboard/ui_text": {},
+    "node-red-dashboard/ui_text_input": {},
+    "node-red-dashboard/ui_toast": {},
+    "node-red-dashboard/ui_ui_control": {
+        "ui_ui_control": {
+            "events": {
+                "all": "Connect, lost, change tab or group events",
+                "change": "Change tab or group events only",
+                "connect": "Connect event only"
+            },
+            "label": {
+                "name": "Name",
+                "output": "Output"
+            },
+            "placeholder": {
+                "name": "Name"
+            }
+        }
+    },
+    "node-red-node-base64/base64": {
+        "base64": {
+            "base64": "base64",
+            "convert": {
+                "buffer": "Convert Buffer <-> Base64",
+                "decode": "Convert Base64 to String",
+                "encode": "Encode as Base64"
+            },
+            "error": {
+                "invalid": "Invalid Base64 string",
+                "nonbase64": "Not a Base64 string"
+            },
+            "label": {
+                "action": "Action"
+            },
+            "log": {
+                "nonbase64encode": "Not a Base64 string - maybe we should encode it..."
+            },
+            "warn": {
+                "cannothandle": "This node only handles strings or buffers.",
+                "noproperty": "No property found to process"
+            }
+        }
+    },
+    "node-red-node-markdown/markdown": {}
+}

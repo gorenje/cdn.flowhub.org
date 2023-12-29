@@ -29,6 +29,8 @@ exit
 CBSTMP=$(date +%s)
 PyTHON=/usr/bin/python3
 
+LoCaLeS="en-US en-GB en de-DE de fr ja ko pt-BR ru zh-CN zh-TW"
+
 echo "==> icons.json"
 curl -s "${NODERED_URL}/icons?_=${CBSTMP}" -H 'Accept: application/json' | $PyTHON .py/json_pretty.py > icons.json
 
@@ -40,10 +42,11 @@ done
 
 for typ in nodes plugins ; do
 
-    for lng in en-US ; do
+    for lng in ${LoCaLeS} ; do
         echo "==> ${typ}/messages/${lng}"
-        curl -s "${NODERED_URL}/${typ}/messages?lng=${lng}&_=${CBSTMP}" | $PyTHON .py/json_pretty.py > ${typ}/messages
+        curl -s "${NODERED_URL}/${typ}/messages?lng=${lng}&_=${CBSTMP}" | $PyTHON .py/json_pretty.py > ${typ}/messages.${lng}
     done
+    cp ${typ}/messages.en-US ${typ}/messages
 
     echo "==> ${typ}/nodes.json"
     curl -s "${NODERED_URL}/${typ}?_=${CBSTMP}" -H 'Accept: application/json' | $PyTHON .py/json_pretty.py > ${typ}/${typ}.json
@@ -54,9 +57,9 @@ for typ in nodes plugins ; do
 done
 
 for lcls in editor infotips node-red jsonata ; do
-    for lng in en-US ; do
+    for lng in ${LoCaLeS} ; do
         echo "==> locales/${lcls}/${lng}"
-        curl -s "${NODERED_URL}/locales/${lcls}?lng=${lng}" | $PyTHON .py/json_pretty.py > locales/${lcls}
+        curl -s "${NODERED_URL}/locales/${lcls}?lng=${lng}" | $PyTHON .py/json_pretty.py > locales/${lcls}.${lng}
     done
 done
 
