@@ -139,8 +139,21 @@ var RED = (function() {
             success: function(data) {
                 var configs = data.trim().split(/(?=<!-- --- \[red-plugin:\S+\] --- -->)/);
                 var totalCount = configs.length;
+
                 var stepConfig = function() {
-                    // loader.reportProgress(RED._("event.loadNodes",{count:(totalCount-configs.length)+"/"+totalCount}), 30 + ((totalCount-configs.length)/totalCount)*40 )
+                    var perDone = ((totalCount-configs.length)/totalCount)
+                    if (
+                        (perDone > 0.10 && perDone < 0.20) ||
+                        (perDone > 0.30 && perDone < 0.40) ||
+                        (perDone > 0.50 && perDone < 0.60) ||
+                        (perDone > 0.70 && perDone < 0.80) ||
+                         perDone > 0.9
+                    ) {
+                        loader.reportProgress(RED._("event.loadPlugins",{
+                            count:(totalCount-configs.length)+"/"+totalCount
+                        }), 20 + (perDone*20) )
+                    }
+
                     if (configs.length === 0) {
                         done();
                     } else {
@@ -232,7 +245,7 @@ var RED = (function() {
     }
 
     function loadNodeList() {
-        loader.reportProgress(RED._("event.loadPalette"), 20)
+        loader.reportProgress(RED._("event.loadPalette"), 40)
         $.ajax({
             headers: {
                 "Accept":"application/json"
@@ -241,7 +254,7 @@ var RED = (function() {
             url: 'nodes/nodes.json',
             success: function(data) {
                 RED.nodes.setNodeList(data);
-                loader.reportProgress(RED._("event.loadNodeCatalogs"), 25)
+                loader.reportProgress(RED._("event.loadNodeCatalogs"), 45)
                 RED.i18n.loadNodeCatalogs(function() {
                     loadIconList(loadNodes);
                 });
@@ -266,7 +279,7 @@ var RED = (function() {
     }
 
     function loadNodes() {
-        loader.reportProgress(RED._("event.loadNodes",{count:""}), 30)
+        loader.reportProgress(RED._("event.loadNodes",{count:""}), 50)
         var lang = localStorage.getItem("editor-language")||RED.i18n.detectLanguage();
 
         $.ajax({
@@ -281,7 +294,18 @@ var RED = (function() {
                 var totalCount = configs.length;
 
                 var stepConfig = function() {
-                    loader.reportProgress(RED._("event.loadNodes",{count:(totalCount-configs.length)+"/"+totalCount}), 30 + ((totalCount-configs.length)/totalCount)*40 )
+                    var perDone = ((totalCount-configs.length)/totalCount)
+                    if (
+                        (perDone > 0.10 && perDone < 0.20) ||
+                        (perDone > 0.30 && perDone < 0.40) ||
+                        (perDone > 0.50 && perDone < 0.60) ||
+                        (perDone > 0.70 && perDone < 0.80) ||
+                         perDone > 0.9
+                    ) {
+                        loader.reportProgress(RED._("event.loadNodes",{
+                            count:(totalCount-configs.length)+"/"+totalCount
+                        }), 50 + perDone*20)
+                    }
 
                     if (configs.length === 0) {
                         $("#red-ui-editor").i18n();
