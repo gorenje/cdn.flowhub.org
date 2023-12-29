@@ -90,7 +90,8 @@ var DEADRED = (function() {
             // don't overwrite the counter
             if ( !isNodeDebugCounter(nde) ) {
                 emitStatusForNode(nde.id, {
-                    "text": "msg " + (nde.type == "inject" ? "generaed" : "received"),
+                    "text": "msg " + (nde.type == "inject" ?
+                                      "generated" : "received"),
                     "fill": "grey",
                     "shape":"ring"
                 })
@@ -795,6 +796,9 @@ var DEADRED = (function() {
         })
     }
 
+    // this is the functionality for the flow compare sidebar - FlowCompareCfg
+    // It's the same as the found in the FlowCompare node -->
+    // https://flows.nodered.org/node/@gregoriusrippenstein/node-red-contrib-flowcompare
     function compareFlows(msg) {
         var oldFlowRevision = {};
         var newFlowRevision = {};
@@ -884,8 +888,10 @@ var DEADRED = (function() {
                 "status": "ok",
                 "flowid": data.flowid,
                 "nodes": lclnodes,
-                "changes": compareFlows({ payload: lclnodes,
-                                          new_flowdata: data.flowdata })
+                "changes": compareFlows({
+                    payload: lclnodes,
+                    new_flowdata: data.flowdata
+                })
             })
 
             jqXHR.abort();
@@ -935,7 +941,7 @@ var DEADRED = (function() {
         }
 
         // locales and messages - convert parameter to be part of the file
-        // name - differentiate between languages.
+        // name - differentiate between languages on a _static_ server.
 
         // LoCaLeS is taken from retrieve.sh and should be kept in sync.
         const LoCaLeS="en-US en-GB en de-DE de fr ja ko pt-BR ru zh-CN zh-TW"
@@ -1070,6 +1076,8 @@ var DEADRED = (function() {
     }
 
     function init() {
+        // after some markdown has been rendered into the info box, update
+        // any links that highlight nodes or groups in the flow.
         RED.events.on( 'markdown:rendered', () => {
             setTimeout( () => {
                 handleTextReferences()
