@@ -1081,6 +1081,16 @@ var DEADRED = (function() {
             RED.comms.emit({ topic: 'hb', data: Date.now() })
         }, 15000)
 
+        // on mobile, hide the sidebar and the palette at startup
+        if ( (RED.utils.getBrowserInfo().mobile > 0) ||
+             window.matchMedia('only screen and (max-width: 890px)').matches ) {
+
+            setTimeout( function() {
+                RED.menu.toggleSelected("menu-item-palette");
+                RED.menu.toggleSelected("menu-item-sidebar");
+            }, 1400);
+        }
+
         console.log( "DEADRED initialised" )
     }
 
