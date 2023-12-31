@@ -1084,6 +1084,24 @@ var DEADRED = (function() {
             },1000)
         })
 
+        // once the flow has been loaded, check for inject nodes that have
+        // a once-trigger. For each of them, set up a setTimeout so that
+        // these nodes are triggered.
+        var flowsLoadedCallback = () => {
+            RED.events.off( 'flows:loaded', flowsLoadedCallback )
+            setTimeout( () => {
+                RED.nodes.eachNode( nde => {
+                    if ( nde.type == "inject" && nde.once ) {
+                        var ndeId = nde.id;
+                        setTimeout( () => {
+                            executeFlow(ndeId, {})
+                        }, nde.onceDelay * 1000 )
+                    }
+                })
+            }, 500)
+        }
+        RED.events.on('flows:loaded', flowsLoadedCallback);
+
         // simulate the heartbeat packet from server
         setInterval( () => {
             RED.comms.emit({ topic: 'hb', data: Date.now() })

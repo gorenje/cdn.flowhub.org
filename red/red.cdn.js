@@ -431,6 +431,7 @@ var RED = (function() {
                         );
                     }
                 }
+                RED.events.emit("flows:loaded")
                 done();
             }
         });
