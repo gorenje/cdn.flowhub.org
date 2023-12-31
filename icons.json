@@ -2,6 +2,7 @@
     "@bartbutenaers/node-red-autolayout-sidebar": [],
     "@gorenje/node-red-contrib-writermap-mindmap": [
         "aeon.svg",
+        "archive_org.svg",
         "change.svg",
         "github-mark.svg",
         "hn.svg",

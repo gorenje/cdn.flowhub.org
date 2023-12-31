@@ -11853,13 +11853,15 @@ msg.cookies = {
   // the front, causing the deploy button to become active. This is a hack
   // to ensure that the popup is above other nodes. The popup is attached to the
   // node in SVG so that the popup comes along when moving a node.
-  RED.events.on("view:selection-changed", function(objs) {
+  RED.events.on("view:selection-changed", function(selection) {
     if ( writerMapUtils['one'] ) {
       document.getElementById(writerMapUtils['one']).remove()
 			delete writerMapUtils['one'];
     }
 
-    if ( objs.nodes && objs.nodes.length == 1 && objs.nodes[0]._def._collection == 'writermap' ) {
+    if ( selection.nodes && selection.nodes.length == 1 &&
+      selection.nodes[0]._def &&
+      selection.nodes[0]._def._collection == 'writermap' ) {
 
       if ( !(RED.utils.getBrowserInfo().mobile > 0) && !window.matchMedia('only screen and (max-width: 890px)').matches ) {
         // open the info box on desktop, only mobile shows the info box under
@@ -11871,7 +11873,7 @@ msg.cookies = {
         return;
       }
 
-      var nde = objs.nodes[0];
+      var nde = selection.nodes[0];
 
       var container = document.getElementById(nde.id);
       if ( !container ) {
@@ -13186,13 +13188,16 @@ msg.cookies = {
       });
 
       RED.events.on("nodes:add", (node) => {
+        var dtStamp = (new Date()).toISOString();
+
         if ( !node._config && node._def && node._def.defaults ) {
+
           if ( node._def.defaults.hasOwnProperty("createdAt") ) {
-            node.createdAt = (new Date()).toISOString();
+            node.createdAt = dtStamp;
           }
 
           if ( node._def.defaults.hasOwnProperty("updatedAt") ) {
-            node.updatedAt = (new Date()).toISOString();
+            node.updatedAt = dtStamp;
           }
         }
       });

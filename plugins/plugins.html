@@ -1475,7 +1475,8 @@ th.revertable:after {
           if ( n.updatedAt && n.createdAt ) {
             blogPageNodes.push( {
               id: n.id,
-              updatedAt: Date.parse(n.updatedAt)
+              updatedAt: Date.parse(n.updatedAt),
+              createdAt: Date.parse(n.createdAt),
             });
           }
         });
@@ -1492,6 +1493,7 @@ th.revertable:after {
 
         var items = [];
         var nodeItemMap = {};
+        var definedAsNew = Date.now() - (1000 * 60 * 60 * 12); //last 12 hours
 
         blogPageNodes.forEach( function (nde) {
           var nId = nde.id;
@@ -1519,9 +1521,9 @@ th.revertable:after {
           nodeItemMap[n.id] = {
             node:     n,
             label:    label,
-            icon:     n.d ? "fa fa-eye-slash" : "fa fa-eye",
+            icon:     "fa " + (n.d ? "fa-eye-slash" : ( nde.createdAt > definedAsNew ? "fa-plus" : "fa-pencil")),
             class:    "",
-            sublabel: n.updatedAt,
+            sublabel: n.updatedAt.replace(/T/,' ').replace(/....Z$/,''),
             selected: false,
             checkbox: false,
             children: undefined
@@ -1544,8 +1546,14 @@ th.revertable:after {
 
 <!-- The html for the right sidebar plugin screen -->
 <script type="text/x-red" data-template-name="BlogChangesSidebar">
-   <div class="form-row node-input-target-row node-input-target-list-row"
-        style="min-height: 300px; height: calc(100% - 250px); margin-top: 30px; margin-left: 10px; margin-right: 15px;">
+ <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
+   <button id="node-input-blogchangesidebar-refresh-button"
+     class="red-ui-button"><i class="fa fa-shower"></i> Refresh</button>
+    <select id="node-input-blogchangesidebar-numOfUpdates"></select>
+  </div>
+
+ <div class="form-row node-input-target-row node-input-target-list-row"
+        style="min-height: 300px; height: calc(100% - 250px); margin-left: 10px; margin-right: 15px;">
       <div>
         <label for="node-input-blogchangesidebar-target-filter">
           <span>Search: </span>
@@ -1555,18 +1563,6 @@ th.revertable:after {
 
       <div id="node-input-blogchangesidebar-target-container-div"
            style="margin-top:10px;"></div>
-   </div>
-
-   <div class="form-row" style="margin-left: 10px; margin-top: 70px;">
-      <label for="node-input-blogchangesidebar-numOfUpdates">
-        <span>Num Updates: </span>
-      </label>
-      <select id="node-input-blogchangesidebar-numOfUpdates"></select>
-   </div>
-
-   <div class="form-row" style="margin-left: 10px;">
-     <button id="node-input-blogchangesidebar-refresh-button"
-             class="red-ui-button"><i class="fa fa-shower"></i> Refresh</button>
    </div>
 </script>
 
@@ -1763,6 +1759,11 @@ th.revertable:after {
 <!-- the html for the right sidebar plugin screen -->
 <script type="text/x-red" data-template-name="BlogPagesSidebar">
 
+  <div class="form-row" style="margin-left: 10px;margin-right: 15px; margin-top: 50px;">
+    <button id="node-input-blogpagessidebar-refresh-but"
+            class="red-ui-button"><i class="fa fa-shower"></i> Refresh</button>
+  </div>
+
   <div class="form-row node-input-target-row node-input-target-list-row"
        style="min-height: 300px; height: calc(100% - 150px); margin-top: 30px; margin-left: 10px; margin-right: 15px;">
      <div>
@@ -1774,10 +1775,6 @@ th.revertable:after {
         style="margin-top: 5px;"></div>
   </div>
 
-  <div class="form-row" style="margin-left: 10px;margin-right: 15px; margin-top: 50px;">
-    <button id="node-input-blogpagessidebar-refresh-but"
-            class="red-ui-button"><i class="fa fa-shower"></i> Refresh</button>
-  </div>
 </script>
 
 <!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar] --- -->
