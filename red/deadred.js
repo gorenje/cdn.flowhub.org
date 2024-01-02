@@ -130,10 +130,10 @@ var DEADRED = (function() {
                         return new TextDecoder().decode(base64ToBytes(content));
                     };
 
-                    NodeRedBackendCode.setMessageProperty(
+                    RED.utils.setMessageProperty(
                         msg,
                         nde.property,
-                        atobUtf8(NodeRedBackendCode.getMessageProperty(
+                        atobUtf8(RED.utils.getMessageProperty(
                             msg, nde.property
                         ))
                     )
@@ -147,10 +147,10 @@ var DEADRED = (function() {
                         return bytesToBase64(new TextEncoder().encode(content))
                     }
 
-                    NodeRedBackendCode.setMessageProperty(
+                    RED.utils.setMessageProperty(
                         msg,
                         nde.property,
-                        btoaUtf8(NodeRedBackendCode.getMessageProperty(
+                        btoaUtf8(RED.utils.getMessageProperty(
                             msg, nde.property
                         ))
                     )
@@ -160,12 +160,12 @@ var DEADRED = (function() {
                 }
 
                 if ( nde.action == "" ) {
-                    var val = NodeRedBackendCode.getMessageProperty(
+                    var val = RED.utils.getMessageProperty(
                         msg, nde.property
                     )
 
                     if ( typeof val == "string" ) {
-                        NodeRedBackendCode.setMessageProperty(
+                        RED.utils.setMessageProperty(
                             msg,
                             nde.property,
                             base64ToBytes(val)
@@ -175,7 +175,7 @@ var DEADRED = (function() {
                         return
 
                     } else if ( typeof val == "object") {
-                        NodeRedBackendCode.setMessageProperty(
+                        RED.utils.setMessageProperty(
                             msg,
                             nde.property,
                             bytesToBase64(val)
@@ -228,8 +228,10 @@ var DEADRED = (function() {
                             msg[rle.p] = jsonata(rle.to).evaluate({msg:msg})
                         }
                         if ( rle.pt == "msg" && rle.tot == "msg" ) {
-                            msg[rle.p] = NodeRedBackendCode.getMessageProperty(
-                                msg, rle.to
+                            RED.utils.setMessageProperty(
+                                msg,
+                                rle.p,
+                                RED.utils.getMessageProperty(msg, rle.to)
                             )
                         }
                     }
@@ -306,12 +308,17 @@ var DEADRED = (function() {
                     }
 
                     if ( nde.complete != "true" ) {
+                        if (nde.complete == "false"){ nde.complete = "payload" }
                         debugData["property"] = nde.complete
-                        var val = NodeRedBackendCode.getMessageProperty(
+
+                        var val = RED.utils.getMessageProperty(
                             msg, nde.complete
                         )
 
-                        if ( typeof val === "string" ) {
+                        if ( val == undefined ) {
+                            debugData["msg"] = val
+                            debugData["format"] = "string[0]"
+                        } else if ( typeof val === "string" ) {
                             debugData["msg"] = val
                             debugData["format"] = "string[" + val.length + "]"
                         } else if ( Array.isArray(val) ) {
@@ -457,7 +464,7 @@ var DEADRED = (function() {
                         if ( nde.ret == "txt" ) {
                             msg.payload = data.toString("utf8")
                         } else if ( nde.ret == "bin" ) {
-                            msg.payload = new ArrayBuffer(data)
+                            msg.payload = data
                         } else {
                             msg.payload = data
                         }
@@ -635,7 +642,7 @@ var DEADRED = (function() {
             case 'switch':
 
                 if ( nde.property && nde.propertyType == "msg" ) {
-                    let val = NodeRedBackendCode.getMessageProperty(
+                    let val = RED.utils.getMessageProperty(
                         msg,nde.property
                     )
 
