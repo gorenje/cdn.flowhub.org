@@ -1567,6 +1567,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "pipestart",
+        "pending_version": "0.0.3",
         "types": [
             "PipeStart"
         ],
@@ -1579,6 +1580,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "filestream",
+        "pending_version": "0.0.3",
         "types": [
             "FileStream"
         ],
@@ -1591,6 +1593,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "httprequest",
+        "pending_version": "0.0.3",
         "types": [
             "HttpRequestStream"
         ],
@@ -1603,6 +1606,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "csvstream",
+        "pending_version": "0.0.3",
         "types": [
             "CsvStream"
         ],
@@ -1615,6 +1619,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "jsonlstream",
+        "pending_version": "0.0.3",
         "types": [
             "JsonLStream"
         ],
@@ -1627,6 +1632,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "linestream",
+        "pending_version": "0.0.3",
         "types": [
             "LineStream"
         ],
@@ -1639,6 +1645,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "iconvstream",
+        "pending_version": "0.0.3",
         "types": [
             "IconvStream"
         ],
@@ -1651,6 +1658,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "decompstream",
+        "pending_version": "0.0.3",
         "types": [
             "DeCompStream"
         ],
@@ -1663,6 +1671,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "archivestream",
+        "pending_version": "0.0.3",
         "types": [
             "ArchiveStream"
         ],
@@ -1675,6 +1684,7 @@
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
         "name": "pipeend",
+        "pending_version": "0.0.3",
         "types": [
             "PipeEnd"
         ],
