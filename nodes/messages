@@ -43,6 +43,8 @@
             "serviceid": {
                 "chat_dummy": "Chat Dummy",
                 "chat_echo_mirror": "Echo+Mirror Chat",
+                "chat_google_gemini": "Google VertexAI Gemini",
+                "chat_google_gemini_with_own_instance": "Google VertexAI Gemini (your instance @Google Cloud)",
                 "chat_gtp_compatiable": "OpenAI ChatGPT compatible servers (e.g., Azure OpenAI GPT)",
                 "chat_huggingface_co_any_model": "HuggingFace - Any Account, Any Model",
                 "chat_huggingface_co_microsoft_dialogpt_large": "HuggingFace (MS DialoGPT) Large",
@@ -78,6 +80,158 @@
     "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish": {},
     "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball": {},
     "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile": {},
+    "@gregoriusrippenstein/node-red-contrib-pipestream/archivestream": {
+        "archivestream": {
+            "error": {
+                "dirname_not_defined": "Directory destination not specified",
+                "failed_to_create_dir": "Failed to create '__directory__'"
+            },
+            "label": {
+                "direction": "Direction",
+                "format": "Format",
+                "showprogress": "Show progress"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/csvstream": {
+        "csvstream": {
+            "errors": {},
+            "label": {
+                "hello": "world"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/decompstream": {
+        "decompstream": {
+            "error": {
+                "unknown_direction": "Action '__direction__' is not supported",
+                "unknown_format": "Format '__format__' is not supported"
+            },
+            "label": {
+                "format": "Format"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/filestream": {
+        "filestream": {
+            "errors": {},
+            "label": {
+                "direction": "Direction",
+                "filename": "Filename",
+                "showprogress": "Show Progress"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/httprequest": {
+        "httprequeststream": {
+            "error": {},
+            "label": {
+                "headers": "Request Headers",
+                "ignore_header": "Ignore msg.headers",
+                "paytoqs": {
+                    "body": "Post as body",
+                    "ignore": "Ignore",
+                    "query": "Add as query string"
+                },
+                "showprogress": "Show Progress"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/iconvstream": {
+        "iconvstream": {
+            "errors": {},
+            "label": {
+                "fromenc": "From encoding",
+                "toenc": "To encoding"
+            },
+            "placeholder": {
+                "fromenc": "ISO-8859-1",
+                "toenc": "UTF-8"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/jsonlstream": {
+        "jsonlstream": {
+            "errors": {},
+            "label": {
+                "hello": "world"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/linestream": {
+        "linestream": {
+            "errors": {},
+            "label": {
+                "hello": "world"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/pipeend": {
+        "pipeend": {
+            "errors": {},
+            "label": {
+                "hello": "world"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
+    "@gregoriusrippenstein/node-red-contrib-pipestream/pipestart": {
+        "pipestart": {
+            "errors": {},
+            "label": {
+                "hello": "world"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            },
+            "tip": {}
+        }
+    },
     "@gregoriusrippenstein/node-red-contrib-tarball/tarball": {
         "tarball": {
             "error": {
@@ -97,6 +251,7 @@
     },
     "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
     "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
+    "@martip/node-red-xlsx/xlsx": {},
     "node-red-contrib-aedes/aedes-mqtt-broker": {
         "aedes-mqtt-broker": {
             "label": {
@@ -139,6 +294,22 @@
     "node-red-contrib-cron-plus/cronplus": {},
     "node-red-contrib-gzip/markdown": {},
     "node-red-contrib-i2c/i2c": {},
+    "node-red-contrib-iconv/converter": {
+        "converter": {
+            "error": {
+                "encoding": "Encoding not found: ",
+                "payload": "Payload is missing",
+                "type": "This node only handles buffers."
+            },
+            "input": {
+                "from": "win1252"
+            },
+            "label": {
+                "from": "Encoding",
+                "name": "Name"
+            }
+        }
+    },
     "node-red-contrib-osc/osc": {},
     "node-red-contrib-postgresql/postgresql": {
         "postgresql": {
