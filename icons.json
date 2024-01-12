@@ -28,9 +28,13 @@
     "@gregoriusrippenstein/node-red-contrib-nodedev": [
         "nodedevsubflow.svg"
     ],
+    "@gregoriusrippenstein/node-red-contrib-pipestream": [],
     "@gregoriusrippenstein/node-red-contrib-tarball": [],
     "@gregoriusrippenstein/node-red-contrib-uglifyjs": [],
     "@gregoriusrippenstein/node-red-contrib-validation-and-documentation": [],
+    "@martip/node-red-xlsx": [
+        "xlsx.svg"
+    ],
     "node-red": [
         "alert.svg",
         "arduino.svg",
@@ -91,6 +95,7 @@
         "gzip.png"
     ],
     "node-red-contrib-i2c": [],
+    "node-red-contrib-iconv": [],
     "node-red-contrib-osc": [],
     "node-red-contrib-postgresql": [
         "postgresql.png"

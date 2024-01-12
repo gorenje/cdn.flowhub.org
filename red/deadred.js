@@ -459,7 +459,8 @@ var DEADRED = (function() {
                     $.get({
                         url: url,
                         headers: hdrs,
-                        dataType: typeFromRet(nde.ret)
+                        dataType: typeFromRet(nde.ret),
+                        crossOrigin: true,
                     }).done( data => {
                         if ( nde.ret == "txt" ) {
                             msg.payload = data.toString("utf8")

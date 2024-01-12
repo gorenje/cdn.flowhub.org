@@ -14377,6 +14377,14 @@ msg.cookies = {
             }
           }
 
+          if ( $('#node-input-serviceid').val() == "chat:gemini.vertexai.google.com/<INSTANCE>") {
+            v = {
+              "serviceId": "chat:gemini.vertexai.google.com",
+              "project": "<YOUR-GOOGLE-CLOUD-PROJECT>",
+              "location": "<YOUR-GOOGLE-CLOUD-LOCATION, e.g. 'us-central1'>"
+            }
+          }
+          
           this.editor.setValue(JSON.stringify(v,null,2))
         })
       }, 300);
@@ -14430,7 +14438,8 @@ msg.cookies = {
       <option value="chat:huggingface.co/microsoft/DialoGPT-large" data-i18n="aisbreaker.serviceid.chat_huggingface_co_microsoft_dialogpt_large"></option>
       <option value="chat:huggingface.co/microsoft/DialoGPT-small" data-i18n="aisbreaker.serviceid.chat_huggingface_co_microsoft_dialogpt_small"></option>
       <option value="chat:huggingface.co/<HF_ACCOUNT>/<HF_MODEL>" data-i18n="aisbreaker.serviceid.chat_huggingface_co_any_model"></option>
-      
+      <option value="chat:gemini.vertexai.google.com" data-i18n="aisbreaker.serviceid.chat_google_gemini"></option>
+      <option value="chat:gemini.vertexai.google.com/<INSTANCE>" data-i18n="aisbreaker.serviceid.chat_google_gemini_with_own_instance"></option>
       <option value="text-to-image:dummy" data-i18n="aisbreaker.serviceid.text_to_image_dummy"></option>
       <option value="text-to-image:openai.com" data-i18n="aisbreaker.serviceid.text_to_image_openai_com"></option>
       <option value="text-to-image:stability.ai" data-i18n="aisbreaker.serviceid.text_to_image_stability_ai"></option>
@@ -16873,6 +16882,1057 @@ Functionality:
     <p>Generate nodes for an existing node package.</p>
    Generate nodes for an existing node package.
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/pipestart] --- -->
+<script type="text/javascript">
+(function(){
+  
+
+  function frontendSupportFunction() {
+  }
+
+  var functTwo = (arg) => {
+
+  };
+  
+  RED.nodes.registerType('PipeStart',{
+    color: '#e5e4ef',
+    icon: "font-awesome/fa-arrow-right",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="PipeStart">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+</script>
+<script type="text/html" data-help-name="PipeStart">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/filestream] --- -->
+<script type="text/javascript">
+(function(){
+  RED.nodes.registerType('FileStream',{
+    color: '#D7D7A0',
+    icon: "font-awesome/fa-navicon",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+      filenameproperty: {value:"filename", required:true},
+      filenamepropertyType: {value:"msg"},
+      direction: {
+        value: "read", required:true
+      },
+      progress: {
+        value: true
+      },    
+    },
+
+    inputs: 1,
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel || this._def.type) + " " + (this.direction == "read" ? "⤉" : "⤈");
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+        $("#node-input-filenameproperty").typedInput({
+            types: ["msg", "jsonata", "str"],
+            typeField: "#node-input-filenamepropertyType"
+        });
+
+        $("#node-input-filenameproperty").val(this.filenameproperty)    
+        $("#node-input-filenamepropertyType").val(this.filenamepropertyType)    
+        $("#node-input-direction").val(this.direction)
+        
+        $('#node-input-progress').val(this.progress)
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="FileStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+    <div class="form-row">
+      <label for="node-input-direction"><i class="fa fa-tasks"></i> <span data-i18n="filestream.label.direction"></span></label>
+      <select type="text" id="node-input-direction" style="width:70%;">
+              <option value="read">read</option>
+              <option value="write">write</option>
+        </select>
+    </div>
+  
+<div class="form-row">
+  <label for="node-input-filenameproperty"><i class="fa fa-tag"></i> <span data-i18n="filestream.label.filename"></span></label>
+  <input type="text" id="node-input-filenameproperty" placeholder="filename">
+  <input type="hidden" id="node-input-filenamepropertyType"value="msg">
+</div>
+
+  <div class="form-row">
+    <label for="node-input-progress">
+        <span data-i18n="filestream.label.showprogress"></span>
+      </label>
+    <input type="checkbox" id="node-input-progress" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
+</script>
+<script type="text/html" data-help-name="FileStream">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/httprequest] --- -->
+<script type="text/javascript">
+(function(){
+
+    /*
+    * Partly taken from the original http request node --> 
+    * https://github.com/node-red/node-red/blob/ce5b6a8024533958f9ba68eb4df464e61c775bce/packages/node_modules/%40node-red/nodes/core/network/21-httprequest.html#L126-L209
+    */
+
+    const headerTypes = [
+        { value: "Accept", label: "Accept", hasValue: false },
+        { value: "Accept-Encoding", label: "Accept-Encoding", hasValue: false },
+        { value: "Accept-Language", label: "Accept-Language", hasValue: false },
+        { value: "Authorization", label: "Authorization", hasValue: false },
+        { value: "Content-Type", label: "Content-Type", hasValue: false },
+        { value: "Cache-Control", label: "Cache-Control", hasValue: false },
+        { value: "User-Agent", label: "User-Agent", hasValue: false },
+        { value: "Location", label: "Location", hasValue: false },
+        { value: "other", label: RED._("node-red:httpin.label.other"),
+          hasValue: true, icon: "red/images/typedInput/az.svg" },
+        { value: "msg", label: "msg.", hasValue: true },
+    ]
+    const headerOptions = {};
+    const defaultOptions = [
+        { value: "other", label: RED._("node-red:httpin.label.other"),
+          hasValue: true, icon: "red/images/typedInput/az.svg" },
+        { value: "msg", label: "msg.", hasValue: true },
+    ];
+    headerOptions["accept"] = [
+        { value: "text/plain", label: "text/plain", hasValue: false },
+        { value: "text/html", label: "text/html", hasValue: false },
+        { value: "application/json", label: "application/json", hasValue: false },
+        { value: "application/xml", label: "application/xml", hasValue: false },
+        ...defaultOptions,
+    ];
+    headerOptions["accept-encoding"] = [
+        { value: "gzip", label: "gzip", hasValue: false },
+        { value: "deflate", label: "deflate", hasValue: false },
+        { value: "compress", label: "compress", hasValue: false },
+        { value: "br", label: "br", hasValue: false },
+        { value: "gzip, deflate", label: "gzip, deflate", hasValue: false },
+        { value: "gzip, deflate, br", label: "gzip, deflate, br", hasValue: false },
+        ...defaultOptions,
+    ];
+    headerOptions["accept-language"] = [
+        { value: "*", label: "*", hasValue: false },
+        { value: "en-GB, en-US, en;q=0.9", label: "en-GB, en-US, en;q=0.9", hasValue: false },
+        { value: "de-AT, de-DE;q=0.9, en;q=0.5", label: "de-AT, de-DE;q=0.9, en;q=0.5", hasValue: false },
+        { value: "es-mx,es,en;q=0.5", label: "es-mx,es,en;q=0.5", hasValue: false },
+        { value: "fr-CH, fr;q=0.9, en;q=0.8", label: "fr-CH, fr;q=0.9, en;q=0.8", hasValue: false },
+        { value: "zh-CN, zh-TW; q = 0.9, zh-HK; q = 0.8, zh; q = 0.7, en; q = 0.6", label: "zh-CN, zh-TW; q = 0.9, zh-HK; q = 0.8, zh; q = 0.7, en; q = 0.6", hasValue: false },
+        { value: "ja-JP, jp", label: "ja-JP, jp", hasValue: false },
+        ...defaultOptions,
+    ];
+    headerOptions["content-type"] = [
+        { value: "text/css", label: "text/css", hasValue: false },
+        { value: "text/plain", label: "text/plain", hasValue: false },
+        { value: "text/html", label: "text/html", hasValue: false },
+        { value: "application/json", label: "application/json", hasValue: false },
+        { value: "application/octet-stream", label: "application/octet-stream", hasValue: false },
+        { value: "application/pdf", label: "application/pdf", hasValue: false },
+        { value: "application/xml", label: "application/xml", hasValue: false },
+        { value: "application/zip", label: "application/zip", hasValue: false },
+        { value: "multipart/form-data", label: "multipart/form-data", hasValue: false },
+        { value: "audio/aac", label: "audio/aac", hasValue: false },
+        { value: "audio/ac3", label: "audio/ac3", hasValue: false },
+        { value: "audio/basic", label: "audio/basic", hasValue: false },
+        { value: "audio/mp4", label: "audio/mp4", hasValue: false },
+        { value: "audio/ogg", label: "audio/ogg", hasValue: false },
+        { value: "image/bmp", label: "image/bmp", hasValue: false },
+        { value: "image/gif", label: "image/gif", hasValue: false },
+        { value: "image/jpeg", label: "image/jpeg", hasValue: false },
+        { value: "image/png", label: "image/png", hasValue: false },
+        { value: "image/tiff", label: "image/tiff", hasValue: false },
+        ...defaultOptions,
+    ];
+    headerOptions["cache-control"] = [
+        { value: "max-age=0", label: "max-age=0", hasValue: false },
+        { value: "max-age=86400", label: "max-age=86400", hasValue: false },
+        { value: "no-cache", label: "no-cache", hasValue: false },
+        ...defaultOptions,
+    ];
+
+    headerOptions["user-agent"] = [
+        { value: "Mozilla/5.0", label: "Mozilla/5.0", hasValue: false },
+        ...defaultOptions,
+    ];
+
+    function getHeaderOptions(headerName) {
+        const lc = (headerName || "").toLowerCase();
+        let opts = headerOptions[lc];
+        return opts || defaultOptions;
+    }
+
+
+  RED.nodes.registerType('HttpRequestStream',{
+    color: '#D7D7A0',
+    icon: "font-awesome/fa-globe",
+    category: 'streaming',
+    defaults: {
+      name: { value:"", },
+      method: { value: "GET", required:true },
+      urlproperty: { value:"url", required:true },
+      urlpropertyType: { value:"msg" },
+      progress: { value: true },
+      ignhdrs: { value: false },
+      paytoqs: { value: "ignore" },
+      headers: { value: [] }
+    },
+
+    inputs: 1,
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      const node = this;
+      
+      $("#node-input-urlproperty").typedInput({
+        types: ["msg","json","str"],
+        typeField: "#node-input-urlpropertyType"
+      });
+      $("#node-input-urlproperty").val(this.urlproperty)
+      $("#node-input-urlpropertyType").val(this.urlpropertyType) 
+      $('#node-input-progress').val(this.progress)
+      $('#node-input-ignhdrs').val(this.ignhdrs)
+
+      if (this.paytoqs === true || this.paytoqs == "query") {
+          $("#node-input-paytoqs").val("query");
+      } else if (this.paytoqs === "body") {
+          $("#node-input-paytoqs").val("body");
+      } else {
+          $("#node-input-paytoqs").val("ignore");
+      }
+
+      const hasMatch = function (arr, value) {
+          return arr.some(function (ht) {
+              return ht.value === value
+          });
+      }
+      
+      const headerList = $("#node-input-headers-container").css('min-height', '150px').css('min-width', '450px').editableList({
+                addItem: function (container, i, header) {
+                    const row = $('<div/>').css({
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        display: 'flex'
+                    }).appendTo(container);
+                    const propertNameCell = $('<div/>').css({ 'flex-grow': 1 }).appendTo(row);
+                    const propertyName = $('<input/>', { class: "node-input-header-name", type: "text", style: "width: 100%" })
+                        .appendTo(propertNameCell)
+                        .typedInput({ types: headerTypes });
+
+                    const propertyValueCell = $('<div/>').css({ 'flex-grow': 1, 'margin-left': '10px' }).appendTo(row);
+                    const propertyValue = $('<input/>', { class: "node-input-header-value", type: "text", style: "width: 100%" })
+                        .appendTo(propertyValueCell)
+                        .typedInput({
+                            types: getHeaderOptions(header.keyType)
+                        });
+
+                    const setup = function(_header) {
+                        const headerTypeIsAPreset = function(h) {return hasMatch(headerTypes, h) };
+                        const headerValueIsAPreset = function(h, v) {return hasMatch(getHeaderOptions(h), v) };
+                        const {keyType, keyValue, valueType, valueValue} = header;
+                        if(keyType == "msg" || keyType == "other") {
+                            propertyName.typedInput('type', keyType);
+                            propertyName.typedInput('value', keyValue);
+                        } else if (headerTypeIsAPreset(keyType)) {
+                            propertyName.typedInput('type', keyType);
+                        } else {
+                            propertyName.typedInput('type', "other");
+                            propertyName.typedInput('value', keyValue);
+                        }
+                        if(valueType == "msg" || valueType == "other") {
+                            propertyValue.typedInput('type', valueType);
+                            propertyValue.typedInput('value', valueValue);
+                        } else if (headerValueIsAPreset(propertyName.typedInput('type'), valueType)) {
+                            propertyValue.typedInput('type', valueType);
+                        } else {
+                            propertyValue.typedInput('type', "other");
+                            propertyValue.typedInput('value', valueValue);
+                        }
+                    }
+                    setup(header);
+
+                    propertyName.on('change', function (event) {
+                        propertyValue.typedInput('types', getHeaderOptions(propertyName.typedInput('type')));
+                    });
+
+                },
+                sortable: true,
+                removable: true
+            });
+      if (node.headers) {
+          for (let index = 0; index < node.headers.length; index++) {
+              const element = node.headers[index];
+              headerList.editableList('addItem', node.headers[index]);
+          }
+      }
+
+
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+      const headers = $("#node-input-headers-container").editableList('items');
+      const node = this;
+      node.headers = [];
+      headers.each(function(i) {
+          const header = $(this);
+          const keyType = header.find(".node-input-header-name").typedInput('type');
+          const keyValue = header.find(".node-input-header-name").typedInput('value');
+          const valueType = header.find(".node-input-header-value").typedInput('type');
+          const valueValue = header.find(".node-input-header-value").typedInput('value');
+          if (keyType !== '' || keyType === 'other' || keyType === 'msg') {
+              node.headers.push({
+                  keyType, keyValue, valueType, valueValue
+              })
+          }
+      });
+    },
+
+    oneditresize: function(size) {
+      const dlg = $("#dialog-form");
+      const expandRow = dlg.find('.node-input-headers-container-row');
+      let height = dlg.height() - 5;
+      if(expandRow && expandRow.length){
+          const siblingRows = dlg.find('> .form-row:not(.node-input-headers-container-row)');
+          for (let i = 0; i < siblingRows.size(); i++) {
+              const cr = $(siblingRows[i]);
+              if(cr.is(":visible"))
+                  height -= cr.outerHeight(true);
+          }
+          $("#node-input-headers-container").editableList('height',height);
+      }       
+    }
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="HttpRequestStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="httpin.label.method"></span></label>
+    <select type="text" id="node-input-method" style="width:70%;">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+      </select>
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-urlproperty"><i class="fa fa-tag"></i> Url</label>
+    <input type="text" id="node-input-urlproperty" placeholder="url">
+    <input type="hidden" id="node-input-urlpropertyType"value="msg">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-progress">
+        <span data-i18n="httprequeststream.label.showprogress">
+      </label>
+    <input type="checkbox" id="node-input-progress" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-ignhdrs">
+          <span data-i18n="httprequeststream.label.ignore_header">
+        </label>
+    <input type="checkbox" id="node-input-ignhdrs" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
+
+  <div class="form-row node-input-paytoqs-row">
+    <label for="node-input-paytoqs"><span data-i18n="node-red:common.label.payload"></span></label>
+    <select id="node-input-paytoqs" style="width: 70%;">
+      <option value="ignore" data-i18n="httprequeststream.label.paytoqs.ignore"></option>
+      <option value="query" data-i18n="httprequeststream.label.paytoqs.query"></option>
+      <option value="body" data-i18n="httprequeststream.label.paytoqs.body"></option>
+    </select>
+  </div>
+
+  <div class="form-row" style="margin-bottom:0;">
+     <label><i class="fa fa-list"></i> <span data-i18n="httprequeststream.label.headers"></span></label>
+  </div>
+  <div class="form-row node-input-headers-container-row">
+     <ol id="node-input-headers-container"></ol>
+  </div>
+
+</script>
+<script type="text/html" data-help-name="HttpRequestStream">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/csvstream] --- -->
+<script type="text/javascript">
+(function(){
+  
+  RED.nodes.registerType('CsvStream',{
+    color: '#FDD0A2',
+    icon: "font-awesome/fa-dot-circle-o",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+      sep: {
+        value:',', 
+        required:true,
+        label:RED._("node-red:csv.label.separator"),
+        validate:RED.validators.regex(/^.{1,2}$/)
+      },
+      hdrin: {value:""},
+      hdrout: {value:"none"},
+
+      multi: {value:"one",required:true},
+      ret: {value:'\\n'},
+      temp: {value:""},
+      skip: {value:"0"},
+      strings: {value:true},
+      include_empty_strings: {value:""},
+      include_null_values: {value:""}
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+      if (this.hdrout === false) { this.hdrout = "none"; $("#node-input-hdrout").val("none"); }
+      if (this.hdrout === true) { this.hdrout = "all"; $("#node-input-hdrout").val("all");}
+      if (this.strings === undefined) { this.strings = true; $("#node-input-strings").prop('checked', true); }
+      if (this.skip === undefined) { this.skip = 0; $("#node-input-skip").val("0");}
+
+      $("#node-input-skip").spinner({ min:0 });
+      
+      if (this.sep == "," || this.sep == "\\t" || this.sep == ";" || this.sep == ":" || this.sep == " " || this.sep == "#") {
+          $("#node-input-select-sep").val(this.sep);
+          $("#node-input-sep").hide();
+      } else {
+          $("#node-input-select-sep").val("");
+          $("#node-input-sep").val(this.sep);
+          $("#node-input-sep").show();
+      }
+      
+      $("#node-input-select-sep").on("change", function() {
+          var v = $("#node-input-select-sep").val();
+          $("#node-input-sep").val(v);
+          if (v == "") {
+              $("#node-input-sep").val("");
+              $("#node-input-sep").show().focus();
+          } else {
+              $("#node-input-sep").hide();
+          }
+      });
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="CsvStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-select-sep"><i class="fa fa-text-width"></i> <span data-i18n="node-red:csv.label.separator"></span></label>
+    <select style="width:150px" id="node-input-select-sep">
+        <option value="," data-i18n="node-red:csv.separator.comma"></option>
+        <option value="\t" data-i18n="node-red:csv.separator.tab"></option>
+        <option value=" " data-i18n="node-red:csv.separator.space"></option>
+        <option value=";" data-i18n="node-red:csv.separator.semicolon"></option>
+        <option value=":" data-i18n="node-red:csv.separator.colon"></option>
+        <option value="#" data-i18n="node-red:csv.separator.hashtag"></option>
+        <option value="" data-i18n="node-red:csv.separator.other"></option>
+    </select>
+    <input style="width:40px;" type="text" id="node-input-sep" pattern=".">
+  </div>
+
+  <div class="form-row" style="padding-left:20px;">
+      <label><i class="fa fa-sign-in"></i> <span data-i18n="node-red:csv.label.input"></span></label>
+      <span data-i18n="node-red:csv.label.skip-s"></span>&nbsp;<input type="text" id="node-input-skip" style="width:40px; height:25px;"/>&nbsp;<span data-i18n="node-red:csv.label.skip-e"></span><br/>
+      <label>&nbsp;</label>
+      <input style="width:20px; vertical-align:baseline; margin-right:5px;" type="checkbox" id="node-input-hdrin"><label style="width:auto; margin-top:7px;" for="node-input-hdrin"><span data-i18n="node-red:csv.label.firstrow"></span></label><br/>
+      <label>&nbsp;</label>
+      <input style="width:20px; vertical-align:baseline; margin-right:5px;" type="checkbox" id="node-input-strings"><label style="width:auto; margin-top:7px;" for="node-input-strings"><span data-i18n="node-red:csv.label.usestrings"></span></label><br/>
+      <label>&nbsp;</label>
+      <input style="width:20px; vertical-align:baseline; margin-right:5px;" type="checkbox" id="node-input-include_empty_strings"><label style="width:auto; margin-top:7px;" for="node-input-include_empty_strings"><span data-i18n="node-red:csv.label.include_empty_strings"></span></label><br/>
+      <label>&nbsp;</label>
+      <input style="width:20px; vertical-align:baseline; margin-right:5px;" type="checkbox" id="node-input-include_null_values"><label style="width:auto; margin-top:7px;" for="node-input-include_null_values"><span data-i18n="node-red:csv.label.include_null_values"></span></label><br/>
+  </div>
+
+  <div class="form-row" style="padding-left:20px;">
+      <label><i class="fa fa-sign-out"></i> <span data-i18n="node-red:csv.label.output"></span></label>
+      <select type="text" id="node-input-multi" style="width:250px;">
+          <option value="one" data-i18n="node-red:csv.output.row"></option>
+         <!-- <option value="mult" data-i18n="node-red:csv.output.array"></option> -->
+      </select>
+  </div>
+
+</script>
+<script type="text/html" data-help-name="CsvStream">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/jsonlstream] --- -->
+<script type="text/javascript">
+(function(){
+  RED.nodes.registerType('JsonLStream',{
+    color: '#FDD0A2',
+    icon: "font-awesome/fa-tint",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="JsonLStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+</script>
+<script type="text/html" data-help-name="JsonLStream">
+  <p>Json Lines streaming.</p>
+  Json lines streamer.
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/linestream] --- -->
+<script type="text/javascript">
+(function(){
+  
+
+  function frontendSupportFunction() {
+  }
+
+  var functTwo = (arg) => {
+
+  };
+  
+  RED.nodes.registerType('LineStream',{
+    color: '#FDD0A2',
+    icon: "font-awesome/fa-reorder",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="LineStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+</script>
+<script type="text/html" data-help-name="LineStream">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/iconvstream] --- -->
+<script type="text/javascript">
+(function(){
+  RED.nodes.registerType('IconvStream',{
+    color: '#FDD0A2',
+    icon: "font-awesome/fa-support",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+      fromenc: {
+        value: "ISO-8859-1",
+      },
+      toenc: {
+        value: "UTF-8"
+      }
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="IconvStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-fromenc"><i class="fa fa-tag"></i> <span data-i18n="iconvstream.label.fromenc"></span></label>
+    <input type="text" id="node-input-fromenc" data-i18n="[placeholder]iconvstream.placeholder.fromenc">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-toenc"><i class="fa fa-tag"></i> <span data-i18n="iconvstream.label.toenc"></span></label>
+    <input type="text" id="node-input-toenc" data-i18n="[placeholder]iconvstream.placeholder.toenc">
+  </div>
+</script>
+<script type="text/html" data-help-name="IconvStream">
+  <p>Iconv for streams</p>
+  Convert between formats.
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/decompstream] --- -->
+<script type="text/javascript">
+(function(){
+  RED.nodes.registerType('DeCompStream',{
+    color: '#FDF0C2',
+    icon: "font-awesome/fa-compress",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+      direction: {
+        value: "decompress", required:true
+      },
+      format: {
+        value: "gz", required:true
+      },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel || this._def.type) + " " + (this.direction == "compress" ? "❯❮" : "❮❯");
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+      $("#node-input-direction").val(this.direction)
+      $("#node-input-format").val(this.format)
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="DeCompStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+    <div class="form-row">
+      <label for="node-input-format"><i class="fa fa-tasks"></i> <span data-i18n="decompstream.label.format"></span></label>
+      <select type="text" id="node-input-format" style="width:70%;">
+                <option value="gz">Gzip</option>
+                <option value="bz2">Bz2</option>
+                <option value="xz">xz</option>
+          </select>
+    </div>
+
+        <div class="form-row">
+          <label for="node-input-direction"><i class="fa fa-tasks"></i> Direction</span></label>
+          <select type="text" id="node-input-direction" style="width:70%;">
+                      <option value="decompress">decompress</option>
+                      <option value="compress">compress</option>
+                </select>
+        </div>
+</script>
+<script type="text/html" data-help-name="DeCompStream">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/archivestream] --- -->
+<script type="text/javascript">
+(function(){
+    
+  RED.nodes.registerType('ArchiveStream',{
+    color: '#FDF0C2',
+    icon: "font-awesome/fa-archive",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+      direction: {
+        value: "extract", required:true
+      },
+      format: {
+        value: "tar", required:true
+      },
+      dirnameproperty: {value:"dirname", required:true},
+      dirnamepropertyType: {value:"msg"},
+      progress: {
+        value: false
+      },
+    },
+
+    inputs: 1,
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel || this._def.type) + " " + (this.direction == "extract" ? "⤏" : "⤎")
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+      $("#node-input-direction").val(this.direction)
+      $("#node-input-format").val(this.format)
+
+      $("#node-input-dirnameproperty").typedInput({
+        types: ["msg", "jsonata", "str"],
+        typeField: "#node-input-dirnamepropertyType"
+      });
+      
+      $("#node-input-dirnameproperty").val(this.dirnameproperty)
+      $("#node-input-dirnamepropertyType").val(this.dirnamepropertyType)
+
+      $('#node-input-progress').val(this.progress)
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="ArchiveStream">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-format"><i class="fa fa-tasks"></i> <span data-i18n="archivestream.label.format"></span></label>
+    <select type="text" id="node-input-format" style="width:70%;">
+      <option value="tar">Tar</option>
+      <option value="zip">Zip</option>
+    </select>
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-direction"><i class="fa fa-tasks"></i> <span data-i18n="archivestream.label.direction"></span></label>
+    <select type="text" id="node-input-direction" style="width:70%;">
+      <option value="extract">extract</option>
+      <option value="compress">compress</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-dirnameproperty"><i class="fa fa-tag"></i> Dirname</label>
+    <input type="text" id="node-input-dirnameproperty" placeholder="dirname">
+    <input type="hidden" id="node-input-dirnamepropertyType"value="msg">
+  </div>
+
+
+  <div class="form-row">
+    <label for="node-input-progress">
+      <span data-i18n="archivestream.label.showprogress">
+    </label>
+    <input type="checkbox" id="node-input-progress" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
+</script>
+<script type="text/html" data-help-name="ArchiveStream">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-pipestream/pipeend] --- -->
+<script type="text/javascript">
+(function(){
+  
+
+  function frontendSupportFunction() {
+  }
+
+  var functTwo = (arg) => {
+
+  };
+  
+  RED.nodes.registerType('PipeEnd',{
+    color: '#e5e4ef',
+    icon: "font-awesome/fa-anchor",
+    category: 'streaming',
+    defaults: {
+      name: {
+        value:"",
+      },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    oneditprepare: function() {
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+
+
+  });
+})();
+</script>
+
+<script type="text/html" data-template-name="PipeEnd">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+</script>
+<script type="text/html" data-help-name="PipeEnd">
+  <p>Various nodes to do various stuff releated to streaming</p>
+  Various nodes to do stuff with streaming
+</script>
+
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-tarball/tarball] --- -->
 <script type="text/javascript">
 (function(){
@@ -17307,6 +18367,127 @@ Functionality:
 <script type="text/x-red" data-help-name="JsonSchemaValidatorWithDocu">
     <p>JSON Schema validator</p>
     <p>Validate input based on schema. Schema can also be passed in as JSON object on `msg.schema`. If validation fails, an exception is raised.</p>
+</script>
+<!-- --- [red-module:@martip/node-red-xlsx/xlsx] --- -->
+<script type="text/html" data-template-name="xlsx">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</span></label>
+    <input type="text" id="node-input-name" placeholder="Name" />
+  </div>
+  <hr align="middle"/>
+  <div class="form-row">
+    <label style="width:100%;">XLSX to Object options</span></label>
+  </div>
+  <div class="form-row" style="padding-left: 20px;">
+    <label><i class="fa fa-sign-in"></i> Input</span></label>
+    <select type="text" id="node-input-sheets" style="width:250px;">
+      <option value="first">read the first sheet only</option>
+      <option value="all">read all sheets</option>
+    </select>
+  </div>
+  <div class="form-row" style="padding-left: 20px;">
+    <label><i class="fa fa-sign-out"></i> Output</span></label>
+    <select type="text" id="node-input-multi" style="width:250px;">
+      <option value="one">a message per sheet</option>
+      <option value="array">a single message [array]</option>
+      <option value="object">a single message {object}</option>
+    </select>
+    <select type="text" id="node-input-parse" style="width:250px; display: none;">
+      <option value="rows">an array of rows</option>
+      <option value="map">a JSON object using a map</option>
+    </select>
+  </div>
+  <div class="form-row" id="map-options" style="padding-left: 20px; display: none;">
+    <label></label>
+    <label style="width: 50px; margin-right: 10px; text-align: right;" for="node-input-map">Map</span></label>
+    <input type="text" id="node-input-map" style="width: 185px;" />
+  </div>  
+</script>
+
+
+
+<script type="text/javascript">
+  RED.nodes.registerType('xlsx', {
+      category: 'parser',
+      color:'#DEBD5C',
+      defaults: {
+        name: { value: '' },
+        sheets: { value: 'first', required: true },
+        multi: { value: 'one', required: true },
+        parse: { value: 'rows', required: true },
+        map: { value: '' }
+      },
+      inputs: 1,
+      outputs: 1,
+      icon: 'xlsx.svg',
+      label: function() {
+        return this.name || 'xlsx' ;
+      },
+      labelStyle: function() {
+        return this.name ? 'node_label_italic' : '';
+      },
+      paletteLabel: 'xlsx',
+      oneditprepare: function() {
+        $('#node-input-sheets').val(this.sheets);
+        $('#node-input-multi').val(this.multi);
+        $('#node-input-parse').val(this.parse);
+        $('#node-input-sheets').on('change', function() {
+          if ($('#node-input-sheets').val() === 'first') {
+            $('#node-input-multi').val('one');
+            $('#node-input-multi').hide();
+            $('#node-input-parse').show().focus();
+            $('#node-input-parse').change();
+          } else {
+            $('#node-input-parse').val('rows');
+            $('#node-input-parse').hide();
+            $('#schema-options').hide();
+            $('#map-options').hide();
+            $('#node-input-multi').show().focus();
+          }
+        });
+        $('#node-input-parse').on('change', function() {
+          const v = $('#node-input-parse').val();
+          if (v === 'rows') {
+            $('#map-options').hide();
+          } else if (v === 'map') {
+            $('#map-options').show();
+          }
+        });
+        $('#node-input-map').typedInput({
+          type:'json',
+          types:['json']
+        });
+
+      }
+  });
+</script><script type="text/html" data-help-name="xlsx">
+  <p>A function that parses the <code>msg.payload</code>, expected to be in XLSX format, using the <strong>read-excel-file</strong> package.</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">buffer</span></dt>
+    <dd>The buffer of the XSLX file.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>filename <span class="property-type">string</span></dt>
+    <dd>The name of the XSLX file.</dd>
+  </dl>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object | array</span></dt>
+    <dd>The parsed XLSX file as an array or object</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>The node can process the first sheet or all the sheets of a workbook.</p>
+  <p>By default, the node outputs an array of arrays (the rows of the sheet), for each processed sheet.</p>
+  <p>When parsing only the first sheet, an optional JSON map can be provided: in this case, the output will be a JSON object (check the <strong>read-excel-file</strong> package documentation for more information; please note that the <i>schema</i> option is not implemented in this node).</p>
+  <p>When parsing all the sheets in a workbook, the output is sent as a single message or as multiple messages (one for each sheet).</p>
+  <p>If the output is sent as a single message, the payload will be an array of arrays or as an object, in which the keys are the names of the sheets.</p>
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://www.npmjs.com/package/read-excel-file">read-excel-file</a> - Details of the <strong>read-excel-file</strong> package</li>
+  </ul>
+  
+
 </script>
 <!-- --- [red-module:node-red-contrib-aedes/aedes-mqtt-broker] --- -->
 <!--
@@ -22531,6 +23712,77 @@ msg.payload = "name"; //  name of the schedule</code></pre>
     <p>address <b>0</b> means that you will broadcast to all I2C-units on the I2C bus.</p>
     <p>The <b>Send bytes</b> is used to set the number of bytes that will be used when the payload is a number.</p>
     <p>The <b>payload</b> and <b>msg.payload</b> can be a Buffer, Array, String or Integer.</p>	
+</script>
+<!-- --- [red-module:node-red-contrib-iconv/converter] --- -->
+<!--
+ Copyright 2017 Tiago Machado
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+		 http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<script type="text/x-red" data-template-name="converter">
+    <div class="form-row">
+        <label for="node-input-from"><i class="fa fa-sign-in"></i> <span data-i18n="converter.label.from"></span></label>
+        <input type="text" id="node-input-from" data-i18n="[placeholder]converter.input.from">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="converter.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]converter.label.name">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('converter',{
+        category: 'function',
+        color:"#DEBD5C",
+        defaults: {
+            name: {
+                value:""
+            },
+            from: {
+                value:"",
+                required:true
+            }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "arrow-in.png",
+        label: function() {
+            return this.name||"charset";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+<script type="text/x-red" data-help-name="converter">
+    <p>For decoding simply send a Buffer inside <code>msg.payload</code> and the choosed encoding format will be applied to convert it to pure Javascript chracter encoding.</p>
+    <p>For encoding simply send a String inside <code>msg.payload</code> and the choosed encoding format will be applied to convert.</p>
+    <ul>Supported Encodings</ul>
+    <li>Node.js Native encodings: utf8, ucs2 / utf16le, ascii, binary, base64, hex</li>
+    <li>Unicode: UTF-16BE, UTF-16 (with BOM)</li>
+    <li>Windows codepages: 874, 1250-1258 (aliases: cpXXX, winXXX, windowsXXX)</li>
+    <li>ISO codepages: ISO-8859-1 - ISO-8859-16</li>
+    <li>IBM codepages: 437, 737, 775, 808, 850, 852, 855-858, 860-866, 869, 922, 1046, 1124, 1125, 1129, 1133, 1161-1163 (aliases cpXXX, ibmXXX)</li>
+    <li>Mac codepages: maccroatian, maccyrillic, macgreek, maciceland, macroman, macromania, macthai, macturkish, macukraine, maccenteuro, macintosh</li>
+    <li>KOI8 codepages: koi8-r, koi8-u, koi8-ru, koi8-t</li>
+    <li>Miscellaneous: armscii8, rk1048, tcvn, georgianacademy, georgianps, pt154, viscii, iso646cn, iso646jp, hproman8, tis620</li>
+    <li>Japanese: Shift_JIS, Windows-31j, Windows932, EUC-JP</li>
+    <li>Chinese: GB2312, GBK, GB18030, Windows936, EUC-CN</li>
+    <li>Korean: KS_C_5601, Windows949, EUC-KR</li>
+    <li>Taiwan/Hong Kong: Big5, Big5-HKSCS, Windows950</li>
 </script>
 <!-- --- [red-module:node-red-contrib-osc/osc] --- -->
 <!--
