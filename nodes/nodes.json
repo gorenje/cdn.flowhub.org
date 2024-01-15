@@ -1563,136 +1563,6 @@
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/pipestart",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "pipestart",
-        "pending_version": "0.0.3",
-        "types": [
-            "PipeStart"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/filestream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "filestream",
-        "pending_version": "0.0.3",
-        "types": [
-            "FileStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/httprequest",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "httprequest",
-        "pending_version": "0.0.3",
-        "types": [
-            "HttpRequestStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/csvstream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "csvstream",
-        "pending_version": "0.0.3",
-        "types": [
-            "CsvStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/jsonlstream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "jsonlstream",
-        "pending_version": "0.0.3",
-        "types": [
-            "JsonLStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/linestream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "linestream",
-        "pending_version": "0.0.3",
-        "types": [
-            "LineStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/iconvstream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "iconvstream",
-        "pending_version": "0.0.3",
-        "types": [
-            "IconvStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/decompstream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "decompstream",
-        "pending_version": "0.0.3",
-        "types": [
-            "DeCompStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/archivestream",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "archivestream",
-        "pending_version": "0.0.3",
-        "types": [
-            "ArchiveStream"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-pipestream/pipeend",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-pipestream",
-        "name": "pipeend",
-        "pending_version": "0.0.3",
-        "types": [
-            "PipeEnd"
-        ],
-        "user": false,
-        "version": "0.0.581"
-    },
-    {
-        "enabled": true,
         "id": "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker",
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-aisbreaker",
@@ -1702,5 +1572,137 @@
         ],
         "user": false,
         "version": "0.1.17"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/pipestart",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "pipestart",
+        "types": [
+            "PipeStart"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/filestream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "filestream",
+        "types": [
+            "FileStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/httprequest",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "httprequest",
+        "types": [
+            "HttpRequestStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/csvstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "csvstream",
+        "types": [
+            "CsvStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/jsonlstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "jsonlstream",
+        "types": [
+            "JsonLStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/linestream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "linestream",
+        "types": [
+            "LineStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/iconvstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "iconvstream",
+        "types": [
+            "IconvStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/chunk2msg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "chunk2msg",
+        "types": [
+            "Chunk2Msg"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/decompstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "decompstream",
+        "types": [
+            "DeCompStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/archivestream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "archivestream",
+        "types": [
+            "ArchiveStream"
+        ],
+        "user": false,
+        "version": "0.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/pipeend",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "pipeend",
+        "types": [
+            "PipeEnd"
+        ],
+        "user": false,
+        "version": "0.0.6"
     }
 ]
