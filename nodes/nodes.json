@@ -1331,7 +1331,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
@@ -1343,7 +1343,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
@@ -1355,7 +1355,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
@@ -1367,7 +1367,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
@@ -1379,7 +1379,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
@@ -1391,7 +1391,7 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
@@ -1403,7 +1403,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.2.6"
+        "version": "0.2.7"
     },
     {
         "enabled": true,
