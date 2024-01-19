@@ -998,7 +998,8 @@ var DEADRED = (function() {
 
         var nodesInGrp = (grpId) => {
             var ndeIds = []
-            RED.nodes.group(grpId).nodes.forEach( n => {
+            let ndsInGrp = RED.nodes.group(grpId) || { nodes: [] }
+            ndsInGrp.nodes.forEach( n => {
                 if ( n.type == "group" ) {
                     ndeIds = ndeIds.concat( nodesInGrp(n.id) )
                 } else {
@@ -1089,6 +1090,14 @@ var DEADRED = (function() {
         RED.events.on( 'markdown:rendered', () => {
             setTimeout( () => {
                 handleTextReferences()
+                // enable any tasklist checkboxes
+                $('.red-ui-panel').find('input[type=checkbox][disabled=""]').removeAttr(
+                    'disabled'
+                ).on('change', (e) => {
+                    e.preventDefault()
+                    RED.nodes.dirty(true) // this activates the deploy button
+                    console.log( "ELEM", e )
+                })
             },1000)
         })
 
