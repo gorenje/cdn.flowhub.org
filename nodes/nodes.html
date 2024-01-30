@@ -15905,33 +15905,37 @@ Functionality:
   <hr/>
   
   <div class="form-row">
-    <label for="node-input-pname" style="min-width: 170px;"><i class="fa fa-tag"></i> Package Name</label>
+    <label for="node-input-pname" style="min-width: 150px;">Package Details:</label>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-pname" style="min-width: 150px;"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-pname" placeholder="@username/node-red-contrib-somename"/>
   </div>
 
   <div class="form-row">
-    <label for="node-input-pversion" style="min-width: 170px;"><i class="fa fa-tag"></i> Package Version</label>
+    <label for="node-input-pversion" style="min-width: 150px;"><i class="fa fa-tag"></i> Version</label>
     <input type="text" id="node-input-pversion" placeholder="0.0.1"/>
   </div>
   
   <div class="form-row">
-    <label for="node-input-pauthorname" style="min-width: 170px;"><i class="fa fa-address-book-o"></i> Package Author Name</label>
+    <label for="node-input-pauthorname" style="min-width: 150px;"><i class="fa fa-address-book-o"></i> Author Name</label>
     <input type="text" id="node-input-pauthorname" placeholder="Alfred E. Neumann"/>
   </div>
 
   <div class="form-row">
-    <label for="node-input-pauthoremail" style="min-width: 170px;"><i class="fa fa-envelope-o"></i> Package Author Email</label>
+    <label for="node-input-pauthoremail" style="min-width: 150px;"><i class="fa fa-envelope-o"></i> Author Email</label>
     <input type="text" id="node-input-pauthoremail" placeholder="joe.blog@example.com"/>
   </div>
 
   <div class="form-row">
-    <label for="node-input-pdescription" style="min-width: 170px;"><i class="fa fa-book"></i> Package Description</label>
+    <label for="node-input-pdescription" style="min-width: 150px;"><i class="fa fa-book"></i> Description</label>
     <input type="text" id="node-input-pdescription" placeholder="Package description"/>
   </div>
 
   <div class="form-row">
-    <label for="node-input-ignore_package_check" style="min-width: 170px;"">
-      <span>Ignore package check?</span>
+    <label for="node-input-ignore_package_check" style="min-width: 150px;"">
+      <span>No package check?</span>
     </label>
     <input type="checkbox" id="node-input-ignore_package_check" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
@@ -16156,34 +16160,7 @@ Functionality:
         }
     });
 
-    function doSubmission(node) {
-
-        var data = {};
-
-        /* the data has not been stored on the node when this is called, 
-            need to retrieve everything from the various fields...
-        */
-        data["summary"]     = node.editorSummary.getValue();
-        data["description"] = node.editorDesc.getValue();
-        
-        data["color"]       = $('#node-input-colour').val();
-        data["icon"]        = $('#red-ui-editor-node-icon').val();
-        data["iconclass"]   = "fa " + data["icon"].split("/")[1]; /* Assume font-awesomeness */
-        data["name"]        = $('#node-input-nodename').val();
-        data["namelwr"]     = data["name"].toLowerCase();
-        data["outputcount"] = $('#node-input-outputcount').val();
-        data["category"]    = $('#node-input-category').val();
-
-        data["hasbutton"]      = $('#node-input-hasbutton').is(":checked");
-        data["minify"]         = $('#node-input-minify').is(":checked");
-        data["hasinput"]       = $('#node-input-hasinput').is(":checked");
-        data["bak2frtcomm"]    = $('#node-input-bak2frtcomm').is(":checked");
-        data["frt2bakcomm"]    = $('#node-input-frt2bakcomm').is(":checked");
-        data["createmanifest"] = $('#node-input-createmanifest').is(":checked");
-        data["isplugin"]       = $('#node-input-isplugin').is(":checked");
-
-        data["__task"]      = "generate_from_templates";
-                
+    function postDataOff(node,data) {
         $.ajax({
             url: "NodeFactory/" + node.id,
             type: "POST",
@@ -16225,7 +16202,52 @@ Functionality:
             }
         });
     }
-    
+
+    function doSubmission(node) {
+        let data = {};
+
+        /* the data has not been stored on the node when this is called, 
+            need to retrieve everything from the various fields...
+        */
+        data["summary"]     = node.editorSummary.getValue();
+        data["description"] = node.editorDesc.getValue();
+        
+        data["color"]       = $('#node-input-colour').val();
+        data["icon"]        = $('#red-ui-editor-node-icon').val();
+        data["iconclass"]   = "fa " + data["icon"].split("/")[1]; /* Assume font-awesomeness */
+        data["name"]        = $('#node-input-nodename').val();
+        data["namelwr"]     = data["name"].toLowerCase();
+        data["outputcount"] = $('#node-input-outputcount').val();
+        data["category"]    = $('#node-input-category').val();
+
+        data["hasbutton"]      = $('#node-input-hasbutton').is(":checked");
+        data["minify"]         = $('#node-input-minify').is(":checked");
+        data["hasinput"]       = $('#node-input-hasinput').is(":checked");
+        data["bak2frtcomm"]    = $('#node-input-bak2frtcomm').is(":checked");
+        data["frt2bakcomm"]    = $('#node-input-frt2bakcomm').is(":checked");
+        data["createmanifest"] = $('#node-input-createmanifest').is(":checked");
+        data["isplugin"]       = $('#node-input-isplugin').is(":checked");
+
+        data["__task"]      = "generate_from_templates";
+
+        postDataOff(node,data)        
+    }
+
+    function doButtonSubmission(node) {
+        let data = {}
+
+        Object.keys(node._def.defaults).forEach( attrname => {
+            data[attrname] = node[attrname]
+        })
+
+        data["name"]      = node.nodename; // name clashes with the default 'name' attribute
+        data["namelwr"]   = data["name"].toLowerCase();
+        data["iconclass"] = "fa " + data["icon"].split("/")[1]; /* Assume font-awesomeness */
+        data["__task"]    = "generate_from_templates";
+        
+        postDataOff(node,data)
+    }
+
     RED.nodes.registerType('NodeFactory', {
         color: "#e5e4ef",
         category: 'nodedev',
@@ -16387,6 +16409,22 @@ Functionality:
         },
 
         oneditresize: function (size) {
+        },
+
+        button: {
+            enabled: function() {
+                return !this.changed
+            },
+
+            onclick: function () {
+                if (this.changed) {
+                    return RED.notify(RED._("notification.warning", {
+                        message: RED._("notification.warnings.undeployedChanges")
+                    }), "warning");
+                }
+
+                doButtonSubmission(this)
+            }
         },
     });
 })();
@@ -17335,13 +17373,14 @@ Functionality:
       name: {
         value:"",
       },
+      /* minify node but can be changed in the properties menu */
+      l: { value: false }
     },
 
     inputs: 1,
 
     outputs: 1,
 
-    showLabel: false,
     label: function() {
       return (this.name || this._def.paletteLabel);
     },
@@ -17578,7 +17617,8 @@ Functionality:
       progress: { value: true },
       ignhdrs: { value: false },
       paytoqs: { value: "ignore" },
-      headers: { value: [] }
+      headers: { value: [] },
+      ignreqtmeout: { value: false }
     },
 
     inputs: 1,
@@ -17604,10 +17644,12 @@ Functionality:
         types: ["msg","json","str"],
         typeField: "#node-input-urlpropertyType"
       });
+
       $("#node-input-urlproperty").val(this.urlproperty)
       $("#node-input-urlpropertyType").val(this.urlpropertyType) 
       $('#node-input-progress').val(this.progress)
       $('#node-input-ignhdrs').val(this.ignhdrs)
+      $('#node-input-ignreqtmeout').val(this.ignreqtmeout)
 
       if (this.paytoqs === true || this.paytoqs == "query") {
           $("#node-input-paytoqs").val("query");
@@ -17744,28 +17786,36 @@ Functionality:
     <input type="hidden" id="node-input-urlpropertyType"value="msg">
   </div>
 
+  <div class="form-row node-input-paytoqs-row">
+    <label for="node-input-paytoqs"><span data-i18n="node-red:common.label.payload"></span></label>
+    <select id="node-input-paytoqs" style="width: 70%;">
+        <option value="ignore" data-i18n="httprequeststream.label.paytoqs.ignore"></option>
+        <option value="query" data-i18n="httprequeststream.label.paytoqs.query"></option>
+        <option value="body" data-i18n="httprequeststream.label.paytoqs.body"></option>
+      </select>
+  </div>
+
   <div class="form-row">
-    <label for="node-input-progress">
+    <label for="node-input-progress" style="width: 155px;">
         <span data-i18n="httprequeststream.label.showprogress">
       </label>
     <input type="checkbox" id="node-input-progress" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
 
   <div class="form-row">
-    <label for="node-input-ignhdrs">
+    <label for="node-input-ignhdrs" style="width: 155px;">
           <span data-i18n="httprequeststream.label.ignore_header">
         </label>
     <input type="checkbox" id="node-input-ignhdrs" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
 
-  <div class="form-row node-input-paytoqs-row">
-    <label for="node-input-paytoqs"><span data-i18n="node-red:common.label.payload"></span></label>
-    <select id="node-input-paytoqs" style="width: 70%;">
-      <option value="ignore" data-i18n="httprequeststream.label.paytoqs.ignore"></option>
-      <option value="query" data-i18n="httprequeststream.label.paytoqs.query"></option>
-      <option value="body" data-i18n="httprequeststream.label.paytoqs.body"></option>
-    </select>
+  <div class="form-row">
+    <label for="node-input-ignreqtmeout" style="width: 155px;">
+            <span data-i18n="httprequeststream.label.ignore_request_timeout">
+          </label>
+    <input type="checkbox" id="node-input-ignreqtmeout" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
+
 
   <div class="form-row" style="margin-bottom:0;">
      <label><i class="fa fa-list"></i> <span data-i18n="httprequeststream.label.headers"></span></label>
@@ -18339,13 +18389,15 @@ Functionality:
       name: {
         value:"",
       },
+      
+      /* minify node but can be changed in the properties menu */
+      l: { value: false }
     },
 
     inputs: 1,
 
     outputs: 1,
 
-    showLabel: false,
     label: function() {
       return (this.name || this._def.paletteLabel);
     },

@@ -180,6 +180,7 @@
             "label": {
                 "headers": "Request Headers",
                 "ignore_header": "Ignore msg.headers",
+                "ignore_request_timeout": "Ignore request Timeout?",
                 "paytoqs": {
                     "body": "Post as body",
                     "ignore": "Ignore",

@@ -6,7 +6,7 @@
    
    function flowHubPullUpdateFlows(e=null){$.get("https://api.flowhub.org/v1/flows?cb="+(new Date).getTime()).done(o=>{var l=[];Object.keys(o.data).forEach(function(e){l.push({label:o.data[e].name,icon:"fa "+(RED.nodes.workspace(e)?"fa-check-circle-o":""),flowid:e,sublabel:e,selected:$("#node-input-flowhubpull-flowid").val()==e,checkbox:!1,children:void 0})}),e&&(l.sort((e,o)=>e.label<o.label?-1:1),e(l))}).fail(e=>{var o="",o="rejected"==e.state()?"<p>Failed to retrieve FlowHub catalogue, request blocked.</p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>":"<p>Failed to retrieve FlowHub catalogue.</p><p>Check browser console for more details.</p>";console.warn("Error loading https://api.flowhub.org/v1/flows:",e),RED.notify(o,{type:"error",id:"FlowHubPull",timeout:4e3})})}
    
-   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function loadScript(e,t){var o=document.createElement("script");o.type="text/javascript",o.readyState?o.onreadystatechange=function(){"loaded"!==o.readyState&&"complete"!==o.readyState||(o.onreadystatechange=null,t&&t())}:o.onload=function(){t&&t()},o.src=e,document.getElementsByTagName("head")[0].appendChild(o)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled"},defaultRevertHandler=(e,t,o)=>{e=RED.nodes.node(e);e&&(e[t]=o,e.dirty=!0,RED.nodes.dirty(!0),RED.view.redraw())},revertableAttributes={},revertableAttributesNames=(["x","y","template","name","info","func","label","tooltip","timeout","repeat"].forEach(function(e){revertableAttributes[e]=defaultRevertHandler}),Object.keys(revertableAttributes));function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function clickBaitDiff(){$("th.revertable").on("click",e=>{e.preventDefault();var t,o=$($(e.target).parent()).data("attr");confirm('Really revert changes to attribute "'+o+'"?')&&(t=revertableAttributes[o])&&t($($(e.target).parent()).data("id"),o,JSON.parse(atob($($(e.target).parent()).data("oldval"))))})}function createDiff(l,c){var f=[],s=[];try{if(Object.keys(c).forEach(function(e){var t;Object.keys(l).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],f.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),s.push(e))}),Object.keys(l).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof l[e]?JSON.stringify(l[e]):l[e],f.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),s.push(e))}),Object.keys(l).forEach(function(i){if(-1<Object.keys(c).indexOf(i))if(JSON.stringify(l[i])!==JSON.stringify(c[i]))try{let o=null,t=void 0;s.push(i);try{t=Diff.diffLines(c[i],l[i])}catch(e){t=Diff.diffLines(JSON.stringify(c[i],void 0,1),JSON.stringify(l[i],void 0,1))}const r=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),r.appendChild(o)});var n=-1<revertableAttributesNames.indexOf(i)?" revertable":"",e=document.createElement("tr");e.setAttribute("class","dv-differ"),e.setAttribute("data-id",l.id),e.setAttribute("data-attr",i);try{e.setAttribute("data-oldval",btoa(JSON.stringify(c[i])))}catch(e){n=""}var a,d=document.createElement("th");d.setAttribute("class",n),d.appendChild(document.createTextNode(i)),descMap[i]&&((a=document.createElement("i")).style["font-size"]="80%",a.appendChild(document.createTextNode("("+descMap[i]+")")),d.appendChild(a)),e.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(r),e.append(d),f.push(e.outerHTML)}catch(e){console.log("--Exceeption",e),f.push("<tr><th class='dv-error'>"+i+" CAUSED EXCEP</th><td><code>"+escapeHtml(l[i])+"</code></td><td><code>"+escapeHtml(c[i])+"</code></td></tr>")}else f.push("<tr><th>"+i+"</th><td><code>"+escapeHtml(l[i])+"</code></td><td><code>"+escapeHtml(c[i])+"</code></td></tr>")}),0==s.length){let o=null;var e="OBJ",t=Diff.diffJson(c,l);const d=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),d.appendChild(o)});var i,n=document.createElement("tr"),a=(n.setAttribute("class","dv-differ"),document.createElement("th"));return a.appendChild(document.createTextNode(e)),descMap[e]&&((i=document.createElement("i")).style["font-size"]="80%",i.appendChild(document.createTextNode("("+descMap[e]+")")),a.appendChild(i)),n.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(d),n.append(a),{html:n.outerHTML,icon:"fa-question"}}}catch(e){console.log("Exception",e)}var o=["x","y","w","h","g","wires"];return{html:f.join(""),icon:0==s.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function doPushSubmission(e,t,o){var i=RED.workspaces.active();$.ajax({url:"FlowHubPush",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:i,flowdata:e||{},flowlabel:RED.nodes.workspace(i).label,cfgnode:t,svgdata:o}),success:function(e){RED.notify("Submission triggered",{type:"warning",id:"FlowHubPush",timeout:2e3}),$("#flowhubpush-view-flow-link").attr("href","https://flowhub.org/f/"+i).show()},error:function(e,t,o){RED.notify("Submission failed: "+t,{type:"error",id:"FlowHubPush",timeout:2e3}),console.log(t,o)}})}function getFlowDataFromCurrentWorkspace(e){var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeRemoveHighlight(){document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({msg:"removehighlight"},"*")}function iframeHighlightItem(e){iframeRemoveHighlight(),document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({item:{label:e.label,icon:e.icon,class:e.class,sublabel:e.sublabel,objid:e.objid},msg:"highlightitem"},"*")}function iframeHasBeenLoaded(e){let t=$(e).data("flowid");var o=getFlowDataFromCurrentWorkspace(t);setTimeout(()=>{e.contentWindow.postMessage({nodes:o,msg:"renderlocalflow",flowid:t||RED.workspaces.active()},"*")},345)}function doComparison(e){var t=RED.workspaces.active();if(RED.nodes.workspace(t))RED.notify("Flow Comparison Triggered",{type:"warning",id:"FlowHubDiff",timeout:2e3}),$.ajax({url:"FlowHubDiff",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowhub:"submission from ",flowdata:e||{},flowlabel:RED.nodes.workspace(t).label}),success:function(e){var d=[],r={};if("failed"==e.status){RED.notify("This does not seem to be a FlowHub flow id: "+t,{type:"error",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else if($("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+e.flowid).show(),e.changes.forEach(function(e){var t,o,i,n,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-trash",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0,objid:a},d.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-plus-square",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(n=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+n.icon,class:"",diffcontent:n.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[a])):((t=RED.nodes.node(a))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(i=("function"==typeof(i=o.label)?i.call(t):i)||""),o&&i||(i=t.type),n=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:i,icon:"fa "+n.icon,class:"",diffcontent:n.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[t.id]))}),e.ifurl&&$("#node-input-flowhubdiff-svgcontainer").html('<iframe id="flowhubdiff-svgimageiframe" width="100%" height="100%" src="'+e.ifurl+'" onload="window.iframeHasBeenLoaded(this)" style="border: none; min-height: 300px;" data-flowid="'+t+'"></iframe>'),0==d.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){$("#node-input-flowhubdiff-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.objid&&iframeHighlightItem(t)}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw()),t.diffcontent?($("#node-input-flowhubdiff-diffcontainer").html(t.diffcontent),clickBaitDiff()):$("#node-input-flowhubdiff-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-flowhubdiff-target-filter").show();var o=$("#node-input-flowhubdiff-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-flowhubdiff-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-flowhubdiff-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+$("#node-input-flowhubdiff-target-container-div").treeList("data").length))}})}$("#node-input-flowhubdiff-target-container-div").treeList("data",d.sort((e,t)=>e.icon==t.icon?e.label.toLowerCase()>t.label.toLowerCase():e.icon>t.icon))}},error:function(e,t,o){$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify("Not Allowed - 500.","error"):0==e.status?RED.notify("Not Allowed - 0.","error"):RED.notify("Not Allowed - Unexpected.","error")}});else{RED.notify("Comparing subflows not supported.",{type:"error",id:"FlowHubDiff",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
+   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function loadScript(e,t){var o=document.createElement("script");o.type="text/javascript",o.readyState?o.onreadystatechange=function(){"loaded"!==o.readyState&&"complete"!==o.readyState||(o.onreadystatechange=null,t&&t())}:o.onload=function(){t&&t()},o.src=e,document.getElementsByTagName("head")[0].appendChild(o)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled"},defaultRevertHandler=(e,t,o)=>{e=RED.nodes.node(e);e&&(e[t]=o,e.dirty=!0,RED.nodes.dirty(!0),RED.view.redraw())},revertableAttributes={},revertableAttributesNames=(["x","y","template","name","info","func","label","tooltip","timeout","repeat"].forEach(function(e){revertableAttributes[e]=defaultRevertHandler}),Object.keys(revertableAttributes));function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function clickBaitDiff(){$("th.revertable").on("click",e=>{e.preventDefault();var t,o=$($(e.target).parent()).data("attr");confirm('Really revert changes to attribute "'+o+'"?')&&(t=revertableAttributes[o])&&t($($(e.target).parent()).data("id"),o,JSON.parse(atob($($(e.target).parent()).data("oldval"))))})}function createDiff(l,c){var f=[],s=[];try{if(Object.keys(c).forEach(function(e){var t;Object.keys(l).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],f.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),s.push(e))}),Object.keys(l).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof l[e]?JSON.stringify(l[e]):l[e],f.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),s.push(e))}),Object.keys(l).forEach(function(i){if(-1<Object.keys(c).indexOf(i))if(JSON.stringify(l[i])!==JSON.stringify(c[i]))try{let o=null,t=void 0;s.push(i);try{t=Diff.diffLines(c[i],l[i])}catch(e){t=Diff.diffLines(JSON.stringify(c[i],void 0,1),JSON.stringify(l[i],void 0,1))}const r=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),r.appendChild(o)});var n=-1<revertableAttributesNames.indexOf(i)?" revertable":"",e=document.createElement("tr");e.setAttribute("class","dv-differ"),e.setAttribute("data-id",l.id),e.setAttribute("data-attr",i);try{e.setAttribute("data-oldval",btoa(JSON.stringify(c[i])))}catch(e){n=""}var a,d=document.createElement("th");d.setAttribute("class",n),d.appendChild(document.createTextNode(i)),descMap[i]&&((a=document.createElement("i")).style["font-size"]="80%",a.appendChild(document.createTextNode("("+descMap[i]+")")),d.appendChild(a)),e.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(r),e.append(d),f.push(e.outerHTML)}catch(e){console.log("--Exceeption",e),f.push("<tr><th class='dv-error'>"+i+" CAUSED EXCEP</th><td><code>"+escapeHtml(l[i])+"</code></td><td><code>"+escapeHtml(c[i])+"</code></td></tr>")}else f.push("<tr><th>"+i+"</th><td><code>"+escapeHtml(l[i])+"</code></td><td><code>"+escapeHtml(c[i])+"</code></td></tr>")}),0==s.length){let o=null;var e="OBJ",t=Diff.diffJson(c,l);const d=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),d.appendChild(o)});var i,n=document.createElement("tr"),a=(n.setAttribute("class","dv-differ"),document.createElement("th"));return a.appendChild(document.createTextNode(e)),descMap[e]&&((i=document.createElement("i")).style["font-size"]="80%",i.appendChild(document.createTextNode("("+descMap[e]+")")),a.appendChild(i)),n.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(d),n.append(a),{html:n.outerHTML,icon:"fa-question"}}}catch(e){console.log("Exception",e)}var o=["x","y","w","h","g","wires"];return{html:f.join(""),icon:0==s.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function doPushSubmission(e,t,o){var i=RED.workspaces.active();$.ajax({url:"FlowHubPush",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:i,flowdata:e||{},flowlabel:RED.nodes.workspace(i).label,cfgnode:t,svgdata:o}),success:function(e){RED.notify("Submission triggered",{type:"warning",id:"FlowHubPush",timeout:2e3}),$("#flowhubpush-view-flow-link").attr("href","https://flowhub.org/f/"+i).show()},error:function(e,t,o){RED.notify("Submission failed: "+t,{type:"error",id:"FlowHubPush",timeout:2e3}),console.log(t,o)}})}function getFlowDataFromCurrentWorkspace(e){var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeRemoveHighlight(){document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({msg:"removehighlight"},"*")}function iframeHighlightItem(e){iframeRemoveHighlight(),document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({item:{label:e.label,icon:e.icon,class:e.class,sublabel:e.sublabel,objid:e.objid},msg:"highlightitem"},"*")}function iframeHasBeenLoaded(e){let t=$(e).data("flowid");var o=getFlowDataFromCurrentWorkspace(t);setTimeout(()=>{e.contentWindow.postMessage({nodes:o,msg:"renderlocalflow",flowid:t||RED.workspaces.active()},"*")},345)}function doComparison(e){var t=RED.workspaces.active();if(RED.nodes.workspace(t))RED.notify("Flow Comparison Triggered",{type:"warning",id:"FlowHubDiff",timeout:2e3}),$.ajax({url:"FlowHubDiff",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowhub:"submission from ",flowdata:e||{},flowlabel:RED.nodes.workspace(t).label}),success:function(e){var d=[],r={};if("failed"==e.status){RED.notify("This does not seem to be a FlowHub flow id: "+t,{type:"error",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else if($("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+e.flowid).show(),e.changes.forEach(function(e){var t,o,i,n,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-trash",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0,objid:a},d.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-plus-square",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(n=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+n.icon,class:"",diffcontent:n.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[a])):(t=RED.nodes.node(a))?((o=RED.nodes.getType(t.type))&&(i=("function"==typeof(i=o.label)?i.call(t):i)||""),o&&i||(i=t.type),n=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:i,icon:"fa "+n.icon,class:"",diffcontent:n.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(r[t.id])):console.log("Node ignore, Type: "+e.type,e)}),e.ifurl&&$("#node-input-flowhubdiff-svgcontainer").html('<iframe id="flowhubdiff-svgimageiframe" width="100%" height="100%" src="'+e.ifurl+'" onload="window.iframeHasBeenLoaded(this)" style="border: none; min-height: 300px;" data-flowid="'+t+'"></iframe>'),0==d.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){$("#node-input-flowhubdiff-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.objid&&iframeHighlightItem(t)}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw()),t.diffcontent?($("#node-input-flowhubdiff-diffcontainer").html(t.diffcontent),clickBaitDiff()):$("#node-input-flowhubdiff-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-flowhubdiff-target-filter").show();var o=$("#node-input-flowhubdiff-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-flowhubdiff-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-flowhubdiff-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+$("#node-input-flowhubdiff-target-container-div").treeList("data").length))}})}$("#node-input-flowhubdiff-target-container-div").treeList("data",d.sort((e,t)=>e.icon==t.icon?e.label.toLowerCase()>t.label.toLowerCase():e.icon>t.icon))}},error:function(e,t,o){$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify("Not Allowed - 500.","error"):0==e.status?RED.notify("Not Allowed - 0.","error"):RED.notify("Not Allowed - Unexpected.","error")}});else{RED.notify("Comparing subflows not supported.",{type:"error",id:"FlowHubDiff",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
 
    function nr_intro_generate_svg_3_1(r){return e=>{try{handleSvgObject($($("svg[width=8000]")[0]),e)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_0(r){return e=>{try{handleSvgObject($($("svg")[0]),e)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function handleSvgObject(o,e){var t=o.clone();t.find("foreignObject").remove(),t.find("svg.__screenshot").remove();function a(t,e){for(var n=0;n<t.length;n++){var s=t.item(n),i=e[n];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))}),["fill","stroke"].forEach(function(t){var e,n,r=(e=$(i).attr(t)||$(i).css(t))&&null!==e&&"none"!=e?(n=e.match(/^#(.)(.)(.)$/))?"#"+n[1]+n[1]+n[2]+n[2]+n[3]+n[3]:(n=e.match(/^#......$/))?e:null===(n=e.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(r=e.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2),opa:r[4]}:(console.log("Screenshot node: returned unknown color: "+e),e):"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2):"none";"object"==typeof r?(s.setAttribute(t+"-opacity",r.opa),s.setAttribute(t,r.clr)):s.setAttribute(t,r)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var n='<?xml version="1.0" standalone="no"?>\r\n<svg '+('width="'+o.attr("width")+'" height="'+o.attr("height")+'"')+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',t=t.html(),l=(new DOMParser).parseFromString(n+t+"\r\n</svg>","image/svg+xml"),r=e=>(["g","rect","line","path","circle","image","text"].forEach(t=>{$(e.getElementsByTagName(t)).each((t,e)=>{e.setAttribute("class",""),e.setAttribute("id","")})}),e),s=(["g","rect","line","path","circle","image"].forEach(function(t){a(l.getElementsByTagName(t),o.find(t))}),["text"].forEach(function(t){a(l.getElementsByTagName(t),o.find(t));for(var e=l.getElementsByTagName(t),n=o.find(t),r=0;r<e.length;r++){var s=e.item(r),i=n[r];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))})}}),l.getElementsByTagName("image")),g={},i=(n,r,s)=>{var i=n.getAttribute("xlink:href"),o=i.substr(-4,4).toLowerCase(),a={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(g[i])return n.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+g[i]),s(r-1);switch(o){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onload=function(t){var e=l.response;e&&(e=(t=>{for(var e="",n=new Uint8Array(t),r=n.byteLength,s=0;s<r;s++)e+=String.fromCharCode(n[s]);return window.btoa(e)})(e),g[i]=e,n.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+e)),s(r-1)},l.send(null);break;case".svg":$.get(i,function(t){var e=new XMLSerializer,e=btoa(e.serializeToString(t));g[i]=e,n.setAttribute("xlink:href","data:image/svg+xml;base64,"+e),s(r-1)})}},c=t=>{t<0?e((new XMLSerializer).serializeToString(r(l))):i(s.item(t),t,c)};0<s.length?i(s.item(s.length-1),s.length-1,c):e((new XMLSerializer).serializeToString(r(l)))}function svgGeneratorFunctionForVersion(t){var n,e=t.settings.version.split("."),r=e[0],e=e[1];if("3"==r){if("0"==e)return nr_intro_generate_svg_3_0(t);if("1"==e)return nr_intro_generate_svg_3_1(t)}return n=t,t=>{var e="Node-RED version ("+n.settings.version+") not supported";n.notify(e,{type:"error"}),t&&t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+e+"</text></svg>")}}
    
@@ -115,7 +115,7 @@
       // Add first tab, compare
       tabs.addTab({
             id: 'func-flowhub-tab-compare',
-            iconClass: 'fa fa-question',
+            iconClass: 'fa fa-clone',
             label: 'Compare'
       });
       
@@ -331,7 +331,102 @@
          }, 300);
        });
 
-       $("#node-input-flowhubpull-sb-import-flow-but").on("click", function(e) {
+      $("#node-input-flowhubpull-sb-check-duplicates-flow-but").on("click", function(e) {
+        if ( e ) { e.preventDefault(); }
+
+        if ( $('#node-input-flowhubpull-flowid').val().trim() == "" ||
+            !$('#node-input-flowhubpull-flowid').val() ) {
+          return RED.notify(RED._("notification.warning", {
+            message: "FlowID not provided, doing nothing."
+          }), "warning");
+        }
+
+        RED.notify("Checking for flow duplication.", "success");
+
+        $.get( "https://api.flowhub.org/v1/flows/" +
+              $('#node-input-flowhubpull-flowid').val() +
+              "?cb=" + new Date().getTime() + "&v=" + 
+              $('#node-input-flowhubpull-flowrevision').val(), function(e,d) {
+                let duplicates = []
+                
+                e.forEach( (e, idx) => {
+                  if ( e.type == "tab" ) {
+                    if ( RED.nodes.workspace(e.id) ) { duplicates.push(e) }
+                  } else if ( e.type == "junction" ) {
+                    if ( RED.nodes.junction(e.id) )  { duplicates.push(e) }
+                  } else if ( e.type == "group" )    {
+                    if ( RED.nodes.group(e.id) )     { duplicates.push(e) }
+                  } else if ( e.type == "subflow" )  {
+                    if ( RED.nodes.subflow(e.id) )   { duplicates.push(e) }
+                  } else if ( RED.nodes.node(e.id) ) {
+                    duplicates.push(e)
+                  }
+                })
+
+                if ( duplicates.length == 0 ) {
+                  RED.notify("Found no duplication.", "success");
+                  
+                  try {
+                    $("#node-input-flowhubpull-sb-duplication-container-div").treeList('empty')
+                  } catch (ex) {}
+                } else {
+                  RED.notify("Found " + duplicates.length + " items of duplication", "warning");
+
+                  try {
+                      $("#node-input-flowhubpull-sb-duplication-container-div").treeList('empty')
+                  } catch (ex) {
+                      $("#node-input-flowhubpull-sb-duplication-container-div").css({
+                          width: "100%",
+                          height: "calc(100%)"
+                      }).treeList(
+                          {
+                              multi: false
+                          }
+                      ).on("treelistitemmouseover", function (e, item) {
+                      }).on("treelistitemmouseout", function (e, item) {
+                      }).on('treelistselect', function (event, item) {
+                          if (item.node) {
+                              RED.workspaces.show(item.node.z, false, false, true);
+                              RED.view.reveal(item.node.id, true)
+                              RED.view.redraw();
+                          }
+                      }).on('treelistconfirm', function (event, item) {
+                          if (item.node) {
+                              var ndeid = item.node.id;
+                              
+                              setTimeout(() => {
+                                  const nodeToShow = RED.nodes.node(ndeid)
+
+                                  if (nodeToShow) {
+                                      RED.view.reveal(nodeToShow.id);
+                                      RED.view.select(nodeToShow.id);
+                                      RED.editor.edit(nodeToShow);
+                                  }
+
+                                  if (ndeid == RED.workspaces.active()) {
+                                      RED.workspaces.edit()
+                                  }
+                              }, 50);
+                          }
+                      });
+                  }
+
+                  // add items
+                  duplicates = duplicates.map( itm => {
+                      return {
+                        node: itm,
+                        label: itm.id,
+                        sublabel: itm.type,
+                        selected: false,
+                        checkbox: false
+                      }
+                  })
+                  $("#node-input-flowhubpull-sb-duplication-container-div").treeList("data", duplicates)
+                }
+              });
+      })
+
+      $("#node-input-flowhubpull-sb-import-flow-but").on("click", function(e) {
          if ( e ) { e.preventDefault(); }
 
          ensureYourConfigNodeExists();
@@ -343,8 +438,6 @@
              message: "FlowID not provided, doing nothing."
            }), "warning");
          }
-
-         $('#node-dialog-ok').trigger('click')
 
          $.get( "https://api.flowhub.org/v1/flows/" +
                 $('#node-input-flowhubpull-flowid').val() +
@@ -366,7 +459,7 @@
                     ).trigger("paste");
                   }, 300);
                 });
-       });
+      });
 
       $('#node-input-flowhubpull-flowrevision').on('change', () => {
         ensureYourConfigNodeExists();
@@ -632,6 +725,14 @@ th.revertable:after {
             <div class="form-row" style="margin-left: 10px;">
                <button id="node-input-flowhubpull-sb-import-flow-but"
                                              class="red-ui-button">Import Flow</button>
+               <button id="node-input-flowhubpull-sb-check-duplicates-flow-but"
+                                             class="red-ui-button">Duplication?</button>
+            </div>
+
+
+            <div class="form-row node-input-target-row node-input-target-list-row"
+               style="position: relative; min-height: 100px; height: 300px; margin-left: 10px; margin-right: 15px;">            
+               <div id="node-input-flowhubpull-sb-duplication-container-div" style="min-height: 300px;"></div>
             </div>
          </div>
       </div>
@@ -1976,9 +2077,13 @@ th.revertable:after {
 (function() {
    var globalRefToSvgData;
 
-   function setupTreelist(){var e=collectOrphans();if(0==e.length){RED.notify("No Orphans Found",{type:"warning",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.node&&t.node.z==RED.workspaces.active()&&(RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectOrphans(){const t=new Set;var n=[],i=(RED.nodes.eachLink(e=>{t.add(e.source),t.add(e.target)}),RED.nodes.eachNode(e=>{t.has(e)||n.push(e)}),[]),r={};return n.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n=t.label,n=("function"==typeof n?n.call(e):n)||"",o=e.type;if(0===o.indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:o,selected:!1,checkbox:!1},i.push(r[e.id])}),i}
+   let obfuscateHelpers={getFlowDataFromCurrentWorkspace:e=>{var e=e||RED.workspaces.active(),o=RED.nodes.groups(e),e=(o=(o=o.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&o.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return o.unshift(e),RED.nodes.createExportableNodeSet(o)},openImportDialog:e=>{RED.clipboard.import();let o=e;setTimeout(()=>{$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(o)).trigger("paste")},300)}};function obfuscatieCurrentFlow(o){let t=obfuscateHelpers.getFlowDataFromCurrentWorkspace();t=t.filter(e=>"group"!=e.type);let r={},a=[];console.log("CFG",o),t.forEach(e=>{r[e.id]=e,o.name&&(e.name=e.id),o.info&&(e.info=""),o.position&&(e.x=150,e.y=150),!o.javascript||"javascript"!=e.format&&"function"!=e.type||a.push(e)}),0<a.length?$.ajax({url:"ClientCode/"+a[0].id+"/ugify",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({nodes:a,cfg:{parse:{},compress:{},mangle:{reserved:["$","export","require"]},output:null,sourceMap:null,nameCache:null,toplevel:!1,warnings:!1}}),success:function(e){e.forEach(e=>{var o=r[e.id];"function"==o.type?o.func=e.func:"javascript"==o.format&&(o.template=e.template)}),obfuscateHelpers.openImportDialog(t)},error:function(e,o,t){RED.notify("ClientCode Communcation Failure: "+n.id+": "+o,{type:"error",timeout:3e3})}}):obfuscateHelpers.openImportDialog(t)}
+   
+   function setupTreelist(){var e=collectOrphans();if(0==e.length){RED.notify("No Orphans Found",{type:"warning",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectOrphans(){const t=new Set;var n=[],i=(RED.nodes.eachLink(e=>{t.add(e.source),t.add(e.target)}),RED.nodes.eachNode(e=>{t.has(e)||n.push(e)}),[]),r={};return n.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n=t.label,n=("function"==typeof n?n.call(e):n)||"",o=e.type;if(0===o.indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:o,selected:!1,checkbox:!1},i.push(r[e.id])}),i}
    
    function nr_intro_generate_svg_3_1(r){return e=>{try{handleSvgObject($($("svg[width=8000]")[0]),e)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_0(r){return e=>{try{handleSvgObject($($("svg")[0]),e)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function handleSvgObject(o,e){var t=o.clone();t.find("foreignObject").remove(),t.find("svg.__screenshot").remove();function a(t,e){for(var n=0;n<t.length;n++){var s=t.item(n),i=e[n];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))}),["fill","stroke"].forEach(function(t){var e,n,r=(e=$(i).attr(t)||$(i).css(t))&&null!==e&&"none"!=e?(n=e.match(/^#(.)(.)(.)$/))?"#"+n[1]+n[1]+n[2]+n[2]+n[3]+n[3]:(n=e.match(/^#......$/))?e:null===(n=e.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(r=e.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2),opa:r[4]}:(console.log("Screenshot node: returned unknown color: "+e),e):"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2):"none";"object"==typeof r?(s.setAttribute(t+"-opacity",r.opa),s.setAttribute(t,r.clr)):s.setAttribute(t,r)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var n='<?xml version="1.0" standalone="no"?>\r\n<svg '+('width="'+o.attr("width")+'" height="'+o.attr("height")+'"')+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',t=t.html(),l=(new DOMParser).parseFromString(n+t+"\r\n</svg>","image/svg+xml"),r=e=>(["g","rect","line","path","circle","image","text"].forEach(t=>{$(e.getElementsByTagName(t)).each((t,e)=>{e.setAttribute("class",""),e.setAttribute("id","")})}),e),s=(["g","rect","line","path","circle","image"].forEach(function(t){a(l.getElementsByTagName(t),o.find(t))}),["text"].forEach(function(t){a(l.getElementsByTagName(t),o.find(t));for(var e=l.getElementsByTagName(t),n=o.find(t),r=0;r<e.length;r++){var s=e.item(r),i=n[r];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))})}}),l.getElementsByTagName("image")),g={},i=(n,r,s)=>{var i=n.getAttribute("xlink:href"),o=i.substr(-4,4).toLowerCase(),a={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(g[i])return n.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+g[i]),s(r-1);switch(o){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onload=function(t){var e=l.response;e&&(e=(t=>{for(var e="",n=new Uint8Array(t),r=n.byteLength,s=0;s<r;s++)e+=String.fromCharCode(n[s]);return window.btoa(e)})(e),g[i]=e,n.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+e)),s(r-1)},l.send(null);break;case".svg":$.get(i,function(t){var e=new XMLSerializer,e=btoa(e.serializeToString(t));g[i]=e,n.setAttribute("xlink:href","data:image/svg+xml;base64,"+e),s(r-1)})}},c=t=>{t<0?e((new XMLSerializer).serializeToString(r(l))):i(s.item(t),t,c)};0<s.length?i(s.item(s.length-1),s.length-1,c):e((new XMLSerializer).serializeToString(r(l)))}function generatorFunctionForVersion(t){var n,e=t.settings.version.split("."),r=e[0],e=e[1];if("3"==r){if("0"==e)return nr_intro_generate_svg_3_0(t);if("1"==e)return nr_intro_generate_svg_3_1(t)}return n=t,t=>{var e="Node-RED version ("+n.settings.version+") not supported";n.notify(e,{type:"error"}),t&&t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+e+"</text></svg>")}}function addPanZoom(){var t=d3.select("#node-input-screenshot-svgcontainer svg"),e=(t.html("<g>"+t.html()+"</g>"),t.select("g")),n=d3.behavior.zoom().scaleExtent([.2,100]).on("zoom",function(t){e.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});t.call(n)}
+
+   function setupTreelistInfoness(){var e=collectUndocumentedNodes();if(0==e.length){RED.notify("All nodes documented",{type:"success",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e,"editor-tab-description")),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectUndocumentedNodes(){let o=[];RED.nodes.eachNode(e=>{var t,n;$("#"+e.id).find(".red-ui-info-available-indicator").remove(),e.info&&e.info.trim()?((t=document.createElementNS("http://www.w3.org/2000/svg","g")).setAttribute("class","red-ui-info-available-indicator"),(n=document.createElementNS("http://www.w3.org/2000/svg","circle")).setAttribute("cx","5"),n.setAttribute("cy","5"),n.setAttribute("r","5"),n.setAttribute("fill","yellow"),t.append(n),$(t).insertBefore($("#"+e.id).find(".red-ui-flow-node-changed"))):e.z==RED.workspaces.active()&&o.push(e)});var i=[],r={};return o.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n,o=t.label,o=("function"==typeof o?o.call(e):o)||"";if(0===(n=e.type).indexOf("subflow:"))return}t&&o||(o=e.type),r[e.id]={node:e,label:o,sublabel:n,selected:!1,checkbox:!1},i.push(r[e.id])}),i}
 
    // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
    var initialiseConfigNodeOnce = () => {
@@ -2020,6 +2125,24 @@ th.revertable:after {
             label: 'Orphans'
       });
 
+      // Add tab, obfuscation
+      tabs.addTab({
+            id: 'func-introspection-tab-obfuscation',
+            iconClass: 'fa fa-user-secret',
+            label: 'Obfuscation'
+      });
+      
+      $('#node-input-obfuscation-generate-btn').on("click", function (e) {
+         if ( e ) { e.preventDefault() }
+         
+         obfuscatieCurrentFlow({
+            name: $('#node-input-obfuscate-name').is(":checked"),
+            info: $('#node-input-obfuscate-info').is(":checked"),
+            position: $('#node-input-obfuscate-position').is(":checked"),
+            javascript: $('#node-input-obfuscate-javascript').is(":checked"),
+         })
+      })
+
       $('#node-screenshot-capture-btn').on("click", function (e) {
          if ( e ) { e.preventDefault() }
 
@@ -2059,6 +2182,11 @@ th.revertable:after {
          if ( e ) { e.preventDefault() }
          setupTreelist();
       })
+
+      $('#node-input-documentation-find-btn').on('click', (e) => {
+         if ( e ) { e.preventDefault() }
+         setupTreelistInfoness();
+      })
    };
    RED.events.on('runtime-state', initialiseConfigNodeOnce);
 })();
@@ -2071,6 +2199,10 @@ th.revertable:after {
    
    .col-100.no-label .red-ui-typedInput-container {
    width: 100% !important;
+   }
+   .w-30 {
+      width: 30% !important;
+      margin-left: 10px;
    }
 </style>
 
@@ -2108,7 +2240,9 @@ th.revertable:after {
             <div class="col-100">
                <div class="form-row node-input-target-row" style="margin-left: 10px; margin-top: 30px">
                   <button id="node-input-orphan-find-btn"
-                          class="red-ui-button"><i class="fa fa-rotate-right"></i> Refresh</button>
+                          class="red-ui-button"><i class="fa fa-life-ring"></i> Unconnected</button>
+                  <button id="node-input-documentation-find-btn"
+                          class="red-ui-button"><i class="fa fa-cc"></i> Undocumented</button>
                </div>
                
                <div class="form-row node-input-target-row node-input-target-list-row"
@@ -2121,9 +2255,52 @@ th.revertable:after {
             </div>
          </div>
       </div>
+
+      <div id="func-introspection-tab-obfuscation" style="display:none; min-height: calc(100%);">
+
+         <div class="form-row">
+            <div class="col-100">
+               <div class="form-row node-input-target-row" style="margin-left: 10px; margin-top: 30px">
+                  <button id="node-input-obfuscation-generate-btn"
+                                class="red-ui-button"><i class="fa fa-low-vision"></i> Obfuscate</button>
+               </div>
+            </div>
+         </div>
+
+         <div class="form-row col-100">
+            <label for="node-input-obfuscate-name" class="w-30">
+               <i class="fa fa-tag"></i>
+               <span>Obfuscate Name?</span>
+            </label>
+            <input type="checkbox" checked=checked id="node-input-obfuscate-name"
+                     style="display:inline-block; width:15px; vertical-align:baseline;">
+         </div>
+         <div class="form-row">
+            <label for="node-input-obfuscate-position" class="w-30">
+                        <i class="fa fa-map-pin"></i>
+                        <span>Obfuscate Position?</span>
+            </label>
+            <input type="checkbox" checked=checked id="node-input-obfuscate-position"
+                   style="display:inline-block; width:15px; vertical-align:baseline;">
+         </div>
+         <div class="form-row">
+            <label for="node-input-obfuscate-info" class="w-30">
+                        <i class="fa fa-info"></i>
+                        <span>Obfuscate Info?</span>
+            </label>
+            <input type="checkbox" checked=checked id="node-input-obfuscate-info"
+                              style="display:inline-block; width:15px; vertical-align:baseline;">
+         </div>
+         <div class="form-row">
+            <label for="node-input-obfuscate-javascript" class="w-30">
+                        <i class="fa fa-code"></i>
+                        <span>Obfuscate Javascript?</span>
+            </label>         
+            <input type="checkbox" checked=checked id="node-input-obfuscate-javascript"
+                              style="display:inline-block; width:15px; vertical-align:baseline;">
+         </div>
    </div>
 
-   
 </script>
 <!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin] --- -->
 <script type="text/javascript">

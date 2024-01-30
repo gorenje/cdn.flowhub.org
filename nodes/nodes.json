@@ -888,7 +888,7 @@
             "FlowHubPull"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.4.7"
     },
     {
         "enabled": true,
@@ -900,7 +900,7 @@
             "FlowHubCfg"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.4.7"
     },
     {
         "enabled": true,
@@ -1331,7 +1331,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1343,7 +1343,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1355,7 +1355,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1367,7 +1367,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1379,7 +1379,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1391,7 +1391,7 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1403,7 +1403,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.2.7"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -1415,7 +1415,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.5.6"
+        "version": "0.6.0"
     },
     {
         "enabled": true,
@@ -1427,7 +1427,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.5.6"
+        "version": "0.6.0"
     },
     {
         "enabled": true,
@@ -1439,7 +1439,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.5.6"
+        "version": "0.6.0"
     },
     {
         "enabled": true,
@@ -1451,7 +1451,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.5.6"
+        "version": "0.6.0"
     },
     {
         "enabled": true,
@@ -1463,7 +1463,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.5.6"
+        "version": "0.6.0"
     },
     {
         "enabled": true,
@@ -1583,7 +1583,7 @@
             "PipeStart"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1595,7 +1595,7 @@
             "FileStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1607,7 +1607,7 @@
             "HttpRequestStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1619,7 +1619,7 @@
             "CsvStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1631,7 +1631,7 @@
             "JsonLStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1643,7 +1643,7 @@
             "LineStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1655,7 +1655,7 @@
             "IconvStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1667,7 +1667,7 @@
             "Chunk2Msg"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1679,7 +1679,7 @@
             "DeCompStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1691,7 +1691,7 @@
             "ArchiveStream"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     },
     {
         "enabled": true,
@@ -1703,6 +1703,6 @@
             "PipeEnd"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.10"
     }
 ]
