@@ -895,7 +895,7 @@ var RED = (function() {
 
         let srchParams = new URLSearchParams(window.location.search);
 
-        // disable tour on if parameter 't' is set to 0
+        // disable tour if parameter 't' is set to 0
         try {
             RED.settings.set(
                 "editor.view.view-show-welcome-tours",srchParams.get('t') !== "0"
@@ -911,8 +911,18 @@ var RED = (function() {
             // only once.
             RED.events.off("workspace:dirty", initPlugins);
 
+            let sP = srchParams;
+            let showSidebarEntry = () => {
+                // if the search parameters for sidebar was set, the show
+                // a specific sidebar
+                if ( sP.get("sb") != "" ) {
+                    RED.sidebar.show(sP.get("sb"))
+                }
+            }
+
             setTimeout( () => {
-              RED.events.emit('runtime-state', { state: 'start'});
+                RED.events.emit('runtime-state', { state: 'start'});
+                setTimeout( showSidebarEntry, 456 )
             }, 732);
         };
         RED.events.on( "workspace:dirty", initPlugins);
