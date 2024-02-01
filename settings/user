@@ -19,6 +19,10 @@
             "core:align-selection-to-left": {
                 "scope": "red-ui-workspace",
                 "key": "alt-a l"
+            },
+            "introspection:show-link-call-links": {
+                "scope": "red-ui-workspace",
+                "key": "alt-ctrl-l"
             }
         }
     },
