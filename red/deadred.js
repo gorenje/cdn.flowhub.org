@@ -916,6 +916,10 @@ var DEADRED = (function() {
                     "data": JSON.parse(options.data)
                 }])
                 jqXHR.abort();
+            } else if ( mth[2] == "ugify" ) {
+                // used by the obfuscation endpoint
+                options.success([])
+                jqXHR.abort();
             } else {
                 // this is a node.send(...) call
                 passMsgToLinks(
