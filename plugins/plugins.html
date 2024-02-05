@@ -2079,7 +2079,7 @@ th.revertable:after {
 (function() {
    var globalRefToSvgData;
 
-   let obfuscateHelpers={getFlowDataFromCurrentWorkspace:e=>{var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)},openImportDialog:e=>{RED.clipboard.import();let t=e;setTimeout(()=>{$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(t)).trigger("paste")},300)}};function obfuscatieCurrentFlow(t){let c=obfuscateHelpers.getFlowDataFromCurrentWorkspace(),u=(t.remove_groups&&(c=c.filter(e=>"group"!=e.type)).forEach(e=>{delete e.g}),{}),r=[],s={},d={},o={},i=[],a={};if(c.forEach(e=>{"subflow"==(u[e.id]=e).type&&(a[e.id]=e),"junction"==e.type&&(s[e.id]=e),"link out"==e.type&&(o[e.id]=e),"link in"==e.type&&(d[e.id]=e),"link call"==e.type&&i.push(e.id),!t.javascript||"javascript"!=e.format&&"function"!=e.type||r.push(e)}),t.remove_junctions&&(Object.keys(s).forEach(o=>{let i=s[o];a[i.z]||c.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r=t.wires[e].indexOf(o);-1<r&&(t.wires[e].splice(r,1),t.wires[e].push(...i.wires[0]))}})}),c=c.filter(e=>!("junction"==e.type&&!a[e.z]))),t.remove_linknodes){let r=[],l=(Object.keys(o).forEach(i=>{var e=o[i],t=e.links||[];t.reduce((e,t)=>e&&!!d[t],!0)&&"return"!=e.mode&&(r.push(i),t.forEach(o=>{d[o]&&c.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r=t.wires[e].indexOf(i);-1<r&&(t.wires[e].splice(r,1),t.wires[e].push(...d[o].wires[0]))}})}))}),(o,e)=>{let t=[],i=[],r=[];function n(e){if(r.indexOf(e.id)<0)if(r.push(e.id),t.push(e),"link out"===e.type){if("return"!=e.mode)throw"not handable"}else RED.nodes.getNodeLinks(e).forEach(function(e){n(e.target)})}try{RED.nodes.getNodeLinks(e).forEach(function(e){n(e.target),i.push(e.target.id)});let r={};var s=t.map(e=>{var t={...u[e.id]};return t.id=RED.nodes.id(),t.x=o.x,t.y=o.y,r[e.id]=t});return s.forEach(e=>{e.wires&&(e.wires=e.wires.map(e=>e.map(e=>{var t=r[e];return"link out"==t.type?[...o.wires[0],(t||{}).id||e]:(t||{}).id||e}).flat()))}),{nodes:s.filter(e=>"link out"!=e.type),entryNodes:i.map(e=>r[e])}}catch(e){return console.log(e),!1}}),t=[],p=[];i.forEach(n=>{let s=u[n],a=d[s.links[0]];a&&l(s,a)&&(t.push(s.id),c.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r,o,i=t.wires[e].indexOf(n);-1<i&&(o=(r=l(s,a)).entryNodes.map(e=>e.id),t.wires[e].splice(i,1),t.wires[e].push(...o),p.push(...r.nodes))}}))}),(c=c.filter(e=>r.indexOf(e.id)<0&&t.indexOf(e.id)<0)).push(...p)}var e;c.forEach(e=>{t.name&&(e.name=e.id),t.info&&(e.info="",delete e.outputLabels,delete e.inputLabels),t.position&&(e.x=150,e.y=150),t.remove_icons&&delete e.icon}),0<r.length?(e={parse:{},compress:{},mangle:{reserved:["$","export","require"]},output:null,sourceMap:null,nameCache:null,toplevel:!1,warnings:!1},$.ajax({url:"ClientCode/"+RED.nodes.id()+"/ugify",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({nodes:r,cfg:e}),success:function(e){e.forEach(e=>{var t=u[e.id];"function"==t.type?t.func=e.func:"javascript"==t.format&&(t.template=e.template)}),obfuscateHelpers.openImportDialog(c)},error:function(e,t,r){RED.notify("ClientCode Communcation Failure: "+n.id+": "+t,{type:"error",timeout:3e3})}})):obfuscateHelpers.openImportDialog(c)}
+   let obfuscateHelpers={getFlowDataFromCurrentWorkspace:e=>{var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)},openImportDialog:e=>{RED.clipboard.import();let t=e;setTimeout(()=>{$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(t)).trigger("paste")},300)}};function obfuscatieCurrentFlow(t){let u=obfuscateHelpers.getFlowDataFromCurrentWorkspace(),c=(t.remove_groups&&(u=u.filter(e=>"group"!=e.type)).forEach(e=>{delete e.g}),t.remove_debugs&&(u=u.filter(e=>"debug"!=e.type)),{}),r=[],s={},d={},o={},i=[],a={};if(u.forEach(e=>{"subflow"==(c[e.id]=e).type&&(a[e.id]=e),"junction"==e.type&&(s[e.id]=e),"link out"==e.type&&(o[e.id]=e),"link in"==e.type&&(d[e.id]=e),"link call"==e.type&&i.push(e.id),!t.javascript||"javascript"!=e.format&&"function"!=e.type||r.push(e)}),t.remove_junctions&&(Object.keys(s).forEach(o=>{let i=s[o];a[i.z]||u.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r=t.wires[e].indexOf(o);-1<r&&(t.wires[e].splice(r,1),t.wires[e].push(...i.wires[0]))}})}),u=u.filter(e=>!("junction"==e.type&&!a[e.z]))),t.remove_linknodes){let r=[],l=(Object.keys(o).forEach(i=>{var e=o[i],t=e.links||[];t.reduce((e,t)=>e&&!!d[t],!0)&&"return"!=e.mode&&(r.push(i),t.forEach(o=>{u.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r=t.wires[e].indexOf(i);-1<r&&(t.wires[e].splice(r,1),t.wires[e].push(...d[o].wires[0]))}})}))}),(o,e)=>{let t=[],i=[],r=[];function n(e){if(r.indexOf(e.id)<0)if(r.push(e.id),t.push(e),"link out"===e.type){if("return"!=e.mode)throw"not handable"}else RED.nodes.getNodeLinks(e).forEach(function(e){n(e.target)})}try{RED.nodes.getNodeLinks(e).forEach(function(e){n(e.target),i.push(e.target.id)});let r={};var s=t.map(e=>{var t={...c[e.id]};return t.id=RED.nodes.id(),t.x=o.x,t.y=o.y,r[e.id]=t});return s.forEach(e=>{e.wires&&(e.wires=e.wires.map(e=>e.map(e=>{var t=r[e];return"link out"==t.type?[...o.wires[0],(t||{}).id||e]:(t||{}).id||e}).flat()))}),{nodes:s.filter(e=>"link out"!=e.type),entryNodes:i.map(e=>r[e])}}catch(e){return console.log(e),!1}}),t=[],p=[];i.forEach(n=>{let s=c[n],a=d[s.links[0]];a&&l(s,a)&&(t.push(s.id),u.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r,o,i=t.wires[e].indexOf(n);-1<i&&(o=(r=l(s,a)).entryNodes.map(e=>e.id),t.wires[e].splice(i,1),t.wires[e].push(...o),p.push(...r.nodes))}}))}),(u=u.filter(e=>r.indexOf(e.id)<0&&t.indexOf(e.id)<0)).push(...p)}var e;u.forEach(e=>{t.name&&(e.name=e.id),t.info&&(e.info="",delete e.outputLabels,delete e.inputLabels),t.position&&(e.x=150,e.y=150),t.remove_icons&&delete e.icon}),0<r.length?(e={parse:{},compress:{},mangle:{reserved:["$","export","require"]},output:null,sourceMap:null,nameCache:null,toplevel:!1,warnings:!1},$.ajax({url:"ClientCode/"+RED.nodes.id()+"/ugify",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({nodes:r,cfg:e}),success:function(e){e.forEach(e=>{var t=c[e.id];"function"==t.type?t.func=e.func:"javascript"==t.format&&(t.template=e.template)}),obfuscateHelpers.openImportDialog(u)},error:function(e,t,r){RED.notify("ClientCode Communcation Failure: "+n.id+": "+t,{type:"error",timeout:3e3})}})):obfuscateHelpers.openImportDialog(u)}
    
    function setupTreelist(){var e=collectOrphans();if(0==e.length){RED.notify("No Orphans Found",{type:"warning",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectOrphans(){const t=new Set;var n=[],i=(RED.nodes.eachLink(e=>{t.add(e.source),t.add(e.target)}),RED.nodes.eachNode(e=>{t.has(e)||n.push(e)}),[]),r={};return n.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n=t.label,n=("function"==typeof n?n.call(e):n)||"",o=e.type;if(0===o.indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:o,selected:!1,checkbox:!1},i.push(r[e.id])}),i}
    
@@ -2148,6 +2148,7 @@ th.revertable:after {
             remove_junctions: $('#node-input-obfuscate-remove-junctions').is(":checked"),
             remove_linknodes: $('#node-input-obfuscate-remove-linknodes').is(":checked"),
             remove_icons: $('#node-input-obfuscate-remove-icons').is(":checked"),
+            remove_debugs: $('#node-input-obfuscate-remove-debugs').is(":checked"),
          })
       })
 
@@ -2216,7 +2217,7 @@ th.revertable:after {
    width: 100% !important;
    }
    .w-30 {
-      width: 30% !important;
+      width: 40% !important;
       margin-left: 10px;
    }
 </style>
@@ -2293,27 +2294,37 @@ th.revertable:after {
                      style="display:inline-block; width:15px; vertical-align:baseline;">
          </div>
 
+         <div class="form-row">
+            <label for="node-input-obfuscate-position" class="w-30">
+               <i class="fa fa-map-pin"></i>
+               <span>Obfuscate Position?</span>
+            </label>
+            <input type="checkbox" checked=checked id="node-input-obfuscate-position"
+                   style="display:inline-block; width:15px; vertical-align:baseline;">
+         </div>
+
+         <div class="form-row">
+            <label for="node-input-obfuscate-javascript" class="w-30">
+               <i class="fa fa-code"></i>
+               <span>Obfuscate Javascript?</span>
+            </label>         
+            <input type="checkbox" checked=checked id="node-input-obfuscate-javascript"
+                              style="display:inline-block; width:15px; vertical-align:baseline;">
+         </div>
+
          <div class="form-row col-100">
             <label for="node-input-obfuscate-remove-icons" class="w-30">
-                        <i class="fa fa-tag"></i>
-                        <span>Remove Icon?</span>
-                     </label>
+               <i class="fa fa-adjust"></i>
+               <span>Remove Icon?</span>
+            </label>
             <input type="checkbox" checked=checked id="node-input-obfuscate-remove-icons"
                               style="display:inline-block; width:15px; vertical-align:baseline;">
          </div>
 
          <div class="form-row">
-            <label for="node-input-obfuscate-position" class="w-30">
-                        <i class="fa fa-map-pin"></i>
-                        <span>Obfuscate Position?</span>
-            </label>
-            <input type="checkbox" checked=checked id="node-input-obfuscate-position"
-                   style="display:inline-block; width:15px; vertical-align:baseline;">
-         </div>
-         <div class="form-row">
             <label for="node-input-obfuscate-info" class="w-30">
-                        <i class="fa fa-info"></i>
-                        <span>Obfuscate Info?</span>
+               <i class="fa fa-info"></i>
+               <span>Remove Info?</span>
             </label>
             <input type="checkbox" checked=checked id="node-input-obfuscate-info"
                               style="display:inline-block; width:15px; vertical-align:baseline;">
@@ -2321,25 +2332,26 @@ th.revertable:after {
 
          <div class="form-row">
             <label for="node-input-obfuscate-remove-groups" class="w-30">
-                        <i class="fa fa-info"></i>
-                        <span>Remove Groups?</span>
+               <i class="fa fa-object-group"></i>
+               <span>Remove Groups?</span>
             </label>
             <input type="checkbox" checked=checked id="node-input-obfuscate-remove-groups"
                               style="display:inline-block; width:15px; vertical-align:baseline;">
          </div>
 
          <div class="form-row">
-            <label for="node-input-obfuscate-javascript" class="w-30">
-                        <i class="fa fa-code"></i>
-                        <span>Obfuscate Javascript?</span>
-            </label>         
-            <input type="checkbox" checked=checked id="node-input-obfuscate-javascript"
-                              style="display:inline-block; width:15px; vertical-align:baseline;">
+            <label for="node-input-obfuscate-remove-debugs" class="w-30">
+               <i class="fa fa-bug"></i>
+               <span>Remove debugs?</span>
+            </label>
+            <input type="checkbox" checked=checked id="node-input-obfuscate-remove-debugs"
+                                       style="display:inline-block; width:15px; vertical-align:baseline;">
          </div>
+
          <div class="form-row">
             <label for="node-input-obfuscate-remove-junctions" class="w-30">
-                        <i class="fa fa-sitemap"></i>
-                        <span>Remove Junctions?</span>
+               <i class="fa fa-sitemap"></i>
+               <span>Coalesce Junctions?</span>
             </label>         
             <input type="checkbox" checked=checked id="node-input-obfuscate-remove-junctions"
                               style="display:inline-block; width:15px; vertical-align:baseline;">
@@ -2347,8 +2359,8 @@ th.revertable:after {
 
          <div class="form-row">
             <label for="node-input-obfuscate-remove-linknodes" class="w-30">
-                        <i class="fa fa-link"></i>
-                        <span>Remove Link Nodes?</span>
+               <i class="fa fa-link"></i>
+               <span>Coalesce Link Nodes?</span>
             </label>         
             <input type="checkbox" checked=checked id="node-input-obfuscate-remove-linknodes"
                               style="display:inline-block; width:15px; vertical-align:baseline;">
