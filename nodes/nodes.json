@@ -730,7 +730,19 @@
             "UglifyJS"
         ],
         "user": false,
-        "version": "0.0.6"
+        "version": "0.0.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-uglifyjs/minifycss",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-uglifyjs",
+        "name": "minifycss",
+        "types": [
+            "MinifyCSS"
+        ],
+        "user": false,
+        "version": "0.0.7"
     },
     {
         "enabled": true,
@@ -1415,7 +1427,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.6.5"
+        "version": "0.6.6"
     },
     {
         "enabled": true,
@@ -1427,7 +1439,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.6.5"
+        "version": "0.6.6"
     },
     {
         "enabled": true,
@@ -1439,7 +1451,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.6.5"
+        "version": "0.6.6"
     },
     {
         "enabled": true,
@@ -1451,7 +1463,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.6.5"
+        "version": "0.6.6"
     },
     {
         "enabled": true,
@@ -1463,7 +1475,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.6.5"
+        "version": "0.6.6"
     },
     {
         "enabled": true,

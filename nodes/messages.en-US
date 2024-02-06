@@ -97,6 +97,17 @@
             }
         }
     },
+    "@gregoriusrippenstein/node-red-contrib-uglifyjs/minifycss": {
+        "minifycss": {
+            "label": {
+                "statusset": "Status Set"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
     "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
     "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
     "@gregoriusrippenstein/node-red-streaming/archivestream": {

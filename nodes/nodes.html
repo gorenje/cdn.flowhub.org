@@ -17163,6 +17163,118 @@ Functionality:
     Usage example is provided: <img src="https://cdn.openmindmap.org/content/1697273742712_Screen_Shot_2023-10-14_at_10.55.06.png"/>
   </p>
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-uglifyjs/minifycss] --- -->
+<script type="text/javascript">
+  (function(){
+  
+  RED.nodes.registerType('MinifyCSS',{
+    color: '#D7D7A0',
+    icon: "font-awesome/fa-filter",
+    category: 'parser',
+    defaults: {
+      name: {
+        value: "",
+      },
+      config: {
+        value: '{"compatibility":"*","level":2}'
+      },
+      configType: {
+        value: "json"
+      },
+      property: { value: "payload" },
+      propertyType: { value: "msg" },
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function () {
+      var that = this;
+
+      $("#node-input-config").typedInput({
+        types: ["json", "jsonata"],
+        typeField: "#node-input-configType"
+      });
+
+      $("#node-input-property").typedInput({
+        default: 'msg',
+        types: ['msg', 'flow', 'global'],
+        typeField: "#node-input-propertyType"
+      });
+
+      $("#node-input-property").typedInput('value', that.property || that._def.defaults.property.value || 'payload');
+      $("#node-input-property").typedInput('type', that.propertyType || that._def.defaults.propertyType.value || 'msg');
+    },
+
+    oneditcancel: function () {
+    },
+
+    oneditsave: function () {
+      this.propertyType = $("#node-input-property").typedInput('type');
+    },
+
+    oneditresize: function(size) {
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="MinifyCSS">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name"/>
+  </div>
+  
+  <div class="form-row">
+    All possible configuration options can be viewed at<br>
+        the <a target="_blank" style="color: blue;" href="https://github.com/clean-css/clean-css?tab=readme-ov-file#compatibility-modes">clean-css
+      NPMjs page<i class="fa fa-external-link"></i></a>.
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-config">
+          <i class="fa fa-tag"></i>
+          Config
+        </label>
+    <input type="text" id="node-input-config">
+    <input type="hidden" id="node-input-configType">
+  </div>
+  
+  <div class="form-row">
+    Apply to which property? This property will used as input <br>
+      and it will be replaced on the message my the minified version <br>
+      of the original content.
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-property">Property</label>
+    <input type="text" id="node-input-property"/>
+    <input type="hidden" id="node-input-propertyType"/>
+  </div>
+</script>
+    <script type="text/html" data-help-name="MinifyCSS">
+  <p>Minify CSS code.</p>
+  Minify CSS code. Based on the <a href="https://www.npmjs.com/package/clean-css">clean-css<a> package.
+</script>
+
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema] --- -->
 <script type="text/javascript">
     RED.nodes.registerType('JsonSchemaValidatorWithDocu', {

@@ -48,6 +48,7 @@
     "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball": {},
     "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile": {},
     "@gregoriusrippenstein/node-red-contrib-tarball/tarball": {},
+    "@gregoriusrippenstein/node-red-contrib-uglifyjs/minifycss": {},
     "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
     "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
     "@gregoriusrippenstein/node-red-streaming/archivestream": {},
