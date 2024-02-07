@@ -930,6 +930,12 @@ var DEADRED = (function() {
             }
         }
 
+        // This is for FlowHub push, it requires a list of installed nodes
+        // for package dependency tracking.
+        if ( options.url == "nodes" ) {
+            options.url = "nodes/nodes.json"
+        }
+
         // if an inject button does get pressed, simulate a flow execution
         // but with only specific nodes being supported.
         mth = options.url.match(/^inject\/([a-z0-9]{16})/i)
