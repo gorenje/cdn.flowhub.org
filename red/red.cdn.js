@@ -26884,7 +26884,7 @@ RED.view = (function() {
                 n.highlighted = false;
             }
             RED.view.redraw();
-        }, 100, Date.now() + 2200, node)
+        }, 250, Date.now() + 4000, node)
         flashingNodeId = node.id;
         node.highlighted = true;
         RED.view.redraw();
