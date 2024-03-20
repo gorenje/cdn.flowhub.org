@@ -14515,52 +14515,8 @@ msg.cookies = {
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull] --- -->
 <script type="text/javascript">
  (function(){
-   function flowHubUpdateFlows(cb=null) {
-     $.get(
-       "https://api.flowhub.org/v1/flows?cb=" + new Date().getTime()
-     ).done( (resp) => {
-       var treeListItems = [];
 
-       Object.keys( resp.data ).forEach( function(key) {
-         treeListItems.push( {
-           label:    resp.data[key].name,
-           icon:     "fa fa-eye",
-           flowid:   key,
-           sublabel: key,
-           selected: $('#node-input-flowid').val() == key,
-           checkbox: false,
-           children: undefined
-         });
-       });
-
-       if ( cb ) {
-         treeListItems.sort( (a,b) => {
-           return a.label < b.label ? -1 : 1;
-         });
-
-         cb(treeListItems)
-       };
-     }).fail( (e) => {
-       var msg = "";
-
-       if ( e.state() == "rejected" ) {
-         msg = "<p>Failed to retrieve FlowHub catalogue, request blocked.</p>"+
-               "<p>AdBlocker or uBlock might have prevented request.</p>"+
-               "<p>Please check browser console for more details.</p>";
-       } else {
-         msg = "<p>Failed to retrieve FlowHub catalogue.</p>" +
-               "<p>Check browser console for more details.</p>";
-       }
-
-       console.warn("Error loading https://api.flowhub.org/v1/flows:",e);
-       RED.notify(msg, {
-           type: "error",
-           id: "FlowHubPull",
-           timeout: 4000
-         }
-       );
-     });
-   };
+   function flowHubPullUpdateFlows(e=null,o=null){$.get({url:"https://api.flowhub.org/v1/flows?cb="+(new Date).getTime(),headers:{"X-FHB-TOKEN":o}}).done(t=>{if("failed"==t.status)return RED.notify(t.msg,{type:"error",id:"FlowHubPull",timeout:4e3});let i=[],n={},l=[];Object.keys(t.data).forEach(function(e){var o=t.data[e].name.match(/^(\[.+\])/);o?n[o[0]]?n[o[0]].push(t.data[e]):n[o[0]]=[t.data[e]]:l.push(t.data[e])}),Object.keys(n).sort((e,o)=>e<o?-1:1).forEach(e=>{var o=n[e].map(e=>({label:e.name,icon:"fa "+(RED.nodes.workspace(e.id)?"fa-check-circle-o":""),flowid:e.id,sublabel:e.id,selected:$("#node-input-flowhubpull-flowid").val()==e.id,checkbox:!1,children:void 0}));i.push({label:e,icon:"",flowid:"",sublabel:"",selected:!1,checkbox:!1,children:o.sort((e,o)=>e.label<o.label?-1:1)})}),l.sort((e,o)=>e.name<o.name?-1:1).forEach(e=>{i.push({label:e.name,icon:"fa "+(RED.nodes.workspace(e.id)?"fa-check-circle-o":""),flowid:e.id,sublabel:e.id,selected:$("#node-input-flowhubpull-flowid").val()==e.id,checkbox:!1,children:void 0})}),e&&e(i)}).fail(e=>{var o="",o="rejected"==e.state()?"<p>Failed to retrieve FlowHub catalogue, request blocked.</p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>":"<p>Failed to retrieve FlowHub catalogue.</p><p>Check browser console for more details.</p>";console.warn("Error loading https://api.flowhub.org/v1/flows:",e),RED.notify(o,{type:"error",id:"FlowHubPull",timeout:4e3})})}function obtainConfigNode(){let o=[];return RED.nodes.eachConfig(function(e){"FlowHubCfg"===e.type&&o.push(e)}),o[0]}function tokenToUrl(e){e=e.substring(4);var o="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_".split("");let t=Object.fromEntries(o.map((e,o)=>[e,o])),i=Object.fromEntries(o.map((e,o)=>[o,e]));return e.replaceAll(/./gi,(e,o)=>i[(t[e]+o+1)%64])}function obtainFhbToken(e,i){$.ajax({url:"FlowHubToken",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({cfgnode:e}),success:function(e){i(e.token)},error:function(e,o,t){i("")}})}function doFlowImport(t,e){$.get({url:"https://api.flowhub.org/v1/flows/"+$("#node-input-flowhubpull-flowid").val()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowhubpull-flowrevision").val(),headers:{"X-FHB-TOKEN":e}},function(o,e){if(!Array.isArray(o))return RED.notify("Access Denied.",{type:"error",timeout:3e3});RED.clipboard.import(),setTimeout(()=>{var e=o;t&&(e=o.filter(function(e){return"tab"!=e.type})),$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(e)).trigger("paste")},300)})}function doFlowImportForPullNode(t,e){$.get({url:"https://api.flowhub.org/v1/flows/"+$("#node-input-flowid").val()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowrevision").val(),headers:{"X-FHB-TOKEN":e}},function(o,e){if(!Array.isArray(o))return RED.notify("Access Denied.",{type:"error",timeout:3e3});RED.clipboard.import(),setTimeout(()=>{var e=o;t&&(e=o.filter(function(e){return"tab"!=e.type})),$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(e)).trigger("paste")},300)})}function checkForDuplication(e){$.get({url:"https://api.flowhub.org/v1/flows/"+$("#node-input-flowhubpull-flowid").val()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowhubpull-flowrevision").val(),headers:{"X-FHB-TOKEN":e}},function(e,o){let t=[];if(!Array.isArray(e))return RED.notify("Access Denied.","warning");if(e.forEach((e,o)=>{"tab"==e.type?RED.nodes.workspace(e.id)&&t.push(e):"junction"==e.type?RED.nodes.junction(e.id)&&t.push(e):"group"==e.type?RED.nodes.group(e.id)&&t.push(e):"subflow"==e.type?RED.nodes.subflow(e.id)&&t.push(e):RED.nodes.node(e.id)&&t.push(e)}),0==t.length){RED.notify("Found no duplication.","success");try{$("#node-input-flowhubpull-sb-duplication-container-div").treeList("empty")}catch(e){}}else{RED.notify("Found "+t.length+" items of duplication","warning");try{$("#node-input-flowhubpull-sb-duplication-container-div").treeList("empty")}catch(e){$("#node-input-flowhubpull-sb-duplication-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,o){}).on("treelistitemmouseout",function(e,o){}).on("treelistselect",function(e,o){o.node&&(RED.workspaces.show(o.node.z,!1,!1,!0),RED.view.reveal(o.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,o){var t;o.node&&(t=o.node.id,setTimeout(()=>{var e=RED.nodes.node(t);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),t==RED.workspaces.active()&&RED.workspaces.edit()},50))})}t=t.map(e=>({node:e,label:e.id,sublabel:e.type,selected:!1,checkbox:!1})),$("#node-input-flowhubpull-sb-duplication-container-div").treeList("data",t)}})}
 
    RED.nodes.registerType('FlowHubPull',{
      color: '#44eeff',
@@ -14574,7 +14530,7 @@ msg.cookies = {
        flowrevision: { value: "" }
      },
      inputs: 1,
-     outputs: 1,
+     outputs: 2,
 
      label: function() {
        return (this.name || this.flowname || this.flowid || this._def.paletteLabel);
@@ -14597,36 +14553,50 @@ msg.cookies = {
          }
        ).on('treelistselect', function(event, item) {
          if ( item.flowid ) {
-           $('#node-input-flowid').val(item.flowid);
-           $('#node-input-flowname').val(item.label);
+          $('#node-input-flowid').val(item.flowid);
+          $('#node-input-flowname').val(item.label);
 
-           $('#flowhubpull-view-flow-link').attr(
-             'href', 'https://flowhub.org/f/'+item.flowid
-           ).show();
-           
-           $('#node-input-import-flow-but').prop('disabled',false)
+          obtainFhbToken(obtainConfigNode(), (token) => {
+            if ( token !== "" && token ) {
+              token = "?t=" + tokenToUrl(token)
+            }
+            $('#flowhubpull-view-flow-link').attr(
+            'href', 'https://flowhub.org/f/' + item.flowid + token
+            ).show();
+          })
+
+          $('#node-input-import-flow-but').prop('disabled',false)
          }
        }).on('treelistconfirm', function(event, item) {
          if ( item.flowid ) {
-           $('#node-input-flowid').val(item.flowid);
-           $('#node-input-flowname').val(item.label);
+          $('#node-input-flowid').val(item.flowid);
+          $('#node-input-flowname').val(item.label);
 
-           $('#flowhubpull-view-flow-link').attr(
-             'href', 'https://flowhub.org/f/'+item.flowid
-           ).show();
+          obtainFhbToken(obtainConfigNode(), (token) => {
+            if ( token !== "" && token ) { 
+              token = "?t=" + tokenToUrl(token)
+            }
+            $('#flowhubpull-view-flow-link').attr(
+              'href', 'https://flowhub.org/f/' + item.flowid + token
+            ).show();
+          });
 
-           $('#node-input-import-flow-but').prop('disabled',false)
-           $("#node-input-import-flow-but").trigger('click');
+          $('#node-input-import-flow-but').prop('disabled',false)
+          $("#node-input-import-flow-but").trigger('click');
          }
        });
 
-       var items = [];
-
        if ( this.flowid ) {
          setTimeout( () => {
-           $('#flowhubpull-view-flow-link').attr(
-             'href', 'https://flowhub.org/f/' + $('#node-input-flowid').val()
-           ).show();
+          obtainFhbToken(obtainConfigNode(), (token) => {
+            if ( token !== "" && token ) {
+              token = "?t=" + tokenToUrl(token)
+            }
+
+            $('#flowhubpull-view-flow-link').attr(
+              'href', 'https://flowhub.org/f/' + $('#node-input-flowid').val() + token
+            ).show();             
+          })
          }, 200);
        } else {
         $('#node-input-import-flow-but').prop('disabled',true)
@@ -14659,26 +14629,28 @@ msg.cookies = {
          }
        });
 
-       flowHubUpdateFlows((treeListItems) => {
-         items = treeListItems;
-         dirList.treeList('data', treeListItems);
-       });
+       obtainFhbToken(obtainConfigNode(), (token) => {
+        flowHubPullUpdateFlows( (lst) => { dirList.treeList('data', lst) }, token);
+       })
 
        $('#node-input-refresh-list-but').on('click', function(e) {
          e.preventDefault();
 
          setTimeout( () => {
-           flowHubUpdateFlows((treeListItems) => {
-             items = treeListItems;
-             dirList.treeList('data', treeListItems);
-           });
+           obtainFhbToken(obtainConfigNode(), (token) => {
+            flowHubPullUpdateFlows( (lst) => { 
+              dirList.treeList('empty')
+              $('#flowhubpull-view-flow-link').hide()
+              setTimeout( () => {
+                dirList.treeList('data', lst) 
+              },300)
+            }, token);
+           })
          }, 300);
        });
 
        $("#node-input-import-flow-but").on("click", function(e) {
          if ( e ) { e.preventDefault(); }
-
-         var notab = $('#node-input-notab').prop('checked');
 
          if ( $('#node-input-flowid').val().trim() == "" ||
               !$('#node-input-flowid').val() ) {
@@ -14689,26 +14661,10 @@ msg.cookies = {
 
          $('#node-dialog-ok').trigger('click')
 
-         $.get( "https://api.flowhub.org/v1/flows/" +
-                $('#node-input-flowid').val() +
-                "?cb=" + new Date().getTime() + "&v=" + 
-                $('#node-input-flowrevision').val(), function(e,d) {
-                  RED.clipboard.import();
-
-                  setTimeout( () => {
-                    var content = e;
-
-                    if ( notab ) {
-                      content = e.filter(function(o) {
-                        return o.type != "tab"
-                      });
-                    }
-
-                    $('#red-ui-clipboard-dialog-import-text').val(
-                      JSON.stringify(content)
-                    ).trigger("paste");
-                  }, 300);
-                });
+         let notab = $('#node-input-notab').prop('checked');
+         obtainFhbToken(obtainConfigNode(), (token) => {
+           doFlowImportForPullNode(notab, token)
+         })
        });
 
        if ( this.notab ) {
@@ -14824,13 +14780,19 @@ msg.cookies = {
       hasUsers: false,
       defaults: {
         apiToken: { value: "FLOWHUB_API_TOKEN" },      
-        apiTokenType: {   value: "env",   },
+        apiTokenType: { value: "env" },
         fullname: { value: "" },
         email: { value: "" },
         flowid: { value: "" },
         flowrevision: { value: "" },
         notab: { value: false },
         pushcomment: { value: "" },
+        pushnewflows: { value: false },
+        tokens: { value: [{
+          name: "FlowHub Token",
+          type: "env",
+          val: "FLOWHUB_API_TOKEN"
+        }]}
       },
       label: 'FlowHubCfg',
   });
@@ -14839,31 +14801,7 @@ msg.cookies = {
 
 <!-- The html for the config node info panel (in right sidebar) -->
 <script type="text/x-red" data-template-name="FlowHubCfg">
-
-   <p>Push current flow tab to FlowHub.org.<br>
-      Flow tabs are exported as they <b>are in the editor</b>. What you see<br>
-      is what you export, the deployed flow might differ. This allows flows to<br>
-      be modified <b>without</b> having to be deployed.
-    </p>
-    
-  <p>
-      FlowHubPush is the twin to the FlowHubPull node and is responsible for<br>
-      uploading the current flow tab to FlowHub. The Flow tab ID is used as<br>
-      identifier. The current active flow tab will be uploaded.<br>
-  </p>
-  <p>
-      Documentation on the flow should be included in the info box of the<br>
-      flow. Double click on the flow tab opens the property window and<br>
-      that's the documentation that will be hosted at FlowHub. Please provide<br>
-      documentation otherwise or a flow that is so simple to understand<br>
-      that it requires no documentation!
-  </p>
-
-  <p>
-      Submission can either be done using an API token or using an email<br>
-      and full name. See the property tab for details on the usage of this<br>
-      service.
-  </p>
+This page is intentional left blank.
 </script>
 
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/seeker] --- -->
@@ -15157,7 +15095,7 @@ msg.cookies = {
 
 
 <script type="text/html" data-help-name="Seeker">
-  <p>Ther Seeker seeks in the sink and presents all (max 25) paths that lead to the sink.</p>
+  <p>The Seeker seeks in the sink and presents all (max 25) paths that lead to the sink.</p>
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/sink] --- -->
 <script type="text/javascript">
@@ -15194,254 +15132,6 @@ msg.cookies = {
 
 <script type="text/html" data-help-name="Sink">
   <p>Sink is the end of a chain of nodes to complete a full text.</p>
-</script>
-<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/getflows] --- -->
-<script type="text/javascript">
-  RED.nodes.registerType('GetFlows',{
-    color: '#e5e4ef',
-    icon: "introspesubflow.svg",
-    category: 'introspection',
-    defaults: {
-      name: {
-        value:"",
-      },
-      flowVersion: {
-        value: "v1"
-      },
-      useAuthentication: {
-        value:false
-      },
-      apiUsername: {
-        value: "",
-      },
-      apiUsernameType: {
-        value: "env",
-      },
-      apiPassword: {
-        value: "",
-      },
-      apiPasswordType: {
-        value: "env",
-      },
-    },
-    inputs:1,
-    outputs:1,
-
-    label: function() {
-      return (this.name || this._def.paletteLabel);
-    },
-
-    labelStyle: function() {
-      return this.name?"node_label_italic":"";
-    },
-    oneditprepare: function() {
-      $("#node-input-apiUsername").typedInput({
-        types:["env", "msg", "flow","global", "cred"],
-        typeField: "#node-input-apiUsernameType"
-      });
-
-      $("#node-input-apiPassword").typedInput({
-        types:["env", "msg", "flow","global", "env", "cred"],
-        typeField: "#node-input-apiPasswordType"
-      });
-
-      if ( $('#node-input-useAuthentication').is(":checked") ) {
-        $('#useAuthentication-input-fields').show();
-      } else {
-        $('#useAuthentication-input-fields').hide()
-      }
-
-      $('#node-input-useAuthentication').on( 'change', function() {
-        if ( $('#node-input-useAuthentication').is(":checked") ) {
-          $('#useAuthentication-input-fields').show();
-        } else {
-          $('#useAuthentication-input-fields').hide()
-        }
-      });
-    },
-  });
-</script>
-
-<script type="text/html" data-template-name="GetFlows">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-
-    <div class="form-row">
-      <label for="node-input-flowVersion">
-        <i class="fa fa-tag"></i>
-        <span>Flow Version</span>
-      </label>
-
-      <select id="node-input-flowVersion">
-        <option value="v1" selected=selected>Version 1</option>
-        <option value="v2">Version 2</option>
-      </select>
-    </div>
-
-    <div class="form-row">
-      <label for="node-input-useAuthentication">
-        <i class="fa "></i>
-        <span>Use Authentication?</span>
-      </label>
-
-      <input type="checkbox" id="node-input-useAuthentication"
-             style="display:inline-block; width:15px; vertical-align:baseline;">
-    </div>
-
-    <div id="useAuthentication-input-fields" class="hidden">
-      <div class="form-row">
-        <label for="node-input-apiUsername">
-          <i class="fa fa-tag"></i>
-          Username
-        </label>
-        <input type="text" id="node-input-apiUsername">
-        <input type="hidden" id="node-input-apiUsernameType">
-      </div>
-
-      <div class="form-row">
-        <label for="node-input-apiPassword">
-          <i class="fa fa-tag"></i>
-          Password
-        </label>
-        <input type="text" id="node-input-apiPassword">
-        <input type="hidden" id="node-input-apiPasswordType">
-      </div>
-    </div>
-</script>
-
-
-<script type="text/html" data-help-name="GetFlows">
-  <p>Retrieves the current flow file from the server. This uses the Node-RED API and is therefore storage-method independent. Return value is a JSON.</p>
-</script>
-<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/sendflow] --- -->
-<script type="text/javascript">
-  RED.nodes.registerType('SendFlow',{
-    color: '#e5e4ef',
-    icon: "introspesubflow.svg",
-    category: 'introspection',
-    defaults: {
-      name: {
-        value:"",
-      },
-      hostUrl: {
-        value: ""
-      },
-      flowVersion: {
-        value: "v1"
-      },
-      useAuthentication: {
-        value:false
-      },
-      apiUsername: {
-        value: "",
-      },
-      apiUsernameType: {
-        value: "env",
-      },
-      apiPassword: {
-        value: "",
-      },
-      apiPasswordType: {
-        value: "env",
-      },
-    },
-    inputs:1,
-    outputs:1,
-
-    label: function() {
-      return (this.name || this._def.paletteLabel);
-    },
-
-    labelStyle: function() {
-      return this.name?"node_label_italic":"";
-    },
-    oneditprepare: function() {
-      $("#node-input-apiUsername").typedInput({
-        types:["env", "msg", "flow","global", "cred"],
-        typeField: "#node-input-apiUsernameType"
-      });
-
-      $("#node-input-apiPassword").typedInput({
-        types:["env", "msg", "flow","global", "env", "cred"],
-        typeField: "#node-input-apiPasswordType"
-      });
-
-      if ( $('#node-input-useAuthentication').is(":checked") ) {
-        $('#useAuthentication-input-fields').show();
-      } else {
-        $('#useAuthentication-input-fields').hide()
-      }
-
-      $('#node-input-useAuthentication').on( 'change', function() {
-        if ( $('#node-input-useAuthentication').is(":checked") ) {
-          $('#useAuthentication-input-fields').show();
-        } else {
-          $('#useAuthentication-input-fields').hide()
-        }
-      });
-    },
-  });
-</script>
-
-<script type="text/html" data-template-name="SendFlow">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-
-    <div class="form-row">
-        <label for="node-input-hostUrl"><i class="fa fa-tag"></i> Host</label>
-        <input type="text" id="node-input-hostUrl" placeholder="Host URL">
-    </div>
-
-    <div class="form-row">
-      <label for="node-input-flowVersion">
-        <i class="fa fa-tag"></i>
-        <span>Flow Version</span>
-      </label>
-
-      <select id="node-input-flowVersion">
-        <option value="v1" selected=selected>Version 1</option>
-        <option value="v2">Version 2</option>
-      </select>
-    </div>
-
-    <div class="form-row">
-      <label for="node-input-useAuthentication">
-        <i class="fa "></i>
-        <span>Use Authentication?</span>
-      </label>
-
-      <input type="checkbox" id="node-input-useAuthentication"
-             style="display:inline-block; width:15px; vertical-align:baseline;">
-    </div>
-
-    <div id="useAuthentication-input-fields" class="hidden">
-      <div class="form-row">
-        <label for="node-input-apiUsername">
-          <i class="fa fa-tag"></i>
-          Username
-        </label>
-        <input type="text" id="node-input-apiUsername">
-        <input type="hidden" id="node-input-apiUsernameType">
-      </div>
-
-      <div class="form-row">
-        <label for="node-input-apiPassword">
-          <i class="fa fa-tag"></i>
-          Password
-        </label>
-        <input type="text" id="node-input-apiPassword">
-        <input type="hidden" id="node-input-apiPasswordType">
-      </div>
-    </div>
-</script>
-
-
-<script type="text/html" data-help-name="SendFlow">
-  <p>Send flow to another Node-RED instance.</p>
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/clientcode] --- -->
 <script type="text/javascript">
@@ -15710,6 +15400,393 @@ Functionality:
     An example flow with some use cases is included and can be accessed either via 
     the Import Flow dialog or accessed online <a style="color: blue" href="https://flowhub.org/f/e02ba6e534f7a0f4" target="_blank">at here <i class="fa fa-external-link"></i></a>.
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/getflows] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('GetFlows',{
+    color: '#e5e4ef',
+    icon: "introspesubflow.svg",
+    category: 'introspection',
+    defaults: {
+      name: {
+        value:"",
+      },
+      flowVersion: {
+        value: "v1"
+      },
+      useAuthentication: {
+        value:false
+      },
+      apiUsername: {
+        value: "",
+      },
+      apiUsernameType: {
+        value: "env",
+      },
+      apiPassword: {
+        value: "",
+      },
+      apiPasswordType: {
+        value: "env",
+      },
+    },
+    inputs:1,
+    outputs:1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+    oneditprepare: function() {
+      $("#node-input-apiUsername").typedInput({
+        types:["env", "msg", "flow","global", "cred"],
+        typeField: "#node-input-apiUsernameType"
+      });
+
+      $("#node-input-apiPassword").typedInput({
+        types:["env", "msg", "flow","global", "env", "cred"],
+        typeField: "#node-input-apiPasswordType"
+      });
+
+      if ( $('#node-input-useAuthentication').is(":checked") ) {
+        $('#useAuthentication-input-fields').show();
+      } else {
+        $('#useAuthentication-input-fields').hide()
+      }
+
+      $('#node-input-useAuthentication').on( 'change', function() {
+        if ( $('#node-input-useAuthentication').is(":checked") ) {
+          $('#useAuthentication-input-fields').show();
+        } else {
+          $('#useAuthentication-input-fields').hide()
+        }
+      });
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="GetFlows">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-flowVersion">
+        <i class="fa fa-tag"></i>
+        <span>Flow Version</span>
+      </label>
+
+      <select id="node-input-flowVersion">
+        <option value="v1" selected=selected>Version 1</option>
+        <option value="v2">Version 2</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-useAuthentication">
+        <i class="fa "></i>
+        <span>Use Authentication?</span>
+      </label>
+
+      <input type="checkbox" id="node-input-useAuthentication"
+             style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div id="useAuthentication-input-fields" class="hidden">
+      <div class="form-row">
+        <label for="node-input-apiUsername">
+          <i class="fa fa-tag"></i>
+          Username
+        </label>
+        <input type="text" id="node-input-apiUsername">
+        <input type="hidden" id="node-input-apiUsernameType">
+      </div>
+
+      <div class="form-row">
+        <label for="node-input-apiPassword">
+          <i class="fa fa-tag"></i>
+          Password
+        </label>
+        <input type="text" id="node-input-apiPassword">
+        <input type="hidden" id="node-input-apiPasswordType">
+      </div>
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="GetFlows">
+  <p>Retrieves the current flow file from the server. This uses the Node-RED API and is therefore storage-method independent. Return value is a JSON.</p>
+</script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/sendflow] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('SendFlow',{
+    color: '#e5e4ef',
+    icon: "introspesubflow.svg",
+    category: 'introspection',
+    defaults: {
+      name: {
+        value:"",
+      },
+      hostUrl: {
+        value: ""
+      },
+      flowVersion: {
+        value: "v1"
+      },
+      useAuthentication: {
+        value:false
+      },
+      apiUsername: {
+        value: "",
+      },
+      apiUsernameType: {
+        value: "env",
+      },
+      apiPassword: {
+        value: "",
+      },
+      apiPasswordType: {
+        value: "env",
+      },
+    },
+    inputs:1,
+    outputs:1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+    oneditprepare: function() {
+      $("#node-input-apiUsername").typedInput({
+        types:["env", "msg", "flow","global", "cred"],
+        typeField: "#node-input-apiUsernameType"
+      });
+
+      $("#node-input-apiPassword").typedInput({
+        types:["env", "msg", "flow","global", "env", "cred"],
+        typeField: "#node-input-apiPasswordType"
+      });
+
+      if ( $('#node-input-useAuthentication').is(":checked") ) {
+        $('#useAuthentication-input-fields').show();
+      } else {
+        $('#useAuthentication-input-fields').hide()
+      }
+
+      $('#node-input-useAuthentication').on( 'change', function() {
+        if ( $('#node-input-useAuthentication').is(":checked") ) {
+          $('#useAuthentication-input-fields').show();
+        } else {
+          $('#useAuthentication-input-fields').hide()
+        }
+      });
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="SendFlow">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hostUrl"><i class="fa fa-tag"></i> Host</label>
+        <input type="text" id="node-input-hostUrl" placeholder="Host URL">
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-flowVersion">
+        <i class="fa fa-tag"></i>
+        <span>Flow Version</span>
+      </label>
+
+      <select id="node-input-flowVersion">
+        <option value="v1" selected=selected>Version 1</option>
+        <option value="v2">Version 2</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-useAuthentication">
+        <i class="fa "></i>
+        <span>Use Authentication?</span>
+      </label>
+
+      <input type="checkbox" id="node-input-useAuthentication"
+             style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div id="useAuthentication-input-fields" class="hidden">
+      <div class="form-row">
+        <label for="node-input-apiUsername">
+          <i class="fa fa-tag"></i>
+          Username
+        </label>
+        <input type="text" id="node-input-apiUsername">
+        <input type="hidden" id="node-input-apiUsernameType">
+      </div>
+
+      <div class="form-row">
+        <label for="node-input-apiPassword">
+          <i class="fa fa-tag"></i>
+          Password
+        </label>
+        <input type="text" id="node-input-apiPassword">
+        <input type="hidden" id="node-input-apiPasswordType">
+      </div>
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="SendFlow">
+  <p>Send flow to another Node-RED instance.</p>
+</script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/installpackage] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('InstallPackage',{
+    color: '#e5e4ef',
+    icon: "introspesubflow.svg",
+    category: 'introspection',
+    paletteLabel: "InstallPkg",
+    defaults: {
+      name: {
+        value:"",
+      },
+      hostUrl: {
+        value: ""
+      },
+      useAuthentication: {
+        value:false
+      },
+      apiUsername: {
+        value: "",
+      },
+      apiUsernameType: {
+        value: "env",
+      },
+      apiPassword: {
+        value: "",
+      },
+      apiPasswordType: {
+        value: "env",
+      },
+      locally: {
+        value: false
+      }
+    },
+    inputs:1,
+    outputs:1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+    oneditprepare: function() {
+      $("#node-input-apiUsername").typedInput({
+        types:["env", "msg", "flow","global", "cred"],
+        typeField: "#node-input-apiUsernameType"
+      });
+
+      $("#node-input-apiPassword").typedInput({
+        types:["env", "msg", "flow","global", "env", "cred"],
+        typeField: "#node-input-apiPasswordType"
+      });
+
+      if ( $('#node-input-useAuthentication').is(":checked") ) {
+        $('#useAuthentication-input-fields').show();
+      } else {
+        $('#useAuthentication-input-fields').hide()
+      }
+
+      $('#node-input-useAuthentication').on( 'change', function() {
+        if ( $('#node-input-useAuthentication').is(":checked") ) {
+          $('#useAuthentication-input-fields').show();
+        } else {
+          $('#useAuthentication-input-fields').hide()
+        }
+      });
+
+      if ( $('#node-input-locally').is(":checked") ) {
+        $('.hostUrl-row').hide();
+      } else {
+        $('.hostUrl-row').show();
+      }
+
+      $('#node-input-locally').on( 'change', function() {
+        if ( $('#node-input-locally').is(":checked") ) {
+          $('.hostUrl-row').hide();
+        } else {
+          $('.hostUrl-row').show();
+        }
+      });
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="InstallPackage">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+<!--
+    <div class="form-row">
+      <input type="checkbox" id="node-input-locally"
+             style="display:inline-block; width:15px; vertical-align:baseline;">
+      <label for="node-input-locally"><i class="fa fa-home"></i> Locally?</label>
+    </div>
+-->
+
+    <div class="form-row hostUrl-row">
+        <label for="node-input-hostUrl"><i class="fa fa-tag"></i> Host</label>
+        <input type="text" id="node-input-hostUrl" placeholder="Host URL">
+    </div>
+
+    <div class="form-row">
+      <input type="checkbox" id="node-input-useAuthentication"
+             style="display:inline-block; width:15px; vertical-align:baseline;">
+
+      <label for="node-input-useAuthentication">
+        <i class="fa fa-key"></i>
+        <span>Use Authentication?</span>
+      </label>
+    </div>
+
+    <div id="useAuthentication-input-fields" class="hidden">
+      <div class="form-row">
+        <label for="node-input-apiUsername">
+          <i class="fa fa-tag"></i>
+          Username
+        </label>
+        <input type="text" id="node-input-apiUsername">
+        <input type="hidden" id="node-input-apiUsernameType">
+      </div>
+
+      <div class="form-row">
+        <label for="node-input-apiPassword">
+          <i class="fa fa-tag"></i>
+          Password
+        </label>
+        <input type="text" id="node-input-apiPassword">
+        <input type="hidden" id="node-input-apiPasswordType">
+      </div>
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="InstallPackage">
+  <p>Install package on another Node-RED instance.</p>
+</script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops] --- -->
 <script type="text/javascript">
   (function(){
@@ -15783,6 +15860,8 @@ Functionality:
       npmpublish: { value: false },
       npmunpublish: { value: false },
       npmotp: { value: ""},
+
+      writetgzfile: { value: false },
     },
 
     inputs: 0,
@@ -15938,6 +16017,13 @@ Functionality:
       <span>No package check?</span>
     </label>
     <input type="checkbox" id="node-input-ignore_package_check" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-writetgzfile" style="min-width: 150px;"">
+      <span>Write .tgz file?</span>
+    </label>
+    <input type="checkbox" id="node-input-writetgzfile" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
 
   <hr/>
@@ -16822,6 +16908,12 @@ Functionality:
       action: {
         value: "publish"
       },
+      access: {
+        value: "public"
+      },
+      registry: { 
+        value: "registry.npmjs.org"
+      },
       authToken: {
         value: "NPM_AUTH_TOKEN",
       },
@@ -16834,7 +16926,7 @@ Functionality:
     outputs: 1,
 
     label: function() {
-      return (this.name || this._def.paletteLabel);
+      return (this.name || (this.action == "publish" ? "NpmPublish" : "NpmUnpublish" )|| this._def.paletteLabel);
     },
 
     labelStyle: function() {
@@ -16877,9 +16969,19 @@ Functionality:
     </div>
 
     <div class="form-row">
+        <label for="node-input-registry"><i class="fa fa-database"></i> Registry</label>
+        <input type="text" id="node-input-registry" placeholder="Registry">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-access"><i class="fa fa-user-secret"></i> Access</label>
+        <input type="text" id="node-input-access" placeholder="Access">
+    </div>
+
+    <div class="form-row">
       <label for="node-input-authToken">
             <i class="fa fa-tag"></i>
-            NPM Auth Token
+            Auth Token
        </label>
       <input type="text" id="node-input-authToken">
       <input type="hidden" id="node-input-authTokenType">
@@ -16904,6 +17006,131 @@ Functionality:
 
     The package name is taken from the package.json if not supplied.
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-nodedev/otpgenerator] --- -->
+<script type="text/javascript">
+    RED.nodes.registerType('OTPGenerate',{
+        category: 'nodedev',
+        color: '#e5e4ef',
+        defaults: {
+            name: {value:""},
+
+            otptype: {value:"totp"},
+            secret: { value: "OTP_SECRET"},
+            secretType: { value: "env"},
+            issuer: { value: "" },
+            label: { value: "" },
+            digits: { value: 6 },
+            period: { value: 30 },
+            algorithm: { value: "SHA1" },
+            counter: { value: 0 },
+
+            property: { value:"payload" },
+            propertyType: { value:"msg" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-user-secret",
+        
+        label: function() {
+            return (this.name || this._def.paletteLabel);
+        },
+        
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        
+        oneditprepare: function() {
+            let that = this;
+
+            $("#node-input-secret").typedInput({
+                types:["env", "msg", "global", "cred"],
+                typeField: "#node-input-secretType"
+            });
+
+            $("#node-input-property").typedInput({
+                default:'msg',
+                types:['msg', 'flow', 'global'],
+                typeField: "#node-input-propertyType"
+            });
+
+            $("#node-input-property").typedInput('value', that.property || that._def.defaults.property.value || 'payload');
+            $("#node-input-property").typedInput('type', that.propertyType || that._def.defaults.propertyType.value || 'msg');
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="OTPGenerate">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-input-otptype"><i class="fa fa-tag"></i> Type</label>
+        <select id="node-input-otptype">
+            <option value="totp">Time-Based (TOTP)</option>
+            <option value="hotp">HMAC-based (HOTP)</option>
+        </select>
+    </div>
+
+    <div class="form-row" style="margin-left: 10px; margin-top: 20px;">
+        <label for="node-input-secret">
+                <i class="fa fa-key"></i>
+                Secret
+            </label>
+        <input type="text" id="node-input-secret">
+        <input type="hidden" id="node-input-secretType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-algorithm"><i class="fa fa-tag"></i> Algorithm</label>
+        <select id="node-input-algorithm">
+                <option value="SHA1">SHA1</option>
+                <option value="SHA256">SHA256</option>
+                <option value="SHA512">SHA512</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-issuer"><i class="fa fa-tag"></i> Issuer</label>
+        <input type="text" id="node-input-issuer" placeholder="Issuer">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <input type="text" id="node-input-label" placeholder="Label">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-digits"><i class="fa fa-tag"></i> Digits</label>
+        <input type="text" id="node-input-digits" placeholder="Digits">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-period"><i class="fa fa-tag"></i> Period</label>
+        <input type="text" id="node-input-period" placeholder="Period">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-counter"><i class="fa fa-tag"></i> Counter</label>
+        <input type="text" id="node-input-counter" placeholder="Counter">
+    </div>
+
+    <hr/>
+
+    <div class="form-row">
+        <label for="node-input-property">Property to set</label>
+        <input type="text" id="node-input-property"/>
+        <input type="hidden" id="node-input-propertyType"/>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="OTPGenerate">
+    <p>One Time Password (HOTP/TOTP) generator</p>
+
+    Based off the <a href="https://flows.nodered.org/node/node-red-contrib-otpauth">OTPAuth node</a>
+</script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg] --- -->
 <script type="text/javascript">
 (function ($) {
@@ -16912,7 +17139,17 @@ Functionality:
       hasUsers: false,
       defaults: {
          pkgname: { value: "node-red-dashboard" },
-         pkgversion: { value: "latest" }
+         pkgversion: { value: "latest" },
+         /* otp stuff */
+         otptype: { value: "totp" },
+         algorithm: { value: "SHA1"},
+         secret: { value: "OTP_SECRET"},
+         secretType: { value: "env"},
+         issuer: { value: ""},
+         otplabel: { value: ""},
+         digits: { value: 6 },
+         counter: { value: 0 },
+         period: { value: 30 }
       },
       paletteLabel: 'PackageImporter',
       label: function () {
@@ -17136,7 +17373,7 @@ Functionality:
 
   <div class="form-row">
     Apply to which property? This property will used as input <br> 
-    and it will be replaced on the message my the uglified version <br>
+    and it will be replaced on the message the uglified version <br>
     of the original content.
   </div>
   

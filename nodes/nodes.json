@@ -730,7 +730,7 @@
             "UglifyJS"
         ],
         "user": false,
-        "version": "0.0.7"
+        "version": "0.0.9"
     },
     {
         "enabled": true,
@@ -742,7 +742,7 @@
             "MinifyCSS"
         ],
         "user": false,
-        "version": "0.0.7"
+        "version": "0.0.9"
     },
     {
         "enabled": true,
@@ -900,7 +900,7 @@
             "FlowHubPull"
         ],
         "user": false,
-        "version": "0.4.8"
+        "version": "0.6.4"
     },
     {
         "enabled": true,
@@ -912,7 +912,7 @@
             "FlowHubCfg"
         ],
         "user": false,
-        "version": "0.4.8"
+        "version": "0.6.4"
     },
     {
         "enabled": true,
@@ -1307,7 +1307,7 @@
             "JsonSchemaValidatorWithDocu"
         ],
         "user": false,
-        "version": "0.1.0"
+        "version": "0.1.1"
     },
     {
         "enabled": true,
@@ -1343,7 +1343,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1355,7 +1355,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1367,7 +1367,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1379,7 +1379,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1391,7 +1391,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1403,7 +1403,19 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/otpgenerator",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "otpgenerator",
+        "types": [
+            "OTPGenerate"
+        ],
+        "user": false,
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1415,7 +1427,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
     },
     {
         "enabled": true,
@@ -1427,7 +1439,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.6.6"
+        "version": "0.7.4"
     },
     {
         "enabled": true,
@@ -1439,31 +1451,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.6.6"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/getflows",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "getflows",
-        "types": [
-            "GetFlows"
-        ],
-        "user": false,
-        "version": "0.6.6"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sendflow",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "sendflow",
-        "types": [
-            "SendFlow"
-        ],
-        "user": false,
-        "version": "0.6.6"
+        "version": "0.7.4"
     },
     {
         "enabled": true,
@@ -1475,7 +1463,43 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.6.6"
+        "version": "0.7.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/getflows",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "getflows",
+        "types": [
+            "GetFlows"
+        ],
+        "user": false,
+        "version": "0.7.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sendflow",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "sendflow",
+        "types": [
+            "SendFlow"
+        ],
+        "user": false,
+        "version": "0.7.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/installpackage",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "installpackage",
+        "types": [
+            "InstallPackage"
+        ],
+        "user": false,
+        "version": "0.7.4"
     },
     {
         "enabled": true,
@@ -1487,7 +1511,7 @@
             "tarball"
         ],
         "user": false,
-        "version": "0.0.3"
+        "version": "0.1.0"
     },
     {
         "enabled": true,
@@ -1511,7 +1535,7 @@
             "FlowCompareCfg"
         ],
         "user": false,
-        "version": "0.1.3"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
@@ -1547,7 +1571,7 @@
             "Flow2MermaidCfg"
         ],
         "user": false,
-        "version": "0.1.9"
+        "version": "0.1.10"
     },
     {
         "enabled": true,
@@ -1583,7 +1607,7 @@
             "AIsBreaker"
         ],
         "user": false,
-        "version": "0.1.17"
+        "version": "0.1.18"
     },
     {
         "enabled": true,
@@ -1595,7 +1619,7 @@
             "PipeStart"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1607,7 +1631,7 @@
             "FileStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1619,7 +1643,7 @@
             "HttpRequestStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1631,7 +1655,7 @@
             "CsvStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1643,7 +1667,7 @@
             "JsonLStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1655,7 +1679,7 @@
             "LineStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1667,7 +1691,7 @@
             "IconvStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1679,7 +1703,7 @@
             "Chunk2Msg"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1691,7 +1715,7 @@
             "DeCompStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1703,7 +1727,7 @@
             "ArchiveStream"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     },
     {
         "enabled": true,
@@ -1715,6 +1739,6 @@
             "PipeEnd"
         ],
         "user": false,
-        "version": "0.0.10"
+        "version": "0.0.11"
     }
 ]

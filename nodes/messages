@@ -70,6 +70,7 @@
     "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull": {},
     "@gregoriusrippenstein/node-red-contrib-introspection/clientcode": {},
     "@gregoriusrippenstein/node-red-contrib-introspection/getflows": {},
+    "@gregoriusrippenstein/node-red-contrib-introspection/installpackage": {},
     "@gregoriusrippenstein/node-red-contrib-introspection/seeker": {},
     "@gregoriusrippenstein/node-red-contrib-introspection/sendflow": {},
     "@gregoriusrippenstein/node-red-contrib-introspection/sink": {},
@@ -79,6 +80,7 @@
     "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall": {},
     "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish": {},
     "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball": {},
+    "@gregoriusrippenstein/node-red-contrib-nodedev/otpgenerator": {},
     "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile": {},
     "@gregoriusrippenstein/node-red-contrib-tarball/tarball": {
         "tarball": {
