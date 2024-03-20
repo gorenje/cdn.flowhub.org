@@ -878,6 +878,16 @@ var DEADRED = (function() {
             options.url = RED.settings.get("dynamicServer", "") + options.url
         }
 
+        // Token retrieval
+        mth = options.url.match(/^FlowHubToken/i)
+        if ( mth ) {
+            options.success({
+                "token": "xxx",
+            })
+
+            jqXHR.abort();
+        }
+
         // handle the FlowCompare functionality locally since we store
         // the flow data on deploy - extract what is being compared from there.
         mth = options.url.match(/^FlowCompareCfg/i)
