@@ -875,6 +875,21 @@ var DEADRED = (function() {
 
         // patial functionality provided by the deadred backend
         if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
+
+            if ( options.url == "FlowHubPush" ) {
+                setTimeout( () => {
+                    RED.comms.emit( [
+                        {
+                            topic: "flowhub:submission-result",
+                            data: {
+                                status: "Succeeded",
+                                statusType: "success"
+                            }
+                        }
+                    ])
+                }, 4345)
+            }
+
             options.url = RED.settings.get("dynamicServer", "") + options.url
         }
 

@@ -900,7 +900,7 @@
             "FlowHubPull"
         ],
         "user": false,
-        "version": "0.6.4"
+        "version": "0.7.1"
     },
     {
         "enabled": true,
@@ -912,7 +912,7 @@
             "FlowHubCfg"
         ],
         "user": false,
-        "version": "0.6.4"
+        "version": "0.7.1"
     },
     {
         "enabled": true,
@@ -1343,7 +1343,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1355,7 +1355,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1367,7 +1367,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1379,7 +1379,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1391,7 +1391,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1403,7 +1403,7 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1415,7 +1415,7 @@
             "OTPGenerate"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1427,7 +1427,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.3.6"
+        "version": "0.3.9"
     },
     {
         "enabled": true,
@@ -1439,7 +1439,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.7.4"
+        "version": "0.7.5"
     },
     {
         "enabled": true,
@@ -1451,7 +1451,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.7.4"
+        "version": "0.7.5"
     },
     {
         "enabled": true,
@@ -1463,7 +1463,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.7.4"
+        "version": "0.7.5"
     },
     {
         "enabled": true,
@@ -1475,7 +1475,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.7.4"
+        "version": "0.7.5"
     },
     {
         "enabled": true,
@@ -1487,7 +1487,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.7.4"
+        "version": "0.7.5"
     },
     {
         "enabled": true,
@@ -1499,7 +1499,7 @@
             "InstallPackage"
         ],
         "user": false,
-        "version": "0.7.4"
+        "version": "0.7.5"
     },
     {
         "enabled": true,
