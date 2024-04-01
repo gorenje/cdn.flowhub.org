@@ -865,7 +865,6 @@ var DEADRED = (function() {
     // to the deadred server.
     let deadredRedirectablesAjax = [
         "FlowHubDiff",
-        "FlowHubPush",
         "NodeFactorySidebarCfg"
     ];
 
@@ -875,29 +874,87 @@ var DEADRED = (function() {
 
         // patial functionality provided by the deadred backend
         if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
+            options.url = RED.settings.get("dynamicServer", "") + options.url
+        }
 
-            if ( options.url == "FlowHubPush" ) {
+        if ( options.url == "FlowHubPush" ) {
+            options.success({})
+            jqXHR.abort()
+
+            let cfgNode = undefined
+
+            RED.nodes.eachConfig( nd => {
+                if ( nd.type == "FlowHubCfg" ) {
+                    cfgNode = nd
+                }
+            })
+
+            if ( cfgNode && cfgNode.apiToken != "" ) {
+                let data = JSON.parse(options.data)
+
+                let postData = {
+                    flowid:       data.flowid,
+                    flowdata:     data.flowdata,
+                    flowlabel:    data.flowlabel,
+                    svgdata:      data.svgdata,
+                    nodedetails:  data.nodedetails,
+                    flowrevision: (cfgNode.flowrevisions || {})[data.flowid] || "",
+                    pushcomment:  cfgNode.pushcomment,
+                    pushnewflows: JSON.parse(cfgNode.pushnewflows),
+                    forcepush:    JSON.parse(cfgNode.forcepush),
+                }
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    headers: {
+                        "Authorization": "Bearer " + cfgNode.apiToken
+                    },
+                    url: RED.settings.get("dynamicServer", "") + "v1/flows",
+                    data: JSON.stringify(postData),
+                    success: (resp) => {
+                        RED.comms.emit([
+                            {
+                                topic: "flowhub:submission-result",
+                                data: {
+                                    status: resp.msg,
+                                    statusType: resp.status == "failed" ? "error" : "success",
+                                }
+                            }
+                        ])
+                    },
+                });
+            } else {
                 setTimeout( () => {
-                    RED.comms.emit( [
+                    RED.comms.emit([
                         {
                             topic: "flowhub:submission-result",
                             data: {
-                                status: "Succeeded",
-                                statusType: "success"
+                                status: "No FlowHub.org token set - <a target=_blank href='https://flowhub.org/integration'>Get your token <i class='fa fa-external-link'></i></a>.",
+                                statustype: "error"
                             }
                         }
                     ])
-                }, 4345)
+                }, 1234)
             }
 
-            options.url = RED.settings.get("dynamicServer", "") + options.url
+            return
         }
 
         // Token retrieval
         mth = options.url.match(/^FlowHubToken/i)
         if ( mth ) {
+            let cfgNode = undefined
+
+            RED.nodes.eachConfig( nd => {
+                if ( nd.type == "FlowHubCfg" ) {
+                    cfgNode = nd
+                }
+            })
+
             options.success({
-                "token": "xxx",
+                "token": (cfgNode ? cfgNode.apiToken : "xxx"),
             })
 
             jqXHR.abort();

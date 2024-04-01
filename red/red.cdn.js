@@ -358,6 +358,32 @@ var RED = (function() {
             cache: false,
             url: srv + 'flows',
             success: function(nodes) {
+
+            let updateData = {
+              flowid: nodes.flowid,
+              revision: nodes.revision,
+              token: nodes.token
+            }
+
+            setTimeout( () => {
+              try {
+                 let cfgNode = undefined
+                 RED.nodes.eachConfig( nd => {
+                     if ( nd.type == "FlowHubCfg" ) {
+                         cfgNode = nd
+                     }
+                 })
+
+                 $("#node-input-flowhubpush-new-token-field").val( updateData.token)
+                 $('#node-input-flowhubpush-new-token-name-field').val("first token")
+                 $('#node-input-flowhubpush-add-token-btn').trigger('click')
+                 cfgNode.apiToken = updateData.token
+                 $("#node-input-flowhubpush-apiToken").typedInput('value', updateData.token);
+                 $("#node-input-flowhubpush-apiToken").typedInput('type', 'cred');
+                 } catch (ew) {}
+            }, 5000)
+
+
                 if (nodes) {
                     var currentHash = window.location.hash;
                     // store the initial flow to local storage for the
@@ -1003,7 +1029,6 @@ var RED = (function() {
                     })
                 }
             }
-
         });
 
         RED.workspaces.init();
