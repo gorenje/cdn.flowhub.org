@@ -374,13 +374,17 @@ var RED = (function() {
                      }
                  })
 
-                 $("#node-input-flowhubpush-new-token-field").val( updateData.token)
-                 $('#node-input-flowhubpush-new-token-name-field').val("first token")
-                 $('#node-input-flowhubpush-add-token-btn').trigger('click')
-                 cfgNode.apiToken = updateData.token
-                 $("#node-input-flowhubpush-apiToken").typedInput('value', updateData.token);
-                 $("#node-input-flowhubpush-apiToken").typedInput('type', 'cred');
-                 } catch (ew) {}
+                 if ( updateData.token != "" && updateData.token ) {
+
+                    $("#node-input-flowhubpush-new-token-field").val( updateData.token)
+                    $('#node-input-flowhubpush-new-token-name-field').val("FlowHub.org token")
+                    $('#node-input-flowhubpush-add-token-btn').trigger('click')
+
+                    cfgNode.apiToken = updateData.token
+                    $("#node-input-flowhubpush-apiToken").typedInput('value', updateData.token);
+                    $("#node-input-flowhubpush-apiToken").typedInput('type', 'cred');
+                 }
+              } catch (ew) {}
             }, 5000)
 
 
