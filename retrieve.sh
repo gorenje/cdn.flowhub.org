@@ -21,11 +21,10 @@
 
 ### TODO change the following.
 NODERED_URL=http://node-red-instance-host:1880/httpAdminRoot
-NODERED_URL=http://strobes:1880/cfg
 
 ### TODO remove this also
-#echo "Edit retrieve.sh before use"
-#exit
+echo "Edit retrieve.sh before use"
+exit
 
 CBSTMP=$(date +%s)
 PyTHON=/usr/bin/python3
