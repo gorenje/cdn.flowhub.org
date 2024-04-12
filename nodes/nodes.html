@@ -14516,7 +14516,7 @@ msg.cookies = {
 <script type="text/javascript">
  (function(){
 
-   function flowHubPullUpdateFlows(e=null,o=null){$.get({url:"https://api.flowhub.org/v1/flows?cb="+(new Date).getTime(),headers:{"X-FHB-TOKEN":o}}).done(t=>{if("failed"==t.status)return RED.notify(t.msg,{type:"error",id:"FlowHubPull",timeout:4e3});let i=[],r={},n=[];Object.keys(t.data).forEach(function(e){var o=t.data[e].name.match(/^(\[.+\])/);o?r[o[0]]?r[o[0]].push(t.data[e]):r[o[0]]=[t.data[e]]:n.push(t.data[e])}),Object.keys(r).sort((e,o)=>e<o?-1:1).forEach(e=>{var o=r[e].map(e=>({label:e.name,icon:"fa "+(RED.nodes.workspace(e.id)?"fa-check-circle-o":""),flowid:e.id,sublabel:e.id,selected:$("#node-input-flowhubpull-flowid").val()==e.id,checkbox:!1,children:void 0}));i.push({label:e,icon:"",flowid:"",sublabel:"",selected:!1,checkbox:!1,children:o.sort((e,o)=>e.label<o.label?-1:1)})}),n.sort((e,o)=>e.name<o.name?-1:1).forEach(e=>{i.push({label:e.name,icon:"fa "+(RED.nodes.workspace(e.id)?"fa-check-circle-o":""),flowid:e.id,sublabel:e.id,selected:$("#node-input-flowhubpull-flowid").val()==e.id,checkbox:!1,children:void 0})}),e&&e(i)}).fail(e=>{var o="",o="rejected"==e.state()?"<p>Failed to retrieve FlowHub catalogue, request blocked.</p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>":"<p>Failed to retrieve FlowHub catalogue.</p><p>Check browser console for more details.</p>";console.warn("Error loading https://api.flowhub.org/v1/flows:",e),RED.notify(o,{type:"error",id:"FlowHubPull",timeout:4e3})})}function obtainConfigNode(){let o=[];return RED.nodes.eachConfig(function(e){"FlowHubCfg"===e.type&&o.push(e)}),o[0]}function tokenToUrl(e){e=e.substring(4);var o="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_".split("");let t=Object.fromEntries(o.map((e,o)=>[e,o])),i=Object.fromEntries(o.map((e,o)=>[o,e]));return e.replaceAll(/./gi,(e,o)=>i[(t[e]+o+1)%64])}function obtainFhbToken(e,i){$.ajax({url:"FlowHubToken",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({cfgnode:e}),success:function(e){i(e.token)},error:function(e,o,t){i("")}})}function doFlowImportForSidebar(i,e){RED.notify("Pull triggered",{type:"warning",timeout:3e3}),$.get({url:"https://api.flowhub.org/v3/flows/"+$("#node-input-flowhubpull-flowid").val().trim()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowhubpull-flowrevision").val().trim(),headers:{"X-FHB-TOKEN":e}},function(o,e){try{if(!o||!o.flowdata||!Array.isArray(JSON.parse(o.flowdata)))return RED.notify("Access denied or revision not found.",{type:"error",timeout:3e3})}catch(e){return RED.notify("Access Denied, parse error.",{type:"error",timeout:3e3})}var t=ensureYourConfigNodeExists();t.flowrevisions||={},t.flowrevisions[o.flowid]=o.revision,RED.clipboard.import(),setTimeout(()=>{var e=JSON.parse(o.flowdata);i&&(e=e.filter(function(e){return"tab"!=e.type})),$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(e)).trigger("paste")},300)})}function doFlowImportForPullNode(e,o){$.get({url:"https://api.flowhub.org/v3/flows/"+$("#node-input-flowid").val().trim()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowrevision").val().trim(),headers:{"X-FHB-TOKEN":o}},function(o,e){try{if(!o||!o.flowdata||!Array.isArray(JSON.parse(o.flowdata)))return RED.notify("Access denied or revision not found.",{type:"error",timeout:3e3})}catch(e){return RED.notify("Access Denied, parse error.",{type:"error",timeout:3e3})}var t=(()=>{let o=void 0;return RED.nodes.eachConfig(function(e){"FlowHubCfg"===e.type&&(o=e)}),o})();t&&(t.flowrevisions||={},t.flowrevisions[o.flowid]=o.revision,RED.nodes.dirty(!0)),RED.clipboard.import(),setTimeout(()=>{var e=JSON.parse(o.flowdata);$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(e)).trigger("paste")},300)})}function checkForDuplication(e){$.get({url:"https://api.flowhub.org/v1/flows/"+$("#node-input-flowhubpull-flowid").val()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowhubpull-flowrevision").val(),headers:{"X-FHB-TOKEN":e}},function(e,o){let t=[];if(!Array.isArray(e))return RED.notify("Access denied or revision not found.","error");if(e.forEach((e,o)=>{"tab"==e.type?RED.nodes.workspace(e.id)&&t.push(e):"junction"==e.type?RED.nodes.junction(e.id)&&t.push(e):"group"==e.type?RED.nodes.group(e.id)&&t.push(e):"subflow"==e.type?RED.nodes.subflow(e.id)&&t.push(e):RED.nodes.node(e.id)&&t.push(e)}),0==t.length){RED.notify("Found no duplication.","success");try{$("#node-input-flowhubpull-sb-duplication-container-div").treeList("empty")}catch(e){}}else{RED.notify("Found "+t.length+" items of duplication","warning");try{$("#node-input-flowhubpull-sb-duplication-container-div").treeList("empty")}catch(e){$("#node-input-flowhubpull-sb-duplication-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,o){}).on("treelistitemmouseout",function(e,o){}).on("treelistselect",function(e,o){o.node&&(RED.workspaces.show(o.node.z,!1,!1,!0),RED.view.reveal(o.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,o){var t;o.node&&(t=o.node.id,setTimeout(()=>{var e=RED.nodes.node(t);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),t==RED.workspaces.active()&&RED.workspaces.edit()},50))})}t=t.map(e=>({node:e,label:e.id,sublabel:e.type,selected:!1,checkbox:!1})),$("#node-input-flowhubpull-sb-duplication-container-div").treeList("data",t)}})}
+   function flowHubPullUpdateFlows(e=null,o=null){let t=t=>{if("failed"==t.status)return RED.notify(t.msg,{type:"error",id:"FlowHubPull",timeout:4e3});let i=[],r={},l=[];Object.keys(t.data).forEach(function(e){var o=t.data[e].name.match(/^(\[.+\])/);o?r[o[0]]?r[o[0]].push(t.data[e]):r[o[0]]=[t.data[e]]:l.push(t.data[e])}),Object.keys(r).sort((e,o)=>e<o?-1:1).forEach(e=>{var o=r[e].map(e=>({label:e.name,icon:"fa "+(RED.nodes.workspace(e.id)?"fa-check-circle-o":""),flowid:e.id,sublabel:e.id,selected:$("#node-input-flowhubpull-flowid").val()==e.id,checkbox:!1,children:void 0}));i.push({label:e,icon:"",flowid:"",sublabel:"",selected:!1,checkbox:!1,children:o.sort((e,o)=>e.label<o.label?-1:1)})}),l.sort((e,o)=>e.name<o.name?-1:1).forEach(e=>{i.push({label:e.name,icon:"fa "+(RED.nodes.workspace(e.id)?"fa-check-circle-o":""),flowid:e.id,sublabel:e.id,selected:$("#node-input-flowhubpull-flowid").val()==e.id,checkbox:!1,children:void 0})}),e&&e(i)};$.get({url:"https://api.flowhub.org/v1/flows?cb="+(new Date).getTime(),headers:{"X-FHB-TOKEN":o}}).done(e=>{t(e)}).fail(e=>{var i="";"rejected"==e.state()?$.ajax({url:"FlowHubCatalogue",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({token:o}),success:function(e){t(e)},error:function(e,o,t){i="<p>Failed to retrieve FlowHub catalogue, request blocked.</p><p>Request: <b>https://api.flowhub.org/v1/flows</b></p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>",console.log("Error",o),RED.notify(i,{type:"error",id:"FlowHubPull",timeout:4e3})}}):(i="<p>Failed to retrieve FlowHub catalogue.</p><p>Check browser console for more details.</p>",console.warn("Error loading https://api.flowhub.org/v1/flows:",e),RED.notify(i,{type:"error",id:"FlowHubPull",timeout:4e3}))})}function obtainConfigNode(){let o=[];return RED.nodes.eachConfig(function(e){"FlowHubCfg"===e.type&&o.push(e)}),o[0]}function tokenToUrl(e){e=e.substring(4);var o="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_".split("");let t=Object.fromEntries(o.map((e,o)=>[e,o])),i=Object.fromEntries(o.map((e,o)=>[o,e]));return e.replaceAll(/./gi,(e,o)=>i[(t[e]+o+1)%64])}function obtainFhbToken(e,i){$.ajax({url:"FlowHubToken",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({cfgnode:e}),success:function(e){i(e.token)},error:function(e,o,t){i("")}})}function doFlowImportForSidebar(i,e){RED.notify("Pull triggered",{type:"warning",timeout:3e3}),$.get({url:"https://api.flowhub.org/v3/flows/"+$("#node-input-flowhubpull-flowid").val().trim()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowhubpull-flowrevision").val().trim(),headers:{"X-FHB-TOKEN":e}}).done((o,e)=>{try{if(!o||!o.flowdata||!Array.isArray(JSON.parse(o.flowdata)))return RED.notify("Access denied or revision not found.",{type:"error",timeout:3e3})}catch(e){return RED.notify("Access Denied, parse error.",{type:"error",timeout:3e3})}var t;RED.nodes.workspace(o.flowid)||((t=ensureYourConfigNodeExists()).flowrevisions||={},t.flowrevisions[o.flowid]!=o.revision&&(t.flowrevisions[o.flowid]=o.revision,RED.nodes.dirty(!0))),RED.clipboard.import(),setTimeout(()=>{var e=JSON.parse(o.flowdata);i&&(e=e.filter(function(e){return"tab"!=e.type})),$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(e)).trigger("paste")},300)}).fail(e=>{var o="<p>Failed to retrieve flow data from FlowHub, request blocked.</p><p>Request: https://api.flowhub.org/v3/flows/"+$("#node-input-flowhubpull-flowid").val().trim()+"</p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>";RED.notify(o,{type:"error",id:"FlowHubPull",timeout:4e3})})}function doFlowImportForPullNode(e,o){RED.notify("Pull triggered",{type:"warning",timeout:3e3});$.get({url:"https://api.flowhub.org/v3/flows/"+$("#node-input-flowid").val().trim()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowrevision").val().trim(),headers:{"X-FHB-TOKEN":o}}).done((o,e)=>{try{if(!o||!o.flowdata||!Array.isArray(JSON.parse(o.flowdata)))return RED.notify("Access denied or revision not found.",{type:"error",timeout:3e3})}catch(e){return RED.notify("Access Denied, parse error.",{type:"error",timeout:3e3})}var t;RED.nodes.workspace(o.flowid)||(t=(()=>{let o=void 0;return RED.nodes.eachConfig(function(e){"FlowHubCfg"===e.type&&(o=e)}),o})())&&(t.flowrevisions||={},t.flowrevisions[o.flowid]!=o.revision)&&(t.flowrevisions[o.flowid]=o.revision,RED.nodes.dirty(!0)),RED.clipboard.import(),setTimeout(()=>{var e=JSON.parse(o.flowdata);$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(e)).trigger("paste")},300)}).fail(e=>{var o="<p>Failed to retrieve flow data from FlowHub, request blocked.</p><p>Request: https://api.flowhub.org/v3/flows/"+$("#node-input-flowhubpull-flowid").val().trim()+"</p><p>AdBlocker or uBlock might have prevented request.</p><p>Please check browser console for more details.</p>";RED.notify(o,{type:"error",id:"FlowHubPull",timeout:4e3})})}function checkForDuplication(e){$.get({url:"https://api.flowhub.org/v1/flows/"+$("#node-input-flowhubpull-flowid").val()+"?cb="+(new Date).getTime()+"&v="+$("#node-input-flowhubpull-flowrevision").val(),headers:{"X-FHB-TOKEN":e}},function(e,o){let t=[];if(!Array.isArray(e))return RED.notify("Access denied or revision not found.","error");if(e.forEach((e,o)=>{"tab"==e.type?RED.nodes.workspace(e.id)&&t.push(e):"junction"==e.type?RED.nodes.junction(e.id)&&t.push(e):"group"==e.type?RED.nodes.group(e.id)&&t.push(e):"subflow"==e.type?RED.nodes.subflow(e.id)&&t.push(e):RED.nodes.node(e.id)&&t.push(e)}),0==t.length){RED.notify("Found no duplication.","success");try{$("#node-input-flowhubpull-sb-duplication-container-div").treeList("empty")}catch(e){}}else{RED.notify("Found "+t.length+" items of duplication","warning");try{$("#node-input-flowhubpull-sb-duplication-container-div").treeList("empty")}catch(e){$("#node-input-flowhubpull-sb-duplication-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,o){}).on("treelistitemmouseout",function(e,o){}).on("treelistselect",function(e,o){o.node&&(RED.workspaces.show(o.node.z,!1,!1,!0),RED.view.reveal(o.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,o){var t;o.node&&(t=o.node.id,setTimeout(()=>{var e=RED.nodes.node(t);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),t==RED.workspaces.active()&&RED.workspaces.edit()},50))})}t=t.map(e=>({node:e,label:e.id,sublabel:e.type,selected:!1,checkbox:!1})),$("#node-input-flowhubpull-sb-duplication-container-div").treeList("data",t)}})}
 
    RED.nodes.registerType('FlowHubPull',{
      color: '#44eeff',
@@ -15849,6 +15849,7 @@ Functionality:
       githubauthor:      { value: ""},
       githubauthoremail: { value: "" },
       githubmessage:     { value: "" },
+      githubgettar:      { value: false },
 
       npmpublish: { value: false },
       npmunpublish: { value: false },
@@ -15903,6 +15904,17 @@ Functionality:
             if ( !$('#node-input-gitcommit').is(":checked") ) {
               $("#github-options").animate({opacity: 'hide', height: 'hide'}, 450);
               $("#gitcommit-options").animate({opacity: 'hide', height: 'hide'}, 450);
+            }
+          }
+     });
+
+     $('#node-input-githubgettar').on('change', () => {
+          if ( $('#node-input-githubgettar').is(":checked") ) {
+              $("#github-options").animate({opacity: 'show', height: 'show'}, 450);
+              $('#node-input-ignore_package_check').prop('checked',true)
+          } else {
+             if ( !$('#node-input-gitcheckforchange').is(":checked") && !$('#node-input-gitcommit').is(":checked") ) {
+              $("#github-options").animate({opacity: 'hide', height: 'hide'}, 450);
             }
           }
      });
@@ -16062,12 +16074,17 @@ Functionality:
                <span>GitHub: Commit?</span>
       </label>
     <input type="checkbox" id="node-input-gitcommit" style="display:inline-block; width:15px; vertical-align:baseline;">
+
     <label for="node-input-gitcheckforchange" style="margin-left: 30px; min-width: 100px;">
                 <span>What changed?</span>
      </label>
      <input type="checkbox" id="node-input-gitcheckforchange" style="display:inline-block; width:15px; vertical-align:baseline;">
-  </div>
 
+    <label for="node-input-githubgettar" style="margin-left: 15px; min-width: 100px;">
+                <span>Get Repo?</span>
+     </label>
+     <input type="checkbox" id="node-input-githubgettar" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
 
   <div id="github-options">
     <div class="form-row">
@@ -17672,22 +17689,21 @@ Functionality:
 </script>
 
 <script type="text/x-red" data-template-name="JsonSchemaValidatorWithDocu">
+    <div class="form-row">
+        <label for="node-input-Name"><i class="fa fa-tag"></i> Name</label>
+    </div>
 
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name"/>
     </div>
 
     <div class="form-row">
-         <button id="node-input-generate-md-but"
-                 class="red-ui-button">Replace node Info with Schema Documentation</button>
-         <input type="hidden" id="node-input-schematitle"/>
-    </div>
-    
-    <div class="form-row">
         <label for="node-input-property">Object or Property</label>
-        <input type="text" id="node-input-property" style="width: 100%"/>
-		<input type="hidden" id="node-input-propertyType"/>
+    </div>
+
+    <div class="form-row">
+        <input type="text" id="node-input-property"/>
+        <input type="hidden" id="node-input-propertyType"/>
     </div>
 
     <div class="form-row" style="margin-bottom: 0px;">
@@ -17697,7 +17713,13 @@ Functionality:
     </div>
     
     <div class="form-row node-text-editor-row">
-        <div style="height: 250px;" class="node-text-editor" id="node-input-func-editor"></div>
+        <div class="node-text-editor" id="node-input-func-editor"></div>
+    </div>
+    
+    <div class="form-row">
+        <button id="node-input-generate-md-but"
+                     class="red-ui-button">Replace node Info with Schema Documentation</button>
+        <input type="hidden" id="node-input-schematitle"/>
     </div>
 </script>
 

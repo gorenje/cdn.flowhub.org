@@ -900,7 +900,7 @@
             "FlowHubPull"
         ],
         "user": false,
-        "version": "0.7.1"
+        "version": "0.7.3"
     },
     {
         "enabled": true,
@@ -912,7 +912,7 @@
             "FlowHubCfg"
         ],
         "user": false,
-        "version": "0.7.1"
+        "version": "0.7.3"
     },
     {
         "enabled": true,
@@ -1307,7 +1307,7 @@
             "JsonSchemaValidatorWithDocu"
         ],
         "user": false,
-        "version": "0.1.1"
+        "version": "0.1.2"
     },
     {
         "enabled": true,
@@ -1343,7 +1343,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1355,7 +1355,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1367,7 +1367,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1379,7 +1379,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1391,7 +1391,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1403,7 +1403,7 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1415,7 +1415,7 @@
             "OTPGenerate"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1427,7 +1427,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.3.9"
+        "version": "0.4.1"
     },
     {
         "enabled": true,
@@ -1535,7 +1535,7 @@
             "FlowCompareCfg"
         ],
         "user": false,
-        "version": "0.1.4"
+        "version": "0.1.5"
     },
     {
         "enabled": true,

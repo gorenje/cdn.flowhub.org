@@ -21,10 +21,11 @@
 
 ### TODO change the following.
 NODERED_URL=http://node-red-instance-host:1880/httpAdminRoot
+NODERED_URL=http://strobes:1880/cfg
 
 ### TODO remove this also
-echo "Edit retrieve.sh before use"
-exit
+#echo "Edit retrieve.sh before use"
+#exit
 
 CBSTMP=$(date +%s)
 PyTHON=/usr/bin/python3
@@ -98,6 +99,9 @@ for lnk in blockly-contrib/npm/blockly/blockly_compressed.js \
               blockly-contrib/npm/@blockly___SEPARATOR___theme-highcontrast/src/index.js \
               blockly-contrib/npm/@blockly___SEPARATOR___theme-modern/src/index.js \
               blockly-contrib/npm/@blockly___SEPARATOR___theme-tritanopia/src/index.js \
+              FlowHubLib/jslib/diff.min.js \
+              FlowCompare/jslib/flowviewer.min.js \
+              FlowCompare/jslib/diff.min.js \
            ; do
 
     echo "==> ${lnk}"
