@@ -1306,7 +1306,7 @@
             "Contact"
         ],
         "user": false,
-        "version": "5.5.961"
+        "version": "3.9.267"
     },
     {
         "enabled": true,
@@ -1318,7 +1318,7 @@
             "Generator"
         ],
         "user": false,
-        "version": "5.5.961"
+        "version": "3.9.267"
     },
     {
         "enabled": true,
@@ -1330,7 +1330,7 @@
             "EmptyContact"
         ],
         "user": false,
-        "version": "5.5.961"
+        "version": "3.9.267"
     },
     {
         "enabled": true,
@@ -1342,7 +1342,7 @@
             "AdressBookCfg"
         ],
         "user": false,
-        "version": "5.5.961"
+        "version": "3.9.267"
     },
     {
         "enabled": true,

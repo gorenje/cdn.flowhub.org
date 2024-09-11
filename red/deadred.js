@@ -1059,6 +1059,61 @@ var DEADRED = (function() {
             }
         }
 
+        // Handle the contact conversion request
+        mth = options.url.match(/^vCardContactSidebarCfg/i)
+        if ( mth && options.type == "POST" ) {
+            let handleUrlEmail = (ary) => {
+                let typeStr = [(ary[1]["type"] || [])].flat().join(",").toUpperCase()
+
+                if ( typeStr != "" ) {
+                    return `${ary[0].toUpperCase()};TYPE=${typeStr}:${ary[3].replace(/\n/g," ")}`
+                } else {
+                    return `${ary[0].toUpperCase()}:${ary[3].replace(/\n/g," ")}`
+                }
+            }
+
+            let handleStr = (ary) => {
+                return `${ary[0].toUpperCase()}:${ary[3].replace(/\n/g," ")}`
+            }
+
+            let handleNvalue = (ary) => {
+                return `${ary[0].toUpperCase()}:${ary[3].join(";").replace(/\n/g," ")}`
+            }
+
+            let handlePhoto = (ary) => {
+                return `${ary[0].toUpperCase()};ENCODING=${ary[1]['encoding'].toUpperCase()};TYPE=${ary[1]['type'].toUpperCase()}:${ary[3]}`
+            }
+
+            let loopThrAttrs = (attr, data, entry, fn) => {
+                data.forEach( ary => {
+                    if ( ary[0].toUpperCase() == attr ) { entry.push( fn(ary) ) }
+                })
+            }
+
+            let result = JSON.parse(options.data).rawjsondata.map( str => {
+                let entry = ["BEGIN:VCARD"]
+                let data = JSON.parse(str)[1]
+
+                let lst = ["VERSION","PRODID","FN","ORG","TITLE","BDAY","NOTE"]
+                lst.forEach( attr => { loopThrAttrs( attr, data, entry, handleStr ) })
+
+                lst = ["N"]
+                lst.forEach( attr => { loopThrAttrs( attr, data, entry, handleNvalue ) } )
+
+                lst = ["EMAIL","URL"]
+                lst.forEach( attr => { loopThrAttrs( attr, data, entry, handleUrlEmail ) } )
+
+                lst = ["PHOTO"]
+                lst.forEach( attr => { loopThrAttrs( attr, data, entry, handlePhoto ) } )
+
+                entry.push( "END:VCARD" )
+                return entry.join("\n")
+            })
+
+            options.success({ data: { vcards: result.join("\n") } }, "",{ status: 200 })
+            jqXHR.abort()
+        }
+
         // a click on the deploy button, an update of the flow. Pass
         // through but handle a reload and stop the flows.
         if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")
