@@ -5,5 +5,6 @@
     "@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin": {},
     "@gregoriusrippenstein/node-red-contrib-flowhub/flowhub_sidebar": {},
     "@gregoriusrippenstein/node-red-contrib-introspection/screenshot": {},
-    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar": {}
+    "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar": {},
+    "@gregoriusrippenstein/node-red-scratchpad/sidebar-plugin": {}
 }

@@ -52,6 +52,7 @@
     "@gregoriusrippenstein/node-red-contrib-uglifyjs/minifycss": {},
     "@gregoriusrippenstein/node-red-contrib-uglifyjs/uglifyjs": {},
     "@gregoriusrippenstein/node-red-contrib-validation-and-documentation/json-schema": {},
+    "@gregoriusrippenstein/node-red-scratchpad/scratchpad": {},
     "@gregoriusrippenstein/node-red-streaming/archivestream": {},
     "@gregoriusrippenstein/node-red-streaming/chunk2msg": {},
     "@gregoriusrippenstein/node-red-streaming/csvstream": {},

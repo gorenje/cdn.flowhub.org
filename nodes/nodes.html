@@ -17677,6 +17677,29 @@ Functionality:
     <p>JSON Schema validator</p>
     <p>Validate input based on schema. Schema can also be passed in as JSON object on `msg.schema`. If validation fails, an exception is raised.</p>
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-scratchpad/scratchpad] --- -->
+<script type="text/javascript">
+(function ($) {
+   RED.nodes.registerType('ScratchPadCfg', {
+      category: 'config',
+      hasUsers: false,
+      defaults: {
+         name: { value: "" },
+         scratches: { value: [] }
+      },
+      paletteLabel: 'ScratchPadCfg',
+      label: function () {
+         return this.name;
+      }
+  });
+})(jQuery);
+</script>
+
+<!-- The html for the config node info panel (in right sidebar) -->
+<script type="text/x-red" data-template-name="ScratchPadCfg">
+   <p>Scratch input for development.</p>
+</script>
+
 <!-- --- [red-module:@gregoriusrippenstein/node-red-streaming/pipestart] --- -->
 <script type="text/javascript">
 (function(){

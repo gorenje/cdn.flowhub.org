@@ -35,6 +35,7 @@
     "@gregoriusrippenstein/node-red-contrib-tarball": [],
     "@gregoriusrippenstein/node-red-contrib-uglifyjs": [],
     "@gregoriusrippenstein/node-red-contrib-validation-and-documentation": [],
+    "@gregoriusrippenstein/node-red-scratchpad": [],
     "@gregoriusrippenstein/node-red-streaming": [],
     "@martip/node-red-xlsx": [
         "xlsx.svg"

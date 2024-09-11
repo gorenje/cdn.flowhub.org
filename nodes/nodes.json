@@ -1677,5 +1677,17 @@
         ],
         "user": false,
         "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-scratchpad/scratchpad",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-scratchpad",
+        "name": "scratchpad",
+        "types": [
+            "ScratchPadCfg"
+        ],
+        "user": false,
+        "version": "6.7.195"
     }
 ]
