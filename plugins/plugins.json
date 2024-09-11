@@ -9,7 +9,67 @@
         "plugins": [],
         "runtime": false,
         "user": false,
-        "version": "0.7.4"
+        "version": "0.8.3"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/screenshot",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "screenshot",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
+        "name": "sidebar-plugin",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.1.6"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodefactory_sidebar",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/sidebar-plugin",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
+        "name": "sidebar-plugin",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.1.12"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contacts/addressbook_sidebar",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contacts",
+        "name": "addressbook_sidebar",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "5.5.961"
     },
     {
         "editor": true,
@@ -22,77 +82,5 @@
         "runtime": false,
         "user": false,
         "version": "0.0.4"
-    },
-    {
-        "editor": true,
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blog-changes-sidebar",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blog-changes-sidebar",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "editor": true,
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blog-pages-sidebar",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blog-pages-sidebar",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "editor": true,
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "nodefactory_sidebar",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "editor": true,
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/screenshot",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "screenshot",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "editor": true,
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/sidebar-plugin",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
-        "name": "sidebar-plugin",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.1.5"
-    },
-    {
-        "editor": true,
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/sidebar-plugin",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
-        "name": "sidebar-plugin",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.1.10"
     }
 ]

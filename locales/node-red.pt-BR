@@ -121,6 +121,7 @@
     "csv": {
         "errors": {
             "bad_csv": "Dados CSV malformados - sa\u00edda provavelmente corrompida.",
+            "bad_template": "Malformed columns template.",
             "csv_js": "Este n\u00f3 lida apenas com cadeia de caracteres CSV ou objetos js.",
             "obj_csv": "Nenhum modelo de colunas especificado para o objeto -> CSV."
         },
@@ -143,6 +144,7 @@
             "separator": "Separador",
             "skip-e": "linhas",
             "skip-s": "Pular primeiro",
+            "spec": "Parser",
             "usestrings": "analise sint\u00e1tica de valores num\u00e9ricos"
         },
         "newline": {
@@ -165,6 +167,11 @@
             "semicolon": "ponto e v\u00edrgula",
             "space": "espa\u00e7o",
             "tab": "tabula\u00e7\u00e3o"
+        },
+        "spec": {
+            "legacy": "Legacy",
+            "legacy_warning": "Legacy mode will be removed in a future release.",
+            "rfc": "RFC4180"
         }
     },
     "debug": {
@@ -414,10 +421,12 @@
         "label": {
             "in": "entrada",
             "output": "Sa\u00edda",
+            "prefix": "Property name for HTML content",
             "select": "Seletor"
         },
         "output": {
             "attr": "um objeto de quaisquer atributos dos elementos",
+            "compl": "an object of any attributes of the elements and html contents",
             "html": "o conte\u00fado HTML dos elementos",
             "text": "apenas o conte\u00fado de texto dos elementos"
         }
@@ -593,6 +602,7 @@
             "object": "um Objeto chave/valor",
             "string": "uma Cadeia de caracteres"
         },
+        "useparts": "Use existing msg.parts property",
         "using": "usando o valor de"
     },
     "json": {
@@ -1122,6 +1132,7 @@
             "connected_plural": "conectados __count__"
         },
         "tip": {
+            "headers": "Os cabe\u00e7alhos s\u00e3o enviados apenas durante o mecanismo de atualiza\u00e7\u00e3o do protocolo, do HTTP para o protocolo WS/WSS.",
             "path1": "Por padr\u00e3o, a <code>carga \u00fatil</code> conter\u00e1 os dados a serem enviados ou recebidos de um websocket. O ouvinte pode ser configurado para enviar ou receber todo o objeto de mensagem como uma cadeia de caracteres formatada em JSON.",
             "path2": "Este caminho ser\u00e1 relativo a <code>__path__</code>.",
             "url1": "A URL deve usar o esquema ws:&#47;&#47; ou wss:&#47;&#47; e apontar para um ouvinte de websocket existente.",

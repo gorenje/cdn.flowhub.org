@@ -1,35 +1,66 @@
 {
     "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/advantage": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/analogy": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/aphorism": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/author": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/base": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blog-post": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogchanges": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogcontent": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogdetails": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogpages": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/book": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/codebase": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/comment": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/consequence": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/definition": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/disadvantage": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/humour": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/idea": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/inspiration": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/observation": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/poesie": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/pubmedium": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/question": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/quote": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/sketch": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/text": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/thought": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/topic": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/treasure": {},
+    "@gdziuba/node-red-usbhid/usbhid": {},
+    "@gorenje/node-red-contrib-mindmap/advantage": {},
+    "@gorenje/node-red-contrib-mindmap/analogy": {},
+    "@gorenje/node-red-contrib-mindmap/aphorism": {},
+    "@gorenje/node-red-contrib-mindmap/author": {},
+    "@gorenje/node-red-contrib-mindmap/base": {},
+    "@gorenje/node-red-contrib-mindmap/blog-post": {},
+    "@gorenje/node-red-contrib-mindmap/book": {},
+    "@gorenje/node-red-contrib-mindmap/codebase": {},
+    "@gorenje/node-red-contrib-mindmap/comment": {},
+    "@gorenje/node-red-contrib-mindmap/consequence": {},
+    "@gorenje/node-red-contrib-mindmap/definition": {},
+    "@gorenje/node-red-contrib-mindmap/disadvantage": {},
+    "@gorenje/node-red-contrib-mindmap/humour": {},
+    "@gorenje/node-red-contrib-mindmap/idea": {},
+    "@gorenje/node-red-contrib-mindmap/inspiration": {},
+    "@gorenje/node-red-contrib-mindmap/observation": {},
+    "@gorenje/node-red-contrib-mindmap/poesie": {},
+    "@gorenje/node-red-contrib-mindmap/question": {},
+    "@gorenje/node-red-contrib-mindmap/quote": {},
+    "@gorenje/node-red-contrib-mindmap/sketch": {},
+    "@gorenje/node-red-contrib-mindmap/text": {},
+    "@gorenje/node-red-contrib-mindmap/thought": {},
+    "@gorenje/node-red-contrib-mindmap/topic": {},
+    "@gorenje/node-red-contrib-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-contacts/addressbook": {},
+    "@gregoriusrippenstein/node-red-contacts/contact": {
+        "contact": {
+            "label": {
+                "firstname": "First Name",
+                "statusset": "Status Set",
+                "surname": "Surname"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
+    "@gregoriusrippenstein/node-red-contacts/emptycontact": {
+        "emptycontact": {
+            "label": {
+                "statusset": "Status Set"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
+    "@gregoriusrippenstein/node-red-contacts/generator": {
+        "generator": {
+            "label": {
+                "statusset": "Status Set"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
     "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {
         "aisbreaker": {
             "access_token": {
@@ -279,142 +310,52 @@
         }
     },
     "@martip/node-red-xlsx/xlsx": {},
-    "node-red-contrib-aedes/aedes-mqtt-broker": {
-        "aedes-mqtt-broker": {
-            "label": {
-                "cert": "Certificate",
-                "dburl": "DB Url",
-                "key": "Private Key",
-                "mqtt_port": "MQTT port",
-                "mqtt_ws_path": "WS path",
-                "mqtt_ws_port": "WS port",
-                "persistence_bind": "Persistence",
-                "persistence_level": "LevelDB",
-                "persistence_memory": "Memory",
-                "persistence_mongodb": "MongoDB",
-                "tls-config": "TLS Configuration",
-                "upload": "Upload",
-                "use-tls": "Enable secure (SSL/TLS) connection"
-            },
-            "placeholder": {
-                "cert": "path to certificate (PEM format)",
-                "dburl": "mongodb://localhost:27017/mqtt",
-                "key": "path to private key (PEM format)",
-                "mqtt_port": "Enter MQTT port",
-                "mqtt_ws_path": "Enter Websocket path. Leave blank to disable Websocket support",
-                "mqtt_ws_port": "Enter Websocket port. Leave blank to disable Websocket support",
-                "password": "leave blank to disable authentication",
-                "username": "leave blank to disable authentication"
-            },
-            "status": {
-                "connected": "connected __count__",
-                "connected_plural": "connected __count__"
-            },
-            "tabs-label": {
-                "connection": "Connection",
-                "security": "Security"
-            }
-        }
-    },
     "node-red-contrib-blockly/blockly": {},
     "node-red-contrib-blockly/blockly-config": {},
-    "node-red-contrib-cron-plus/cronplus": {},
-    "node-red-contrib-gzip/markdown": {},
+    "node-red-contrib-dnsquery/dnsquery": {},
+    "node-red-contrib-excel/xlsx": {},
+    "node-red-contrib-fastxml/fastxml": {},
     "node-red-contrib-i2c/i2c": {},
-    "node-red-contrib-iconv/converter": {
-        "converter": {
-            "error": {
-                "encoding": "Encoding not found: ",
-                "payload": "Payload is missing",
-                "type": "This node only handles buffers."
+    "node-red-contrib-image-output/image": {},
+    "node-red-contrib-switch-break/switchBreak": {
+        "label": {
+            "defaultState": "Break by default",
+            "input": "Input:",
+            "master": "Director:",
+            "name": "Name:",
+            "onLock": "Break on:",
+            "onUnlock": "Accept on:",
+            "resend": "Re-send last message on unlock",
+            "time": {
+                "d": "days",
+                "h": "hours",
+                "m": "minutes",
+                "ms": "milliseconds",
+                "s": "seconds"
             },
-            "input": {
-                "from": "win1252"
-            },
-            "label": {
-                "from": "Encoding",
-                "name": "Name"
-            }
+            "timeOut": "Time out:",
+            "useTimeOut": "Use timeout"
+        },
+        "node": {
+            "master": "break director",
+            "slave": "break actor"
+        },
+        "option": {
+            "else": "otherwise"
+        },
+        "status": {
+            "active": "active",
+            "inactive": "inactive",
+            "locked": "locked",
+            "na": "untouched",
+            "unlocked": "unlocked"
+        },
+        "text": {
+            "name": "name",
+            "unknown": "no director link"
         }
     },
-    "node-red-contrib-osc/osc": {},
-    "node-red-contrib-postgresql/postgresql": {
-        "postgresql": {
-            "label": {
-                "applicationName": "Application name",
-                "connectionTimeout": "Connection Timeout",
-                "database": "Database",
-                "host": "Host",
-                "idle": "Idle Timeout",
-                "max": "Maximum size",
-                "name": "Name",
-                "password": "Password",
-                "port": "Port",
-                "query": "Query",
-                "rowsPerMsg": "Number of rows per message",
-                "server": "Server",
-                "split": "Split results in multiple messages",
-                "ssl": "SSL",
-                "user": "User"
-            },
-            "placeholder": {
-                "applicationName": "",
-                "connectionTimeout": "10000 (Milliseconds)",
-                "database": "dbExample",
-                "host": "127.0.0.1",
-                "idle": "1000 (Milliseconds)",
-                "max": "10",
-                "name": "dbConnection",
-                "password": "dbPassword",
-                "port": "5432",
-                "user": "dbUser"
-            },
-            "tab": {
-                "connection": "Connection",
-                "pool": "Pool",
-                "security": "Security"
-            },
-            "title": {
-                "applicationName": "The name of the application that created this Client instance.",
-                "max": "Maximum number of physical database connections that this connection pool can contain."
-            }
-        }
-    },
-    "node-red-contrib-web-babylonjs/box": {},
-    "node-red-contrib-web-babylonjs/cone": {},
-    "node-red-contrib-web-babylonjs/events": {},
-    "node-red-contrib-web-babylonjs/material": {},
-    "node-red-contrib-web-babylonjs/plane": {},
-    "node-red-contrib-web-babylonjs/scene": {},
-    "node-red-contrib-web-babylonjs/sphere": {},
-    "node-red-contrib-web-babylonjs/transform": {},
-    "node-red-contrib-zip/zip": {
-        "zip": {
-            "error": {
-                "filename-type-string": "Filename type must be a String",
-                "parse": "Error parsing zip file: __err__",
-                "payload-type-buffer": "Payload type must be a Buffer",
-                "payload-type-buffer-string": "Payload type must be a Buffer or a String"
-            },
-            "label": {
-                "compressionlevel": "Compression",
-                "filename": "File name",
-                "level": {
-                    "best": "9 (best)",
-                    "default": "6 (default)",
-                    "fast": "1 (fast)",
-                    "no": "0 (no compression)"
-                },
-                "mode": "Mode",
-                "name": "Name",
-                "outasstring": "Output payload as String"
-            },
-            "mode": {
-                "compress": "Compress",
-                "decompress": "Decompress"
-            }
-        }
-    },
+    "node-red-contrib-ui-upload/ui_upload": {},
     "node-red-dashboard/ui_audio": {},
     "node-red-dashboard/ui_base": {
         "ui_base": {
@@ -756,5 +697,196 @@
             }
         }
     },
-    "node-red-node-markdown/markdown": {}
+    "node-red-node-pi-gpio/rpi-gpio": {
+        "rpi-gpio": {
+            "alreadyset": "already set as",
+            "alreadyuse": "already in use",
+            "any": "any",
+            "digout": "Digital output",
+            "errors": {
+                "alreadyset": "GPIO pin __pin__ already set as type: __type__",
+                "commandnotexecutable": "nrgpio command not executable ",
+                "commandnotfound": "nrgpio command not found ",
+                "error": "error: __error__",
+                "ignorenode": "Raspberry Pi specific node set inactive",
+                "invalidinput": "Invalid input",
+                "invalidpin": "Invalid GPIO pin",
+                "libnotfound": "Cannot find Pi RPi.GPIO python library",
+                "mustbeexecutable": "nrgpio must to be executable",
+                "needtobeexecutable": "__command__ needs to be executable",
+                "pythoncommandnotfound": "nrgpio python command not running",
+                "sawpitype": "Saw Pi Type",
+                "version": "Failed to get version from Pi"
+            },
+            "initpin0": "initial level of pin - low (0)",
+            "initpin1": "initial level of pin - high (1)",
+            "label": {
+                "button": "Button",
+                "debounce": "Debounce",
+                "freq": "Frequency",
+                "gpiopin": "GPIO",
+                "initpin": "Initialise pin state?",
+                "left": "Left",
+                "middle": "Middle",
+                "pikeyboard": "Pi Keyboard",
+                "pimouse": "Pi Mouse",
+                "readinitial": "Read initial state of pin on deploy/restart?",
+                "resistor": "Resistor?",
+                "right": "Right",
+                "selectpin": "select pin",
+                "type": "Type"
+            },
+            "left": "left",
+            "middle": "middle",
+            "pinname": "Pin",
+            "pwmout": "PWM output",
+            "resistor": {
+                "none": "none",
+                "pulldown": "pulldown",
+                "pullup": "pullup"
+            },
+            "right": "right",
+            "servo": "Servo output",
+            "status": {
+                "closed": "closed",
+                "na": "N/A : __value__",
+                "not-available": "not available",
+                "not-running": "not running",
+                "ok": "OK",
+                "stopped": "stopped"
+            },
+            "tip": {
+                "dig": "Tip: For digital output - input must be 0 or 1.",
+                "in": "Tip: Only Digital Input is supported - input must be 0 or 1.",
+                "pin": "<b>Pins in Use</b>: ",
+                "pwm": "Tip: For PWM output - input must be between 0 to 100; setting high frequency might occupy more CPU than expected.",
+                "ser": "<b>Tip</b>: For Servo output - input must be between 0 to 100. 50 is centre."
+            },
+            "types": {
+                "digout": "digital output",
+                "input": "input",
+                "pulldown": "input with pull down",
+                "pullup": "input with pull up",
+                "pwmout": "PWM output",
+                "servo": "Servo output"
+            }
+        }
+    },
+    "node-red-node-random/random": {
+        "random": {
+            "label": {
+                "from": "From",
+                "generate": "Generate",
+                "highestNumber": "highest number",
+                "lowestNumber": "lowest number",
+                "realNumber": "a real number - floating point",
+                "to": "To",
+                "wholeNumber": "a whole number - integer"
+            }
+        }
+    },
+    "node-red-node-serialport/serialport": {
+        "serial": {
+            "addsplit": "Add character to output messages",
+            "errors": {
+                "badbaudrate": "Baudrate is invalid",
+                "closed": "serial port __port__ closed",
+                "disconnected": "serial port __port__ disconnected",
+                "error": "serial port __port__ error: __error__",
+                "list": "Failed to list ports. Please enter manually.",
+                "missing-conf": "missing serial config",
+                "serial-port": "serial port",
+                "unexpected-close": "serial port __port__ closed unexpectedly"
+            },
+            "label": {
+                "baudrate": "Baud Rate",
+                "databits": "Data Bits",
+                "deliver": "and deliver",
+                "input": "Input",
+                "ms": "ms",
+                "none": "none",
+                "output": "Output",
+                "parity": "Parity",
+                "request": "Request",
+                "responsetimeout": "Default response timeout",
+                "serial": "serial",
+                "serialport": "Serial Port",
+                "settings": "Settings",
+                "split": "Split input",
+                "start": "Optionally wait for a start character of",
+                "startor": ", then",
+                "stopbits": "Stop Bits"
+            },
+            "linestates": {
+                "high": "High",
+                "low": "Low",
+                "none": "auto"
+            },
+            "onopen": "serial port __port__ opened at __baud__ baud __config__",
+            "output": {
+                "ascii": "ASCII strings",
+                "binary": "binary buffers"
+            },
+            "parity": {
+                "even": "Even",
+                "mark": "Mark",
+                "none": "None",
+                "odd": "Odd",
+                "space": "Space"
+            },
+            "placeholder": {
+                "serialport": "for example: /dev/ttyUSB0/"
+            },
+            "split": {
+                "character": "on the character",
+                "lengths": "into fixed lengths of",
+                "silent": "after a silence of",
+                "timeout": "after a timeout of"
+            },
+            "status": {
+                "stopped": "stopped",
+                "timeout": "timeout",
+                "waiting": "waiting"
+            },
+            "stopped": "__port__ stopped",
+            "tip": {
+                "addchar": "Tip: This character is added to every message sent out to the serial port. Usually \\r or \\n.",
+                "count": "Tip: In count mode msg.count can override the configured count as long as it smaller than the configured value.",
+                "responsetimeout": "Tip: The default response timeout can be overridden by setting msg.timeout.",
+                "silent": "Tip: In line-silent mode timeout is restarted upon arrival of any character (i.e. inter-byte timeout).",
+                "split": "Tip: the \"Split on\" character is used to split the input into separate messages. Can accept chars ($), escape codes (\\n), or hex codes (0x03).",
+                "timeout": "Tip: In timeout mode timeout starts from arrival of first character.",
+                "waitfor": "Tip: Optional. Leave blank to receive all data. Can accept chars ($), escape codes (\\n), or hex codes (0x02)."
+            }
+        }
+    },
+    "node-red-node-smooth/smooth": {},
+    "node-red-node-ui-list/ui_list": {
+        "ui_list": {
+            "action": {
+                "check": "checkbox to send changed item",
+                "click": "click to send item",
+                "menu": "menu to send selected item",
+                "none": "no action",
+                "switch": "switch to send changed item"
+            },
+            "error": {
+                "no-group": "group not configured"
+            },
+            "label": {
+                "action": "Action",
+                "group": "Group",
+                "html": "allow HTML in displayed text",
+                "list": "List Type",
+                "name": "Name",
+                "size": "Size",
+                "topic": "Topic"
+            },
+            "type": {
+                "one": "Single-line",
+                "three": "Multi-line - wide",
+                "two": "Multi-line - narrow"
+            }
+        }
+    }
 }

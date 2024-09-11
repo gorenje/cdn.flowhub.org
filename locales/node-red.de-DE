@@ -121,6 +121,7 @@
     "csv": {
         "errors": {
             "bad_csv": "Unf\u00f6rmige CSV-Daten - Ausgangsdaten m\u00f6glicherweise korrupt",
+            "bad_template": "Malformed columns template.",
             "csv_js": "Dieser Node verarbeitet nur CSV-Zeichenfolgen oder JS-Objekte",
             "obj_csv": "Es wurde keine Spaltennamen f\u00fcr Objekt/CSV-Wandlung angegeben"
         },
@@ -143,6 +144,7 @@
             "separator": "Trennzeichen",
             "skip-e": "Zeile(n)",
             "skip-s": "\u00dcberspringe erste",
+            "spec": "Parser",
             "usestrings": "Zahlenwerte ermitteln"
         },
         "newline": {
@@ -165,6 +167,11 @@
             "semicolon": "Semikolon",
             "space": "Leerzeichen",
             "tab": "Tab"
+        },
+        "spec": {
+            "legacy": "Legacy",
+            "legacy_warning": "Legacy mode will be removed in a future release.",
+            "rfc": "RFC4180"
         }
     },
     "debug": {
@@ -418,10 +425,12 @@
         "label": {
             "in": "in",
             "output": "Ausgang",
+            "prefix": "Property name for HTML content",
             "select": "Selektor"
         },
         "output": {
             "attr": "Objekt mit allen Elemente-Attributen",
+            "compl": "an object of any attributes of the elements and html contents",
             "html": "HTML-Inhalt der Elemente",
             "text": "Nur Textinhalt der Elemente"
         }
@@ -597,6 +606,7 @@
             "object": "ein Schl\u00fcssel/Wert-Objekt",
             "string": "ein String"
         },
+        "useparts": "Use existing msg.parts property",
         "using": "mit dem Wert von"
     },
     "json": {
@@ -1123,6 +1133,7 @@
             "connected_plural": "Verbunden __count__"
         },
         "tip": {
+            "headers": "Header werden nur w\u00e4hrend des Protokollaktualisierungsmechanismus \u00fcbermittelt, von HTTP auf das WS/WSS-Protokoll.",
             "path1": "Standardm\u00e4\u00dfig enth\u00e4lt <code>payload</code> die Daten, die \u00fcber einen WebSocket gesendet oder von einem WebSocket empfangen werden. Der Empf\u00e4nger (Listener) kann so konfiguriert werden, dass er das gesamte Nachrichtenobjekt als eine JSON-formatierte Zeichenfolge (string) sendet oder empf\u00e4ngt.",
             "path2": "Dieser Pfad ist relativ zu <code>__path__</code>.",
             "url1": "URL sollte ws:&#47;&#47; oder wss:&#47;&#47; Schema verwenden und auf einen vorhandenen WebSocket-Listener verweisen.",

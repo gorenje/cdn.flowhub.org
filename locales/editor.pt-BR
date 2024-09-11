@@ -44,6 +44,7 @@
         "groupStyleCopied": "Estilo de grupo copiado",
         "group_plural": "__count__ grupos",
         "import": {
+            "alreadyExists": "This node already exists",
             "conflictNotification1": "Alguns dos n\u00f3s que voc\u00ea est\u00e1 importando j\u00e1 existem em sua \u00e1rea de trabalho.",
             "conflictNotification2": "Selecione quais n\u00f3s importar e se deseja substituir os n\u00f3s existentes ou importar uma c\u00f3pia deles.",
             "errors": {
@@ -96,6 +97,7 @@
             "enable": "Habilitado",
             "export": "Exportar",
             "fill": "Preenchido",
+            "format": "Format",
             "import": "Importar",
             "label": "Etiqueta",
             "line": "Contorno",
@@ -201,6 +203,7 @@
             "deleted": "Exclu\u00eddo",
             "flowAdded": "fluxo adicionado ",
             "flowDeleted": "fluxo exclu\u00eddo ",
+            "moved": "moved",
             "movedFrom": "movido de __id__",
             "movedTo": "movido para __id__ ",
             "unchanged": "inalterado "
@@ -396,15 +399,16 @@
         "workspace": "\u00e1rea de trabalho"
     },
     "languages": {
-        "de": "Alem\u00e3o",
-        "en-US": "Ingl\u00eas",
-        "fr": "French",
-        "ja": "Japon\u00eas",
-        "ko": "Coreano",
-        "pt-BR": "Portugu\u00eas(Brasil)",
-        "ru": "Russo",
-        "zh-CN": "Chin\u00eas(Simplificado)",
-        "zh-TW": "Chin\u00eas(Tradicional)"
+        "de": "Deutsch",
+        "en-US": "English",
+        "es-ES": "Espa\u00f1ol (Espa\u00f1a)",
+        "fr": "Fran\u00e7ais",
+        "ja": "\u65e5\u672c\u8a9e",
+        "ko": "Korean",
+        "pt-BR": "Portugu\u00eas (Brasil)",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+        "zh-CN": "\u7b80\u4f53\u4e2d\u6587",
+        "zh-TW": "\u7e41\u9ad4\u4e2d\u6587"
     },
     "library": {
         "dialogSaveOverwrite": "J\u00e1 existe um __libraryType__ chamado __libraryName__. Substituir?",
@@ -491,7 +495,6 @@
             "projects-new": "Novo",
             "projects-open": "Abrir",
             "projects-settings": "Configura\u00e7\u00f5es do projeto",
-            "rename": "Renomear",
             "search": "Procurar fluxos",
             "searchInput": "procure seus fluxos",
             "selectionToSubflow": "Sele\u00e7\u00e3o para subfluxo",
@@ -598,6 +601,7 @@
                     "install": "Instalar",
                     "remove": "Remover",
                     "review": "Abrir informa\u00e7\u00e3o do n\u00f3",
+                    "understood": "Understood",
                     "update": "Atualizar"
                 },
                 "cannotUpdate": {
@@ -610,6 +614,9 @@
                 "remove": {
                     "body": "<p> Remover '__module__' </p> <p> Remover o n\u00f3 ir\u00e1 desinstal\u00e1-lo do Node-RED. O n\u00f3 pode continuar a usar recursos at\u00e9 que o Node-RED seja reiniciado. </p>",
                     "title": "Remover n\u00f3s"
+                },
+                "removePlugin": {
+                    "body": "<p>Removed plugin __module__. Please reload the editor to clear left-overs.</p>"
                 },
                 "update": {
                     "body": "<p> Atualizar '__module__' </p> <p> Atualizar o n\u00f3 exigir\u00e1 a reinicializa\u00e7\u00e3o do Node-RED para concluir a atualiza\u00e7\u00e3o. Isso deve ser feito manualmente. </p>",
@@ -627,6 +634,7 @@
                 "disableFailed": "<p> Falha ao desativar: __module__ </p> <p> __message__ </p> <p> Verifique o log para obter mais informa\u00e7\u00f5es </p>",
                 "enableFailed": "<p> Falha ao ativar: __module__ </p> <p> __message__ </p> <p> Verifique o log para obter mais informa\u00e7\u00f5es </p>",
                 "installFailed": "<p> Falha ao instalar: __module__ </p> <p> __message__ </p> <p> Verifique o log para obter mais informa\u00e7\u00f5es </p>",
+                "installTimeout": "<p>Install continuing the background.</p><p>Nodes will appear in palette when complete. Check the log for more information.</p>",
                 "removeFailed": "<p> Falha ao remover: __module__ </p> <p> __message__ </p> <p> Verifique o log para obter mais informa\u00e7\u00f5es </p>",
                 "updateFailed": "<p> Falha ao atualizar: __module__ </p> <p> __message__ </p> <p> Verifique o log para obter mais informa\u00e7\u00f5es </p>"
             },
@@ -640,6 +648,8 @@
             "nodeCount": "__label__ node",
             "nodeCount_plural": "__label__ nodes",
             "palette": "Paleta",
+            "pluginCount": "__count__ plugin",
+            "pluginCount_plural": "__count__ plugins",
             "refresh": "Atualizar lista de m\u00f3dulos",
             "remove": "remover",
             "sort": "ordenar:",
@@ -914,6 +924,7 @@
         },
         "help": {
             "changeLog": "Log de altera\u00e7\u00e3o",
+            "hideTopics": "Hide topics",
             "label": "ajuda",
             "name": "Ajuda",
             "noHelp": "Nenhum t\u00f3pico de ajuda selecionado",
@@ -1172,9 +1183,18 @@
         "welcomeTours": "Tour de Boas-vindas"
     },
     "typedInput": {
+        "date": {
+            "format": {
+                "object": "JavaScript Date Object",
+                "timestamp": "milliseconds since epoch"
+            }
+        },
+        "selected": "__count__ selected",
+        "selected_plural": "__count__ selected",
         "type": {
             "bin": "armazenamento tempor\u00e1rio",
             "bool": "booliano",
+            "conf-types": "config node",
             "cred": "credencial",
             "date": "registro de tempo",
             "env": "vari\u00e1vel de ambiente",
@@ -1204,6 +1224,7 @@
             "invalid-expr": "Invalid JSONata expression: __error__",
             "invalid-json": "Dados JSON inv\u00e1lidos: __error__",
             "invalid-num": "N\u00famero inv\u00e1lido",
+            "invalid-num-prop": "__prop__: n\u00famero inv\u00e1lido",
             "invalid-prop": "Express\u00e3o de propriedade inv\u00e1lida",
             "invalid-regex-prop": "__prop__: Padr\u00e3o de entrada inv\u00e1lido",
             "invalid-regexp": "Padr\u00e3o de entrada inv\u00e1lido",

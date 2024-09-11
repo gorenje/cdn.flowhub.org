@@ -44,6 +44,7 @@
         "groupStyleCopied": "\u5df2\u590d\u5236\u7ec4\u98ce\u683c",
         "group_plural": "__count__ \u4e2a\u7ec4",
         "import": {
+            "alreadyExists": "This node already exists",
             "conflictNotification1": "\u60a8\u8981\u5bfc\u5165\u7684\u67d0\u4e9b\u8282\u70b9\u5df2\u7ecf\u5b58\u5728\u4e8e\u5de5\u4f5c\u7a7a\u95f4\u4e2d\u3002",
             "conflictNotification2": "\u9009\u62e9\u8981\u5bfc\u5165\u7684\u8282\u70b9\uff0c\u5e76\u786e\u8ba4\u8981\u66ff\u6362\u73b0\u6709\u7684\u8282\u70b9\u8fd8\u662f\u5bfc\u5165\u5b83\u4eec\u7684\u526f\u672c",
             "errors": {
@@ -96,6 +97,7 @@
             "enable": "\u542f\u7528",
             "export": "\u5bfc\u51fa",
             "fill": "\u586b\u5145",
+            "format": "Format",
             "import": "\u5bfc\u5165",
             "label": "\u6807\u7b7e",
             "line": "\u5927\u7eb2",
@@ -201,6 +203,7 @@
             "deleted": "\u5df2\u5220\u9664",
             "flowAdded": "\u5df2\u6dfb\u52a0\u6d41\u7a0b",
             "flowDeleted": "\u5df2\u5220\u9664\u6d41\u7a0b",
+            "moved": "moved",
             "movedFrom": "\u4ece__id__\u79fb\u52a8",
             "movedTo": "\u79fb\u52a8\u81f3__id__",
             "unchanged": "\u672a\u66f4\u6539"
@@ -396,15 +399,16 @@
         "workspace": "\u5de5\u4f5c\u533a"
     },
     "languages": {
-        "de": "\u5fb7\u8bed",
-        "en-US": "\u82f1\u6587",
-        "fr": "\u6cd5\u8bed",
-        "ja": "\u65e5\u8bed",
-        "ko": "\u97e9\u6587",
-        "pt-BR": "\u8461\u8404\u7259\u8bed",
-        "ru": "\u4fc4\u8a9e",
+        "de": "Deutsch",
+        "en-US": "English",
+        "es-ES": "Espa\u00f1ol (Espa\u00f1a)",
+        "fr": "Fran\u00e7ais",
+        "ja": "\u65e5\u672c\u8a9e",
+        "ko": "Korean",
+        "pt-BR": "Portugu\u00eas (Brasil)",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
         "zh-CN": "\u7b80\u4f53\u4e2d\u6587",
-        "zh-TW": "\u7e41\u4f53\u4e2d\u6587"
+        "zh-TW": "\u7e41\u9ad4\u4e2d\u6587"
     },
     "library": {
         "dialogSaveOverwrite": "\u4e00\u4e2a\u53eb\u505a__libraryName__\u7684__libraryType__\u5df2\u7ecf\u5b58\u5728\uff0c\u60a8\u9700\u8981\u8986\u76d6\u4e48\uff1f",
@@ -491,7 +495,6 @@
             "projects-new": "\u65b0\u5efa",
             "projects-open": "\u6253\u5f00",
             "projects-settings": "\u9879\u76ee\u8bbe\u5b9a",
-            "rename": "\u91cd\u547d\u540d",
             "search": "\u67e5\u627e\u6d41\u7a0b",
             "searchInput": "\u67e5\u627e\u6d41\u7a0b",
             "selectionToSubflow": "\u5c06\u9009\u62e9\u90e8\u5206\u66f4\u6539\u4e3a\u5b50\u6d41\u7a0b",
@@ -598,6 +601,7 @@
                     "install": "\u5b89\u88c5",
                     "remove": "\u5220\u9664",
                     "review": "\u6253\u5f00\u8282\u70b9\u4fe1\u606f",
+                    "understood": "Understood",
                     "update": "\u66f4\u65b0"
                 },
                 "cannotUpdate": {
@@ -610,6 +614,9 @@
                 "remove": {
                     "body": "\u5220\u9664\u8282\u70b9\u5c06\u4eceNode-RED\u5378\u8f7d\u5b83\u3002\u8282\u70b9\u53ef\u80fd\u4f1a\u7ee7\u7eed\u4f7f\u7528\u8d44\u6e90\uff0c\u76f4\u5230\u91cd\u65b0\u542f\u52a8Node-RED\u3002",
                     "title": "\u5220\u9664\u8282\u70b9"
+                },
+                "removePlugin": {
+                    "body": "<p>Removed plugin __module__. Please reload the editor to clear left-overs.</p>"
                 },
                 "update": {
                     "body": "\u66f4\u65b0\u8282\u70b9\u5c06\u9700\u8981\u91cd\u65b0\u542f\u52a8Node-RED\u6765\u5b8c\u6210\u66f4\u65b0\uff0c\u8be5\u8fc7\u7a0b\u5fc5\u987b\u7531\u624b\u52a8\u5b8c\u6210\u3002",
@@ -627,6 +634,7 @@
                 "disableFailed": "\u65e0\u6cd5\u7981\u7528: __module__<br>__message__<br>\u67e5\u770b\u65e5\u5fd7\u4e86\u89e3\u66f4\u591a\u4fe1\u606f",
                 "enableFailed": "\u65e0\u6cd5\u542f\u7528: __module__<br>__message__<br>\u67e5\u770b\u65e5\u5fd7\u4e86\u89e3\u66f4\u591a\u4fe1\u606f",
                 "installFailed": "\u65e0\u6cd5\u5b89\u88c5: __module__<br>__message__<br>\u67e5\u770b\u65e5\u5fd7\u4e86\u89e3\u66f4\u591a\u4fe1\u606f",
+                "installTimeout": "<p>Install continuing the background.</p><p>Nodes will appear in palette when complete. Check the log for more information.</p>",
                 "removeFailed": "\u65e0\u6cd5\u5220\u9664: __module__<br>__message__<br>\u67e5\u770b\u65e5\u5fd7\u4e86\u89e3\u66f4\u591a\u4fe1\u606f",
                 "updateFailed": "\u65e0\u6cd5\u66f4\u65b0: __module__<br>__message__<br>\u67e5\u770b\u65e5\u5fd7\u4e86\u89e3\u66f4\u591a\u4fe1\u606f"
             },
@@ -640,6 +648,8 @@
             "nodeCount": "__label__ \u4e2a\u8282\u70b9",
             "nodeCount_plural": "__label__ \u4e2a\u8282\u70b9",
             "palette": "\u63a7\u5236\u677f",
+            "pluginCount": "__count__ plugin",
+            "pluginCount_plural": "__count__ plugins",
             "refresh": "\u66f4\u65b0\u6a21\u5757\u5217\u8868",
             "remove": "\u79fb\u9664",
             "sort": "\u6392\u5e8f:",
@@ -914,6 +924,7 @@
         },
         "help": {
             "changeLog": "\u66f4\u65b0\u65e5\u5fd7",
+            "hideTopics": "Hide topics",
             "label": "\u5e2e\u52a9",
             "name": "\u5e2e\u52a9",
             "noHelp": "\u672a\u9009\u62e9\u5e2e\u52a9\u4e3b\u9898",
@@ -1172,9 +1183,18 @@
         "welcomeTours": "\u6b22\u8fce\u4f7f\u7528 Node-RED"
     },
     "typedInput": {
+        "date": {
+            "format": {
+                "object": "JavaScript Date Object",
+                "timestamp": "milliseconds since epoch"
+            }
+        },
+        "selected": "__count__ selected",
+        "selected_plural": "__count__ selected",
         "type": {
             "bin": "\u4e8c\u8fdb\u5236\u6d41",
             "bool": "\u5e03\u5c14\u503c",
+            "conf-types": "config node",
             "cred": "\u8bc1\u4e66",
             "date": "\u65f6\u95f4\u6233",
             "env": "\u73af\u5883\u53d8\u91cf",
@@ -1204,6 +1224,7 @@
             "invalid-expr": "\u65e0\u6548\u7684 JSONata \u8868\u8fbe\u5f0f: __error__",
             "invalid-json": "\u65e0\u6548\u7684 JSON \u6570\u636e\uff1a __error__",
             "invalid-num": "\u65e0\u6548\u7684\u6570\u5b57",
+            "invalid-num-prop": "__prop__: \u65e0\u6548\u7684\u6570\u5b57",
             "invalid-prop": "\u65e0\u6548\u7684\u5c5e\u6027\u8868\u8fbe\u5f0f",
             "invalid-regex-prop": "__prop__: \u8f93\u5165\u683c\u5f0f\u65e0\u6548",
             "invalid-regexp": "\u8f93\u5165\u683c\u5f0f\u65e0\u6548",

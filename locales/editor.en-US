@@ -44,6 +44,7 @@
         "groupStyleCopied": "Group style copied",
         "group_plural": "__count__ groups",
         "import": {
+            "alreadyExists": "This node already exists",
             "conflictNotification1": "Some of the nodes you are importing already exist in your workspace.",
             "conflictNotification2": "Select which nodes to import and whether to replace the existing nodes, or to import a copy of them.",
             "errors": {
@@ -96,6 +97,7 @@
             "enable": "Enable",
             "export": "Export",
             "fill": "Fill",
+            "format": "Format",
             "import": "Import",
             "label": "Label",
             "line": "Outline",
@@ -201,6 +203,7 @@
             "deleted": "deleted",
             "flowAdded": "flow added",
             "flowDeleted": "flow deleted",
+            "moved": "moved",
             "movedFrom": "moved from __id__",
             "movedTo": "moved to __id__",
             "unchanged": "unchanged"
@@ -396,15 +399,16 @@
         "workspace": "workspace"
     },
     "languages": {
-        "de": "German",
+        "de": "Deutsch",
         "en-US": "English",
-        "fr": "French",
-        "ja": "Japanese",
+        "es-ES": "Espa\u00f1ol (Espa\u00f1a)",
+        "fr": "Fran\u00e7ais",
+        "ja": "\u65e5\u672c\u8a9e",
         "ko": "Korean",
-        "pt-BR": "Portuguese",
-        "ru": "Russian",
-        "zh-CN": "Chinese(Simplified)",
-        "zh-TW": "Chinese(Traditional)"
+        "pt-BR": "Portugu\u00eas (Brasil)",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+        "zh-CN": "\u7b80\u4f53\u4e2d\u6587",
+        "zh-TW": "\u7e41\u9ad4\u4e2d\u6587"
     },
     "library": {
         "dialogSaveOverwrite": "A __libraryType__ called __libraryName__ already exists. Overwrite?",
@@ -491,7 +495,6 @@
             "projects-new": "New",
             "projects-open": "Open",
             "projects-settings": "Project Settings",
-            "rename": "Rename",
             "search": "Search flows",
             "searchInput": "search your flows",
             "selectionToSubflow": "Selection to Subflow",
@@ -598,6 +601,7 @@
                     "install": "Install",
                     "remove": "Remove",
                     "review": "Open node information",
+                    "understood": "Understood",
                     "update": "Update"
                 },
                 "cannotUpdate": {
@@ -610,6 +614,9 @@
                 "remove": {
                     "body": "<p>Removing '__module__'</p><p>Removing the node will uninstall it from Node-RED. The node may continue to use resources until Node-RED is restarted.</p>",
                     "title": "Remove nodes"
+                },
+                "removePlugin": {
+                    "body": "<p>Removed plugin __module__. Please reload the editor to clear left-overs.</p>"
                 },
                 "update": {
                     "body": "<p>Updating '__module__'</p><p>Updating the node will require a restart of Node-RED to complete the update. This must be done manually.</p>",
@@ -627,6 +634,7 @@
                 "disableFailed": "<p>Failed to disable: __module__</p><p>__message__</p><p>Check the log for more information</p>",
                 "enableFailed": "<p>Failed to enable: __module__</p><p>__message__</p><p>Check the log for more information</p>",
                 "installFailed": "<p>Failed to install: __module__</p><p>__message__</p><p>Check the log for more information</p>",
+                "installTimeout": "<p>Install continuing the background.</p><p>Nodes will appear in palette when complete. Check the log for more information.</p>",
                 "removeFailed": "<p>Failed to remove: __module__</p><p>__message__</p><p>Check the log for more information</p>",
                 "updateFailed": "<p>Failed to update: __module__</p><p>__message__</p><p>Check the log for more information</p>"
             },
@@ -640,6 +648,8 @@
             "nodeCount": "__label__ node",
             "nodeCount_plural": "__label__ nodes",
             "palette": "Palette",
+            "pluginCount": "__count__ plugin",
+            "pluginCount_plural": "__count__ plugins",
             "refresh": "Refresh module list",
             "remove": "remove",
             "sort": "sort:",
@@ -914,6 +924,7 @@
         },
         "help": {
             "changeLog": "Change Log",
+            "hideTopics": "Hide topics",
             "label": "help",
             "name": "Help",
             "noHelp": "No help topic selected",
@@ -1172,9 +1183,18 @@
         "welcomeTours": "Welcome Tours"
     },
     "typedInput": {
+        "date": {
+            "format": {
+                "object": "JavaScript Date Object",
+                "timestamp": "milliseconds since epoch"
+            }
+        },
+        "selected": "__count__ selected",
+        "selected_plural": "__count__ selected",
         "type": {
             "bin": "buffer",
             "bool": "boolean",
+            "conf-types": "config node",
             "cred": "credential",
             "date": "timestamp",
             "env": "env variable",
@@ -1204,6 +1224,7 @@
             "invalid-expr": "Invalid JSONata expression: __error__",
             "invalid-json": "Invalid JSON data: __error__",
             "invalid-num": "Invalid number",
+            "invalid-num-prop": "__prop__: invalid number",
             "invalid-prop": "Invalid property expression",
             "invalid-regex-prop": "__prop__: invalid input pattern",
             "invalid-regexp": "Invalid input pattern",

@@ -1,35 +1,34 @@
 {
     "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/advantage": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/analogy": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/aphorism": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/author": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/base": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blog-post": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogchanges": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogcontent": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogdetails": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogpages": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/book": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/codebase": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/comment": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/consequence": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/definition": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/disadvantage": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/humour": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/idea": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/inspiration": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/observation": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/poesie": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/pubmedium": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/question": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/quote": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/sketch": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/text": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/thought": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/topic": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/treasure": {},
+    "@gdziuba/node-red-usbhid/usbhid": {},
+    "@gorenje/node-red-contrib-mindmap/advantage": {},
+    "@gorenje/node-red-contrib-mindmap/analogy": {},
+    "@gorenje/node-red-contrib-mindmap/aphorism": {},
+    "@gorenje/node-red-contrib-mindmap/author": {},
+    "@gorenje/node-red-contrib-mindmap/base": {},
+    "@gorenje/node-red-contrib-mindmap/blog-post": {},
+    "@gorenje/node-red-contrib-mindmap/book": {},
+    "@gorenje/node-red-contrib-mindmap/codebase": {},
+    "@gorenje/node-red-contrib-mindmap/comment": {},
+    "@gorenje/node-red-contrib-mindmap/consequence": {},
+    "@gorenje/node-red-contrib-mindmap/definition": {},
+    "@gorenje/node-red-contrib-mindmap/disadvantage": {},
+    "@gorenje/node-red-contrib-mindmap/humour": {},
+    "@gorenje/node-red-contrib-mindmap/idea": {},
+    "@gorenje/node-red-contrib-mindmap/inspiration": {},
+    "@gorenje/node-red-contrib-mindmap/observation": {},
+    "@gorenje/node-red-contrib-mindmap/poesie": {},
+    "@gorenje/node-red-contrib-mindmap/question": {},
+    "@gorenje/node-red-contrib-mindmap/quote": {},
+    "@gorenje/node-red-contrib-mindmap/sketch": {},
+    "@gorenje/node-red-contrib-mindmap/text": {},
+    "@gorenje/node-red-contrib-mindmap/thought": {},
+    "@gorenje/node-red-contrib-mindmap/topic": {},
+    "@gorenje/node-red-contrib-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-contacts/addressbook": {},
+    "@gregoriusrippenstein/node-red-contacts/contact": {},
+    "@gregoriusrippenstein/node-red-contacts/emptycontact": {},
+    "@gregoriusrippenstein/node-red-contacts/generator": {},
     "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {},
     "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
     "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
@@ -65,24 +64,15 @@
     "@gregoriusrippenstein/node-red-streaming/pipeend": {},
     "@gregoriusrippenstein/node-red-streaming/pipestart": {},
     "@martip/node-red-xlsx/xlsx": {},
-    "node-red-contrib-aedes/aedes-mqtt-broker": {},
     "node-red-contrib-blockly/blockly": {},
     "node-red-contrib-blockly/blockly-config": {},
-    "node-red-contrib-cron-plus/cronplus": {},
-    "node-red-contrib-gzip/markdown": {},
+    "node-red-contrib-dnsquery/dnsquery": {},
+    "node-red-contrib-excel/xlsx": {},
+    "node-red-contrib-fastxml/fastxml": {},
     "node-red-contrib-i2c/i2c": {},
-    "node-red-contrib-iconv/converter": {},
-    "node-red-contrib-osc/osc": {},
-    "node-red-contrib-postgresql/postgresql": {},
-    "node-red-contrib-web-babylonjs/box": {},
-    "node-red-contrib-web-babylonjs/cone": {},
-    "node-red-contrib-web-babylonjs/events": {},
-    "node-red-contrib-web-babylonjs/material": {},
-    "node-red-contrib-web-babylonjs/plane": {},
-    "node-red-contrib-web-babylonjs/scene": {},
-    "node-red-contrib-web-babylonjs/sphere": {},
-    "node-red-contrib-web-babylonjs/transform": {},
-    "node-red-contrib-zip/zip": {},
+    "node-red-contrib-image-output/image": {},
+    "node-red-contrib-switch-break/switchBreak": {},
+    "node-red-contrib-ui-upload/ui_upload": {},
     "node-red-dashboard/ui_audio": {},
     "node-red-dashboard/ui_base": {
         "ui_base": {
@@ -401,5 +391,196 @@
             }
         }
     },
-    "node-red-node-markdown/markdown": {}
+    "node-red-node-pi-gpio/rpi-gpio": {
+        "rpi-gpio": {
+            "alreadyset": "\u8a2d\u5b9a\u6e08",
+            "alreadyuse": "\u4f7f\u7528\u4e2d",
+            "any": "\u5168\u3066",
+            "digout": "\u30c7\u30b8\u30bf\u30eb\u51fa\u529b",
+            "errors": {
+                "alreadyset": "GPIO\u7aef\u5b50  __pin__ \u306f\u65e2\u306b\u51fa\u529b\u5f62\u5f0f\u304c\u8a2d\u5b9a\u3055\u308c\u3066\u3044\u307e\u3059: __type__",
+                "commandnotexecutable": "nrgpio \u30b3\u30de\u30f3\u30c9\u304c\u5b9f\u884c\u53ef\u80fd\u3067\u306f\u3042\u308a\u307e\u305b\u3093 ",
+                "commandnotfound": "nrgpio \u30b3\u30de\u30f3\u30c9\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093 ",
+                "error": "\u30a8\u30e9\u30fc: __error__",
+                "ignorenode": "Raspberry Pi\u56fa\u6709\u306e\u30ce\u30fc\u30c9\u3092\u7121\u8996\u3057\u307e\u3057\u305f",
+                "invalidinput": "\u5165\u529b\u304c\u4e0d\u6b63\u3067\u3059",
+                "invalidpin": "GPIO\u7aef\u5b50\u304c\u4e0d\u6b63\u3067\u3059",
+                "libnotfound": "RPi.GPIO python\u30e9\u30a4\u30d6\u30e9\u30ea\u3092\u898b\u3064\u3051\u3089\u308c\u307e\u305b\u3093\u3067\u3057\u305f",
+                "mustbeexecutable": "nrgpio \u306f\u5b9f\u884c\u53ef\u80fd\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+                "needtobeexecutable": "__command__ \u306f\u5b9f\u884c\u53ef\u80fd\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059",
+                "pythoncommandnotfound": "nrgpio python \u30b3\u30de\u30f3\u30c9\u304c\u5b9f\u884c\u3055\u308c\u3066\u3044\u307e\u305b\u3093",
+                "sawpitype": "Saw Pi Type",
+                "version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u30b3\u30de\u30f3\u30c9\u304c\u5931\u6557\u3057\u307e\u3057\u305f"
+            },
+            "initpin0": "\u7aef\u5b50\u306e\u521d\u671f\u30ec\u30d9\u30eb - Low (0)",
+            "initpin1": "\u7aef\u5b50\u306e\u521d\u671f\u30ec\u30d9\u30eb - High (1)",
+            "label": {
+                "button": "\u30dc\u30bf\u30f3",
+                "debounce": "\u30c7\u30d0\u30a6\u30f3\u30b9",
+                "freq": "\u983b\u5ea6",
+                "gpiopin": "GPIO",
+                "initpin": "\u7aef\u5b50\u306e\u72b6\u614b\u3092\u521d\u671f\u5316",
+                "left": "Left",
+                "middle": "Middle",
+                "pikeyboard": "Pi Keyboard",
+                "pimouse": "Pi Mouse",
+                "readinitial": "\u30c7\u30d7\u30ed\u30a4\u3084\u518d\u8d77\u52d5\u6642\u306b\u7aef\u5b50\u306e\u521d\u671f\u72b6\u614b\u3092\u8aad\u307f\u8fbc\u3080",
+                "resistor": "\u62b5\u6297",
+                "right": "Right",
+                "selectpin": "\u7aef\u5b50\u306e\u9078\u629e",
+                "type": "\u51fa\u529b\u5f62\u5f0f"
+            },
+            "left": "\u5de6",
+            "middle": "\u4e2d\u9593",
+            "pinname": "\u7aef\u5b50",
+            "pwmout": "PWM\u51fa\u529b",
+            "resistor": {
+                "none": "\u306a\u3057",
+                "pulldown": "\u30d7\u30eb\u30c0\u30a6\u30f3",
+                "pullup": "\u30d7\u30eb\u30a2\u30c3\u30d7"
+            },
+            "right": "\u53f3",
+            "servo": "\u30b5\u30fc\u30dc\u51fa\u529b",
+            "status": {
+                "closed": "\u5207\u65ad",
+                "na": "N/A : __value__",
+                "not-available": "\u5229\u7528\u4e0d\u53ef",
+                "not-running": "\u505c\u6b62\u4e2d",
+                "ok": "OK",
+                "stopped": "\u505c\u6b62"
+            },
+            "tip": {
+                "dig": "\u6ce8\u91c8: \u300c\u51fa\u529b\u5f62\u5f0f\u300d\u3068\u3057\u3066\u300c\u30c7\u30b8\u30bf\u30eb\u51fa\u529b\u300d\u3092\u7528\u3044\u308b\u5834\u5408\u3001\u5165\u529b\u5024\u306f0\u307e\u305f\u306f1\u306e\u6570\u5024\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+                "in": "\u6ce8\u91c8: \u5165\u529b\u5024\u306f\u30010\u307e\u305f\u306f1\u306e\u6570\u5024\u306e\u307f\u5bfe\u5fdc\u3057\u3066\u3044\u307e\u3059\u3002",
+                "pin": "<b>\u4f7f\u7528\u4e2d\u306e\u7aef\u5b50</b>: ",
+                "pwm": "\u6ce8\u91c8: \u300c\u51fa\u529b\u5f62\u5f0f\u300d\u3068\u3057\u3066\u300cPWM\u51fa\u529b\u300d\u3092\u7528\u3044\u308b\u5834\u5408\u3001\u5165\u529b\u5024\u306f0\uff5e100\u306e\u6570\u5024\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+                "ser": "<b>\u6ce8\u91c8</b>: \u30b5\u30fc\u30dc\u51fa\u529b\u5411\u3051 - \u5165\u529b\u5024\u306f0\uff5e100\u306e\u9593\u3067\u3042\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u300250\u304c\u4e2d\u5fc3\u5024\u3067\u3059\u3002"
+            },
+            "types": {
+                "digout": "\u30c7\u30b8\u30bf\u30eb\u51fa\u529b",
+                "input": "\u5165\u529b",
+                "pulldown": "\u30d7\u30eb\u30c0\u30a6\u30f3\u306e\u5165\u529b",
+                "pullup": "\u30d7\u30eb\u30a2\u30c3\u30d7\u306e\u5165\u529b",
+                "pwmout": "PWM\u51fa\u529b",
+                "servo": "\u30b5\u30fc\u30dc\u51fa\u529b"
+            }
+        }
+    },
+    "node-red-node-random/random": {
+        "random": {
+            "label": {
+                "from": "\u6700\u5c0f",
+                "generate": "\u751f\u6210",
+                "highestNumber": "\u6700\u5927\u5024",
+                "lowestNumber": "\u6700\u5c0f\u5024",
+                "realNumber": "\u5b9f\u6570 - \u6d6e\u52d5\u5c0f\u6570\u70b9",
+                "to": "\u6700\u5927",
+                "wholeNumber": "\u6574\u6570 - \u6574\u6570\u5024"
+            }
+        }
+    },
+    "node-red-node-serialport/serialport": {
+        "serial": {
+            "addsplit": "\u51fa\u529b\u30e1\u30c3\u30bb\u30fc\u30b8\u306b\u5206\u5272\u6587\u5b57\u3092\u8ffd\u52a0\u3059\u308b",
+            "errors": {
+                "badbaudrate": "\u30dc\u30fc\u30ec\u30fc\u30c8\u304c\u4e0d\u6b63\u3067\u3059\u3002",
+                "closed": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8 __port__ \u9589\u3058\u3089\u308c\u307e\u3057\u305f",
+                "disconnected": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8 __port__ \u5207\u65ad",
+                "error": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8 __port__ \u30a8\u30e9\u30fc: __error__",
+                "list": "\u30dd\u30fc\u30c8\u306e\u30ea\u30b9\u30c8\u5316\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\u624b\u52d5\u3067\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+                "missing-conf": "\u30b7\u30ea\u30a2\u30eb\u8a2d\u5b9a\u304c\u3042\u308a\u307e\u305b\u3093\u3002",
+                "serial-port": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8",
+                "unexpected-close": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8 __port__ \u304c\u4e88\u671f\u305b\u305a\u9589\u3058\u3089\u308c\u307e\u3057\u305f"
+            },
+            "label": {
+                "baudrate": "\u30dc\u30fc\u30ec\u30fc\u30c8",
+                "databits": "\u30c7\u30fc\u30bf\u30d3\u30c3\u30c8",
+                "deliver": "\u5206\u5272\u5f8c\u306e\u914d\u4fe1\u30c7\u30fc\u30bf",
+                "input": "\u5165\u529b",
+                "ms": "\u30df\u30ea\u79d2",
+                "none": "\u306a\u3057",
+                "output": "\u51fa\u529b",
+                "parity": "\u30d1\u30ea\u30c6\u30a3",
+                "request": "\u30ea\u30af\u30a8\u30b9\u30c8",
+                "responsetimeout": "\u30c7\u30d5\u30a9\u30eb\u30c8\u306e\u5fdc\u7b54\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8",
+                "serial": "serial",
+                "serialport": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8",
+                "settings": "\u8a2d\u5b9a",
+                "split": "\u5165\u529b\u306e\u5206\u5272\u65b9\u6cd5",
+                "start": "\u30aa\u30d7\u30b7\u30e7\u30f3\u3067\u958b\u59cb\u6587\u5b57",
+                "startor": "\u3092\u5f85\u3061\u307e\u3059\u3002",
+                "stopbits": "\u7d42\u4e86\u30d3\u30c3\u30c8"
+            },
+            "linestates": {
+                "high": "\u9ad8",
+                "low": "\u4f4e",
+                "none": "\u81ea\u52d5"
+            },
+            "onopen": "\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8 __port__ \u304c __baud__ \u30dc\u30fc __config__ \u3067\u958b\u304b\u308c\u307e\u3057\u305f",
+            "output": {
+                "ascii": "\u6587\u5b57\u5217",
+                "binary": "\u30d0\u30a4\u30ca\u30ea\u30d0\u30c3\u30d5\u30a1"
+            },
+            "parity": {
+                "even": "\u5076\u6570",
+                "mark": "\u30de\u30fc\u30af",
+                "none": "\u306a\u3057",
+                "odd": "\u5947\u6570",
+                "space": "\u30b9\u30da\u30fc\u30b9"
+            },
+            "placeholder": {
+                "serialport": "\u4f8b: /dev/ttyUSB0/"
+            },
+            "split": {
+                "character": "\u6587\u5b57\u5217\u3067\u533a\u5207\u308b",
+                "lengths": "\u4e00\u5b9a\u306e\u6587\u5b57\u6570\u3067\u533a\u5207\u308b",
+                "silent": "\u4e00\u5b9a\u306e\u5f85\u3061\u6642\u9593\u5f8c\u306b\u533a\u5207\u308b",
+                "timeout": "\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u5f8c\u3067\u533a\u5207\u308b"
+            },
+            "status": {
+                "stopped": "stopped",
+                "timeout": "timeout",
+                "waiting": "waiting"
+            },
+            "stopped": "__port__ stopped",
+            "tip": {
+                "addchar": "Tip: \u3053\u306e\u6587\u5b57\u306f\u3001\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8\u306b\u9001\u4fe1\u3055\u308c\u308b\u3059\u3079\u3066\u306e\u30e1\u30c3\u30bb\u30fc\u30b8\u306b\u8ffd\u52a0\u3055\u308c\u307e\u3059\u3002\u901a\u5e38\u306f \\r \u3084 \\n \u3067\u3059\u3002",
+                "count": "Tip: \u30ab\u30a6\u30f3\u30c8\u30e2\u30fc\u30c9\u3067\u306f msg.count \u8a2d\u5b9a\u306f\u3001\u69cb\u6210\u3055\u308c\u305f\u5024\u3088\u308a\u3082\u5c0f\u3055\u3044\u3068\u304d\u306b\u9650\u308a\u3001\u69cb\u6210\u3055\u308c\u305f\u30ab\u30a6\u30f3\u30c8\u3092\u4e0a\u66f8\u304d\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002",
+                "responsetimeout": "Tip: \u30c7\u30d5\u30a9\u30eb\u30c8\u306e\u5fdc\u7b54\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u306f msg.timeout \u306e\u8a2d\u5b9a\u3067\u4e0a\u66f8\u304d\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002",
+                "silent": "Tip: In line-silent mode timeout is restarted upon arrival of any character (i.e. inter-byte timeout).",
+                "split": "Tip: \"\u533a\u5207\u308a\" \u6587\u5b57\u306f\u3001\u5165\u529b\u3092\u5225\u3005\u306e\u30e1\u30c3\u30bb\u30fc\u30b8\u306b\u5206\u5272\u3059\u308b\u305f\u3081\u306b\u4f7f\u7528\u3055\u308c\u3001\u30b7\u30ea\u30a2\u30eb\u30dd\u30fc\u30c8\u306b\u9001\u4fe1\u3055\u308c\u308b\u3059\u3079\u3066\u306e\u30e1\u30c3\u30bb\u30fc\u30b8\u306b\u8ffd\u52a0\u3059\u308b\u3053\u3068\u3082\u3067\u304d\u307e\u3059\u3002",
+                "timeout": "Tip: \u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u30e2\u30fc\u30c9\u3067\u306e\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u306f\u6700\u521d\u306e\u6587\u5b57\u304c\u5230\u7740\u3057\u305f\u3068\u304d\u304b\u3089\u59cb\u307e\u308a\u307e\u3059\u3002",
+                "waitfor": "Tip: \u30aa\u30d7\u30b7\u30e7\u30f3\u3067\u3059\u3002\u3059\u3079\u3066\u306e\u30c7\u30fc\u30bf\u3092\u53d7\u4fe1\u3059\u308b\u306b\u306f\u3001\u7a7a\u767d\u306e\u307e\u307e\u306b\u3057\u307e\u3059\u3002\u6587\u5b57($)\u30fb\u30a8\u30b9\u30b1\u30fc\u30d7\u30b3\u30fc\u30c9(\\n)\u30fb16\u9032\u30b3\u30fc\u30c9(0x02)\u3092\u53d7\u3051\u5165\u308c\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002"
+            }
+        }
+    },
+    "node-red-node-smooth/smooth": {},
+    "node-red-node-ui-list/ui_list": {
+        "ui_list": {
+            "action": {
+                "check": "\u30c1\u30a7\u30c3\u30af\u72b6\u614b\u304c\u5909\u5316\u3057\u305f\u8981\u7d20\u3092\u9001\u4fe1",
+                "click": "\u30af\u30ea\u30c3\u30af\u3057\u305f\u8981\u7d20\u3092\u9001\u4fe1",
+                "menu": "\u9078\u629e\u3055\u308c\u305f\u30e1\u30cb\u30e5\u30fc\u8981\u7d20\u3092\u9001\u4fe1",
+                "none": "\u306a\u3057",
+                "switch": "\u30b9\u30a4\u30c3\u30c1\u304c\u5909\u5316\u3057\u305f\u8981\u7d20\u3092\u9001\u4fe1"
+            },
+            "error": {
+                "no-group": "\u30b0\u30eb\u30fc\u30d7\u304c\u8a2d\u5b9a\u3055\u308c\u3066\u3044\u307e\u305b\u3093"
+            },
+            "label": {
+                "action": "\u52d5\u4f5c",
+                "group": "\u30b0\u30eb\u30fc\u30d7",
+                "html": "\u30c6\u30ad\u30b9\u30c8\u306bHTML\u30bf\u30b0\u3092\u5229\u7528",
+                "list": "\u8868\u793a\u5f62\u5f0f",
+                "name": "\u540d\u524d",
+                "size": "\u30b5\u30a4\u30ba",
+                "topic": "\u30c8\u30d4\u30c3\u30af"
+            },
+            "type": {
+                "one": "1\u884c",
+                "three": "\u8907\u6570\u884c(\u5e83)",
+                "two": "\u8907\u6570\u884c(\u72ed)"
+            }
+        }
+    }
 }

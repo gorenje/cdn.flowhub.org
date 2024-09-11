@@ -9,7 +9,7 @@
             "junction"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -21,7 +21,7 @@
             "inject"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -33,7 +33,7 @@
             "debug"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -45,7 +45,7 @@
             "complete"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -57,7 +57,7 @@
             "catch"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -69,7 +69,7 @@
             "status"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -83,7 +83,7 @@
             "link call"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -95,7 +95,7 @@
             "comment"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -107,7 +107,7 @@
             "global-config"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -119,7 +119,7 @@
             "unknown"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -131,7 +131,7 @@
             "function"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -143,7 +143,7 @@
             "switch"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -155,7 +155,7 @@
             "change"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -167,7 +167,7 @@
             "range"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -179,7 +179,7 @@
             "template"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -191,7 +191,7 @@
             "delay"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -203,7 +203,7 @@
             "trigger"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -215,7 +215,7 @@
             "exec"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -227,7 +227,7 @@
             "rbe"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -239,7 +239,7 @@
             "tls-config"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -251,7 +251,7 @@
             "http proxy"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -265,7 +265,7 @@
             "mqtt-broker"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -278,7 +278,7 @@
             "http response"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -290,7 +290,7 @@
             "http request"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -305,7 +305,7 @@
             "websocket-client"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -319,7 +319,7 @@
             "tcp request"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -332,7 +332,7 @@
             "udp out"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -344,7 +344,7 @@
             "csv"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -356,7 +356,7 @@
             "html"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -368,7 +368,7 @@
             "json"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -380,7 +380,7 @@
             "xml"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -392,7 +392,7 @@
             "yaml"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -405,7 +405,7 @@
             "join"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -417,7 +417,7 @@
             "sort"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -429,7 +429,7 @@
             "batch"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -442,7 +442,7 @@
             "file in"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
     },
     {
         "enabled": true,
@@ -454,7 +454,95 @@
             "watch"
         ],
         "user": false,
-        "version": "3.1.3"
+        "version": "4.0.2"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhubpull",
+        "types": [
+            "FlowHubPull"
+        ],
+        "user": false,
+        "version": "0.8.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhubcfg",
+        "types": [
+            "FlowHubCfg"
+        ],
+        "user": false,
+        "version": "0.8.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-dnsquery/dnsquery",
+        "local": true,
+        "module": "node-red-contrib-dnsquery",
+        "name": "dnsquery",
+        "types": [
+            "dnsquery"
+        ],
+        "user": false,
+        "version": "1.0.7"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-fastxml/fastxml",
+        "local": true,
+        "module": "node-red-contrib-fastxml",
+        "name": "fastxml",
+        "types": [
+            "fastxml"
+        ],
+        "user": false,
+        "version": "1.1.2"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-image-output/image",
+        "local": true,
+        "module": "node-red-contrib-image-output",
+        "name": "image",
+        "types": [
+            "image"
+        ],
+        "user": false,
+        "version": "0.6.4"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-i2c/i2c",
+        "local": true,
+        "module": "node-red-contrib-i2c",
+        "name": "i2c",
+        "types": [
+            "i2c scan",
+            "i2c in",
+            "i2c out"
+        ],
+        "user": false,
+        "version": "0.9.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gdziuba/node-red-usbhid/usbhid",
+        "local": true,
+        "module": "@gdziuba/node-red-usbhid",
+        "name": "usbhid",
+        "types": [
+            "HIDConfig",
+            "getHIDdevices",
+            "HIDdevice"
+        ],
+        "user": false,
+        "version": "1.0.3"
     },
     {
         "enabled": true,
@@ -466,7 +554,7 @@
             "ui_base"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -478,7 +566,7 @@
             "ui_button"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -490,7 +578,7 @@
             "ui_dropdown"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -502,7 +590,7 @@
             "ui_switch"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -514,7 +602,7 @@
             "ui_slider"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -526,7 +614,7 @@
             "ui_numeric"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -538,7 +626,7 @@
             "ui_text_input"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -550,7 +638,7 @@
             "ui_date_picker"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -562,7 +650,7 @@
             "ui_colour_picker"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -574,7 +662,7 @@
             "ui_form"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -586,7 +674,7 @@
             "ui_text"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -598,7 +686,7 @@
             "ui_gauge"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -610,7 +698,7 @@
             "ui_chart"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -622,7 +710,7 @@
             "ui_audio"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -634,7 +722,7 @@
             "ui_toast"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -646,7 +734,7 @@
             "ui_ui_control"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -658,7 +746,7 @@
             "ui_template"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -670,7 +758,7 @@
             "ui_link"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -682,7 +770,7 @@
             "ui_tab"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -694,7 +782,7 @@
             "ui_group"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
@@ -706,19 +794,447 @@
             "ui_spacer"
         ],
         "user": false,
-        "version": "3.6.1"
+        "version": "3.6.5"
     },
     {
         "enabled": true,
-        "id": "node-red-node-base64/base64",
+        "id": "node-red-node-ui-list/ui_list",
         "local": true,
-        "module": "node-red-node-base64",
-        "name": "base64",
+        "module": "node-red-node-ui-list",
+        "name": "ui_list",
         "types": [
-            "base64"
+            "ui_list"
         ],
         "user": false,
-        "version": "0.3.0"
+        "version": "0.3.6"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-ui-upload/ui_upload",
+        "local": true,
+        "module": "node-red-contrib-ui-upload",
+        "name": "ui_upload",
+        "types": [
+            "ui_upload"
+        ],
+        "user": false,
+        "version": "0.8.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-node-pi-gpio/rpi-gpio",
+        "local": true,
+        "module": "node-red-node-pi-gpio",
+        "name": "rpi-gpio",
+        "types": [
+            "rpi-gpio in",
+            "rpi-gpio out",
+            "rpi-mouse",
+            "rpi-keyboard"
+        ],
+        "user": false,
+        "version": "2.0.6"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-node-random/random",
+        "local": true,
+        "module": "node-red-node-random",
+        "name": "random",
+        "types": [
+            "random"
+        ],
+        "user": false,
+        "version": "0.4.1"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-node-serialport/serialport",
+        "local": true,
+        "module": "node-red-node-serialport",
+        "name": "serialport",
+        "types": [
+            "serial in",
+            "serial out",
+            "serial request",
+            "serial-port",
+            "serial control"
+        ],
+        "user": false,
+        "version": "2.0.2"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-node-smooth/smooth",
+        "local": true,
+        "module": "node-red-node-smooth",
+        "name": "smooth",
+        "types": [
+            "smooth"
+        ],
+        "user": false,
+        "version": "0.1.2"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/seeker",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "seeker",
+        "types": [
+            "Seeker"
+        ],
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sink",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "sink",
+        "types": [
+            "Sink"
+        ],
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/clientcode",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "clientcode",
+        "types": [
+            "ClientCode"
+        ],
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/getflows",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "getflows",
+        "types": [
+            "GetFlows"
+        ],
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sendflow",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "sendflow",
+        "types": [
+            "SendFlow"
+        ],
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-introspection/installpackage",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
+        "name": "installpackage",
+        "types": [
+            "InstallPackage"
+        ],
+        "user": false,
+        "version": "0.7.9"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-switch-break/switchBreak",
+        "local": true,
+        "module": "node-red-contrib-switch-break",
+        "name": "switchBreak",
+        "types": [
+            "break director",
+            "break actor"
+        ],
+        "user": false,
+        "version": "1.0.2"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
+        "name": "flowcompare",
+        "types": [
+            "FlowCompareCfg"
+        ],
+        "user": false,
+        "version": "0.1.6"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodedevops",
+        "types": [
+            "NodeDevOps"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodefactory",
+        "types": [
+            "NodeFactory"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "pkgfile",
+        "types": [
+            "PkgFile"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "npmtarball",
+        "types": [
+            "NpmTarBall"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "noderedinstall",
+        "types": [
+            "NodeRedInstall"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "npmpublish",
+        "types": [
+            "NpmPublish"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/otpgenerator",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "otpgenerator",
+        "types": [
+            "OTPGenerate"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "nodefactorycfg",
+        "types": [
+            "NodeFactorySidebarCfg"
+        ],
+        "user": false,
+        "version": "0.4.3"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-excel/xlsx",
+        "local": true,
+        "module": "node-red-contrib-excel",
+        "name": "xlsx",
+        "types": [
+            "excel"
+        ],
+        "user": false,
+        "version": "0.0.3"
+    },
+    {
+        "enabled": true,
+        "id": "@martip/node-red-xlsx/xlsx",
+        "local": true,
+        "module": "@martip/node-red-xlsx",
+        "name": "xlsx",
+        "types": [
+            "xlsx"
+        ],
+        "user": false,
+        "version": "1.0.2"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/pipestart",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "pipestart",
+        "types": [
+            "PipeStart"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/filestream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "filestream",
+        "types": [
+            "FileStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/httprequest",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "httprequest",
+        "types": [
+            "HttpRequestStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/csvstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "csvstream",
+        "types": [
+            "CsvStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/jsonlstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "jsonlstream",
+        "types": [
+            "JsonLStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/linestream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "linestream",
+        "types": [
+            "LineStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/iconvstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "iconvstream",
+        "types": [
+            "IconvStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/chunk2msg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "chunk2msg",
+        "types": [
+            "Chunk2Msg"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/decompstream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "decompstream",
+        "types": [
+            "DeCompStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/archivestream",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "archivestream",
+        "types": [
+            "ArchiveStream"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-streaming/pipeend",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-streaming",
+        "name": "pipeend",
+        "types": [
+            "PipeEnd"
+        ],
+        "user": false,
+        "version": "0.0.12"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
+        "name": "flowtomermaid",
+        "types": [
+            "Flow2MermaidCfg"
+        ],
+        "user": false,
+        "version": "0.1.12"
     },
     {
         "enabled": true,
@@ -746,15 +1262,15 @@
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-aedes/aedes-mqtt-broker",
+        "id": "node-red-node-base64/base64",
         "local": true,
-        "module": "node-red-contrib-aedes",
-        "name": "aedes-mqtt-broker",
+        "module": "node-red-node-base64",
+        "name": "base64",
         "types": [
-            "aedes broker"
+            "base64"
         ],
         "user": false,
-        "version": "0.11.1"
+        "version": "0.3.0"
     },
     {
         "enabled": true,
@@ -766,7 +1282,7 @@
             "Blockly"
         ],
         "user": false,
-        "version": "2.3.0"
+        "version": "2.4.1"
     },
     {
         "enabled": true,
@@ -778,141 +1294,55 @@
             "blockly-config"
         ],
         "user": false,
-        "version": "2.3.0"
+        "version": "2.4.1"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/scene",
+        "id": "@gregoriusrippenstein/node-red-contacts/contact",
         "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "scene",
+        "module": "@gregoriusrippenstein/node-red-contacts",
+        "name": "contact",
         "types": [
-            "scene"
+            "Contact"
         ],
         "user": false,
-        "version": "0.0.15"
+        "version": "5.5.961"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/material",
+        "id": "@gregoriusrippenstein/node-red-contacts/generator",
         "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "material",
+        "module": "@gregoriusrippenstein/node-red-contacts",
+        "name": "generator",
         "types": [
-            "material"
+            "Generator"
         ],
         "user": false,
-        "version": "0.0.15"
+        "version": "5.5.961"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/sphere",
+        "id": "@gregoriusrippenstein/node-red-contacts/emptycontact",
         "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "sphere",
+        "module": "@gregoriusrippenstein/node-red-contacts",
+        "name": "emptycontact",
         "types": [
-            "sphere"
+            "EmptyContact"
         ],
         "user": false,
-        "version": "0.0.15"
+        "version": "5.5.961"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/box",
+        "id": "@gregoriusrippenstein/node-red-contacts/addressbook",
         "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "box",
+        "module": "@gregoriusrippenstein/node-red-contacts",
+        "name": "addressbook",
         "types": [
-            "box"
+            "AdressBookCfg"
         ],
         "user": false,
-        "version": "0.0.15"
-    },
-    {
-        "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/plane",
-        "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "plane",
-        "types": [
-            "plane"
-        ],
-        "user": false,
-        "version": "0.0.15"
-    },
-    {
-        "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/cone",
-        "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "cone",
-        "types": [
-            "cone"
-        ],
-        "user": false,
-        "version": "0.0.15"
-    },
-    {
-        "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/transform",
-        "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "transform",
-        "types": [
-            "transform"
-        ],
-        "user": false,
-        "version": "0.0.15"
-    },
-    {
-        "enabled": true,
-        "id": "node-red-contrib-web-babylonjs/events",
-        "local": true,
-        "module": "node-red-contrib-web-babylonjs",
-        "name": "events",
-        "types": [
-            "events"
-        ],
-        "user": false,
-        "version": "0.0.15"
-    },
-    {
-        "enabled": true,
-        "id": "node-red-contrib-i2c/i2c",
-        "local": true,
-        "module": "node-red-contrib-i2c",
-        "name": "i2c",
-        "types": [
-            "i2c scan",
-            "i2c in",
-            "i2c out"
-        ],
-        "user": false,
-        "version": "0.9.0"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
-        "name": "flowhubpull",
-        "types": [
-            "FlowHubPull"
-        ],
-        "user": false,
-        "version": "0.7.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
-        "name": "flowhubcfg",
-        "types": [
-            "FlowHubCfg"
-        ],
-        "user": false,
-        "version": "0.7.4"
+        "version": "5.5.961"
     },
     {
         "enabled": true,
@@ -928,374 +1358,15 @@
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-postgresql/postgresql",
+        "id": "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker",
         "local": true,
-        "module": "node-red-contrib-postgresql",
-        "name": "postgresql",
+        "module": "@gregoriusrippenstein/node-red-contrib-aisbreaker",
+        "name": "aisbreaker",
         "types": [
-            "postgreSQLConfig",
-            "postgresql"
+            "AIsBreaker"
         ],
         "user": false,
-        "version": "0.14.0"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/base",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "base",
-        "types": [],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/topic",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "topic",
-        "types": [
-            "Topic"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/observation",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "observation",
-        "types": [
-            "Observation"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/question",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "question",
-        "types": [
-            "Question"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/thought",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "thought",
-        "types": [
-            "Thought"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/idea",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "idea",
-        "types": [
-            "Idea"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/analogy",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "analogy",
-        "types": [
-            "Analogy"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/aphorism",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "aphorism",
-        "types": [
-            "Aphorism"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/poesie",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "poesie",
-        "types": [
-            "Poesie"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/humour",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "humour",
-        "types": [
-            "Humour"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/treasure",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "treasure",
-        "types": [
-            "Treasure"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/consequence",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "consequence",
-        "types": [
-            "Consequence"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/advantage",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "advantage",
-        "types": [
-            "Advantage"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/disadvantage",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "disadvantage",
-        "types": [
-            "Disadvantage"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/text",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "text",
-        "types": [
-            "Text"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blog-post",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blog-post",
-        "types": [
-            "Blog-Post"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/comment",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "comment",
-        "types": [
-            "Comment"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/codebase",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "codebase",
-        "types": [
-            "Code-Base"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/sketch",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "sketch",
-        "types": [
-            "Sketch"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/inspiration",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "inspiration",
-        "types": [
-            "Inspiration"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/quote",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "quote",
-        "types": [
-            "Quote"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/definition",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "definition",
-        "types": [
-            "Definition"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/book",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "book",
-        "types": [
-            "Book"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/author",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "author",
-        "types": [
-            "Author"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogchanges",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blogchanges",
-        "types": [
-            "BlogChanges"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogdetails",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blogdetails",
-        "types": [
-            "BlogDetails"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogpages",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blogpages",
-        "types": [
-            "BlogPages"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blogpageinfo",
-        "types": [
-            "BlogPageInfo"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/blogcontent",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "blogcontent",
-        "types": [
-            "BlogContent"
-        ],
-        "user": false,
-        "version": "0.1.2"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-writermap-mindmap/pubmedium",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-writermap-mindmap",
-        "name": "pubmedium",
-        "types": [
-            "PubMedium"
-        ],
-        "user": false,
-        "version": "0.1.2"
+        "version": "0.1.18"
     },
     {
         "enabled": true,
@@ -1311,198 +1382,6 @@
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-gzip/markdown",
-        "local": true,
-        "module": "node-red-contrib-gzip",
-        "name": "markdown",
-        "types": [
-            "gzip"
-        ],
-        "user": false,
-        "version": "0.0.3"
-    },
-    {
-        "enabled": true,
-        "id": "node-red-contrib-osc/osc",
-        "local": true,
-        "module": "node-red-contrib-osc",
-        "name": "osc",
-        "types": [
-            "osc"
-        ],
-        "user": false,
-        "version": "1.1.0"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "nodedevops",
-        "types": [
-            "NodeDevOps"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "nodefactory",
-        "types": [
-            "NodeFactory"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/pkgfile",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "pkgfile",
-        "types": [
-            "PkgFile"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/npmtarball",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "npmtarball",
-        "types": [
-            "NpmTarBall"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/noderedinstall",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "noderedinstall",
-        "types": [
-            "NodeRedInstall"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/npmpublish",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "npmpublish",
-        "types": [
-            "NpmPublish"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/otpgenerator",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "otpgenerator",
-        "types": [
-            "OTPGenerate"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/nodefactorycfg",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
-        "name": "nodefactorycfg",
-        "types": [
-            "NodeFactorySidebarCfg"
-        ],
-        "user": false,
-        "version": "0.4.1"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/seeker",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "seeker",
-        "types": [
-            "Seeker"
-        ],
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sink",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "sink",
-        "types": [
-            "Sink"
-        ],
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/clientcode",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "clientcode",
-        "types": [
-            "ClientCode"
-        ],
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/getflows",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "getflows",
-        "types": [
-            "GetFlows"
-        ],
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/sendflow",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "sendflow",
-        "types": [
-            "SendFlow"
-        ],
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-introspection/installpackage",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-introspection",
-        "name": "installpackage",
-        "types": [
-            "InstallPackage"
-        ],
-        "user": false,
-        "version": "0.7.5"
-    },
-    {
-        "enabled": true,
         "id": "@gregoriusrippenstein/node-red-contrib-tarball/tarball",
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-tarball",
@@ -1515,230 +1394,288 @@
     },
     {
         "enabled": true,
-        "id": "node-red-node-markdown/markdown",
+        "id": "@gorenje/node-red-contrib-mindmap/base",
         "local": true,
-        "module": "node-red-node-markdown",
-        "name": "markdown",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "base",
+        "types": [],
+        "user": false,
+        "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-mindmap/topic",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "topic",
         "types": [
-            "markdown"
+            "Topic"
         ],
         "user": false,
         "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare",
+        "id": "@gorenje/node-red-contrib-mindmap/observation",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowcompare",
-        "name": "flowcompare",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "observation",
         "types": [
-            "FlowCompareCfg"
+            "Observation"
         ],
         "user": false,
-        "version": "0.1.5"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-zip/zip",
+        "id": "@gorenje/node-red-contrib-mindmap/question",
         "local": true,
-        "module": "node-red-contrib-zip",
-        "name": "zip",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "question",
         "types": [
-            "zip"
+            "Question"
         ],
         "user": false,
-        "version": "1.1.3"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-cron-plus/cronplus",
+        "id": "@gorenje/node-red-contrib-mindmap/thought",
         "local": true,
-        "module": "node-red-contrib-cron-plus",
-        "name": "cronplus",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "thought",
         "types": [
-            "cronplus"
+            "Thought"
         ],
         "user": false,
-        "version": "2.1.0"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid",
+        "id": "@gorenje/node-red-contrib-mindmap/idea",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flow2uml",
-        "name": "flowtomermaid",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "idea",
         "types": [
-            "Flow2MermaidCfg"
+            "Idea"
         ],
         "user": false,
-        "version": "0.1.10"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@martip/node-red-xlsx/xlsx",
+        "id": "@gorenje/node-red-contrib-mindmap/analogy",
         "local": true,
-        "module": "@martip/node-red-xlsx",
-        "name": "xlsx",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "analogy",
         "types": [
-            "xlsx"
+            "Analogy"
         ],
         "user": false,
-        "version": "1.0.3"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "node-red-contrib-iconv/converter",
+        "id": "@gorenje/node-red-contrib-mindmap/aphorism",
         "local": true,
-        "module": "node-red-contrib-iconv",
-        "name": "converter",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "aphorism",
         "types": [
-            "converter"
+            "Aphorism"
         ],
         "user": false,
-        "version": "0.0.5"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker",
+        "id": "@gorenje/node-red-contrib-mindmap/poesie",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-aisbreaker",
-        "name": "aisbreaker",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "poesie",
         "types": [
-            "AIsBreaker"
+            "Poesie"
         ],
         "user": false,
-        "version": "0.1.18"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/pipestart",
+        "id": "@gorenje/node-red-contrib-mindmap/humour",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "pipestart",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "humour",
         "types": [
-            "PipeStart"
+            "Humour"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/filestream",
+        "id": "@gorenje/node-red-contrib-mindmap/treasure",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "filestream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "treasure",
         "types": [
-            "FileStream"
+            "Treasure"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/httprequest",
+        "id": "@gorenje/node-red-contrib-mindmap/consequence",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "httprequest",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "consequence",
         "types": [
-            "HttpRequestStream"
+            "Consequence"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/csvstream",
+        "id": "@gorenje/node-red-contrib-mindmap/advantage",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "csvstream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "advantage",
         "types": [
-            "CsvStream"
+            "Advantage"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/jsonlstream",
+        "id": "@gorenje/node-red-contrib-mindmap/disadvantage",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "jsonlstream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "disadvantage",
         "types": [
-            "JsonLStream"
+            "Disadvantage"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/linestream",
+        "id": "@gorenje/node-red-contrib-mindmap/text",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "linestream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "text",
         "types": [
-            "LineStream"
+            "Text"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/iconvstream",
+        "id": "@gorenje/node-red-contrib-mindmap/blog-post",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "iconvstream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "blog-post",
         "types": [
-            "IconvStream"
+            "Blog-Post"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/chunk2msg",
+        "id": "@gorenje/node-red-contrib-mindmap/comment",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "chunk2msg",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "comment",
         "types": [
-            "Chunk2Msg"
+            "Comment"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/decompstream",
+        "id": "@gorenje/node-red-contrib-mindmap/codebase",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "decompstream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "codebase",
         "types": [
-            "DeCompStream"
+            "Code-Base"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/archivestream",
+        "id": "@gorenje/node-red-contrib-mindmap/sketch",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "archivestream",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "sketch",
         "types": [
-            "ArchiveStream"
+            "Sketch"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-streaming/pipeend",
+        "id": "@gorenje/node-red-contrib-mindmap/inspiration",
         "local": true,
-        "module": "@gregoriusrippenstein/node-red-streaming",
-        "name": "pipeend",
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "inspiration",
         "types": [
-            "PipeEnd"
+            "Inspiration"
         ],
         "user": false,
-        "version": "0.0.11"
+        "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-mindmap/quote",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "quote",
+        "types": [
+            "Quote"
+        ],
+        "user": false,
+        "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-mindmap/definition",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "definition",
+        "types": [
+            "Definition"
+        ],
+        "user": false,
+        "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-mindmap/book",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "book",
+        "types": [
+            "Book"
+        ],
+        "user": false,
+        "version": "0.1.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-contrib-mindmap/author",
+        "local": true,
+        "module": "@gorenje/node-red-contrib-mindmap",
+        "name": "author",
+        "types": [
+            "Author"
+        ],
+        "user": false,
+        "version": "0.1.4"
     }
 ]

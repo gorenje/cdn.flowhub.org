@@ -44,6 +44,7 @@
         "groupStyleCopied": "Gruppenstil kopiert",
         "group_plural": "__count__ Gruppen",
         "import": {
+            "alreadyExists": "This node already exists",
             "conflictNotification1": "Einige der zu importierenden Nodes sind bereits im Arbeitsbereich vorhanden",
             "conflictNotification2": "Selektiere die zu importierenden Nodes und welche vorhandenen Nodes zu ersetzen oder zu kopieren sind",
             "errors": {
@@ -96,6 +97,7 @@
             "enable": "Aktivieren",
             "export": "Exportiere",
             "fill": "F\u00fcllung",
+            "format": "Format",
             "import": "Import",
             "label": "Name",
             "line": "Rahmen",
@@ -201,6 +203,7 @@
             "deleted": "Gel\u00f6scht",
             "flowAdded": "Flow hinzugef\u00fcgt",
             "flowDeleted": "Flow gel\u00f6scht",
+            "moved": "moved",
             "movedFrom": "Verschoben von __id__",
             "movedTo": "Verschoben nach __id__",
             "unchanged": "Unver\u00e4ndert"
@@ -397,14 +400,15 @@
     },
     "languages": {
         "de": "Deutsch",
-        "en-US": "Englisch",
-        "fr": "Franz\u00f6sisch",
-        "ja": "Japanisch",
-        "ko": "Koreanisch",
-        "pt-BR": "Portugiesisch",
-        "ru": "Russisch",
-        "zh-CN": "Chinesisch (Vereinfacht)",
-        "zh-TW": "Chinesisch (Traditionell)"
+        "en-US": "English",
+        "es-ES": "Espa\u00f1ol (Espa\u00f1a)",
+        "fr": "Fran\u00e7ais",
+        "ja": "\u65e5\u672c\u8a9e",
+        "ko": "Korean",
+        "pt-BR": "Portugu\u00eas (Brasil)",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+        "zh-CN": "\u7b80\u4f53\u4e2d\u6587",
+        "zh-TW": "\u7e41\u9ad4\u4e2d\u6587"
     },
     "library": {
         "dialogSaveOverwrite": "Ein __libraryType__ mit dem Namen __libraryName__ existiert bereits. \u00dcberschreiben?",
@@ -491,7 +495,6 @@
             "projects-new": "Neu",
             "projects-open": "\u00d6ffnen",
             "projects-settings": "Einstellungen",
-            "rename": "Umbenennen",
             "search": "Flows durchsuchen",
             "searchInput": "Flows durchsuchen",
             "selectionToSubflow": "Auswahl in Subflow umwandeln",
@@ -598,6 +601,7 @@
                     "install": "Installieren",
                     "remove": "Entfernen",
                     "review": "Node-Informationen \u00f6ffnen",
+                    "understood": "Understood",
                     "update": "Aktualisieren"
                 },
                 "cannotUpdate": {
@@ -610,6 +614,9 @@
                 "remove": {
                     "body": "<p>Entfernung von '__module__'.</p><p>Die Entfernung des Nodes deinstalliert ihn aus Node-RED. Der Node kann weiterhin Ressourcen verwenden, bis Node-RED erneut gestartet wird.</p>",
                     "title": "Nodes entfernen"
+                },
+                "removePlugin": {
+                    "body": "<p>Removed plugin __module__. Please reload the editor to clear left-overs.</p>"
                 },
                 "update": {
                     "body": "<p>Aktualisierung von '__module__'.</p><p>F\u00fcr die Aktualisierung des Nodes ist ein Neustart von Node-RED erforderlich, damit die Aktualisierung abgeschlossen werden kann. Dieses muss manuell geschehen.</p>",
@@ -627,6 +634,7 @@
                 "disableFailed": "<p>Deaktivierung fehlgeschlagen: __module__.</p><p>__message__</p><p>\u00dcberpr\u00fcfen Sie das Protokoll auf weitere Informationen.</p>",
                 "enableFailed": "<p>Aktivierung fehlgeschlagen: __module__.</p><p>__message__</p><p>\u00dcberpr\u00fcfen Sie das Protokoll auf weitere Informationen.</p>",
                 "installFailed": "<p>Installation fehlgeschlagen: __module__.</p><p>__message__</p><p>\u00dcberpr\u00fcfen Sie das Protokoll auf weitere Informationen.</p>",
+                "installTimeout": "<p>Install continuing the background.</p><p>Nodes will appear in palette when complete. Check the log for more information.</p>",
                 "removeFailed": "<p>Entfernen fehlgeschlagen: __module__.</p><p>__message__</p><p>\u00dcberpr\u00fcfen Sie das Protokoll auf weitere Informationen.</p>",
                 "updateFailed": "<p>Aktualisierung fehlgeschlagen: __module__.</p><p>__message__</p><p>\u00dcberpr\u00fcfen Sie das Protokoll auf weitere Informationen.</p>"
             },
@@ -640,6 +648,8 @@
             "nodeCount": "__label__ Node",
             "nodeCount_plural": "__label__ Nodes",
             "palette": "Palette",
+            "pluginCount": "__count__ Plugin",
+            "pluginCount_plural": "__count__ Plugins",
             "refresh": "Aktualisiere Modulliste",
             "remove": "Entfernen",
             "sort": "Sortierung:",
@@ -783,7 +793,7 @@
             "desc0": "Sie k\u00f6nnen jetzt Node-RED wie bisher verwenden.",
             "desc1": "Im Tab 'Info' in der Seitenleiste wird angezeigt, welches das aktuelle Projekt ist. \u00dcber die Schaltfl\u00e4che rechts neben dem Projektnamen gelangt man zu 'Projekteinstellungen'.",
             "desc2": "Im Tab 'Commit-Historie' in der Seitenleiste werden alle Dateien angezeigt, die sich in Ihrem Projekt ge\u00e4ndert haben, und um sie ins lokale Repository zu \u00fcbertragen (commit). Es zeigt Ihnen eine vollst\u00e4ndige Historie Ihrer Commits an und erm\u00f6glicht es Ihnen, Ihre Commits in ein (remote) Server-Repository zu schieben (push).",
-            "success": "Sie haben Ihr erstes Projekt erfolgreich erstduellt!"
+            "success": "Sie haben Ihr erstes Projekt erfolgreich erstellt!"
         },
         "default-files": {
             "create": "Erstellen Sie Ihre Projektdateien",
@@ -914,6 +924,7 @@
         },
         "help": {
             "changeLog": "\u00c4nderungsprotokoll",
+            "hideTopics": "Hide topics",
             "label": "Hilfe",
             "name": "Hilfe",
             "noHelp": "Kein Hilfethema ausgew\u00e4hlt",
@@ -1172,9 +1183,18 @@
         "welcomeTours": "Welcome Tours"
     },
     "typedInput": {
+        "date": {
+            "format": {
+                "object": "JavaScript Date Object",
+                "timestamp": "milliseconds since epoch"
+            }
+        },
+        "selected": "__count__ selected",
+        "selected_plural": "__count__ selected",
         "type": {
             "bin": "buffer",
             "bool": "boolean",
+            "conf-types": "config node",
             "cred": "Credentials",
             "date": "timestamp",
             "env": "Umgebungsvariable",

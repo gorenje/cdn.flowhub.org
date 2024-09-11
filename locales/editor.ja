@@ -106,7 +106,7 @@
         "show-event-log": "\u30a4\u30d9\u30f3\u30c8\u30ed\u30b0\u3092\u8868\u793a",
         "show-examples-import-dialog": "\u30b5\u30f3\u30d7\u30eb\u8aad\u307f\u8fbc\u307f\u30c0\u30a4\u30a2\u30ed\u30b0\u3092\u8868\u793a",
         "show-export-dialog": "\u66f8\u304d\u51fa\u3057\u30c0\u30a4\u30a2\u30ed\u30b0\u3092\u8868\u793a",
-        "show-global-env": "\u5927\u57df\u74b0\u5883\u5909\u6570\u3092\u8868\u793a",
+        "show-global-env": "\u30b0\u30ed\u30fc\u30d0\u30eb\u74b0\u5883\u5909\u6570\u3092\u8868\u793a",
         "show-help": "\u30d8\u30eb\u30d7\u3092\u8868\u793a",
         "show-help-tab": "\u30ce\u30fc\u30c9\u30d8\u30eb\u30d7\u30bf\u30d6\u306e\u8868\u793a",
         "show-import-dialog": "\u8aad\u307f\u8fbc\u307f\u30c0\u30a4\u30a2\u30ed\u30b0\u3092\u8868\u793a",
@@ -179,13 +179,13 @@
         "download": "\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9",
         "export": {
             "all": "\u5168\u3066\u306e\u30bf\u30d6",
-            "compact": "\u30a4\u30f3\u30c7\u30f3\u30c8\u306e\u306a\u3044JSON\u30d5\u30a9\u30fc\u30de\u30c3\u30c8",
+            "compact": "\u30a4\u30f3\u30c7\u30f3\u30c8\u306a\u3057",
             "copy": "\u66f8\u304d\u51fa\u3057",
             "current": "\u73fe\u5728\u306e\u30bf\u30d6",
             "exists": "<p><b>\"__file__\"</b>\u306f\u65e2\u306b\u5b58\u5728\u3057\u307e\u3059\u3002</p><p>\u66f4\u65b0\u3057\u307e\u3059\u304b?</p>",
             "export": "\u30e9\u30a4\u30d6\u30e9\u30ea\u306b\u66f8\u304d\u51fa\u3057",
             "exportAs": "\u66f8\u304d\u51fa\u3057\u5148",
-            "formatted": "\u30a4\u30f3\u30c7\u30f3\u30c8\u4ed8\u304d\u306eJSON\u30d5\u30a9\u30fc\u30de\u30c3\u30c8",
+            "formatted": "\u30a4\u30f3\u30c7\u30f3\u30c8\u4ed8\u304d",
             "overwrite": "\u66f4\u65b0",
             "selected": "\u9078\u629e\u3057\u305f\u30d5\u30ed\u30fc"
         },
@@ -198,6 +198,7 @@
         "groupStyleCopied": "\u30b0\u30eb\u30fc\u30d7\u306e\u5f62\u5f0f\u3092\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f",
         "group_plural": "__count__ \u500b\u306e\u30b0\u30eb\u30fc\u30d7",
         "import": {
+            "alreadyExists": "\u672c\u30ce\u30fc\u30c9\u306f\u65e2\u306b\u5b58\u5728",
             "conflictNotification1": "\u8aad\u307f\u8fbc\u3082\u3046\u3068\u3057\u3066\u3044\u308b\u30ce\u30fc\u30c9\u306e\u3044\u304f\u3064\u304b\u306f\u3001\u65e2\u306b\u30ef\u30fc\u30af\u30b9\u30da\u30fc\u30b9\u5185\u306b\u5b58\u5728\u3057\u3066\u3044\u307e\u3059\u3002",
             "conflictNotification2": "\u8aad\u307f\u8fbc\u3080\u30ce\u30fc\u30c9\u3092\u9078\u629e\u3057\u3001\u307e\u305f\u65e2\u5b58\u306e\u30ce\u30fc\u30c9\u3092\u7f6e\u304d\u63db\u3048\u308b\u304b\u3001\u3082\u3057\u304f\u306f\u305d\u308c\u3089\u306e\u30b3\u30d4\u30fc\u3092\u8aad\u307f\u8fbc\u3080\u304b\u3082\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
             "errors": {
@@ -250,6 +251,7 @@
             "enable": "\u6709\u52b9",
             "export": "\u66f8\u304d\u51fa\u3057",
             "fill": "\u5857\u308a\u3064\u3076\u3057",
+            "format": "\u5f62\u5f0f",
             "import": "\u8aad\u307f\u8fbc\u307f",
             "label": "\u30e9\u30d9\u30eb",
             "line": "\u7dda",
@@ -283,7 +285,7 @@
         "junction": "\u5206\u5c90\u70b9",
         "linkNodes": "Link\u30ce\u30fc\u30c9",
         "node": "\u30ce\u30fc\u30c9",
-        "showActionList": "Show action list"
+        "showActionList": "\u52d5\u4f5c\u4e00\u89a7\u3092\u8868\u793a"
     },
     "deploy": {
         "confirm": {
@@ -355,6 +357,7 @@
             "deleted": "\u524a\u9664",
             "flowAdded": "\u8ffd\u52a0\u3055\u308c\u305f\u30d5\u30ed\u30fc",
             "flowDeleted": "\u524a\u9664\u3055\u308c\u305f\u30d5\u30ed\u30fc",
+            "moved": "\u79fb\u52d5",
             "movedFrom": "__id__ \u304b\u3089\u79fb\u52d5",
             "movedTo": "__id__ \u3078\u79fb\u52d5",
             "unchanged": "\u5909\u66f4\u306a\u3057"
@@ -447,7 +450,7 @@
     },
     "env-var": {
         "environment": "\u74b0\u5883\u5909\u6570",
-        "header": "\u5927\u57df\u74b0\u5883\u5909\u6570",
+        "header": "\u30b0\u30ed\u30fc\u30d0\u30eb\u74b0\u5883\u5909\u6570",
         "revert": "\u7834\u68c4"
     },
     "event": {
@@ -521,7 +524,7 @@
         "copyNode": "\u30ce\u30fc\u30c9\u3092\u30b3\u30d4\u30fc",
         "cutNode": "\u30ce\u30fc\u30c9\u3092\u5207\u308a\u53d6\u308a",
         "deleteReconnect": "\u524a\u9664\u3068\u518d\u63a5\u7d9a",
-        "deleteSelected": "\u9078\u629e\u3057\u305f\u30ce\u30fc\u30c9\u3084\u63a5\u7d9a\u3092\u524a\u9664",
+        "deleteSelected": "\u9078\u629e\u90e8\u5206\u3092\u524a\u9664",
         "editSelected": "\u9078\u629e\u3057\u305f\u30ce\u30fc\u30c9\u3092\u7de8\u96c6",
         "editor": "\u7de8\u96c6\u30c0\u30a4\u30a2\u30ed\u30b0",
         "exportNode": "\u30d5\u30ed\u30fc\u306e\u66f8\u304d\u51fa\u3057",
@@ -550,15 +553,16 @@
         "workspace": "\u30ef\u30fc\u30af\u30b9\u30da\u30fc\u30b9"
     },
     "languages": {
-        "de": "\u30c9\u30a4\u30c4\u8a9e",
-        "en-US": "\u82f1\u8a9e",
-        "fr": "\u30d5\u30e9\u30f3\u30b9\u8a9e",
+        "de": "Deutsch",
+        "en-US": "English",
+        "es-ES": "Espa\u00f1ol (Espa\u00f1a)",
+        "fr": "Fran\u00e7ais",
         "ja": "\u65e5\u672c\u8a9e",
-        "ko": "\u97d3\u56fd\u8a9e",
-        "pt-BR": "\u30dd\u30eb\u30c8\u30ac\u30eb\u8a9e",
-        "ru": "\u30ed\u30b7\u30a2\u8a9e",
-        "zh-CN": "\u4e2d\u56fd\u8a9e(\u7c21\u4f53)",
-        "zh-TW": "\u4e2d\u56fd\u8a9e(\u7e41\u4f53)"
+        "ko": "Korean",
+        "pt-BR": "Portugu\u00eas (Brasil)",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+        "zh-CN": "\u7b80\u4f53\u4e2d\u6587",
+        "zh-TW": "\u7e41\u9ad4\u4e2d\u6587"
     },
     "library": {
         "dialogSaveOverwrite": "__libraryName__ \u3068\u3044\u3046 __libraryType__ \u306f\u65e2\u306b\u5b58\u5728\u3057\u3066\u3044\u307e\u3059 \u4e0a\u66f8\u304d\u3057\u307e\u3059\u304b\uff1f",
@@ -611,14 +615,14 @@
             "codeEditor": "\u30b3\u30fc\u30c9\u30a8\u30c7\u30a3\u30bf",
             "createSubflow": "\u30b5\u30d6\u30d5\u30ed\u30fc\u3092\u4f5c\u6210",
             "delete": "\u30d5\u30ed\u30fc\u3092\u524a\u9664",
-            "disableSelectedNodes": "Disable selected nodes",
+            "disableSelectedNodes": "\u9078\u629e\u3057\u305f\u30ce\u30fc\u30c9\u3092\u7121\u52b9\u5316",
             "displayConfig": "\u8a2d\u5b9a\u30ce\u30fc\u30c9",
             "displayStatus": "\u30ce\u30fc\u30c9\u306e\u30b9\u30c6\u30fc\u30bf\u30b9\u3092\u8868\u793a",
             "distributeHorizontally": "\u5de6\u53f3\u306b\u6574\u5217",
             "distributeVertically": "\u4e0a\u4e0b\u306b\u6574\u5217",
             "edit": "\u7de8\u96c6",
             "editPalette": "\u30d1\u30ec\u30c3\u30c8\u306e\u7ba1\u7406",
-            "enableSelectedNodes": "Enable selected nodes",
+            "enableSelectedNodes": "\u9078\u629e\u3057\u305f\u30ce\u30fc\u30c9\u3092\u6709\u52b9\u5316",
             "export": "\u66f8\u304d\u51fa\u3057",
             "flows": "\u30d5\u30ed\u30fc",
             "groupMergeSelection": "\u9078\u629e\u90e8\u5206\u3092\u30de\u30fc\u30b8",
@@ -626,7 +630,7 @@
             "groupSelection": "\u9078\u629e\u90e8\u5206\u3092\u30b0\u30eb\u30fc\u30d7\u5316",
             "groups": "\u30b0\u30eb\u30fc\u30d7",
             "help": "Node-RED\u30a6\u30a7\u30d6\u30b5\u30a4\u30c8",
-            "hideSelectedNodeLabels": "Hide selected node labels",
+            "hideSelectedNodeLabels": "\u9078\u629e\u3057\u305f\u30ce\u30fc\u30c9\u306e\u30e9\u30d9\u30eb\u975e\u8868\u793a",
             "import": "\u8aad\u307f\u8fbc\u307f",
             "importExample": "\u30d5\u30ed\u30fc\u4f8b\u3092\u8aad\u307f\u8fbc\u307f",
             "keyboardShortcuts": "\u30b7\u30e7\u30fc\u30c8\u30ab\u30c3\u30c8\u30ad\u30fc\u306e\u8aac\u660e",
@@ -645,14 +649,13 @@
             "projects-new": "\u65b0\u898f",
             "projects-open": "\u958b\u304f",
             "projects-settings": "\u8a2d\u5b9a",
-            "rename": "\u30d5\u30ed\u30fc\u540d\u3092\u5909\u66f4",
             "search": "\u30ce\u30fc\u30c9\u3092\u691c\u7d22",
             "searchInput": "\u30ce\u30fc\u30c9\u3092\u691c\u7d22",
             "selectionToSubflow": "\u9078\u629e\u90e8\u5206\u3092\u30b5\u30d6\u30d5\u30ed\u30fc\u5316",
             "settings": "\u8a2d\u5b9a",
-            "showNodeHelp": "Show node help",
+            "showNodeHelp": "\u30ce\u30fc\u30c9\u306e\u30d8\u30eb\u30d7\u3092\u8868\u793a",
             "showNodeLabelDefault": "\u8ffd\u52a0\u3057\u305f\u30ce\u30fc\u30c9\u306e\u30e9\u30d9\u30eb\u3092\u8868\u793a",
-            "showSelectedNodeLabels": "Show selected node labels",
+            "showSelectedNodeLabels": "\u9078\u629e\u3057\u305f\u30ce\u30fc\u30c9\u306e\u30e9\u30d9\u30eb\u8868\u793a",
             "showTips": "\u30d2\u30f3\u30c8\u3092\u8868\u793a",
             "showWelcomeTours": "\u65b0\u30d0\u30fc\u30b8\u30e7\u30f3\u306e\u30ac\u30a4\u30c9\u30c4\u30a2\u30fc\u3092\u8868\u793a",
             "sidebar": {
@@ -752,6 +755,7 @@
                     "install": "\u8ffd\u52a0",
                     "remove": "\u524a\u9664",
                     "review": "\u30ce\u30fc\u30c9\u306e\u60c5\u5831\u3092\u53c2\u7167",
+                    "understood": "\u4e86\u89e3",
                     "update": "\u66f4\u65b0"
                 },
                 "cannotUpdate": {
@@ -764,6 +768,9 @@
                 "remove": {
                     "body": "<p>__module__ \u3092\u524a\u9664\u3057\u307e\u3059\u3002</p><p>Node-RED\u304b\u3089\u30ce\u30fc\u30c9\u3092\u524a\u9664\u3057\u307e\u3059\u3002\u30ce\u30fc\u30c9\u306fNode-RED\u304c\u518d\u8d77\u52d5\u3055\u308c\u308b\u307e\u3067\u3001\u30ea\u30bd\u30fc\u30b9\u3092\u4f7f\u3044\u7d9a\u3051\u308b\u53ef\u80fd\u6027\u304c\u3042\u308a\u307e\u3059\u3002</p>",
                     "title": "\u30ce\u30fc\u30c9\u3092\u524a\u9664"
+                },
+                "removePlugin": {
+                    "body": "<p>\u30d7\u30e9\u30b0\u30a4\u30f3 __module__ \u3092\u524a\u9664\u3057\u307e\u3057\u305f\u3002\u30d6\u30e9\u30a6\u30b6\u3092\u518d\u8aad\u307f\u8fbc\u307f\u3057\u3066\u6b8b\u3063\u305f\u8868\u793a\u3092\u6d88\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>"
                 },
                 "update": {
                     "body": "<p>__module__ \u3092\u66f4\u65b0\u3057\u307e\u3059\u3002</p><p>\u66f4\u65b0\u3092\u5b8c\u4e86\u3059\u308b\u306b\u306f\u624b\u52d5\u3067Node-RED\u3092\u518d\u8d77\u52d5\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002</p>",
@@ -781,6 +788,7 @@
                 "disableFailed": "<p>\u7121\u52b9\u5316\u51e6\u7406\u304c\u5931\u6557\u3057\u307e\u3057\u305f: __module__</p><p>__message__</p><p>\u8a73\u7d30\u306f\u30ed\u30b0\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>",
                 "enableFailed": "<p>\u6709\u52b9\u5316\u51e6\u7406\u304c\u5931\u6557\u3057\u307e\u3057\u305f: __module__</p><p>__message__</p><p>\u8a73\u7d30\u306f\u30ed\u30b0\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>",
                 "installFailed": "<p>\u8ffd\u52a0\u51e6\u7406\u304c\u5931\u6557\u3057\u307e\u3057\u305f: __module__</p><p>__message__</p><p>\u8a73\u7d30\u306f\u30ed\u30b0\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>",
+                "installTimeout": "<p>\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u3067\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\u304c\u7d99\u7d9a\u3055\u308c\u307e\u3059\u3002</p><p>\u5b8c\u4e86\u3057\u305f\u6642\u306b\u30ce\u30fc\u30c9\u304c\u8868\u793a\u3055\u308c\u307e\u3059\u3002\u8a73\u7d30\u306f\u30ed\u30b0\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>",
                 "removeFailed": "<p>\u524a\u9664\u51e6\u7406\u304c\u5931\u6557\u3057\u307e\u3057\u305f: __module__</p><p>__message__</p><p>\u8a73\u7d30\u306f\u30ed\u30b0\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>",
                 "updateFailed": "<p>\u66f4\u65b0\u51e6\u7406\u304c\u5931\u6557\u3057\u307e\u3057\u305f: __module__</p><p>__message__</p><p>\u8a73\u7d30\u306f\u30ed\u30b0\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</p>"
             },
@@ -794,6 +802,8 @@
             "nodeCount": "__label__ \u500b\u306e\u30ce\u30fc\u30c9",
             "nodeCount_plural": "__label__ \u500b\u306e\u30ce\u30fc\u30c9",
             "palette": "\u30d1\u30ec\u30c3\u30c8",
+            "pluginCount": "__count__ \u500b\u306e\u30d7\u30e9\u30b0\u30a4\u30f3",
+            "pluginCount_plural": "__count__ \u500b\u306e\u30d7\u30e9\u30b0\u30a4\u30f3",
             "refresh": "\u30e2\u30b8\u30e5\u30fc\u30eb\u30ea\u30b9\u30c8\u66f4\u65b0",
             "remove": "\u524a\u9664",
             "sort": "\u4e26\u3079\u66ff\u3048:",
@@ -1068,6 +1078,7 @@
         },
         "help": {
             "changeLog": "\u66f4\u65b0\u5c65\u6b74",
+            "hideTopics": "\u30c8\u30d4\u30c3\u30af\u3092\u975e\u8868\u793a",
             "label": "\u30d8\u30eb\u30d7",
             "name": "\u30d8\u30eb\u30d7",
             "noHelp": "\u30d8\u30eb\u30d7\u306e\u30c8\u30d4\u30c3\u30af\u304c\u672a\u9078\u629e",
@@ -1326,9 +1337,18 @@
         "welcomeTours": "\u30a6\u30a7\u30eb\u30ab\u30e0\u30c4\u30a2\u30fc"
     },
     "typedInput": {
+        "date": {
+            "format": {
+                "object": "JavaScript\u65e5\u4ed8\u30aa\u30d6\u30b8\u30a7\u30af\u30c8",
+                "timestamp": "\u30a8\u30dd\u30c3\u30af\u304b\u3089\u306e\u7d4c\u904e\u30df\u30ea\u79d2"
+            }
+        },
+        "selected": "__count__\u500b\u3092\u9078\u629e",
+        "selected_plural": "__count__\u500b\u3092\u9078\u629e",
         "type": {
             "bin": "\u30d0\u30c3\u30d5\u30a1",
             "bool": "\u771f\u507d",
+            "conf-types": "\u8a2d\u5b9a\u30ce\u30fc\u30c9",
             "cred": "\u8a8d\u8a3c\u60c5\u5831",
             "date": "\u65e5\u6642",
             "env": "\u74b0\u5883\u5909\u6570",
@@ -1355,9 +1375,10 @@
     "validator": {
         "errors": {
             "invalid-config": "__prop__: \u8a2d\u5b9a\u30ce\u30fc\u30c9\u304c\u4e0d\u6b63",
-            "invalid-expr": "Invalid JSONata expression: __error__",
+            "invalid-expr": "\u4e0d\u6b63\u306aJSONata\u5f0f: __error__",
             "invalid-json": "JSON\u30c7\u30fc\u30bf\u304c\u4e0d\u6b63: __error__",
             "invalid-num": "\u6570\u5024\u304c\u4e0d\u6b63",
+            "invalid-num-prop": "__prop__: \u6570\u5024\u304c\u4e0d\u6b63",
             "invalid-prop": "\u30d7\u30ed\u30d1\u30c6\u30a3\u5f0f\u304c\u4e0d\u6b63",
             "invalid-regex-prop": "__prop__: \u5165\u529b\u30d1\u30bf\u30fc\u30f3\u304c\u4e0d\u6b63",
             "invalid-regexp": "\u5165\u529b\u30d1\u30bf\u30fc\u30f3\u304c\u4e0d\u6b63",

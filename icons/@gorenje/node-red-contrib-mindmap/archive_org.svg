@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   sodipodi:docname="archive_org.svg"
+   id="svg917"
+   version="1.1"
+   aria-labelledby="logoTitleID logoDescID"
+   viewBox="0 0 27 30"
+   height="30"
+   width="27"
+   class="ia-logo style-scope primary-nav">
+  <metadata
+     id="metadata923">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Internet Archive logo</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs921" />
+  <sodipodi:namedview
+     inkscape:current-layer="g915"
+     inkscape:window-maximized="0"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:cy="15"
+     inkscape:cx="13.5"
+     inkscape:zoom="18.814815"
+     showgrid="false"
+     id="namedview919"
+     inkscape:window-height="978"
+     inkscape:window-width="2038"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <title
+     class="style-scope primary-nav"
+     id="logoTitleID">Internet Archive logo</title>
+  <desc
+     class="style-scope primary-nav"
+     id="logoDescID">A line drawing of the Internet Archive headquarters building façade.</desc>
+  <g
+     id="g915"
+     class="style-scope primary-nav"
+     fill-rule="evenodd"
+     fill="none"
+     stroke-width="1"
+     stroke="none">
+    <mask
+       class="style-scope primary-nav"
+       fill="#ffffff"
+       id="mask-2">
+      <path
+         class="style-scope primary-nav"
+         id="path-1"
+         d="M 26.666667,28.604651 V 30 H 0 l 2.8368794e-4,-1.395349 z m -1.052632,-2.093023 v 1.744186 H 1.0526316 V 26.511628 Z M 3.624692,7.6744186 3.9174691,7.8215328 4.0639977,10.173954 4.2105263,13.996393 v 3.676169 L 4.0639977,22.255044 4.039623,25.342193 3.624692,25.465116 H 2.1602464 L 1.7209407,25.342193 1.5503175,22.255044 1.4035088,17.697034 V 14.021147 L 1.5503175,10.173954 1.6842385,7.8088748 1.9896232,7.6744186 Z m 21.052795,0 0.293116,0.1471142 0.146277,2.3524212 0.146278,3.822439 v 3.676169 l -0.146278,4.582482 -0.0241,3.087149 -0.415294,0.122923 h -1.464458 l -0.439393,-0.122923 -0.171218,-3.087149 -0.146278,-4.55801 v -3.675887 l 0.146278,-3.847193 0.134508,-2.3650792 0.305166,-0.1344562 z m -14.737064,0 0.292806,0.1471142 0.146544,2.3524212 0.146543,3.822439 v 3.676169 l -0.146543,4.582482 -0.0241,3.087149 -0.415253,0.122923 H 8.4758312 L 8.0362015,25.342193 7.8655613,22.255044 7.7192982,17.697034 V 14.021147 L 7.8655613,10.173954 8.000056,7.8088748 8.3049108,7.6744186 Z m 8.070175,0 0.292807,0.1471142 0.146543,2.3524212 0.146543,3.822439 v 3.676169 l -0.146543,4.582482 -0.0241,3.087149 -0.415253,0.122923 h -1.464591 l -0.43935,-0.122923 -0.17092,-3.087149 -0.146263,-4.55801 v -3.675887 l 0.146263,-3.847193 0.134494,-2.3650792 0.305135,-0.1344562 z M 25.614035,4.5348837 V 6.9767442 H 1.0526316 V 4.5348837 Z M 13.080676,0 25.964912,2.9333134 25.448414,3.8372093 H 0.77192525 L 0,3.1041615 Z" />
+    </mask>
+    <use
+       transform="matrix(0.8341197,0,0,0.63681582,2.3817147,4.9669959)"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-opacity:1"
+       height="100%"
+       width="100%"
+       y="0"
+       x="0"
+       id="use910"
+       class="style-scope primary-nav"
+       xlink:href="#path-1"
+       fill="#ffffff" />
+    <g
+       inkscape:label="g913"
+       id="g913"
+       class="style-scope primary-nav"
+       fill="#ffffff"
+       mask="url(#mask-2)" />
+  </g>
+</svg>

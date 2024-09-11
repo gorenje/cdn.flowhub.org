@@ -121,6 +121,7 @@
     "csv": {
         "errors": {
             "bad_csv": "CSV\u6578\u64da\u683c\u5f0f\u932f\u8aa4-\u8f38\u51fa\u53ef\u80fd\u5df2\u640d\u58de\u3002",
+            "bad_template": "Malformed columns template.",
             "csv_js": "\u6b64\u7bc0\u9ede\u50c5\u8655\u7406CSV\u5b57\u4e32\u6216JS\u7269\u4ef6",
             "obj_csv": "\u5c0d\u8c61->CSV\u8f49\u63db\u672a\u8a2d\u5b9a\u5217\u6a21\u7248"
         },
@@ -143,6 +144,7 @@
             "separator": "\u5206\u9694\u7b26\u865f",
             "skip-e": "\u884c",
             "skip-s": "\u5ffd\u7565\u524d",
+            "spec": "Parser",
             "usestrings": "\u89e3\u6790\u6578\u503c"
         },
         "newline": {
@@ -165,6 +167,11 @@
             "semicolon": "\u5206\u865f",
             "space": "\u7a7a\u683c",
             "tab": "Tab"
+        },
+        "spec": {
+            "legacy": "Legacy",
+            "legacy_warning": "Legacy mode will be removed in a future release.",
+            "rfc": "RFC4180"
         }
     },
     "debug": {
@@ -418,10 +425,12 @@
         "label": {
             "in": "in",
             "output": "\u8f38\u51fa",
+            "prefix": "Property name for HTML content",
             "select": "\u9078\u53d6\u9805"
         },
         "output": {
             "attr": "\u5305\u542b\u9078\u5b9a\u5143\u7d20\u7684\u6240\u6709\u5c6c\u6027\u7684\u7269\u4ef6",
+            "compl": "an object of any attributes of the elements and html contents",
             "html": "\u9078\u5b9a\u5143\u7d20\u7684html\u5167\u5bb9",
             "text": "\u9078\u5b9a\u5143\u7d20\u7684\u7d14\u6587\u5b57\u5167\u5bb9"
         }
@@ -594,6 +603,7 @@
             "object": "\u9375\u503c\u5c0d\u5c0d\u8c61",
             "string": "\u5b57\u4e32"
         },
+        "useparts": "Use existing msg.parts property",
         "using": "\u4f7f\u7528\u6b64\u503c"
     },
     "json": {
@@ -1121,6 +1131,7 @@
             "connected_plural": "\u9023\u63a5\u6578 __count__"
         },
         "tip": {
+            "headers": "\u6a19\u982d\u50c5\u5728\u5354\u5b9a\u5347\u7d1a\u6a5f\u5236\u671f\u9593\u63d0\u4ea4\uff0c\u5f9e HTTP \u5230 WS/WSS \u5354\u5b9a.",
             "path1": "\u9810\u8a2d\u60c5\u6cc1\u4e0b\uff0c<code>payload</code>\u5c07\u5305\u542b\u8981\u767c\u9001\u6216\u5f9eWebsocket\u63a5\u6536\u7684\u8cc7\u6599\u3002\u5075\u807d\u5668\u53ef\u4ee5\u914d\u7f6e\u70ba\u4ee5JSON\u683c\u5f0f\u7684\u5b57\u4e32\u767c\u9001\u6216\u63a5\u6536\u6574\u500b\u6d88\u606f\u7269\u4ef6.",
             "path2": "\u9019\u689d\u8def\u5f91\u5c07\u76f8\u5c0d\u65bc <code>__path__</code>.",
             "url1": "URL \u61c9\u8a72\u4f7f\u7528ws:&#47;&#47;\u6216\u8005wss:&#47;&#47;\u65b9\u6848\u4e26\u6307\u5411\u73fe\u6709\u7684websocket\u76e3\u807d\u5668.",

@@ -33,8 +33,8 @@
         "detach-selected-nodes": "D\u00e9tacher les noeuds s\u00e9lectionn\u00e9s",
         "disable-flow": "D\u00e9sactiver le flux",
         "disable-selected-nodes": "D\u00e9sactiver les noeuds s\u00e9lectionn\u00e9s",
-        "distribute-selection-horizontally": "Distribuer la s\u00e9lection horizontalement",
-        "distribute-selection-vertical": "Distribuer la s\u00e9lection verticalement",
+        "distribute-selection-horizontally": "R\u00e9partir la s\u00e9lection horizontalement",
+        "distribute-selection-vertical": "R\u00e9partir la s\u00e9lection verticalement",
         "edit-flow": "Modifier le flux",
         "edit-selected-node": "Modifier le noeud s\u00e9lectionn\u00e9",
         "enable-flow": "Activer le flux",
@@ -59,7 +59,7 @@
         "list-flows": "Lister les flux",
         "list-hidden-flows": "Afficher les flux cach\u00e9s",
         "list-modified-nodes": "Afficher les flux modifi\u00e9s",
-        "list-subflows": "Liste les sous-flux",
+        "list-subflows": "Lister les sous-flux",
         "lock-flow": "Verrouiller le flux",
         "manage-palette": "G\u00e9rer la palette",
         "merge-selection-to-group": "Fusionner la s\u00e9lection dans le groupe",
@@ -154,14 +154,14 @@
         "zoom-reset": "R\u00e9initialiser le zoom"
     },
     "actions": {
-        "search-counter": "\"__term__\" __result__ de __count__",
+        "search-counter": "\"__term__\" __result__ sur __count__",
         "search-flows": "Rechercher le flux",
         "search-next": "Suivant",
         "search-prev": "Pr\u00e9c\u00e9dent",
-        "toggle-navigator": "Basculer de navigateur",
+        "toggle-navigator": "Basculer l'affichage du navigateur",
         "zoom-in": "Agrandir",
-        "zoom-out": "D\u00e9zoomer",
-        "zoom-reset": "R\u00e9initialiser le zoom"
+        "zoom-out": "R\u00e9duire",
+        "zoom-reset": "R\u00e9initialiser"
     },
     "bufferEditor": {
         "modeArray": "G\u00e9rer en tant que tableau JSON",
@@ -198,6 +198,7 @@
         "groupStyleCopied": "Style de groupe copi\u00e9",
         "group_plural": "__count__ groupes",
         "import": {
+            "alreadyExists": "Ce noeud existe d\u00e9j\u00e0",
             "conflictNotification1": "Certains des noeuds que vous avez import\u00e9s existent d\u00e9j\u00e0 dans votre espace de travail.",
             "conflictNotification2": "S\u00e9lectionnez les noeuds \u00e0 importer et choisissez s'il faut remplacer les noeuds existants ou en importer une copie.",
             "errors": {
@@ -250,6 +251,7 @@
             "enable": "Activer",
             "export": "Exporter",
             "fill": "Remplissage",
+            "format": "Format",
             "import": "Importer",
             "label": "Etiquette",
             "line": "Bordure",
@@ -283,7 +285,7 @@
         "junction": "Jonction",
         "linkNodes": "Liens entre les noeuds",
         "node": "Noeud",
-        "showActionList": "Show action list"
+        "showActionList": "Afficher la liste des actions"
     },
     "deploy": {
         "confirm": {
@@ -300,7 +302,7 @@
             "conflict": "Le serveur ex\u00e9cute un ensemble de flux plus r\u00e9cent.",
             "conflictAutoMerge": "Les modifications n'incluent aucun conflit et peuvent \u00eatre fusionn\u00e9es automatiquement.",
             "conflictChecking": "V\u00e9rifier si les modifications peuvent \u00eatre fusionn\u00e9es automatiquement",
-            "conflictManualMerge": "Les changements incluent des conflits qui doivent \u00eatre r\u00e9solus avant de pouvoir \u00eatre d\u00e9ploy\u00e9s.",
+            "conflictManualMerge": "Les modifications incluent des conflits qui doivent \u00eatre r\u00e9solus avant de pouvoir \u00eatre d\u00e9ploy\u00e9es.",
             "doNotWarn": "Ne plus m'avertir \u00e0 ce sujet",
             "improperlyConfigured": "L'espace de travail contient des noeuds qui ne sont pas correctement configur\u00e9s :",
             "plusNMore": "+ __count__ en plus",
@@ -346,7 +348,7 @@
         "nodeCount": "__count__ noeud",
         "nodeCount_plural": "__count__ noeuds",
         "oldVersionError": "L'ancienne version ne contient pas de JSON valide :",
-        "remote": "Modifications \u00e0 distance",
+        "remote": "Changements distants",
         "reviewChanges": "Examiner les modifications",
         "saveConflict": "Enregistrer la r\u00e9solution des conflits",
         "type": {
@@ -355,13 +357,14 @@
             "deleted": "supprim\u00e9",
             "flowAdded": "flux ajout\u00e9",
             "flowDeleted": "flux supprim\u00e9",
+            "moved": "d\u00e9plac\u00e9",
             "movedFrom": "d\u00e9plac\u00e9 depuis __id__",
             "movedTo": "d\u00e9plac\u00e9 vers __id__",
             "unchanged": "inchang\u00e9"
         },
         "unresolvedCount": "__count__ conflit non r\u00e9solu",
         "unresolvedCount_plural": "__count__ conflits non r\u00e9solus",
-        "viewCommitDiff": "Afficher les modifications de validation"
+        "viewCommitDiff": "Afficher les modifications de la validation"
     },
     "editableList": {
         "add": "Ajouter",
@@ -383,7 +386,7 @@
         "errors": {
             "credentialLoadFailed": "\u00c9chec du chargement des identifiants du noeud",
             "invalidProperties": "Propri\u00e9t\u00e9s invalides :",
-            "scopeChange": "La modification de la port\u00e9e la rendra indisponible pour les noeuds d'autres flux qui l'utilisent"
+            "scopeChange": "La modification de la port\u00e9e rendra indisponible ce noeud de configuration aux noeuds d'autres flux qui l'utilisent"
         },
         "hide": "Masquer",
         "icon": "Ic\u00f4ne",
@@ -392,7 +395,7 @@
             "checkbox": "case \u00e0 cocher",
             "hidden": "masquer la propri\u00e9t\u00e9",
             "input": "entr\u00e9e",
-            "none": "aucune",
+            "none": "aucun",
             "select": "s\u00e9lection",
             "spinner": "valeurs \u00e0 d\u00e9filer"
         },
@@ -466,7 +469,7 @@
     },
     "expressionEditor": {
         "compatMode": "Mode de compatibilit\u00e9 activ\u00e9",
-        "compatModeDesc": "<h3>Mode de compatibilit\u00e9 JSONata</h3><p> L'expression actuelle semble toujours faire r\u00e9f\u00e9rence \u00e0 <code>msg</code> et sera donc \u00e9valu\u00e9e en mode de compatibilit\u00e9. Veuiller mettre \u00e0 jour l'expression pour ne pas utiliser <code>msg</code> car ce mode sera supprim\u00e9 \u00e0 l'avenir.</p><p> Lorsque la prise en charge de JSONata a \u00e9t\u00e9 ajout\u00e9e pour la premi\u00e8re fois \u00e0 Node-RED, il fallait que l'expression r\u00e9f\u00e9rencie l'objet <code>msg</code>. Par exemple, <code>msg.payload</code> serait utilis\u00e9 pour acc\u00e9der \u00e0 la charge utile.</p><p> Cela n'est plus n\u00e9cessaire car l'expression sera \u00e9valu\u00e9e directement par rapport au message. Pour acc\u00e9der \u00e0 la charge utile, l'expression doit \u00eatre simplement <code>charge utile</code>.</p>",
+        "compatModeDesc": "<h3>Mode de compatibilit\u00e9 JSONata</h3><p> L'expression actuelle semble toujours faire r\u00e9f\u00e9rence \u00e0 <code>msg</code> et sera donc \u00e9valu\u00e9e en mode de compatibilit\u00e9. Veuillez mettre \u00e0 jour l'expression pour ne pas utiliser <code>msg</code> car ce mode sera supprim\u00e9 \u00e0 l'avenir.</p><p> Lorsque la prise en charge de JSONata a \u00e9t\u00e9 ajout\u00e9e pour la premi\u00e8re fois \u00e0 Node-RED, il fallait que l'expression r\u00e9f\u00e9rencie l'objet <code>msg</code>. Par exemple, <code>msg.payload</code> serait utilis\u00e9 pour acc\u00e9der \u00e0 la charge utile.</p><p> Cela n'est plus n\u00e9cessaire car l'expression sera \u00e9valu\u00e9e directement par rapport au message. Pour acc\u00e9der \u00e0 la charge utile, l'expression doit \u00eatre simplement <code>charge utile</code>.</p>",
         "data": "Exemple de message",
         "errors": {
             "clone-unsupported": "Impossible de tester la fonction $clone",
@@ -505,7 +508,7 @@
             "invalidJSON": "JSON invalide : "
         },
         "expandItems": "D\u00e9velopper les \u00e9l\u00e9ments",
-        "format": "Format JSON",
+        "format": "Formatter JSON",
         "insertAbove": "Ins\u00e9rer ci-dessus",
         "insertBelow": "Ins\u00e9rer ci-dessous",
         "rawMode": "Modifier JSON",
@@ -521,9 +524,9 @@
         "copyNode": "Copier les noeuds s\u00e9lectionn\u00e9s",
         "cutNode": "Couper les noeuds s\u00e9lectionn\u00e9s",
         "deleteReconnect": "Supprimer et reconnecter",
-        "deleteSelected": "Supprimer les noeuds ou le lien s\u00e9lectionn\u00e9(s)",
+        "deleteSelected": "Supprimer la s\u00e9lection",
         "editSelected": "Modifier le noeud s\u00e9lectionn\u00e9",
-        "editor": "Bo\u00eete de dialogue d'\u00e9dition",
+        "editor": "Bo\u00eete d'\u00e9dition",
         "exportNode": "Exporter les noeuds",
         "filterActions": "Rechercher l'action",
         "global": "Global",
@@ -550,15 +553,16 @@
         "workspace": "Espace de travail"
     },
     "languages": {
-        "de": "Allemand",
-        "en-US": "Anglais",
+        "de": "Deutsch",
+        "en-US": "English",
+        "es-ES": "Espa\u00f1ol (Espa\u00f1a)",
         "fr": "Fran\u00e7ais",
-        "ja": "Japonais",
-        "ko": "Cor\u00e9en",
-        "pt-BR": "Portugais br\u00e9silien",
-        "ru": "Russe",
-        "zh-CN": "Chinois (Simplifi\u00e9)",
-        "zh-TW": "Chinois (Traditionnel)"
+        "ja": "\u65e5\u672c\u8a9e",
+        "ko": "Korean",
+        "pt-BR": "Portugu\u00eas (Brasil)",
+        "ru": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+        "zh-CN": "\u7b80\u4f53\u4e2d\u6587",
+        "zh-TW": "\u7e41\u9ad4\u4e2d\u6587"
     },
     "library": {
         "dialogSaveOverwrite": "Une __libraryType__ appel\u00e9e __libraryName__ existe d\u00e9j\u00e0. \u00c9craser ?",
@@ -576,13 +580,13 @@
             "examples": "Exemples",
             "local": "Local"
         },
-        "unnamedType": "Innom\u00e9 __type__"
+        "unnamedType": "Sans nom __type__"
     },
     "markdownEditor": {
         "bold": "Gras",
         "code": "Code",
         "expand": "D\u00e9velopper",
-        "format": "Format\u00e9 avec Markdown",
+        "format": "Formatter avec Markdown",
         "heading1": "Rubrique 1",
         "heading2": "Rubrique 2",
         "heading3": "Rubrique 3",
@@ -611,22 +615,22 @@
             "codeEditor": "\u00c9diteur de code",
             "createSubflow": "Cr\u00e9er un sous-flux",
             "delete": "Supprimer",
-            "disableSelectedNodes": "Disable selected nodes",
+            "disableSelectedNodes": "D\u00e9sactiver les noeuds s\u00e9lectionn\u00e9s",
             "displayConfig": "Noeuds de configuration",
             "displayStatus": "Afficher l'\u00e9tat du noeud",
             "distributeHorizontally": "R\u00e9partir horizontalement",
-            "distributeVertically": "Distribuer verticalement",
+            "distributeVertically": "R\u00e9partir verticalement",
             "edit": "\u00c9diter",
             "editPalette": "G\u00e9rer la palette",
-            "enableSelectedNodes": "Enable selected nodes",
+            "enableSelectedNodes": "Activer les noeuds s\u00e9lectionn\u00e9s",
             "export": "Exporter",
             "flows": "Flux",
             "groupMergeSelection": "Fusionner la s\u00e9lection",
             "groupRemoveSelection": "Supprimer du groupe",
-            "groupSelection": "Grouper cette s\u00e9lection",
+            "groupSelection": "Grouper la s\u00e9lection",
             "groups": "Groupes",
             "help": "Site web de Node-RED",
-            "hideSelectedNodeLabels": "Hide selected node labels",
+            "hideSelectedNodeLabels": "Masquer les \u00e9tiquettes des noeuds s\u00e9lectionn\u00e9s",
             "import": "Importer",
             "importExample": "Importer un exemple de flux",
             "keyboardShortcuts": "Raccourcis clavier",
@@ -645,16 +649,15 @@
             "projects-new": "Nouveau projet",
             "projects-open": "Ouvrir le projet",
             "projects-settings": "Param\u00e8tres du projet",
-            "rename": "Renommer",
             "search": "Rechercher les flux",
             "searchInput": "Rechercher vos flux",
             "selectionToSubflow": "Convertir en sous-flux",
             "settings": "Param\u00e8tres",
-            "showNodeHelp": "Show node help",
+            "showNodeHelp": "Afficher l'aide du noeud",
             "showNodeLabelDefault": "Afficher l'\u00e9tiquette des noeuds nouvellement ajout\u00e9s",
-            "showSelectedNodeLabels": "Show selected node labels",
+            "showSelectedNodeLabels": "Afficher les \u00e9tiquettes des noeuds s\u00e9lectionn\u00e9s",
             "showTips": "Afficher les astuces",
-            "showWelcomeTours": "Afficher les visites guid\u00e9es pour les nouvelles versions",
+            "showWelcomeTours": "Afficher les visites guid\u00e9es des nouvelles versions",
             "sidebar": {
                 "show": "Afficher la barre lat\u00e9rale"
             },
@@ -663,7 +666,7 @@
             "userSettings": "Param\u00e8tres de l'utilisateur",
             "view": {
                 "auto": "Contextuel",
-                "browserDefault": "Navigateur par d\u00e9faut",
+                "browserDefault": "Par d\u00e9faut du Navigateur",
                 "defaultDir": "Sens par d\u00e9faut",
                 "grid": "Grille",
                 "gridSize": "Taille de la grille",
@@ -707,7 +710,7 @@
             "change-branch": "Changer pour une branche locale '__project__'",
             "createDefault": "Cr\u00e9er des fichiers de projet par d\u00e9faut",
             "loaded": "Projet '__project__' charg\u00e9",
-            "merge-abort": "Git fusion abandonn\u00e9e",
+            "merge-abort": "Fusion Git abandonn\u00e9e",
             "merge-complete": "Fusion Git termin\u00e9e",
             "mergeConflict": "Afficher les conflits de fusion",
             "no": "Non merci",
@@ -723,19 +726,19 @@
         },
         "warning": "<strong>Attention</strong> : __message__",
         "warnings": {
-            "credentials_load_failed": "<p>Les flux se sont arr\u00eat\u00e9s car les informations d'identification n'ont pas pu \u00eatre d\u00e9chiffr\u00e9es.</p><p>Le fichier d'informations d'identification du flux est chiffr\u00e9, mais la cl\u00e9 de chiffrement du projet est manquante ou invalide.</p>",
-            "credentials_load_failed_reset": "<p>Les informations d'identification n'ont pas pu \u00eatre d\u00e9chiffr\u00e9es</p><p>Le fichier d'informations d'identification du flux est chiffr\u00e9, mais la cl\u00e9 de chiffrement du projet est manquante ou invalide.</p><p>Le fichier d'informations d'identification du flux sera r\u00e9initialis\u00e9 lors du prochain d\u00e9ploiement. Toutes les informations d'identification de flux existantes seront perdues.</p>",
+            "credentials_load_failed": "<p>Les flux se sont arr\u00eat\u00e9s car les informations d'identification n'ont pas pu \u00eatre d\u00e9chiffr\u00e9es.</p><p>Le fichier d'informations d'identification du flux est chiffr\u00e9 mais la cl\u00e9 de chiffrement du projet est manquante ou invalide.</p>",
+            "credentials_load_failed_reset": "<p>Les informations d'identification n'ont pas pu \u00eatre d\u00e9chiffr\u00e9es</p><p>Le fichier d'informations d'identification du flux est chiffr\u00e9 mais la cl\u00e9 de chiffrement du projet est manquante ou invalide.</p><p>Le fichier d'informations d'identification du flux sera r\u00e9initialis\u00e9 lors du prochain d\u00e9ploiement. Toutes les informations d'identification des flux existants seront perdues.</p>",
             "git_merge_conflict": "<p>La fusion automatique des modifications a \u00e9chou\u00e9.</p><p>Corriger les conflits non fusionn\u00e9s, puis valider le r\u00e9sultat.</p>",
             "missing-modules": "<p>Flux arr\u00eat\u00e9s en raison de modules manquants.</p>",
             "missing-types": "<p>Flux arr\u00eat\u00e9s en raison de types de noeuds manquants.</p>",
             "missing_flow_file": "<p>Fichier contenant les flux introuvable.</p><p>Le projet n'est pas configur\u00e9 avec un fichier de flux.</p>",
-            "missing_package_file": "<p>Fichier de paquetage du projet introuvable.</p><p>Il manque au projet un fichier package.json.</p>",
-            "nodeActionDisabled": "Actions de noeud d\u00e9sactiv\u00e9es",
-            "nodeActionDisabledSubflow": "Actions de noeud d\u00e9sactiv\u00e9es dans le sous-flux",
+            "missing_package_file": "<p>Fichier de paquetage du projet introuvable.</p><p>Il manque au projet le fichier <code>package.json</code>.</p>",
+            "nodeActionDisabled": "Les actions du noeud sont d\u00e9sactiv\u00e9es",
+            "nodeActionDisabledSubflow": "Les actions de noeud sont d\u00e9sactiv\u00e9es \u00e0 l'int\u00e9rieur du sous-flux",
             "project_empty": "<p>Le projet est vide.</p><p>Voulez-vous cr\u00e9er un ensemble de fichiers de projet par d\u00e9faut ?<br/>Sinon, vous devrez ajouter manuellement des fichiers au projet (en dehors de l'\u00e9diteur).</p>",
             "project_not_found": "<p>Le projet '__project__' est introuvable.</p>",
             "restartRequired": "Node-RED doit \u00eatre red\u00e9marr\u00e9 pour mettre \u00e0 jour les modules",
-            "safe-mode": "<p>Flux arr\u00eat\u00e9s en mode sans \u00e9chec.</p><p>Vous pouvez modifier vos flux et d\u00e9ployer les changements pour red\u00e9marrer.</p>",
+            "safe-mode": "<p>Flux arr\u00eat\u00e9s en mode sans \u00e9chec.</p><p>Vous pouvez modifier vos flux et d\u00e9ployer ensuite les changements afin de d\u00e9marrer vos flux.</p>",
             "undeployedChanges": "Le noeud a des modifications non d\u00e9ploy\u00e9es"
         }
     },
@@ -744,7 +747,7 @@
             "collapse-all": "R\u00e9duire toutes les cat\u00e9gories",
             "expand-all": "D\u00e9velopper toutes les cat\u00e9gories"
         },
-        "addCategory": "Ajouter un nouveau...",
+        "addCategory": "Ajouter une nouvelle...",
         "editor": {
             "allCatalogs": "Tous les catalogues",
             "confirm": {
@@ -752,18 +755,22 @@
                     "install": "Installer",
                     "remove": "Supprimer",
                     "review": "Ouvrir la documentation",
+                    "understood": "Compris",
                     "update": "Mettre \u00e0 jour"
                 },
                 "cannotUpdate": {
-                    "body": "Une mise \u00e0 jour pour ce noeud est disponible, mais il n'est pas install\u00e9 dans un emplacement que le gestionnaire de palette peut mettre \u00e0 jour.<br/><br/>Veuiller vous r\u00e9f\u00e9rer \u00e0 la documentation pour savoir comment mettre \u00e0 jour ce noeud."
+                    "body": "Une mise \u00e0 jour pour ce noeud est disponible, mais il n'est pas install\u00e9 dans un emplacement que le gestionnaire de palette peut mettre \u00e0 jour.<br/><br/>Veuillez vous r\u00e9f\u00e9rer \u00e0 la documentation pour savoir comment mettre \u00e0 jour ce noeud."
                 },
                 "install": {
-                    "body": "<p>Installation de '__module__'</p><p>Avant l'installation, veuiller lire la documentation du noeud. Certains noeuds ont des d\u00e9pendances qui ne peuvent pas \u00eatre r\u00e9solues automatiquement et peuvent n\u00e9cessiter un red\u00e9marrage de Node-RED.</p>",
+                    "body": "<p>Installation de '__module__'</p><p>Avant l'installation, veuillez lire la documentation du noeud. Certains noeuds ont des d\u00e9pendances qui ne peuvent pas \u00eatre r\u00e9solues automatiquement et peuvent n\u00e9cessiter un red\u00e9marrage de Node-RED.</p>",
                     "title": "Installer les noeuds"
                 },
                 "remove": {
-                    "body": "<p>Suppression de '__module__'</p><p>La suppression du noeud le d\u00e9sinstallera de Node-RED. Le noeud peut continuer \u00e0 utiliser des ressources jusqu'au red\u00e9marrage de Node-RED.</p>",
+                    "body": "<p>Suppression de '__module__'</p><p>La suppression du noeud le d\u00e9sinstallera de Node-RED. Le noeud peut continuer \u00e0 utiliser ses ressources jusqu'au red\u00e9marrage de Node-RED.</p>",
                     "title": "Supprimer les noeuds"
+                },
+                "removePlugin": {
+                    "body": "<p>Suppression du plugin '__module__'. Veuillez recharger l'\u00e9diteur afin d'appliquer les changements.</p>"
                 },
                 "update": {
                     "body": "<p>Mise \u00e0 jour de '__module__'</p><p>La mise \u00e0 jour du noeud n\u00e9cessitera un red\u00e9marrage de Node-RED pour terminer la mise \u00e0 jour. Cela doit \u00eatre fait manuellement.</p>",
@@ -781,6 +788,7 @@
                 "disableFailed": "<p>\u00c9chec lors de la d\u00e9sactivation : __module__</p><p>__message__</p><p>Consulter le journal pour plus d'informations</p>",
                 "enableFailed": "<p>\u00c9chec lors de l'activation : __module__</p><p>__message__</p><p>Consulter le journal pour plus d'informations</p>",
                 "installFailed": "<p>\u00c9chec lors de l'installation : __module__</p><p>__message__</p><p>Consulter le journal pour plus d'informations</p>",
+                "installTimeout": "<p>L'installation continue en arri\u00e8re-plan.</p><p>Les noeuds appara\u00eetront dans la palette une fois l'installation termin\u00e9e. Consulter le journal pour plus d'informations.</p>",
                 "removeFailed": "<p>\u00c9chec lors de la suppression : __module__</p><p>__message__</p><p>Consulter le journal pour plus d'informations</p>",
                 "updateFailed": "<p>\u00c9chec lors de la mise \u00e0 jour : __module__</p><p>__message__</p><p>Consulter le journal pour plus d'informations</p>"
             },
@@ -794,6 +802,8 @@
             "nodeCount": "__label__ noeud",
             "nodeCount_plural": "__label__ noeuds",
             "palette": "Palette",
+            "pluginCount": "__count__ plugin",
+            "pluginCount_plural": "__count__ plugins",
             "refresh": "Actualiser la liste des modules",
             "remove": "Supprimer",
             "sort": "Trier:",
@@ -824,7 +834,7 @@
             "title": "G\u00e9rer la palette",
             "update": "Mettre \u00e0 jour vers __version__",
             "updated": "Mis \u00e0 jour",
-            "upload": "Charger le fichier tgz du module"
+            "upload": "Charger le fichier .tgz du module"
         },
         "event": {
             "nodeAdded": "Noeud ajout\u00e9 \u00e0 la palette :",
@@ -866,7 +876,7 @@
             "connection-failed": "La connexion a \u00e9chou\u00e9",
             "credential-key": "Cl\u00e9 de chiffrement des identifiants",
             "desc0": "Si vous avez d\u00e9j\u00e0 un d\u00e9p\u00f4t Git contenant un projet, vous pouvez le cloner pour commencer.",
-            "git-error": "Erreur git",
+            "git-error": "Erreur Git",
             "git-url": "URL du d\u00e9p\u00f4t Git",
             "must-contain": "Doit contenir uniquement A-Z 0-9 _ -",
             "no-info-in-url": "Ne pas inclure le nom d'utilisateur/mot de passe dans l'URL",
@@ -902,12 +912,12 @@
             "enable-encryption": "Activer le chiffrement",
             "encryption-key": "Cl\u00e9 de chiffrement",
             "flow-file": "Fichier de flux",
-            "git-error": "Erreur git",
+            "git-error": "Erreur Git",
             "git-url": "URL du d\u00e9p\u00f4t Git",
             "must-contain": "Doit contenir uniquement A-Z 0-9 _ -",
             "no-info-in-url": "Ne pas inclure le nom d'utilisateur/mot de passe dans l'URL",
             "no-resource": "R\u00e9f\u00e9rentiel introuvable",
-            "not-git": "Ce n'est pas un d\u00e9p\u00f4t git",
+            "not-git": "Ce n'est pas un d\u00e9p\u00f4t Git",
             "open": "Projet ouvert",
             "opt": "Facultatif",
             "passphrase": "Phrase de mot de passe",
@@ -970,13 +980,13 @@
             "enable": "Activer le chiffrement",
             "git-auth-error": "Erreur d'authentification Git",
             "git-error": "Erreur Git",
-            "setup": "Configuration du chiffrage de votre fichier d'informations d'identification",
+            "setup": "Configuration du chiffrement de votre fichier d'informations d'identification",
             "use-custom": "Utiliser la cl\u00e9 personnalis\u00e9e"
         },
         "errors": {
             "code": "Code",
             "no-username-email": "Votre client Git n'est pas configur\u00e9 avec un nom d'utilisateur/e-mail.",
-            "unexpected": "Une erreur inattendue est apparue"
+            "unexpected": "Une erreur inattendue est survenue"
         },
         "git-config": {
             "desc0": "Node-RED utilise l'outil open source Git pour le contr\u00f4le de version. Il suit les modifications apport\u00e9es \u00e0 vos fichiers de projet et vous permet de les transf\u00e9rer vers des r\u00e9f\u00e9rentiels distants.",
@@ -1068,11 +1078,12 @@
         },
         "help": {
             "changeLog": "Journal des modifications",
+            "hideTopics": "Masquer les sujets",
             "label": "Aide",
             "name": "Aide",
             "noHelp": "Aucune rubrique d'aide s\u00e9lectionn\u00e9e",
             "nodeHelp": "Aide sur les noeuds",
-            "search": "Aide \u00e0 la recherche",
+            "search": "Rechercher l'aide",
             "showHelp": "Afficher l'aide",
             "showInOutline": "Afficher dans les grandes lignes",
             "showTopics": "Afficher les sujets"
@@ -1103,13 +1114,13 @@
             "nodes": "__count__ noeuds",
             "none": "Aucun",
             "null": "Nul",
-            "outline": "Plan",
+            "outline": "Contour",
             "properties": "Propri\u00e9t\u00e9s",
             "selection": "S\u00e9lection",
             "showFlow": "Afficher",
             "showLess": "Afficher en moins",
             "showMore": "Afficher en plus",
-            "showTips": "Vous pouvez ouvrir les astuces \u00e0 partir du panneau des param\u00e8tres",
+            "showTips": "Vous pouvez afficher les astuces \u00e0 partir du panneau des param\u00e8tres",
             "status": "Statut",
             "subflow": "Sous-flux",
             "subflowDesc": "Description du sous-flux",
@@ -1166,7 +1177,7 @@
                 "selectFile": "Choisir le dossier",
                 "setTheEncryptionKey": "D\u00e9finir la cl\u00e9 de chiffrement",
                 "title": "Param\u00e8tres du projet",
-                "unmergedConfirm": "La branche locale '__name__' contient des modifications non fusionn\u00e9es qui seront perdues. Etes-vous s\u00fbr de vouloir la supprimer?",
+                "unmergedConfirm": "La branche locale '__name__' contient des modifications non fusionn\u00e9es qui seront perdues. \u00cates-vous s\u00fbr de vouloir la supprimer?",
                 "url": "URL",
                 "urlRule": "https://, ssh:// ou file://",
                 "urlRule2": "Ne pas inclure le nom d'utilisateur/mot de passe dans l'URL",
@@ -1183,7 +1194,7 @@
                 "committerTip": "Laisser vide pour utiliser la valeur par d\u00e9faut du syst\u00e8me",
                 "copyPublicKey": "Copier la cl\u00e9 publique dans le presse-papiers",
                 "delete": "Supprimer une cl\u00e9",
-                "deleteConfirm": "\u00cates-vous s\u00fbr de vouloir supprimer la cl\u00e9 SSH __nom__ ? \u00c7a ne peut pas \u00eatre annul\u00e9.",
+                "deleteConfirm": "\u00cates-vous s\u00fbr de vouloir supprimer la cl\u00e9 SSH __name__ ? \u00c7a ne peut pas \u00eatre annul\u00e9.",
                 "email": "e-mail",
                 "generate": "G\u00e9n\u00e9rer une cl\u00e9",
                 "gitConfig": "Configuration Git",
@@ -1247,7 +1258,7 @@
                 "notTracking": "Votre branche locale ne suit pas actuellement une branche distante.",
                 "projectHistory": "Historique du projet",
                 "pull": "Tirer",
-                "pullChanges": "Tirer les changements",
+                "pullChanges": "Tirer les changements distants",
                 "pullUnrelatedHistory": "<p>Le r\u00e9ferentiel distant a un historique de validations sans rapport.</p><p>\u00cates-vous s\u00fbr de vouloir extraire les modifications dans votre r\u00e9f\u00e9rentiel local\u00a0?</p>",
                 "push": "Envoyer",
                 "pushFailed": "L'envoi a \u00e9chou\u00e9 car la branche a des validations plus r\u00e9centes. Tirer et fusionner d'abord, puis envoyer \u00e0 nouveau.",
@@ -1262,20 +1273,20 @@
                 "secondsAgo": "Il y a quelques instants",
                 "selectUpstreamBranch": "La branche sera cr\u00e9\u00e9e. S\u00e9lectionner ci-dessous pour la d\u00e9finir comme branche en amont suivie.",
                 "setUpstreamBranch": "D\u00e9finir comme branche en amont",
-                "showUnstagedChanges": "Afficher les modifications non mise en place",
-                "stageAllChange": "Mettre en place tous les changements",
-                "stageChange": "Mettre en place le changement",
-                "staged": "Mis en place",
-                "stagedChanges": "Changement mis en place",
+                "showUnstagedChanges": "Afficher les modifications non index\u00e9es",
+                "stageAllChange": "Indexer tous les changements",
+                "stageChange": "Indexer les changements",
+                "staged": "Index\u00e9",
+                "stagedChanges": "Changements index\u00e9s",
                 "statusUnmergedChanged": "Votre r\u00e9f\u00e9rentiel contient des modifications non fusionn\u00e9es. Vous devez r\u00e9soudre les conflits et valider le r\u00e9sultat.",
                 "trackedUpstreamBranch": "La branche cr\u00e9\u00e9e sera d\u00e9finie comme la branche en amont suivie.",
-                "unablePull": "<p>Impossible d'extraire les modifications \u00e0 distance ; vos modifications locales non mises en place seraient \u00e9cras\u00e9es.</p><p>Valider vos modifications et r\u00e9essayer.</p>",
+                "unablePull": "<p>Impossible d'extraire les modifications \u00e0 distance; vos modifications locales non mises en place seraient \u00e9cras\u00e9es.</p><p>Valider vos modifications et r\u00e9essayer.</p>",
                 "unableToAccess": "Impossible d'acc\u00e9der au r\u00e9f\u00e9rentiel distant",
                 "unmergedChanges": "Modifications non fusionn\u00e9es",
-                "unstageAllChange": "Ne pas mettre en place tous les changements",
-                "unstageChange": "Ne pas mettre en place le changement",
-                "unstaged": "Non mis en place",
-                "unstagedChanges": "Abandon des changements",
+                "unstageAllChange": "Annuler l'indexation de tous les changements",
+                "unstageChange": "Annuler l'indexation des changements",
+                "unstaged": "Non index\u00e9",
+                "unstagedChanges": "Changements non index\u00e9s",
                 "upstream": "en amont",
                 "validationsAheadAndBehind2_plural": "__count__ commits avant le r\u00e9f\u00e9rentiel distant. "
             }
@@ -1291,7 +1302,7 @@
         "edit": "Modifier le mod\u00e8le du sous-flux",
         "editSubflow": "Modifier le mod\u00e8le du sous-flux : __name__",
         "editSubflowInstance": "Modifier l'instance du sous-flux : __name__",
-        "editSubflowProperties": "modifier les propri\u00e9t\u00e9s",
+        "editSubflowProperties": "Modifier les propri\u00e9t\u00e9s",
         "env": {
             "remove": "Supprimer la variable d'environnement",
             "restore": "Restaurer le sous-flux par d\u00e9faut"
@@ -1302,14 +1313,14 @@
             "noNodesSelected": "<strong>Impossible de cr\u00e9er un sous-flux</strong> : aucun noeud s\u00e9lectionn\u00e9"
         },
         "info": "Description",
-        "input": "Entr\u00e9es:",
+        "input": "Entr\u00e9es :",
         "keys": "Mots cl\u00e9s",
-        "keysPlaceholder": "Mots cl\u00e9s s\u00e9par\u00e9s par des virgules",
+        "keysPlaceholder": "Mots cl\u00e9s s\u00e9par\u00e9s par une virgule",
         "license": "Licence",
         "licenseNone": "Aucune",
         "licenseOther": "Autre",
         "module": "Module",
-        "output": "Sorties:",
+        "output": "Sorties :",
         "status": "Statut du noeud",
         "subflowInstances": "Il existe __count__ instance de ce mod\u00e8le de sous-flux",
         "subflowInstances_plural": "Il existe __count__ instances de ce mod\u00e8le de sous-flux",
@@ -1327,9 +1338,18 @@
         "welcomeTours": "Visite de bienvenue"
     },
     "typedInput": {
+        "date": {
+            "format": {
+                "object": "Objet de date JavaScript",
+                "timestamp": "millisecondes depuis l'\u00e9poque"
+            }
+        },
+        "selected": "__count__ s\u00e9lectionn\u00e9e",
+        "selected_plural": "__count__ s\u00e9lectionn\u00e9es",
         "type": {
             "bin": "tampon",
             "bool": "bool\u00e9en",
+            "conf-types": "noeud de configuration",
             "cred": "identifiant",
             "date": "horodatage",
             "env": "variable d'environnement",
@@ -1347,8 +1367,8 @@
             "settings": "Vous devez \u00eatre connect\u00e9 pour acc\u00e9der aux param\u00e8tres"
         },
         "loggedInAs": "Connect\u00e9 en tant que __name__",
-        "login": "Connexion",
-        "loginFailed": "\u00c9chec de la connexion",
+        "login": "Se connecter",
+        "loginFailed": "\u00c9chec de connexion",
         "notAuthorized": "Pas autoris\u00e9",
         "password": "Mot de passe",
         "username": "Nom d'utilisateur"
@@ -1359,6 +1379,7 @@
             "invalid-expr": "Expression JSONata invalide : __error__",
             "invalid-json": "Donn\u00e9es JSON invalides : __error__",
             "invalid-num": "Num\u00e9ro invalide",
+            "invalid-num-prop": "__prop__: num\u00e9ro invalide",
             "invalid-prop": "Expression de propri\u00e9t\u00e9 invalide",
             "invalid-regex-prop": "__prop__: mod\u00e8le d'entr\u00e9e non valide",
             "invalid-regexp": "Mod\u00e8le d'entr\u00e9e non valide",
@@ -1371,13 +1392,13 @@
         "addFlow": "Ajouter un flux",
         "addFlowToRight": "Ajouter un flux \u00e0 droite",
         "closeFlow": "Fermer le flux",
-        "confirmDelete": "Confirmation de la suppression",
+        "confirmDelete": "Confirmer la suppression",
         "defaultName": "Flux __number__",
-        "delete": "Etes-vous s\u00fbr de vouloir supprimer '__label__'?",
+        "delete": "\u00cates-vous s\u00fbr de vouloir supprimer '__label__' ?",
         "disableFlow": "D\u00e9sactiver le flux",
         "disabled": "D\u00e9sactiv\u00e9",
-        "dropFlowHere": "D\u00e9poser le flux ici",
-        "dropImageHere": "D\u00e9poser l'image ici",
+        "dropFlowHere": "L\u00e2chez le flux ici",
+        "dropImageHere": "L\u00e2chez l'image ici",
         "editFlow": "Modifier le flux : __name__",
         "enableFlow": "Activer le flux",
         "enabled": "Activ\u00e9",
@@ -1392,7 +1413,7 @@
         "lockFlow": "Verrouiller le flux",
         "moveToEnd": "D\u00e9placer le flux vers la fin",
         "moveToStart": "D\u00e9placer le flux au d\u00e9but",
-        "selectNodes": "Cliquer sur les noeuds pour s\u00e9lectionner",
+        "selectNodes": "Cliquer pour s\u00e9lectionner",
         "showAllFlows": "Afficher tous les flux",
         "showLastHiddenFlow": "Afficher le dernier flux masqu\u00e9",
         "status": "Statut",

@@ -1,35 +1,34 @@
 {
     "@bartbutenaers/node-red-autolayout-sidebar/auto_layout_config": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/advantage": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/analogy": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/aphorism": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/author": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/base": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blog-post": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogchanges": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogcontent": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogdetails": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogpageinfo": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/blogpages": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/book": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/codebase": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/comment": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/consequence": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/definition": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/disadvantage": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/humour": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/idea": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/inspiration": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/observation": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/poesie": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/pubmedium": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/question": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/quote": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/sketch": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/text": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/thought": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/topic": {},
-    "@gorenje/node-red-contrib-writermap-mindmap/treasure": {},
+    "@gdziuba/node-red-usbhid/usbhid": {},
+    "@gorenje/node-red-contrib-mindmap/advantage": {},
+    "@gorenje/node-red-contrib-mindmap/analogy": {},
+    "@gorenje/node-red-contrib-mindmap/aphorism": {},
+    "@gorenje/node-red-contrib-mindmap/author": {},
+    "@gorenje/node-red-contrib-mindmap/base": {},
+    "@gorenje/node-red-contrib-mindmap/blog-post": {},
+    "@gorenje/node-red-contrib-mindmap/book": {},
+    "@gorenje/node-red-contrib-mindmap/codebase": {},
+    "@gorenje/node-red-contrib-mindmap/comment": {},
+    "@gorenje/node-red-contrib-mindmap/consequence": {},
+    "@gorenje/node-red-contrib-mindmap/definition": {},
+    "@gorenje/node-red-contrib-mindmap/disadvantage": {},
+    "@gorenje/node-red-contrib-mindmap/humour": {},
+    "@gorenje/node-red-contrib-mindmap/idea": {},
+    "@gorenje/node-red-contrib-mindmap/inspiration": {},
+    "@gorenje/node-red-contrib-mindmap/observation": {},
+    "@gorenje/node-red-contrib-mindmap/poesie": {},
+    "@gorenje/node-red-contrib-mindmap/question": {},
+    "@gorenje/node-red-contrib-mindmap/quote": {},
+    "@gorenje/node-red-contrib-mindmap/sketch": {},
+    "@gorenje/node-red-contrib-mindmap/text": {},
+    "@gorenje/node-red-contrib-mindmap/thought": {},
+    "@gorenje/node-red-contrib-mindmap/topic": {},
+    "@gorenje/node-red-contrib-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-contacts/addressbook": {},
+    "@gregoriusrippenstein/node-red-contacts/contact": {},
+    "@gregoriusrippenstein/node-red-contacts/emptycontact": {},
+    "@gregoriusrippenstein/node-red-contacts/generator": {},
     "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {},
     "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
     "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
@@ -65,24 +64,15 @@
     "@gregoriusrippenstein/node-red-streaming/pipeend": {},
     "@gregoriusrippenstein/node-red-streaming/pipestart": {},
     "@martip/node-red-xlsx/xlsx": {},
-    "node-red-contrib-aedes/aedes-mqtt-broker": {},
     "node-red-contrib-blockly/blockly": {},
     "node-red-contrib-blockly/blockly-config": {},
-    "node-red-contrib-cron-plus/cronplus": {},
-    "node-red-contrib-gzip/markdown": {},
+    "node-red-contrib-dnsquery/dnsquery": {},
+    "node-red-contrib-excel/xlsx": {},
+    "node-red-contrib-fastxml/fastxml": {},
     "node-red-contrib-i2c/i2c": {},
-    "node-red-contrib-iconv/converter": {},
-    "node-red-contrib-osc/osc": {},
-    "node-red-contrib-postgresql/postgresql": {},
-    "node-red-contrib-web-babylonjs/box": {},
-    "node-red-contrib-web-babylonjs/cone": {},
-    "node-red-contrib-web-babylonjs/events": {},
-    "node-red-contrib-web-babylonjs/material": {},
-    "node-red-contrib-web-babylonjs/plane": {},
-    "node-red-contrib-web-babylonjs/scene": {},
-    "node-red-contrib-web-babylonjs/sphere": {},
-    "node-red-contrib-web-babylonjs/transform": {},
-    "node-red-contrib-zip/zip": {},
+    "node-red-contrib-image-output/image": {},
+    "node-red-contrib-switch-break/switchBreak": {},
+    "node-red-contrib-ui-upload/ui_upload": {},
     "node-red-dashboard/ui_audio": {},
     "node-red-dashboard/ui_base": {
         "ui_base": {
@@ -424,5 +414,169 @@
             }
         }
     },
-    "node-red-node-markdown/markdown": {}
+    "node-red-node-pi-gpio/rpi-gpio": {
+        "rpi-gpio": {
+            "alreadyset": "bereits festgelegt als",
+            "alreadyuse": "bereits im Gebrauch",
+            "any": "Beliebig",
+            "digout": "Digitaler Ausgang",
+            "errors": {
+                "alreadyset": "GPIO-Pin __pin__ ist bereits festgelegt als Typ: __type__",
+                "commandnotexecutable": "nrgpio-Befehl nicht ausf\u00fchrbar ",
+                "commandnotfound": "nrgpio-Befehl nicht gefunden ",
+                "error": "Fehler: __error__",
+                "ignorenode": "Raspberry-Pi-spezifische Nodes inaktiv gesetzt",
+                "invalidinput": "Ung\u00fcltige Eingabe",
+                "invalidpin": "Ung\u00fcltiger GPIO-Pin",
+                "libnotfound": "RPi.GPIO-Python-Bibliothek nicht gefunden",
+                "mustbeexecutable": "nrgpio muss ausf\u00fchrbar sein",
+                "needtobeexecutable": "__command__ muss ausf\u00fchrbar sein",
+                "pythoncommandnotfound": "nrgpio-Python-Befehl nicht aktiv",
+                "sawpitype": "Saw-Pi-Typ",
+                "version": "Abrufen der Version vom Pi fehlgeschlagen"
+            },
+            "initpin0": "Pin-Initalzustand low (0)",
+            "initpin1": "Pin-Initalzustand high (1)",
+            "label": {
+                "button": "Taste",
+                "debounce": "Entprellung",
+                "freq": "Frequenz",
+                "gpiopin": "GPIO",
+                "initpin": "Pin-Zustand initialisieren",
+                "left": "Links",
+                "middle": "Mitte",
+                "pikeyboard": "Pi-Tastatur",
+                "pimouse": "Pi-Maus",
+                "readinitial": "Initalzustand des Pins bei \u00dcbernahme/Neustart lesen",
+                "resistor": "Widerstand",
+                "right": "Rechts",
+                "selectpin": "Pinauswahl",
+                "type": "Typ"
+            },
+            "left": "Links",
+            "middle": "Mitte",
+            "pinname": "Pin",
+            "pwmout": "PWM-Ausgang",
+            "resistor": {
+                "none": "Kein",
+                "pulldown": "Pull-Down",
+                "pullup": "Pull-Up"
+            },
+            "right": "Rechts",
+            "servo": "Servo-Ausgang",
+            "status": {
+                "closed": "Geschlossen",
+                "na": "Nicht anwendbar: __Wert__",
+                "not-available": "Nicht verf\u00fcgbar",
+                "not-running": "Nicht aktiv",
+                "ok": "OK",
+                "stopped": "Gestoppt"
+            },
+            "tip": {
+                "dig": "<b>Tipp:</b> F\u00fcr den digitalen Ausgang muss der Node-Eingangswert 0 oder 1 sein",
+                "in": "<b>Tipp:</b> Es werden nur die digitale Eing\u00e4nge unterst\u00fctzt. Der Eingang muss 0 oder 1 sein",
+                "pin": "<b>Verwendete Pins:</b> ",
+                "pwm": "<b>Tipp:</b> F\u00fcr die PWM-Ausgabe muss der Node-Eingangswert zwischen 0 und 100 liegen. Hohen Frequenzen k\u00f6nnen die CPU mehr beanspruchen als erwartet.",
+                "ser": "<b>Tipp:</b> F\u00fcr die Servo-Ausgabe muss der Node-Eingangswert zwischen 0 und 100 eingegeben werden. 50 ist die Mitte."
+            },
+            "types": {
+                "digout": "Digitaler Ausgang",
+                "input": "Eingang",
+                "pulldown": "Eingabe mit Pull-Down",
+                "pullup": "Eingang mit Pull-Up",
+                "pwmout": "PWM-Ausgang",
+                "servo": "Servo-Ausgang"
+            }
+        }
+    },
+    "node-red-node-random/random": {
+        "random": {
+            "label": {
+                "from": "Von",
+                "generate": "Generiere",
+                "highestNumber": "gr\u00f6\u00dfte Zahl",
+                "lowestNumber": "kleinste Zahl",
+                "realNumber": "eine reelle Zahl (floating point)",
+                "to": "Bis",
+                "wholeNumber": "eine Ganzzahl (integer)"
+            }
+        }
+    },
+    "node-red-node-serialport/serialport": {
+        "serial": {
+            "addsplit": "Zeichen zu Ausgangsnachrichten hinzuf\u00fcgen",
+            "errors": {
+                "badbaudrate": "Ung\u00fcltige Baudrate",
+                "closed": "Serieller Port __port__ geschlossen",
+                "disconnected": "Serieller Port __port__ getrennt",
+                "error": "Serieller Port __port__ FEHLER: __error__",
+                "list": "Port-Auflistung fehlgeschlagen. Bitte manuell eintragen.",
+                "missing-conf": "Fehlende serielle Konfiguration",
+                "serial-port": "Serieller Port",
+                "unexpected-close": "Serieller Port __port__ unerwartet geschlossen"
+            },
+            "label": {
+                "baudrate": "Baudrate",
+                "databits": "Datenbits",
+                "deliver": "und Ausgabe als",
+                "input": "Empfang",
+                "ms": "ms",
+                "none": "none",
+                "output": "Versand",
+                "parity": "Parit\u00e4t",
+                "request": "Anforderung",
+                "responsetimeout": "Standardwert Antwort-Zeitablauf",
+                "serial": "seriell",
+                "serialport": "Serieller Port",
+                "settings": "Einstellungen",
+                "split": "Aufteilung",
+                "start": "Optional Warten auf das Startzeichen",
+                "startor": ", dann",
+                "stopbits": "Stoppbits"
+            },
+            "linestates": {
+                "high": "High",
+                "low": "Low",
+                "none": "Auto"
+            },
+            "onopen": "Seriellen Port __port__ ge\u00f6ffnet mit __baud__ Baud, __config__",
+            "output": {
+                "ascii": "ASCII-Strings",
+                "binary": "Bin\u00e4re Buffer"
+            },
+            "parity": {
+                "even": "Gerade",
+                "mark": "Mark",
+                "none": "Keine",
+                "odd": "Ungerade",
+                "space": "Space"
+            },
+            "placeholder": {
+                "serialport": "z.B. /dev/ttyUSB0/"
+            },
+            "split": {
+                "character": "anhand Zeichen",
+                "lengths": "in feste L\u00e4ngen von",
+                "silent": "nach Ruhezeit von",
+                "timeout": "nach Zeitablauf von"
+            },
+            "status": {
+                "stopped": "stopped",
+                "timeout": "Zeitablauf",
+                "waiting": "Wartend"
+            },
+            "stopped": "__port__ stopped",
+            "tip": {
+                "addchar": "Tipp: Dieses Zeichen wird jeder \u00fcber den seriellen Port gesendeten Nachricht hinzugef\u00fcgt. \u00dcblicherweise \\r oder \\n.",
+                "count": "Tipp: Im Modus der festen L\u00e4ngen kann msg.count die vorgegebene Anzahl \u00fcberschreiben, sofern dieser Wert kleiner ist",
+                "responsetimeout": "Tipp: Der Standardwert des Antwort-Zeitablaufs (default response timeout) kann durch Setzen von msg.timeout \u00fcberschrieben werden",
+                "silent": "Tipp: Im Ruhezeit-Modus wird die Ruhezeitmessung bei jedem neu empfangenen Zeichen neu gestartet",
+                "split": "Tipp: Das Aufteilungszeichen wird benutzt, um die empfangenen Daten in einzelne Nachrichten aufzuteilen. Es werden Zeichen ($), Escape-Codes (\\n) oder Hex-Codes (0x03) akzeptiert.",
+                "timeout": "Tipp: Im Zeitablauf-Modus startet die Zeitmessung mit Empfang des ersten Zeichens",
+                "waitfor": "Tipp: Optional. Leer lassen, um alle Daten zu empfangen. Es werden Zeichen ($), Escape-Codes (\\n) oder Hex-Codes (0x03) akzeptiert."
+            }
+        }
+    },
+    "node-red-node-smooth/smooth": {},
+    "node-red-node-ui-list/ui_list": {}
 }

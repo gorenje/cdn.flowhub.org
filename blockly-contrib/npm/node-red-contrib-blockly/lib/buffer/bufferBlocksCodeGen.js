@@ -12,6 +12,18 @@ Blockly.JavaScript['buffer_to_string'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
+Blockly.JavaScript['buffer_from_list'] = function(block) {
+  const list_input = Blockly.JavaScript.valueToCode(block, 'LIST_INPUT', Blockly.JavaScript.ORDER_ATOMIC) || '""';
+  const code = 'Buffer.from(' + list_input + ')';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['buffer_to_list'] = function(block) {
+  const buffer_input = Blockly.JavaScript.valueToCode(block, 'BUFFER_INPUT', Blockly.JavaScript.ORDER_ATOMIC);
+  const code = 'Array.from(' + buffer_input + ')';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
 Blockly.JavaScript['buffer_length'] = function(block) {
   const buffer_input = Blockly.JavaScript.valueToCode(block, 'BUFFER_INPUT', Blockly.JavaScript.ORDER_ATOMIC);
   const code = buffer_input + '.length';
@@ -84,7 +96,7 @@ Blockly.JavaScript['buffer_set_index'] = function(block) {
        '      return value[0];',
        '    } else {',
        //JS thinks a single " " is !isNan so we need to treat it as a special case
-       '      if (value == " ") {',
+       '      if (value === " ") {',
        '        return value.charCodeAt(0);',
        '      } else {',
        '        return Math.min(Math.max(value, 0),255);',

@@ -1,6 +1,9 @@
 {
     "@bartbutenaers/node-red-autolayout-sidebar": [],
-    "@gorenje/node-red-contrib-writermap-mindmap": [
+    "@gdziuba/node-red-usbhid": [
+        "usb.png"
+    ],
+    "@gorenje/node-red-contrib-mindmap": [
         "aeon.svg",
         "archive_org.svg",
         "change.svg",
@@ -11,6 +14,7 @@
         "node-red.svg",
         "open_mind_logo.svg"
     ],
+    "@gregoriusrippenstein/node-red-contacts": [],
     "@gregoriusrippenstein/node-red-contrib-aisbreaker": [
         "logo.png"
     ],
@@ -85,27 +89,14 @@
         "watch.svg",
         "white-globe.svg"
     ],
-    "node-red-contrib-aedes": [
-        "aedes.png",
-        "aedes_original.png"
-    ],
     "node-red-contrib-blockly": [],
-    "node-red-contrib-cron-plus": [],
-    "node-red-contrib-gzip": [
-        "gzip.png"
-    ],
+    "node-red-contrib-dnsquery": [],
+    "node-red-contrib-excel": [],
+    "node-red-contrib-fastxml": [],
     "node-red-contrib-i2c": [],
-    "node-red-contrib-iconv": [],
-    "node-red-contrib-osc": [],
-    "node-red-contrib-postgresql": [
-        "postgresql.png"
-    ],
-    "node-red-contrib-web-babylonjs": [
-        "babylon.png"
-    ],
-    "node-red-contrib-zip": [
-        "zip.png"
-    ],
+    "node-red-contrib-image-output": [],
+    "node-red-contrib-switch-break": [],
+    "node-red-contrib-ui-upload": [],
     "node-red-dashboard": [
         "ui_button.png",
         "ui_chart.png",
@@ -124,7 +115,13 @@
     "node-red-node-base64": [
         "parser-base64.png"
     ],
-    "node-red-node-markdown": [
-        "parser-markdown.png"
+    "node-red-node-pi-gpio": [],
+    "node-red-node-random": [],
+    "node-red-node-serialport": [],
+    "node-red-node-smooth": [
+        "smooth.png"
+    ],
+    "node-red-node-ui-list": [
+        "icon.png"
     ]
 }

@@ -33,7 +33,7 @@
     },
     "catch": {
         "catch": "catch : tout",
-        "catchGroup": "catch: group",
+        "catchGroup": "catch: groupe",
         "catchNodes": "catch : __number__",
         "catchUncaught": "catch : non captur\u00e9",
         "label": {
@@ -121,6 +121,7 @@
     "csv": {
         "errors": {
             "bad_csv": "Donn\u00e9es CSV mal form\u00e9es - sortie probablement corrompue.",
+            "bad_template": "Colonnes du mod\u00e8le mal form\u00e9es.",
             "csv_js": "Ce noeud ne g\u00e8re que les cha\u00eenes CSV ou les objets js.",
             "obj_csv": "Aucun mod\u00e8le de colonnes sp\u00e9cifi\u00e9 pour l'objet -> CSV."
         },
@@ -144,6 +145,7 @@
             "separator": "S\u00e9parateur",
             "skip-e": "lignes",
             "skip-s": "Passer en premier",
+            "spec": "Analyseur",
             "usestrings": "Analyser les valeurs num\u00e9riques"
         },
         "newline": {
@@ -166,6 +168,11 @@
             "semicolon": "point-virgule",
             "space": "espace",
             "tab": "tabulation"
+        },
+        "spec": {
+            "legacy": "H\u00e9rit\u00e9 (Legacy)",
+            "legacy_warning": "Le mode h\u00e9rit\u00e9 sera supprim\u00e9 dans une prochaine version.",
+            "rfc": "RFC4180"
         }
     },
     "debug": {
@@ -389,7 +396,7 @@
             "modules": "Modules",
             "outputs": "Sorties",
             "setup": "Configurations",
-            "timeout": "Timeout"
+            "timeout": "D\u00e9lai d'attente"
         },
         "require": {
             "importAs": "Import\u00e9 comme",
@@ -415,10 +422,12 @@
         "label": {
             "in": "dans",
             "output": "Sortie",
+            "prefix": "Nom de la propri\u00e9t\u00e9 pour le contenu HTML",
             "select": "S\u00e9lecteur"
         },
         "output": {
             "attr": "un objet de n'importe quel attribut des \u00e9l\u00e9ments",
+            "compl": "un objet pour tous les attributs de tous les \u00e9l\u00e9ments ainsi que du contenu HTML",
             "html": "le contenu html des \u00e9l\u00e9ments",
             "text": "uniquement le contenu textuel des \u00e9l\u00e9ments"
         }
@@ -594,6 +603,7 @@
             "object": "un Objet cl\u00e9/valeur",
             "string": "une Cha\u00eene"
         },
+        "useparts": "Use existing msg.parts property",
         "using": "En utilisant la valeur du"
     },
     "json": {
@@ -831,7 +841,7 @@
             "selected": "noeuds s\u00e9lectionn\u00e9s"
         },
         "status": "statut : tout",
-        "statusGroup": "status: group",
+        "statusGroup": "statut: groupe",
         "statusNodes": "statut : __number__"
     },
     "switch": {
@@ -1120,6 +1130,7 @@
             "connected_plural": "__count__ connect\u00e9s"
         },
         "tip": {
+            "headers": "Les en-t\u00eates ne sont soumis que lors du m\u00e9canisme de mise \u00e0 niveau du protocole, de HTTP vers le protocole WS/WSS.",
             "path1": "Par d\u00e9faut, <code>payload</code> contiendra les donn\u00e9es \u00e0 envoyer ou \u00e0 recevoir d'un websocket. L'\u00e9couteur peut \u00eatre configur\u00e9 pour envoyer ou recevoir l'int\u00e9gralit\u00e9 de l'objet message sous forme de cha\u00eene au format JSON.",
             "path2": "Ce chemin sera relatif \u00e0 <code>__path__</code>.",
             "url1": "L'URL doit utiliser le sch\u00e9ma ws:&#47;&#47; ou wss:&#47;&#47; et pointer vers un \u00e9couteur websocket existant.",
