@@ -25,6 +25,22 @@
     "@gorenje/node-red-contrib-mindmap/thought": {},
     "@gorenje/node-red-contrib-mindmap/topic": {},
     "@gorenje/node-red-contrib-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-artworks/artwork": {
+        "artwork": {
+            "label": {
+                "displayedat": "Displayed At",
+                "imageurl": "Image Url",
+                "size": "Size",
+                "statusset": "Status Set",
+                "title": "Title",
+                "website": "Website"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
     "@gregoriusrippenstein/node-red-contacts/addressbook": {},
     "@gregoriusrippenstein/node-red-contacts/contact": {
         "contact": {

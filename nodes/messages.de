@@ -25,6 +25,7 @@
     "@gorenje/node-red-contrib-mindmap/thought": {},
     "@gorenje/node-red-contrib-mindmap/topic": {},
     "@gorenje/node-red-contrib-mindmap/treasure": {},
+    "@gregoriusrippenstein/node-red-artworks/artwork": {},
     "@gregoriusrippenstein/node-red-contacts/addressbook": {},
     "@gregoriusrippenstein/node-red-contacts/contact": {},
     "@gregoriusrippenstein/node-red-contacts/emptycontact": {},

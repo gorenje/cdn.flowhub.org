@@ -885,7 +885,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.7.9"
+        "version": "0.8.0"
     },
     {
         "enabled": true,
@@ -897,7 +897,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.7.9"
+        "version": "0.8.0"
     },
     {
         "enabled": true,
@@ -909,7 +909,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.7.9"
+        "version": "0.8.0"
     },
     {
         "enabled": true,
@@ -921,7 +921,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.7.9"
+        "version": "0.8.0"
     },
     {
         "enabled": true,
@@ -933,7 +933,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.7.9"
+        "version": "0.8.0"
     },
     {
         "enabled": true,
@@ -945,7 +945,7 @@
             "InstallPackage"
         ],
         "user": false,
-        "version": "0.7.9"
+        "version": "0.8.0"
     },
     {
         "enabled": true,
@@ -1234,7 +1234,7 @@
             "Flow2MermaidCfg"
         ],
         "user": false,
-        "version": "0.1.12"
+        "version": "0.1.13"
     },
     {
         "enabled": true,
@@ -1689,5 +1689,17 @@
         ],
         "user": false,
         "version": "6.7.195"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-artworks/artwork",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-artworks",
+        "name": "artwork",
+        "types": [
+            "ArtWork"
+        ],
+        "user": false,
+        "version": "5.7.507"
     }
 ]

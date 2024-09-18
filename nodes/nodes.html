@@ -13580,6 +13580,222 @@ msg.cookies = {
 <script type="text/html" data-help-name="Author">
   <p>A writermap node.</p>
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/node-red-artworks/artwork] --- -->
+<script type="text/javascript">
+  (function(){
+    
+  RED.nodes.registerType('ArtWork',{
+    color: '#FDD0A284',
+    icon: "font-awesome/fa-paint-brush",
+    category: 'art',
+    defaults: {
+      name: { value:"", },
+      info: {
+        value: ""
+      },
+      
+      imageurl: { value: "" },
+      website: { value: "" },
+
+      description: { value: "" },
+      size: { value: ""},
+
+      composedOn: { value: undefined },
+      displayedOn: { value: undefined },
+      displayedat: { value: "" },
+      soldOn: { value: undefined },
+
+      /* createdAt and updatedAt are "internal" attributes that track just
+         that: when the node was created and the last time it was updated.
+         These aren't shown in the edit window because they are maintained
+         internally. These are managed by BlogChanges node (onpaletteadd has
+         event listeners for updating these values).
+      */
+      createdAt: {
+        value: "",
+      },
+      updatedAt: {
+        value: "",
+      }
+
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    generatevCardJson: function() {
+      let vCardDetails = [
+        ["version", {}, "text", "3.0"],
+        ["prodid", {}, "text", "//ArtWork Node//EN-US"],
+        ["photo", { value: "uri" }, "text", this.imageurl],
+        ["fn", {}, "text", this.name],
+        ["url", { type: "website" }, "text", this.website],
+        ["url", { type: "image" }, "text", this.imageurl],
+        ["note", {}, "text", this.description.replace(/\n/, " ") + " Size: " + this.size],
+      ]
+
+      let addArtistDetails = (artist) => {
+        vCardDetails.push(["org", {}, "text", artist.name])
+
+        JSON.parse(artist.rawJsonData)[1].forEach( ary => {
+          if ( ["url","tel","email"].includes(ary[0])) { 
+            vCardDetails.push(ary) 
+          }
+        })
+      }
+
+      RED.nodes.eachLink(lnk => {
+        if (lnk.target.id == this.id && lnk.source.type == "Contact") {
+          let artist = lnk.source
+          addArtistDetails(artist)
+        }
+      })
+
+      return ["vcard", vCardDetails]
+    },
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      if (this.imageurl) {
+        $('#artwork-image').attr('src', this.imageurl)
+      } else {
+        $('#artwork-image').attr('src', 'data:image/jpeg;base64,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')
+      }
+
+      if (!this.composedOn || this.composedOn == "") {
+        $('#node-input-composedOn').val(
+          (new Date()).toISOString().substring(0, 16)
+        );
+      }
+
+      this.editor = RED.editor.createEditor({
+        id: 'node-input-description',
+        mode: 'ace/mode/markdown',
+        value: $("#node-input-description").val()
+      });
+
+      $('#node-input-imageurl-link').attr('href', this.imageurl)
+      $('#node-input-website-link').attr('href', this.website)
+    },
+
+    oneditcancel: function () {
+      this.editor.destroy();
+      delete this.editor;
+    },
+
+    oneditsave: function() {
+      $("#node-input-description").val(this.editor.getValue());
+
+      this.info = `
+# ${ $("#node-input-name").val() }
+
+![image](${ $("#node-input-imageurl").val() })
+
+${ $("#node-input-description").val() }
+      `
+      
+      this.editor.destroy();
+      delete this.editor;
+    },
+
+    oneditresize: function(size) {
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="ArtWork">
+  
+  <div class="form-row">
+    <center>
+      <img id="artwork-image" src="" width="400"/>
+    </center>
+  </div>
+
+  
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="artwork.label.title"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]artwork.label.title">
+  </div>
+
+  
+  <div class="form-row">
+    <label for="node-input-description">
+        <i class="fa fa-tag"></i>
+        <span>Description</span>
+      </label>
+    <div style="height: 150px; min-height:150px; max-height: 150px;" class="node-text-editor" id="node-input-description">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-size"><i class="fa fa-square-o"></i> <span data-i18n="artwork.label.size"></span></label>
+    <input type="text" id="node-input-size" data-i18n="[placeholder]artwork.label.size">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-composedOn">
+        <i class="fa fa-clock-o"></i>
+        <span>Composed</span>
+      </label>
+    <input type="datetime-local" id="node-input-composedOn">
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-displayedOn">
+        <i class="fa fa-clock-o"></i>
+        <span>Displayed</span>
+    </label>
+    <input type="datetime-local" id="node-input-displayedOn">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-displayedat"><i class="fa fa-map-pin"></i> <span data-i18n="artwork.label.displayedat"></span></label>
+    <input type="text" id="node-input-displayedat" data-i18n="[placeholder]artwork.label.displayedat">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-soldOn">
+          <i class="fa fa-clock-o"></i>
+          <span>Sold</span>
+        </label>
+    <input type="datetime-local" id="node-input-soldOn">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-imageurl"><i class="fa fa-link"></i> <span data-i18n="artwork.label.imageurl"></span></label>
+    <input type="text" id="node-input-imageurl" data-i18n="[placeholder]artwork.label.imageurl">
+    <a id="node-input-imageurl-link" style="color: blue; margin-left: 10px;" target=_blank href="#"><i class='fa fa-external-link'></i></a>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-website"><i class="fa fa-link"></i> <span data-i18n="artwork.label.website"></span></label>
+    <input type="text" id="node-input-website" data-i18n="[placeholder]artwork.label.website">
+    <a id="node-input-website-link" style="color: blue; margin-left: 10px;" target=_blank href="#"><i class='fa fa-external-link'></i></a>
+  </div>
+</script>
+<script type="text/html" data-help-name="ArtWork">
+  <p>Representation of a piece of art</p>
+  Representation of art
+</script>
+
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contacts/contact] --- -->
 <script type="text/javascript">
   (function () {
