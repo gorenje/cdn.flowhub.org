@@ -93,6 +93,7 @@
     ],
     "node-red-contrib-blockly": [],
     "node-red-contrib-dnsquery": [],
+    "node-red-contrib-duckdb": [],
     "node-red-contrib-excel": [],
     "node-red-contrib-fastxml": [],
     "node-red-contrib-i2c": [],

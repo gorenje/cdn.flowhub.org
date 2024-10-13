@@ -1701,5 +1701,21 @@
         ],
         "user": false,
         "version": "5.7.507"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-duckdb/duckdb",
+        "local": true,
+        "module": "node-red-contrib-duckdb",
+        "name": "duckdb",
+        "types": [
+            "duckdb",
+            "duckdb-sql",
+            "duckdb func",
+            "duckdb import",
+            "duckdb export"
+        ],
+        "user": false,
+        "version": "0.5.473"
     }
 ]

@@ -69,6 +69,7 @@
     "node-red-contrib-blockly/blockly": {},
     "node-red-contrib-blockly/blockly-config": {},
     "node-red-contrib-dnsquery/dnsquery": {},
+    "node-red-contrib-duckdb/duckdb": {},
     "node-red-contrib-excel/xlsx": {},
     "node-red-contrib-fastxml/fastxml": {},
     "node-red-contrib-i2c/i2c": {},
