@@ -728,6 +728,8 @@
 
    function setupTreelistAllLinksForLinkIn(e){e=collectAllLinksNodes(e);if(0==e.length){RED.notify("No links found",{type:"error",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e,"editor-tab-description")),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectAllLinksNodes(t){let n=[];RED.nodes.eachNode(e=>{"link call"!=e.type&&"link out"!=e.type||-1<e.links.indexOf(t)&&n.push(e)});var i=[],r={};return n.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n,o=t.label,o=("function"==typeof o?o.call(e):o)||"";if(0===(n=e.type).indexOf("subflow:"))return}t&&o||(o=e.type),r[e.id]={node:e,label:o,sublabel:n,selected:!1,checkbox:!1},i.push(r[e.id])}),i}function collectNodeStats(){let t={},n=[],o={workspaces:0,junctions:0,subflows:0,configs:0,groups:0,wires:0,nodes:0},i=(RED.nodes.eachConfig(e=>{o.configs+=1}),RED.nodes.eachLink(e=>{o.wires+=1}),RED.nodes.eachJunction(e=>{o.junctions+=1}),RED.nodes.eachGroup(e=>{o.groups+=1}),RED.nodes.eachWorkspace(e=>{o.workspaces+=1}),RED.nodes.eachSubflow(e=>{o.subflows+=1}),RED.nodes.eachNode(e=>{o.nodes+=1,t[e.type]=(t[e.type]||0)+1}),Object.keys(t).forEach(e=>{n.push({label:e,sublabel:t[e],selected:!1,checkbox:!1})}),[]),r=0;return Object.keys(o).forEach(e=>{r+=o[e],i.push({label:e,sublabel:o[e],selected:!1,checkbox:!1})}),[{label:"__ TOTALS",sublabel:r,selected:!1,checkbox:!1,children:i}].concat(n.sort((e,t)=>e.label>t.label))}function setupTreeListForNodeStats(){var e=collectNodeStats();try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){}).on("treelistconfirm",function(e,t){}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e)}
 
+   function setupTreeMsgTracerlist(){try{$("#node-input-msgtracer-trace-treelist").treeList("empty"),$("#node-input-msgtracer-trace-treelist").treeList("data",[])}catch(e){$("#node-input-msgtracer-trace-treelist").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw(),$("#node-input-msgtracer-toggle").is(":checked")||($(".red-ui-debug-msg").css("background-color",""),$(".red-ui-debug-msg-node-"+t.node.id).css("background-color","red")))}).on("treelistconfirm",function(e,t){var r;t.node&&(r=t.node.id,setTimeout(()=>{var e=RED.nodes.node(r);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),r==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-msgtracer-trace-treelist-filter").show();var r=$("#node-input-msgtracer-trace-treelist-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-msgtracer-trace-treelist").treeList("filter",null),r.searchBox("count","")):(e=$("#node-input-msgtracer-trace-treelist").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||-1<e.node.id.toLowerCase().indexOf(t)}),r.searchBox("count",e+" / "+$("#node-input-msgtracer-trace-treelist").treeList("data").length))}})}}function toggleMsgTracingInBackend(e){let t=$("#node-input-msgtracer-toggle").is(":checked"),r=$("#node-input-msgtracer-msgtodebug").is(":checked");$.ajax({url:"MsgTracer/msgtracing/"+(t?"on":"off"),type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({withDebug:r}),success:function(e){RED.notify("Message tracing is <b>"+(t?"on":"off")+"</b> and msg to debug is <b>"+(r?"on":"off")+"</b>",{type:"success",timeout:3e3})},error:function(e,t,r){RED.notify("Message tracing failed: "+t,{type:"error",timeout:3e3})}})}function handleMsgTracerToggles(e){$("#node-input-msgtracer-toggle").is(":checked")&&setupTreeMsgTracerlist(),toggleMsgTracingInBackend(e)}
+
    // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
    var initialiseConfigNodeOnce = () => {
       RED.events.off('runtime-state', initialiseConfigNodeOnce);
@@ -952,6 +954,26 @@
          $('.red-ui-linkcall-link-indicator').remove()
       })
 
+      $('#node-input-msgtrace-clear-debug-btn').on('click', (e) => {
+         if ( e ) { e.preventDefault() }
+
+         // remove any message highlights from the debug panel
+         $('.red-ui-debug-msg').css("background-color", "")
+
+         // from [debug node](https://github.com/node-red/node-red/blob/2854351909dee9f92597faba3f37239134294eec/packages/node_modules/%40node-red/nodes/core/common/21-debug.html#L437)
+         RED.actions.invoke("core:clear-debug-messages")
+      })
+
+      $('#node-input-msgtrace-clear-trace-btn').on('click', (e) => {
+         if ( e ) { e.preventDefault() }
+         setupTreeMsgTracerlist()
+         $("#node-input-msgtracer-trace-treelist").treeList('empty')
+         $("#node-input-msgtracer-trace-treelist").treeList('data', [])
+      })
+
+      $('#node-input-msgtracer-msgtodebug').on("change", toggleMsgTracingInBackend)
+      $('#node-input-msgtracer-toggle').on("change", handleMsgTracerToggles)
+
       RED.actions.add( "introspection:show-link-call-links", highlightAllLinkCalls)
       
       $('#node-input-linkcalls-find-btn').on('click', (e) => {
@@ -984,6 +1006,10 @@
    }
    .w-30 {
       width: 40% !important;
+      margin-left: 10px;
+   }   
+   .w-25 {
+      width: 25% !important;
       margin-left: 10px;
    }   
    .ml-30 {
@@ -1071,6 +1097,35 @@
                            class="red-ui-button"><i class="fa fa-link"></i> Link Calls</button>
          <button id="node-input-orphan-clear-workspace-btn"
                            class="red-ui-button">Clear dots</button>
+      </div>
+
+      <div class="form-row" style="margin-left: 10px; margin-top: 40px">
+         <label for="node-input-msgtracer-toggle"  class="w-25">
+                        <i class="fa fa-stethoscope"></i>
+                        <span>Trace Messages?</span>
+         </label>
+         <input type="checkbox" id="node-input-msgtracer-toggle"
+                              style="display:inline-block; width:15px; vertical-align:baseline;">
+
+         <label for="node-input-msgtracer-msgtodebug" class="w-25">
+                        <i class="fa fa-bug"></i>
+                        <span>Msg to Debug?</span>
+         </label>
+         <input type="checkbox" id="node-input-msgtracer-msgtodebug"
+                              style="display:inline-block; width:15px; vertical-align:baseline;">
+
+         <button id="node-input-msgtrace-clear-trace-btn" style="margin-left: 10px;"
+                       class="red-ui-button">Clear Trace</button>
+         <button id="node-input-msgtrace-clear-debug-btn" style="margin-left: 10px;"
+                       class="red-ui-button">Clear Debug</button>
+      </div>
+
+      <div class="form-row"
+         style="margin-left: 10px; position: relative; min-height: 200px; height: 450px; margin-right: 15px;">
+         <div style="margin-bottom: 5px; width: 35%; padding-left: 60%;">
+            <input type="text" id="node-input-msgtracer-trace-treelist-filter" style="display: none;">
+         </div>
+         <div id="node-input-msgtracer-trace-treelist"></div>
       </div>
    </div>
 

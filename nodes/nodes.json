@@ -885,7 +885,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.8.0"
+        "version": "0.9.3"
     },
     {
         "enabled": true,
@@ -897,7 +897,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.8.0"
+        "version": "0.9.3"
     },
     {
         "enabled": true,
@@ -909,7 +909,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.8.0"
+        "version": "0.9.3"
     },
     {
         "enabled": true,
@@ -921,7 +921,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.8.0"
+        "version": "0.9.3"
     },
     {
         "enabled": true,
@@ -933,7 +933,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.8.0"
+        "version": "0.9.3"
     },
     {
         "enabled": true,
@@ -945,7 +945,7 @@
             "InstallPackage"
         ],
         "user": false,
-        "version": "0.8.0"
+        "version": "0.9.3"
     },
     {
         "enabled": true,
@@ -982,7 +982,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -994,7 +994,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -1006,7 +1006,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -1018,7 +1018,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -1030,7 +1030,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -1042,7 +1042,7 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -1054,7 +1054,7 @@
             "OTPGenerate"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,
@@ -1066,7 +1066,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.4.3"
+        "version": "0.4.5"
     },
     {
         "enabled": true,

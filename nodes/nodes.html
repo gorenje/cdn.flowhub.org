@@ -15295,85 +15295,9 @@ This page is intentional left blank.
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/clientcode] --- -->
 <script type="text/javascript">
 
- RED.comms.subscribe('introspect:client-code-perform', (event,data) => {
-   if ( data.msg == "execfunc" ) {
-
-     var doSend = (data, nodeid, _msg) => {
-       if ( typeof data == "object" ) {
-         data = {
-           ..._msg,
-           ...data
-         };
-       }
-
-       $.ajax({
-         url:         "ClientCode/" + nodeid,
-         type:        "POST",
-         contentType: "application/json; charset=utf-8",
-         data:        JSON.stringify(data),
-
-         success: function (resp) {
-         },
-
-         error: function (jqXHR, textStatus, errorThrown) {
-           RED.notify("ClientCode Communcation Failure: " +
-                      nodeid + ": " + textStatus, {
-             type: "error",
-             id: nodeid,
-             timeout: 3000
-           });
-         }
-       });
-     };
-
-    var doStatus = (sts, nodeid, _msg) => {
-       $.ajax({
-         url:         "ClientCode/" + nodeid + "/status",
-         type:        "POST",
-         contentType: "application/json; charset=utf-8",
-         data:        JSON.stringify(sts),
-
-         success: function (resp) {
-         },
-
-         error: function (jqXHR, textStatus, errorThrown) {
-           RED.notify("ClientCode Communcation Failure: " +
-                      nodeid + ": " + textStatus, {
-             type: "error",
-             id: nodeid,
-             timeout: 3000
-           });
-         }
-       });
-     }
-
-     var doError = (msg, nodeid, _msg) => {
-       RED.notify("ClientCode Failed: " + nodeid + ": " + msg, {
-         type: "error",
-         id: nodeid,
-         timeout: 3000
-       });
-
-       console.log( "ClientCode: Error with node: " + nodeid + ": " + msg);
-     };
-
-     var nodeid = data.nodeid;
-     var _msg = data._msg;
-     var msg = data._msg;
-
-     var node = {
-       id:     data.nodeid,
-       send:   (dt)  => { doSend(dt, nodeid, _msg)     },
-       error:  (mg)  => { doError(mg, nodeid, _msg)    },
-       status: (sts) => { doStatus(sts, nodeid, _msg)  }
-     };
-
-     var payload = data.payload;
-     var topic = data.topic;
-
-     eval( data.func );
-   }
- });
+function handleMsgTracePacket(e,r){if(r.nodeid){let a=RED.nodes.node(r.nodeid);if(a){r=$("#node-input-msgtracer-trace-treelist").treeList("data");let t=!1;if(r.forEach(e=>{e.id==a.id&&(t=!0,e.seenCounter+=1,e.sublabel=e.seenCounter+" @ "+e.workspaceLabel)}),t)$("#node-input-msgtracer-trace-treelist").treeList("data",r);else{var l=RED.nodes.getType(a.type);let e;e=l&&("function"==typeof(l=l.label)?l.call(a):l)||a.type;l={id:a.id,label:"",seenCounter:1,workspaceLabel:(RED.nodes.workspace(a.z)||{label:a.z}).label,sublabel:"1 @ "+(RED.nodes.workspace(a.z)||{label:a.z}).label,selected:!1,checkbox:!1,node:a,icon:RED.utils.createNodeIcon(a,!0)};$("#node-input-msgtracer-trace-treelist").treeList("data",[l,...r])}}}}RED.comms.subscribe("msgtracer:node-received",(e,t)=>{try{handleMsgTracePacket(e,t)}catch(e){console.error(e)}});
+ 
+function handleClientCodeFrontend(event,data){var doSend,doStatus,doError,nodeid,_msg,msg,node,payload,topic;"execfunc"==data.msg&&(doSend=(o,d,e)=>{"object"==typeof o&&(o={...e,...o}),$.ajax({url:"ClientCode/"+d,type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify(o),success:function(o){},error:function(o,e,t){RED.notify("ClientCode Communcation Failure: "+d+": "+e,{type:"error",id:d,timeout:3e3})}})},doStatus=(o,d,e)=>{$.ajax({url:"ClientCode/"+d+"/status",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify(o),success:function(o){},error:function(o,e,t){RED.notify("ClientCode Communcation Failure: "+d+": "+e,{type:"error",id:d,timeout:3e3})}})},doError=(o,e,t)=>{RED.notify("ClientCode Failed: "+e+": "+o,{type:"error",id:e,timeout:3e3}),console.log("ClientCode: Error with node: "+e+": "+o)},nodeid=data.nodeid,_msg=data._msg,msg=data._msg,node={id:data.nodeid,send:o=>{doSend(o,nodeid,_msg)},error:o=>{doError(o,nodeid,_msg)},status:o=>{doStatus(o,nodeid,_msg)}},payload=data.payload,topic=data.topic,eval(data.func))}RED.comms.subscribe("introspect:client-code-perform",(o,e)=>{try{handleClientCodeFrontend(o,e)}catch(o){console.error(o)}});
 
   RED.nodes.registerType('ClientCode',{
     color: '#e5e4ef',
@@ -16005,6 +15929,8 @@ Functionality:
       noderedinstall: { value: false },
       randompackagename: { value: false },
 
+      nodered_uninstall: { value: false },
+
       ignore_package_check: { value: false },
 
       gitcommit:         { value: false },
@@ -16039,9 +15965,15 @@ Functionality:
     },
 
     oneditprepare: function() {
+     $('#node-input-nodered_uninstall').on('change', () => {
+        if ( $('#node-input-nodered_uninstall').is(":checked") ) {
+           $('#node-input-noderedinstall').prop('checked',false).trigger('change')
+        }
+     })
 
      $('#node-input-noderedinstall').on('change', () => {
           if ( $('#node-input-noderedinstall').is(":checked") ) {
+              $('#node-input-nodered_uninstall').prop('checked',false).trigger('change')
               $("#noderedinstall-options").animate({opacity: 'show', height: 'show'}, 450);
           } else {
               $("#noderedinstall-options").animate({opacity: 'hide', height: 'hide'}, 450);
@@ -16215,6 +16147,13 @@ Functionality:
     </div>
   </div>
 
+  <div class="form-row">
+    <label for="node-input-nodered_uninstall" style="min-width: 120px;">
+                <span>Uninstall package?</span>
+            </label>
+    <input type="checkbox" id="node-input-nodered_uninstall" style="display:inline-block; width:15px; vertical-align:baseline;">
+  </div>
+
   <hr/>
   <div class="form-row">
     <label for="node-input-npmpublish" style="min-width: 120px;">
@@ -16361,16 +16300,23 @@ Functionality:
     </div>
 
     <div class="form-row">
+        <label for="node-input-isrealplugin" style="min-width: 250px;">
+           <span>Plugin?</span>
+        </label>
+        <input type="checkbox" id="node-input-isrealplugin" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
         <label for="node-input-isplugin" style="min-width: 250px;">
-                    <span>Plugin: Sidebar + Config?</span>
-                </label>
+            <span>Sidebar + Config?</span>
+        </label>
         <input type="checkbox" id="node-input-isplugin" style="display:inline-block; width:15px; vertical-align:baseline;">
     </div>
     
     <div class="form-row">
         <label for="node-input-frt2bakcomm" style="min-width: 250px;">
-                <span>Frontend to Backend communication?</span>
-            </label>
+           <span>Frontend to Backend communication?</span>
+        </label>
         <input type="checkbox" id="node-input-frt2bakcomm" style="display:inline-block; width:15px; vertical-align:baseline;">
     </div>
 
@@ -16488,7 +16434,15 @@ Functionality:
         data["bak2frtcomm"]    = $('#node-input-bak2frtcomm').is(":checked");
         data["frt2bakcomm"]    = $('#node-input-frt2bakcomm').is(":checked");
         data["createmanifest"] = $('#node-input-createmanifest').is(":checked");
+        
+        /*
+            Argh! This is a mess but I can't change it because isplugin is used
+            in the wild. isplugin is actually a sidebar + config node, while
+            isrealplugin is a plugin in the true sense of Node-RED. This was
+            done due to lack-of-knowledge on the part of the author.
+        */
         data["isplugin"]       = $('#node-input-isplugin').is(":checked");
+        data["isrealplugin"]   = $('#node-input-isrealplugin').is(":checked");
 
         data["__task"]      = "generate_from_templates";
 
@@ -16529,6 +16483,7 @@ Functionality:
             bak2frtcomm:    { value: false },
             createmanifest: { value: false },
             isplugin:       { value: false },
+            isrealplugin:   { value: false },
         },
         inputs: 1,
         outputs: 1,
@@ -16581,6 +16536,20 @@ Functionality:
                 opacity: 1.0,
                 sortPalette: function (a, b) { return a.l - b.l; }
             }).appendTo("#node-input-row-style-colour");
+
+            $("#node-input-isrealplugin").on('change', function(ev) {
+                if ( $('#node-input-isrealplugin').is(":checked") ) {
+                    $('#node-input-isplugin').prop('checked',false).trigger('change')
+                    $('#node-input-frt2bakcomm').prop('checked',false).trigger('change')
+                    $('#node-input-bak2frtcomm').prop('checked',false).trigger('change')
+                }
+            })
+
+            $("#node-input-isplugin").on('change', function(ev) {
+                if ( $('#node-input-isplugin').is(":checked") ) {
+                    $('#node-input-isrealplugin').prop('checked',false).trigger('change')
+                }
+            })
 
             $("#node-input-colour").on('change', function(ev) {
                 var colour = $(this).val();

@@ -71,6 +71,63 @@ var DEADRED = (function() {
         }
     }
 
+    function msgTracerOnReceiveHook(evnt) {
+        try {
+            let nde = RED.nodes.node(evnt.destination.id)
+
+            if ( !nde ) { return undefined }
+
+            emitStatusForNode(nde.id, {
+                "text": "msg " + (nde.type == "inject" ?
+                                  "generated" : "received"),
+                "fill": "grey",
+                "shape":"ring"
+            })
+
+            var ndeid = nde.id
+            setTimeout( () => { clearStatusForNode(ndeid) }, 1500);
+
+            RED.comms.emit([{
+                topic: "msgtracer:node-received",
+                data: {
+                    nodeid: evnt.destination.id
+                }
+            }])
+
+            return nde
+        } catch (ex) {
+            console.error(ex)
+        }
+    }
+
+    function msgTracerOnReceiveHookWithDebug(evnt) {
+        try {
+            let nde = msgTracerOnReceiveHook(evnt)
+
+            // don't publish debug messages for junctions because they
+            // cause errors in handleDebugMessages in the client.
+            if ( !nde || nde.type == "junction") { return }
+
+            let msg = {
+                id:     nde.id,
+                z:      nde.z,
+                _alias: nde.id,
+                path:   nde.z,
+                name:   nde._def.label.call(nde),
+                topic:  evnt.msg.topic,
+                msg:    evnt.msg
+            }
+
+            RED.comms.emit([{
+                topic: "debug",
+                data: msg
+            }])
+
+        } catch (ex) {
+            console.error(ex)
+        }
+    }
+
     //
     // Main node handler. ExecuteNode modifies the message as required by the
     // node type, throwing up an error if the node isn't supported or passing
@@ -84,8 +141,12 @@ var DEADRED = (function() {
         // clone the message, handle exceptions with shallower clone
         msg = cloneIt(msg)
 
+        // emit an onReceive hook
+        RED.hooks.trigger( "onReceive", { msg: msg, destination: nde } )
+
         // message tracing can be deactivated using the __notrace property
         // on the msg object.
+        /* -- now using explicit message tracing.
         if ( !msg.__notrace ) {
             // don't overwrite the counter
             if ( !isNodeDebugCounter(nde) ) {
@@ -100,6 +161,7 @@ var DEADRED = (function() {
                 setTimeout( () => { clearStatusForNode(ndeid) }, 1500);
             }
         }
+        */
 
         // Start of subflow execution. This is done using a similar method
         // to the handling of link nodes: add an array to the message to
@@ -983,6 +1045,36 @@ var DEADRED = (function() {
                     new_flowdata: data.flowdata
                 })
             })
+
+            jqXHR.abort();
+        }
+
+        // handle the MsgTracer functionality
+        mth = options.url.match(/^MsgTracer\/msgtracing\/(.+)/i)
+        if ( mth ) {
+            let state = mth[1]
+            let req = {
+                body: JSON.parse(options.data)
+            }
+
+            const OnReceiveHookName = "onReceive.introspectionMsgTracer"
+
+            try {
+                RED.hooks.remove(OnReceiveHookName)
+
+                if ( state == "on" ) {
+                    if ( req.body.withDebug ) {
+                        RED.hooks.add(OnReceiveHookName, msgTracerOnReceiveHookWithDebug)
+                    } else {
+                        RED.hooks.add(OnReceiveHookName, msgTracerOnReceiveHook)
+                    }
+                }
+
+                options.success({})
+            } catch (err) {
+                console.log( err )
+                options.error({})
+            }
 
             jqXHR.abort();
         }
