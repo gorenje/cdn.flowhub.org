@@ -287,7 +287,7 @@ var DEADRED = (function() {
                             msg[rle.p] = JSON.parse(rle.to)
                         }
                         if ( rle.pt == "msg" && rle.tot == "jsonata" ) {
-                            msg[rle.p] = jsonata(rle.to).evaluate({msg:msg})
+                            msg[rle.p] = jsonata(rle.to.replace(/\$\$[.]/g,"$").replace(/msg[.]/g,"$")).evaluate({},msg)
                         }
                         if ( rle.pt == "msg" && rle.tot == "msg" ) {
                             RED.utils.setMessageProperty(
@@ -774,7 +774,7 @@ var DEADRED = (function() {
                             break
 
                         case "jsonata":
-                            msg[prp.p] = jsonata(prp.v).evaluate({msg:msg})
+                            msg[prp.p] = jsonata(prp.v.replace(/\$\$[.]/g,"$").replace(/msg[.]/g,"$")).evaluate({},msg)
                             break
 
                         case "str":
