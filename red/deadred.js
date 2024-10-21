@@ -976,6 +976,20 @@ var DEADRED = (function() {
                     url: RED.settings.get("dynamicServer", "") + "v1/flows",
                     data: JSON.stringify(postData),
                     success: (resp) => {
+                        // update the revision of the flow locally if it has changed
+                        // remotely
+                        if ( resp.status == "nochange"
+                            && cfgNode.flowrevisions
+                            && cfgNode.flowrevisions[resp.flowid] != resp.revision
+                            && resp.revision != "") {
+                            cfgNode.flowrevisions[resp.flowid] = resp.revision
+                        }
+
+                        // update of flow was made,
+                        if ( resp.status == "ok" ) {
+                            cfgNode.flowrevisions[resp.flowid] = resp.revision
+                        }
+
                         RED.comms.emit([
                             {
                                 topic: "flowhub:submission-result",
