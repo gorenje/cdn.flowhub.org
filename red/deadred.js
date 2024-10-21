@@ -71,6 +71,26 @@ var DEADRED = (function() {
         }
     }
 
+    function logExceptionToDebug(ex,nde,msg) {
+        let debugMsg = {
+            id:     nde.id,
+            z:      nde.z,
+            _alias: nde.id,
+            path:   nde.z,
+            name:   RED.utils.getNodeLabel(nde),
+            topic:  msg.topic,
+            msg:    JSON.stringify( { msg: msg, exception: ex } ),
+            format: "Object"
+        }
+
+        setTimeout( () => {
+            RED.comms.emit([{
+                topic: "debug",
+                data: debugMsg
+            }])
+        }, 500);
+    }
+
     function msgTracerOnReceiveHook(evnt) {
         try {
             let nde = RED.nodes.node(evnt.destination.id)
@@ -113,7 +133,7 @@ var DEADRED = (function() {
                 z:      nde.z,
                 _alias: nde.id,
                 path:   nde.z,
-                name:   nde._def.label.call(nde),
+                name:   RED.utils.getNodeLabel(nde),
                 topic:  evnt.msg.topic,
                 msg:    evnt.msg
             }
@@ -705,6 +725,7 @@ var DEADRED = (function() {
             case 'switch':
 
                 if ( nde.property && nde.propertyType == "msg" ) {
+
                     let val = RED.utils.getMessageProperty(
                         msg,nde.property
                     )
@@ -715,6 +736,7 @@ var DEADRED = (function() {
                         try {
                             return tst(val,rle.v,rle.v2)
                         } catch (ex) {
+                            logExceptionToDebug(ex,nde,msg)
                             return false
                         }
                     })
@@ -740,9 +762,24 @@ var DEADRED = (function() {
 
                     passMsgToLinks(lnks, msg);
                     return
+                } else {
+                    nodeTypeNotSupported(nde)
+                    return
                 }
 
                 break
+
+            case "yaml":
+                let yamlData = msg[nde.property]
+
+                if ( typeof yamlData === "object" ) {
+                    msg[nde.property] = jsyaml.dump(yamlData)
+                } else {
+                    msg[nde.property] = jsyaml.load(yamlData)
+                }
+
+                passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+                return
 
             case 'xml':
 
@@ -838,8 +875,8 @@ var DEADRED = (function() {
         try {
             executeNode(nde, msg)
         } catch ( ex ) {
-            RED.notify( "Error executing: " + nde.id, "error");
-            console.error( "Error for node", [nde, ex, msg])
+            RED.notify( `Error executing '${RED.utils.getNodeLabel(nde)}' of type '${nde.type}' with id ${nde.id}: ${ex.message}`, "error");
+            logExceptionToDebug(ex,nde,msg)
         }
     }
 

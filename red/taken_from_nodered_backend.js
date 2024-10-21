@@ -78,7 +78,7 @@ var NodeRedBackendCode = (function(){
             return a !== undefined && a !== null && (typeof b !== "object" )  &&  a.hasOwnProperty(b+"");
         },
         'jsonata_exp': function(a, b) { return (b === true); },
-        'else': function(a) { return a === true; }
+        'else': function(a) { return true; }
     };
 
     return {
