@@ -1424,6 +1424,12 @@ var DEADRED = (function() {
             }, 1400);
         }
 
+        RED.actions.add("core:click-selected-nodes-button", function () {
+            const selectedNodes = RED.view.selection().nodes || [];
+            // Triggers the button action of the selected nodes
+            selectedNodes.forEach((node) => RED.view.clickNodeButton(node));
+        });
+
         console.log( "DEADRED initialised" )
     }
 

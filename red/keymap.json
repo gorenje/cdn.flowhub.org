@@ -21,7 +21,8 @@
         "ctrl-alt-n": "core:new-project",
         "ctrl-alt-o": "core:open-project",
         "ctrl-shift-l": "core:show-event-log",
-        "ctrl-shift-p":"core:show-action-list"
+        "ctrl-shift-p":"core:show-action-list",
+        "alt-enter": "core:click-selected-nodes-button"
     },
     "red-ui-sidebar-node-config": {
         "backspace": "core:delete-config-selection",
