@@ -4,6 +4,7 @@
         "ctrl-f": "core:search",
         "ctrl-shift-f": "core:list-flows",
         "ctrl-d": "core:deploy-flows",
+        "ctrl-s": "core:deploy-flows",
         "ctrl-g c": "core:show-config-tab",
         "ctrl-g d": "core:show-debug-tab",
         "ctrl-g h": "core:show-help-tab",
