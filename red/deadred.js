@@ -1430,7 +1430,7 @@ var DEADRED = (function() {
             selectedNodes.forEach((node) => RED.view.clickNodeButton(node));
         });
 
-        RED.events.on("core:drag-dropped-workspace", (event) =>{
+        let customDropHandler = (event) => {
             /* for debugging purposes - inspect the original Event to discover the type:
              *   console>  window.ddEvent.originalEvent.dataTransfer.items[0].type
              */
@@ -1589,7 +1589,20 @@ var DEADRED = (function() {
                 setTimeout( checkIfAllIsThere, 200 )
                 setTimeout( () => { nodesToBeImported.length = waitingOnNode }, 4000 )
             }
-        })
+        }
+
+        /*
+         * Because this happens before the workspace is setup, we set the drop listen
+         * when the target becomes available.
+         */
+        let defineCustomDropHandler = () => {
+            if ( $('#red-ui-drop-target').length > 0 ) {
+                $('#red-ui-drop-target').on("drop", customDropHandler)
+            } else {
+                setTimeout( defineCustomDropHandler, 300 )
+            }
+        }
+        setTimeout( defineCustomDropHandler, 300 )
 
         console.log( "DEADRED initialised" )
     }
