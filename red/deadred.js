@@ -1430,6 +1430,167 @@ var DEADRED = (function() {
             selectedNodes.forEach((node) => RED.view.clickNodeButton(node));
         });
 
+        RED.events.on("core:drag-dropped-workspace", (event) =>{
+            /* for debugging purposes - inspect the original Event to discover the type:
+             *   console>  window.ddEvent.originalEvent.dataTransfer.items[0].type
+             */
+            window.ddEvent = event
+
+            let itemPtr = event.originalEvent.dataTransfer.items
+            let itemCount = itemPtr.length
+
+            let nodesToBeImported = []
+            let waitingOnNode = 0;
+
+            let file2base64Image = (file, cb) => {
+                var reader = new FileReader();
+                reader.onload = (function (fd) {
+                    return function (e) {
+                        cb(e.target.result);
+                    };
+                })(file);
+                reader.readAsDataURL(file);
+            }
+
+            for( let idx = 0; idx < itemCount ; idx++ ) {
+                let itm = itemPtr[idx]
+
+                if ( itm.type == "text/uri-list" ) {
+                    waitingOnNode++;
+
+                    let xPos = 40 * waitingOnNode
+
+                    itm.getAsString( (url) => {
+                        nodesToBeImported.push({
+                            "id": RED.nodes.id(),
+                            "type": "Inspiration",
+                            "name": "Web Bookmark",
+                            "info": url,
+                            "sumPass": false,
+                            "sumPassPrio": 0,
+                            "sumPassNodeId": "",
+                            "createdAt": new Date().toISOString(),
+                            "updatedAt": new Date().toISOString(),
+                            "x": 0,
+                            "y": xPos,
+                            "wires": [[ ]]
+                        })
+                    })
+                } else if ( itm.type.startsWith("image/") ) {
+                    waitingOnNode++
+
+                    let file = event.originalEvent.dataTransfer.files[idx]
+                    let xPos = waitingOnNode * 40
+
+                    file2base64Image(file, dataUrl => {
+                        nodesToBeImported.push({
+                            "id": RED.nodes.id(),
+                            "type": "Sketch",
+                            "name": file.name,
+                            "info": `<img src="${dataUrl}"/>\n`,
+                            "sumPass": false,
+                            "sumPassPrio": 0,
+                            "sumPassNodeId": "",
+                            "createdAt": new Date().toISOString(),
+                            "updatedAt": new Date().toISOString(),
+                            "x": 0,
+                            "y": xPos,
+                            "wires": [[ ]]
+                        })
+                    })
+                } else if ( itm.type == "text/markdown" ) {
+                    waitingOnNode++
+
+                    let file = event.originalEvent.dataTransfer.files[idx]
+                    let xPos = waitingOnNode * 40
+
+                    file.arrayBuffer().then( d => {
+                        nodesToBeImported.push({
+                            "id": RED.nodes.id(),
+                            "type": "Text",
+                            "name": file.name,
+                            "info": new TextDecoder().decode(d),
+                            "sumPass": false,
+                            "sumPassPrio": 0,
+                            "sumPassNodeId": "",
+                            "createdAt": new Date().toISOString(),
+                            "updatedAt": new Date().toISOString(),
+                            "x": 0,
+                            "y": xPos,
+                            "wires": [[ ]]
+                        })
+                    }).catch( ex => { console.log(ex) })
+                } else if ( (itm.type == "text/xml" ||
+                             itm.type == "text/css" ||
+                             itm.type == "application/x-javascript" ||
+                             itm.type == "text/plain" ||
+                             itm.type == "text/html" ||
+                             itm.type == "text/vcard" ||
+                             itm.type == "text/x-python-script" ||
+                             itm.type == "application/x-yaml"
+                           ) && (
+                              event.originalEvent.dataTransfer.files && event.originalEvent.dataTransfer.files[idx]
+                           )) {
+                    /*
+                     * Why is there a checking for existence of file data?
+                     *
+                     * Because text/plain is supported here BUT it's assumed that there is a
+                     * corresponding file, ensure that there is, else ignore text/plain.
+                     * text/plain also occurs without having a file attached.
+                     */
+                    waitingOnNode++
+
+                    let file = event.originalEvent.dataTransfer.files[idx]
+                    let xPos = waitingOnNode * 40
+
+                    let mapMineTypeToFormat = (minetype) => {
+                        let type = minetype.split("/")[1].replace("x-","")
+
+                        return {
+                            "vcard":         "text",
+                            "plain":         "text",
+                            "python-script": "python",
+                        }[type] || type;
+                    }
+
+                    file.arrayBuffer().then( d => {
+                        nodesToBeImported.push({
+                            "id": RED.nodes.id(),
+                            "type": "PkgFile",
+                            "name": file.name,
+                            "filename": file.name,
+                            "dirname": "",
+                            "format": mapMineTypeToFormat(itm.type),
+                            "syntax": "mustache",
+                            "template": new TextDecoder().decode(d),
+                            "output": "str",
+                            "x": xPos,
+                            "y": 0,
+                            "wires": [[]]
+                        })
+                    }).catch( ex => { console.log(ex) })
+                }
+
+            }
+
+            let checkIfAllIsThere = () => {
+                if (waitingOnNode > 0 && nodesToBeImported.length == waitingOnNode) {
+                    setTimeout( () => {
+                        try {
+                            RED.view.importNodes(nodesToBeImported)
+                        } catch ( ex ) { /*keep quiet*/ }
+                    },400);
+                } else {
+                    setTimeout( checkIfAllIsThere, 400 )
+                }
+            }
+
+            if ( waitingOnNode > 0 ) {
+                setTimeout( checkIfAllIsThere, 200 )
+                setTimeout( () => { nodesToBeImported.length = waitingOnNode }, 4000 )
+            }
+        })
+
         console.log( "DEADRED initialised" )
     }
 

@@ -43016,6 +43016,7 @@ RED.clipboard = (function() {
                 throw e;
             }
         }
+
         var importOptions = {generateIds: false, addFlow: addFlow};
         try {
             RED.view.importNodes(newNodes, importOptions);
@@ -43316,6 +43317,8 @@ RED.clipboard = (function() {
                 hideDropTarget();
             })
             .on("drop",function(event) {
+                RED.events.emit( "core:drag-dropped-workspace", event );
+
                 if (!RED.workspaces.isLocked()) {
                     try {
                         if ($.inArray("text/plain",event.originalEvent.dataTransfer.types) != -1) {
