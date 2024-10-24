@@ -963,7 +963,6 @@ var DEADRED = (function() {
     // redirect those requests that demonstrate certain functionality
     // to the deadred server.
     let deadredRedirectablesAjax = [
-        "FlowHubDiff",
         "NodeFactorySidebarCfg"
     ];
 
@@ -974,6 +973,31 @@ var DEADRED = (function() {
         // patial functionality provided by the deadred backend
         if ( deadredRedirectablesAjax.indexOf( options.url ) > -1 ) {
             options.url = RED.settings.get("dynamicServer", "") + options.url
+        }
+
+        if ( options.url == "FlowHubDiff" ) {
+            jqXHR.abort()
+
+            let cfgNode = undefined
+
+            RED.nodes.eachConfig( nd => {
+                if ( nd.type == "FlowHubCfg" ) {
+                    cfgNode = nd
+                }
+            })
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                headers: {
+                    "FlowHub-API-Version": "brownbear",
+                    "X-FHB-TOKEN": cfgNode.apiToken
+                },
+                url: RED.settings.get("dynamicServer", "") + "v1/diff",
+                data: options.data,
+                success: options.success
+            });
         }
 
         if ( options.url == "FlowHubPush" ) {
@@ -1455,17 +1479,18 @@ var DEADRED = (function() {
             for( let idx = 0; idx < itemCount ; idx++ ) {
                 let itm = itemPtr[idx]
 
-                if ( itm.type == "text/uri-list" ) {
+                if ( itm.type == "text/uri-list" || itm.type == "text/x-moz-url" ) {
                     waitingOnNode++;
 
                     let yPos = 40 * waitingOnNode
 
                     itm.getAsString( (url) => {
+                        let urlAndTitle = url.split("\n")
                         nodesToBeImported.push({
                             "id": RED.nodes.id(),
                             "type": "Inspiration",
-                            "name": "Web Bookmark",
-                            "info": url,
+                            "name": urlAndTitle[1] || "Web Bookmark",
+                            "info": urlAndTitle[0],
                             "sumPass": false,
                             "sumPassPrio": 0,
                             "sumPassNodeId": "",
