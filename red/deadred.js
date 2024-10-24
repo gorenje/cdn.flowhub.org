@@ -1604,6 +1604,24 @@ var DEADRED = (function() {
         }
         setTimeout( defineCustomDropHandler, 300 )
 
+        // handle a generate paste in the browser window. But this only
+        // works outside of the workspace area. But this is only a prototype.
+        $(window).on('paste', (event) => {
+            try {
+                let pasteText = event.originalEvent.clipboardData.getData('text')
+                let data = JSON.parse(pasteText)
+
+                if ( Array.isArray(data) ) {
+                    RED.view.importNodes(data, {
+                        generateIds: true,
+                        addFlow: false,
+                        touchImport: false,
+                        generateDefaultNames: false
+                    })
+                }
+            } catch(ex) { /* keep quiet */ }
+        })
+
         console.log( "DEADRED initialised" )
     }
 
