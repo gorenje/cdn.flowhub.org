@@ -1458,7 +1458,7 @@ var DEADRED = (function() {
                 if ( itm.type == "text/uri-list" ) {
                     waitingOnNode++;
 
-                    let xPos = 40 * waitingOnNode
+                    let yPos = 40 * waitingOnNode
 
                     itm.getAsString( (url) => {
                         nodesToBeImported.push({
@@ -1472,7 +1472,7 @@ var DEADRED = (function() {
                             "createdAt": new Date().toISOString(),
                             "updatedAt": new Date().toISOString(),
                             "x": 0,
-                            "y": xPos,
+                            "y": yPos,
                             "wires": [[ ]]
                         })
                     })
@@ -1480,7 +1480,7 @@ var DEADRED = (function() {
                     waitingOnNode++
 
                     let file = event.originalEvent.dataTransfer.files[idx]
-                    let xPos = waitingOnNode * 40
+                    let yPos = waitingOnNode * 40
 
                     file2base64Image(file, dataUrl => {
                         nodesToBeImported.push({
@@ -1494,7 +1494,7 @@ var DEADRED = (function() {
                             "createdAt": new Date().toISOString(),
                             "updatedAt": new Date().toISOString(),
                             "x": 0,
-                            "y": xPos,
+                            "y": yPos,
                             "wires": [[ ]]
                         })
                     })
@@ -1502,7 +1502,7 @@ var DEADRED = (function() {
                     waitingOnNode++
 
                     let file = event.originalEvent.dataTransfer.files[idx]
-                    let xPos = waitingOnNode * 40
+                    let yPos = waitingOnNode * 40
 
                     file.arrayBuffer().then( d => {
                         nodesToBeImported.push({
@@ -1516,7 +1516,7 @@ var DEADRED = (function() {
                             "createdAt": new Date().toISOString(),
                             "updatedAt": new Date().toISOString(),
                             "x": 0,
-                            "y": xPos,
+                            "y": yPos,
                             "wires": [[ ]]
                         })
                     }).catch( ex => { console.log(ex) })
@@ -1541,7 +1541,7 @@ var DEADRED = (function() {
                     waitingOnNode++
 
                     let file = event.originalEvent.dataTransfer.files[idx]
-                    let xPos = waitingOnNode * 40
+                    let yPos = waitingOnNode * 40
 
                     let mapMineTypeToFormat = (minetype) => {
                         let type = minetype.split("/")[1].replace("x-","")
@@ -1564,8 +1564,8 @@ var DEADRED = (function() {
                             "syntax": "mustache",
                             "template": new TextDecoder().decode(d),
                             "output": "str",
-                            "x": xPos,
-                            "y": 0,
+                            "y": yPos,
+                            "x": 0,
                             "wires": [[]]
                         })
                     }).catch( ex => { console.log(ex) })
