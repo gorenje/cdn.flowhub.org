@@ -1636,6 +1636,10 @@ var DEADRED = (function() {
                 let pasteText = event.originalEvent.clipboardData.getData('text')
                 let data = JSON.parse(pasteText)
 
+                if (event.target && event.target.id == "red-ui-clipboard-dialog-import-text") {
+                    return
+                }
+
                 if ( Array.isArray(data) ) {
                     RED.view.importNodes(data, {
                         generateIds: true,
