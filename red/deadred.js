@@ -1636,7 +1636,10 @@ var DEADRED = (function() {
                 let pasteText = event.originalEvent.clipboardData.getData('text')
                 let data = JSON.parse(pasteText)
 
-                if (event.target && event.target.id == "red-ui-clipboard-dialog-import-text") {
+                // these are pastes into the import dialog or the search field, ignore those
+                // pastes and let others deal with the contents.
+                if (event.target && ( event.target.id == "red-ui-clipboard-dialog-import-text" ||
+                                      event.target.classList.contains("red-ui-searchBox-input" ))) {
                     return
                 }
 
