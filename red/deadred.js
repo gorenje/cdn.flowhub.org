@@ -22,9 +22,9 @@ var DEADRED = (function() {
         RED.comms.emit([{ "topic":"status/" + ndeid, "data": status }])
     }
 
-    function nodeTypeNotSupported(nde) {
+    function nodeTypeNotSupported(nde,details) {
         RED.notify(
-            "Execution of type: " + nde.type + " ("+nde.id+") not supported",
+            "Execution of type: " + nde.type + " ("+nde.id+") not supported" + ( details ? `: ${details}` : ""),
             "warning"
         );
     }
@@ -765,11 +765,35 @@ var DEADRED = (function() {
                     passMsgToLinks(lnks, msg);
                     return
                 } else {
-                    nodeTypeNotSupported(nde)
+                    nodeTypeNotSupported(nde, "propertyType can only be msg")
                     return
                 }
 
                 break
+
+            case "template":
+                if ( nde.output != "str" ) {
+                    nodeTypeNotSupported(nde, "output may only be <b>plain text</b>")
+                    return
+                }
+
+                if ( nde.fieldType != "msg" ) {
+                    nodeTypeNotSupported(nde, `unsupported field type <b>${nde.fieldType}</b>`)
+                    return
+                }
+
+                if ( nde.syntax == "plain" ) {
+                    msg[nde.field] = nde.template
+                } else if ( nde.syntax == "mustache" ) {
+                    msg[nde.field] = window.Mustache.render(nde.template,msg)
+                } else {
+                    nodeTypeNotSupported(nde, `Unknown format: <b>${nde.syntax}</b>`)
+                    return
+                }
+
+                passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg);
+
+                return
 
             case "yaml":
                 let yamlData = msg[nde.property]
