@@ -11981,35 +11981,47 @@ msg.cookies = {
 </script><script type="text/x-red" data-help-name="HIDdevice">
     <p>A simple node that receives BYTE array or Buffer as msg.payload and sends it to the HID Device. It sends received data as msg.payload (Buffer) to output 1 and errors to output 2</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/base] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/base] --- -->
 <script type="text/javascript">
   /*
-   * Can use https://colordesigner.io/gradient-generator to generate gradient
-   * steps
+   * ~~Can use https://colordesigner.io/gradient-generator to generate gradient
+   * steps~~
+   * 
+   * Use https://online-free-tools.com/en/css_color_hex_gradient instead, gradient 
+   * generator is broken shit.
    */
   window.wmPaletteColours = {
     "50-topic":         '#d0c9f6',
+    
     "30-observation":   '#f4adf3',
     "32-question":      '#e0a4f3',
     "35-thought":       '#cb9cf3',
+    
     "25-idea":          '#88baff',
-    "40-analogy":       '#86bfff',
-    "45-aphorism":      '#84c3ff',
-    "20-poesie":        '#83c7ff',
-    "22-humour":        '#81ccff',
-    "23-treasure":      '#7fd0ff',
+    "26-dream":         '#86BDFF',
+    "41-metaphor":      '#85C0FF',
+    "45-aphorism":      '#84C3FF',
+    "20-poesie":        '#82C6FF',
+    "22-humour":        '#81C9FF',
+    "23-treasure":      '#80CCFF',
+
     "37-consequence":   '#f6c1cc',
     "38-advantage":     '#efacbf',
     "39-disadvantage":  '#e796b1',
+    
     "05-text":          '#c8ffb5',
-    "10-blog-post":     '#d0fdc2',
-    "15-comment":       '#d9fcce',
-    "55-code-base":     '#e1fbda',
-    "56-sketch":        '#e1fbda',
+    "10-blog-post":     '#CDFEBC',
+    "12-image":         '#CDFEBC',
+    "15-comment":       '#D2FDC3',
+    "55-code-base":     '#D7FCCB',
+    "57-art":           '#DCFBD2',
+    "47-learning":      '#e1fbda',
+
     "60-inspiration":   '#dfdfb6',
-    "65-quote":         '#e5e5c0',
-    "70-definition":    '#eaebca',
-    "75-book":          '#f0f0d4',
+    "65-quote":         '#E3E3BE',
+    "70-definition":    '#E7E8C6',
+    "74-bookmark":      '#ECECCE',
+    "75-book":          '#F0F1D6',
     "80-author":        '#f5f6de',
   };
 
@@ -12123,6 +12135,10 @@ msg.cookies = {
           $('#sumpass-node-selection').hide()
         }
       });
+
+      $('#node-input-wordCount').html(
+        that.info ? that.info.split(/\s+/).filter(word => word !== '').length : 0
+      )
 
       writerMapUtils.fillTypeDropDown(that);
     },
@@ -12247,7 +12263,7 @@ msg.cookies = {
       var sltObj = $('#node-input-typeDropdown');
       sltObj.html("");
 
-      writerMapUtils.allWriterMapTypes().forEach( (typ) => {
+      writerMapUtils.allWriterMapTypes().sort( (a,b) => a > b ).forEach( (typ) => {
         sltObj.append(
           $('<option></option>').val(typ).html(typ)
         )
@@ -12359,7 +12375,7 @@ msg.cookies = {
   })
 </script>
 
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/topic] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/topic] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Topic',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["50-topic"],
@@ -12403,8 +12419,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12412,7 +12431,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Topic">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/observation] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/observation] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Observation',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["30-observation"],
@@ -12456,8 +12475,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12465,7 +12487,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Observation">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/question] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/question] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Question',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["32-question"],
@@ -12509,8 +12531,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12518,7 +12543,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Question">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/thought] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/thought] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Thought',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["35-thought"],
@@ -12562,8 +12587,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12571,7 +12599,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Thought">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/idea] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/idea] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Idea',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["25-idea"],
@@ -12615,8 +12643,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12624,15 +12655,15 @@ msg.cookies = {
 <script type="text/html" data-help-name="Idea">
   <p>A mindmap Idea node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/analogy] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/dream] --- -->
 <script type="text/javascript">
-  RED.nodes.registerType('Analogy',{ ...window.mmDefaults, ...{
-    color: window.wmPaletteColours["40-analogy"],
-    icon: "font-awesome/fa-balance-scale",
+  RED.nodes.registerType('Dream',{ ...window.mmDefaults, ...{
+    color: window.wmPaletteColours["26-dream"],
+    icon: "font-awesome/fa-bed",
   }});
 </script>
 
-<script type="text/html" data-template-name="Analogy">
+<script type="text/html" data-template-name="Dream">
 <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
@@ -12668,16 +12699,75 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
 
-<script type="text/html" data-help-name="Analogy">
-  <p>A writermap node.</p>
+<script type="text/html" data-help-name="Dream">
+  <p>A mindmap Dream node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/aphorism] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/metaphor] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('Metaphor',{ ...window.mmDefaults, ...{
+    color: window.wmPaletteColours["41-metaphor"],
+    icon: "font-awesome/fa-balance-scale",
+  }});
+</script>
+
+<script type="text/html" data-template-name="Metaphor">
+<div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+</div>
+
+<div class="form-row">
+    <label style="display: inline-block; width: 40%;"
+           for="node-input-sumPass">
+      <i class="fa fa-filter"></i>
+      <span>Summaries subnodes?</span>
+    </label>
+    <input type="checkbox" id="node-input-sumPass"
+           style="display:inline-block; width:35px; vertical-align:baseline;">
+
+    <label style="display: inline-block; width: 10%; padding-left: 100px;"
+           for="node-input-sumPassPrio">
+      <span>Priority: </span>
+    </label>
+    <select id="node-input-sumPassPrio" style="width: 50px;"></select>
+</div>
+
+<div id="sumpass-node-selection" class="hide">
+    <div class="form-row">
+        <select id="node-input-sumPassNodeId" style="width: 100%">
+      </select>
+    </div>
+</div>
+
+<div class="form-row node-text-editor-row">
+    <input type="hidden" id="node-input-info" autofocus="autofocus">
+    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-info-editor"></div>
+</div>
+
+<div class="form-row">
+    <label for="node-input-typeDropdown">Change Type</label>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
+</div>
+</script>
+
+
+<script type="text/html" data-help-name="Metaphor">
+  <p>A writermap Metaphor node.</p>
+</script>
+<!-- --- [red-module:@gorenje/node-red-mindmap/aphorism] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Aphorism',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["45-aphorism"],
@@ -12721,8 +12811,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12730,7 +12823,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Aphorism">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/poesie] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/poesie] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Poesie',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["20-poesie"],
@@ -12774,8 +12867,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12783,7 +12879,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Poesie">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/humour] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/humour] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Humour',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["22-humour"],
@@ -12827,8 +12923,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12836,7 +12935,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Humour">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/treasure] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/treasure] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Treasure',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["23-treasure"],
@@ -12880,8 +12979,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12889,7 +12991,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Treasure">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/consequence] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/consequence] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Consequence',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["37-consequence"],
@@ -12933,8 +13035,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12942,7 +13047,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Consequence">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/advantage] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/advantage] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Advantage',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["38-advantage"],
@@ -12986,8 +13091,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -12995,7 +13103,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Advantage">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/disadvantage] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/disadvantage] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Disadvantage',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["39-disadvantage"],
@@ -13039,8 +13147,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13048,7 +13159,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Disadvantage">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/text] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/text] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Text',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["05-text"],
@@ -13092,8 +13203,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13101,7 +13215,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Text">
     <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/blog-post] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/blog-post] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Blog-Post',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["10-blog-post"],
@@ -13146,8 +13260,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13155,7 +13272,63 @@ msg.cookies = {
 <script type="text/html" data-help-name="Blog-Post">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/comment] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/image] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('Image',{ ...window.mmDefaults, ...{
+    color: window.wmPaletteColours["12-image"],
+    icon: "font-awesome/fa-file-image-o",
+  }});
+</script>
+
+<script type="text/html" data-template-name="Image">
+<div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+</div>
+
+<div class="form-row">
+    <label style="display: inline-block; width: 40%;"
+           for="node-input-sumPass">
+      <i class="fa fa-filter"></i>
+      <span>Summaries subnodes?</span>
+    </label>
+    <input type="checkbox" id="node-input-sumPass"
+           style="display:inline-block; width:35px; vertical-align:baseline;">
+
+    <label style="display: inline-block; width: 10%; padding-left: 100px;"
+           for="node-input-sumPassPrio">
+      <span>Priority: </span>
+    </label>
+    <select id="node-input-sumPassPrio" style="width: 50px;"></select>
+</div>
+
+<div id="sumpass-node-selection" class="hide">
+    <div class="form-row">
+        <select id="node-input-sumPassNodeId" style="width: 100%">
+      </select>
+    </div>
+</div>
+
+<div class="form-row node-text-editor-row">
+    <input type="hidden" id="node-input-info" autofocus="autofocus">
+    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-info-editor"></div>
+</div>
+
+<div class="form-row">
+    <label for="node-input-typeDropdown">Change Type</label>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
+</div>
+</script>
+
+
+<script type="text/html" data-help-name="Image">
+  <p>A writermap Image node.</p>
+</script>
+<!-- --- [red-module:@gorenje/node-red-mindmap/comment] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Comment',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["15-comment"],
@@ -13199,8 +13372,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13208,7 +13384,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Comment">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/codebase] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/codebase] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Code-Base',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["55-code-base"],
@@ -13253,8 +13429,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13262,15 +13441,15 @@ msg.cookies = {
 <script type="text/html" data-help-name="Code-Base">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/sketch] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/art] --- -->
 <script type="text/javascript">
-  RED.nodes.registerType('Sketch',{ ...window.mmDefaults, ...{
-    color: window.wmPaletteColours["56-sketch"],
+  RED.nodes.registerType('Art',{ ...window.mmDefaults, ...{
+    color: window.wmPaletteColours["57-art"],
     icon: "font-awesome/fa-image",
   }});
 </script>
 
-<script type="text/html" data-template-name="Sketch">
+<script type="text/html" data-template-name="Art">
 <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
@@ -13306,16 +13485,75 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
 
-<script type="text/html" data-help-name="Sketch">
-  <p>A writermap node.</p>
+<script type="text/html" data-help-name="Art">
+  <p>A writermap Art node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/inspiration] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/learning] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('Learning',{ ...window.mmDefaults, ...{
+    color: window.wmPaletteColours["47-learning"],
+    icon: "font-awesome/fa-bolt",
+  }});
+</script>
+
+<script type="text/html" data-template-name="Learning">
+<div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+</div>
+
+<div class="form-row">
+    <label style="display: inline-block; width: 40%;"
+           for="node-input-sumPass">
+      <i class="fa fa-filter"></i>
+      <span>Summaries subnodes?</span>
+    </label>
+    <input type="checkbox" id="node-input-sumPass"
+           style="display:inline-block; width:35px; vertical-align:baseline;">
+
+    <label style="display: inline-block; width: 10%; padding-left: 100px;"
+           for="node-input-sumPassPrio">
+      <span>Priority: </span>
+    </label>
+    <select id="node-input-sumPassPrio" style="width: 50px;"></select>
+</div>
+
+<div id="sumpass-node-selection" class="hide">
+    <div class="form-row">
+        <select id="node-input-sumPassNodeId" style="width: 100%">
+      </select>
+    </div>
+</div>
+
+<div class="form-row node-text-editor-row">
+    <input type="hidden" id="node-input-info" autofocus="autofocus">
+    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-info-editor"></div>
+</div>
+
+<div class="form-row">
+    <label for="node-input-typeDropdown">Change Type</label>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
+</div>
+</script>
+
+
+<script type="text/html" data-help-name="Learning">
+  <p>A mindmap Learning node.</p>
+</script>
+<!-- --- [red-module:@gorenje/node-red-mindmap/inspiration] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Inspiration',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["60-inspiration"],
@@ -13359,8 +13597,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13368,7 +13609,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Inspiration">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/quote] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/quote] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Quote',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["65-quote"],
@@ -13412,8 +13653,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13421,7 +13665,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Quote">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/definition] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/definition] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Definition',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["70-definition"],
@@ -13465,8 +13709,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13474,7 +13721,63 @@ msg.cookies = {
 <script type="text/html" data-help-name="Definition">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/book] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/bookmark] --- -->
+<script type="text/javascript">
+  RED.nodes.registerType('Bookmark',{ ...window.mmDefaults, ...{
+    color: window.wmPaletteColours["74-bookmark"],
+    icon: "font-awesome/fa-bookmark-o",
+  }});
+</script>
+
+<script type="text/html" data-template-name="Bookmark">
+<div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+</div>
+
+<div class="form-row">
+    <label style="display: inline-block; width: 40%;"
+           for="node-input-sumPass">
+      <i class="fa fa-filter"></i>
+      <span>Summaries subnodes?</span>
+    </label>
+    <input type="checkbox" id="node-input-sumPass"
+           style="display:inline-block; width:35px; vertical-align:baseline;">
+
+    <label style="display: inline-block; width: 10%; padding-left: 100px;"
+           for="node-input-sumPassPrio">
+      <span>Priority: </span>
+    </label>
+    <select id="node-input-sumPassPrio" style="width: 50px;"></select>
+</div>
+
+<div id="sumpass-node-selection" class="hide">
+    <div class="form-row">
+        <select id="node-input-sumPassNodeId" style="width: 100%">
+      </select>
+    </div>
+</div>
+
+<div class="form-row node-text-editor-row">
+    <input type="hidden" id="node-input-info" autofocus="autofocus">
+    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-info-editor"></div>
+</div>
+
+<div class="form-row">
+    <label for="node-input-typeDropdown">Change Type</label>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
+</div>
+</script>
+
+
+<script type="text/html" data-help-name="Bookmark">
+  <p>A writermap Bookmark node.</p>
+</script>
+<!-- --- [red-module:@gorenje/node-red-mindmap/book] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Book',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["75-book"],
@@ -13518,8 +13821,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -13527,7 +13833,7 @@ msg.cookies = {
 <script type="text/html" data-help-name="Book">
   <p>A writermap node.</p>
 </script>
-<!-- --- [red-module:@gorenje/node-red-contrib-mindmap/author] --- -->
+<!-- --- [red-module:@gorenje/node-red-mindmap/author] --- -->
 <script type="text/javascript">
   RED.nodes.registerType('Author',{ ...window.mmDefaults, ...{
     color: window.wmPaletteColours["80-author"],
@@ -13571,8 +13877,11 @@ msg.cookies = {
 
 <div class="form-row">
     <label for="node-input-typeDropdown">Change Type</label>
-    <select id="node-input-typeDropdown">
-    </select>
+    <select id="node-input-typeDropdown"></select>
+    
+    <label for="node-input-wordCount" style="float: right;">Words:
+        <span id="node-input-wordCount"></span>
+    </label>
 </div>
 </script>
 
@@ -14965,292 +15274,41 @@ This page is intentional left blank.
 
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/seeker] --- -->
 <script type="text/javascript">
-  RED.nodes.registerType('Seeker',{
-    color: '#e5e4ef',
-    icon: "font-awesome/fa-ship",
-    category: 'introspection',
-    paletteLabel: "Seeker",
-    defaults: {
-      name: {
-        value:"",
-      },
-    },
-    inputs:0,
-    outputs:1,
-
-    label: function() {
-      return (this.name || this._def.paletteLabel);
-    },
-
-    labelStyle: function() {
-      return this.name?"node_label_italic":"";
-    },
-
-    oneditprepare: function() {
-      var that = this;
-
-      this._resize = function() {
-        var rows = $("#dialog-form>div:not(.node-input-target-list-row)");
-        var height = $("#dialog-form").height();
-        for (var i=0;i<rows.length;i++) {
-          height -= $(rows[i]).outerHeight(true);
-        }
-        var editorRow = $("#dialog-form>div.node-input-target-list-row");
-        editorRow.css("height",height+"px");
-      };
-
-      var search = $("#node-input-seeker-target-filter").searchBox({
-        style: "compact",
-        delay: 300,
-        change: function() {
-          var val = $(this).val().trim().toLowerCase();
-          if (val === "") {
-            dirList.treeList("filter", null);
-            search.searchBox("count","");
-          } else {
-            var count = dirList.treeList("filter", function(item) {
-              return item.label.toLowerCase().indexOf(val) > -1 || item.node.type.toLowerCase().indexOf(val) > -1
-            });
-            search.searchBox("count",count+" / "+items.length);
-          }
-        }
-      });
-
-      var dirList = $("#node-input-seeker-target-container-div").css({
-        width: "100%",
-        height: "100%"
-      }).treeList({
-        multi:true
-      }).on("treelistitemmouseover", function(e, item) {
-        if ( item.node) {
-          if ( item.children) {
-            item.node.highlighted = true;
-            item.node.dirty = true;
-            item.children.forEach( function(n) {
-              n.node.highlighted = true;
-              n.node.dirty = true;
-            });
-          } else {
-            item.node.highlighted = true;
-            item.node.dirty = true;
-          }
-          RED.view.redraw();
-        }
-      }).on("treelistitemmouseout", function(e, item) {
-
-        if ( item.node ) {
-          if ( item.children ) {
-            item.node.highlighted = false;
-            item.node.dirty = true;
-            item.children.forEach( function(n) {
-              n.node.highlighted = false;
-              n.node.dirty = true;
-            });
-          } else {
-            item.node.highlighted = false;
-            item.node.dirty = true;
-          }
-          RED.view.redraw();
-        }
-      }).on('treelistselect', function(event, item) {
-        if ( item.node ) {
-          if ( item.children) {
-            var preselected = item.children.map(function(n) {
-              return n.node.id
-            });
-
-            RED.tray.hide();
-            RED.view.selectNodes({
-              selected: preselected,
-              onselect: function(selection) {
-                RED.tray.show();
-              },
-              oncancel: function() {
-                RED.tray.show();
-              }
-            });
-
-          } else {
-            RED.workspaces.show(item.node.z,false,false,true);
-            item.node.highlighted = true;
-            item.node.dirty = true;
-            RED.view.reveal(item.node.id,true)
-          }
-
-          RED.view.redraw();
-        }
-      });
-
-      var nodePaths = [];
-
-      var traverse = function( node, nodeIds ) {
-        if ( nodeIds.indexOf(node.id) < 0 ) {
-
-          switch( node.type ) {
-
-          case "link call":
-              RED.nodes.getNodeLinks(node).forEach( function(l) {
-                traverse( l.target, [...nodeIds, node.id] );
-              });
-
-              node.links.forEach( function(lnkNdeId) {
-                var dNode = RED.nodes.node(lnkNdeId);
-                if ( !dNode ) { return }
-
-                traverse( dNode, [...nodeIds, node.id] );
-              });
-              
-              break;
-
-          case "link out":
-              node.links.forEach( function(lnkNdeId) {
-                var dNode = RED.nodes.node(lnkNdeId);
-                if ( !dNode ) { return }
-
-                traverse( dNode, [...nodeIds, node.id] );
-              });
-              break;
-
-          case "Sink":
-            nodePaths.push(nodeIds);
-            break;
-
-          default:
-            RED.nodes.getNodeLinks(node).forEach( function(l) {
-              traverse( l.target, [...nodeIds, node.id] );
-            })
-          }
-        }
-      };
-
-      RED.nodes.getNodeLinks(that).forEach( function(l) {
-        traverse(l.target, [])
-      });
-
-      var items = [];
-      var nodeItemMap = {};
-
-      var listOfNodes = function(nodePaths) {
-        var lenNodePaths = nodePaths.length;
-        if ( lenNodePaths > 25 ) {
-          var rdmIdx = Math.floor( Math.random() * lenNodePaths );
-          /* Avoid duplication by taking a random range of 25 nodes */
-          return [...nodePaths, ...nodePaths.slice(0,30)].slice(
-            rdmIdx, rdmIdx + 25
-          )
-        } else {
-          return nodePaths;
-        }
-      }
-
-      listOfNodes(nodePaths).forEach( function (path) {
-        var n = RED.nodes.node(path[0]);
-
-        var nodeDef = RED.nodes.getType(n.type);
-        var label;
-        var sublabel = "Nodes: " + path.length;
-
-        if (nodeDef) {
-          var l = nodeDef.label;
-          label = (typeof l === "function" ? l.call(n) : l)||"";
-
-          if (sublabel.indexOf("subflow:") === 0) {
-            return;
-          }
-        }
-
-        if (!nodeDef || !label) {
-          label = n.type;
-        }
-
-        var children = [];
-
-        path.forEach( function(nId) {
-          var nde = RED.nodes.node(nId);
-
-          /* junctions can be undefined */
-          if ( nde === undefined ) { return }
-
-          var ndeDef = RED.nodes.getType(nde.type);
-          var labelStr = nde.type;
-
-          if ( ndeDef ) {
-            labelStr = (typeof ndeDef.label === "function" ?
-                        ndeDef.label.call(nde) : ndeDef.label) || nde.type ||"";
-          }
-
-          children.push(
-            {
-              "label":    labelStr,
-              "node":     nde,
-              "sublabel": nde.type
-            }
-          )
-        });
-
-        nodeItemMap[n.id] = {
-          node: n,
-          label: label,
-          sublabel: sublabel,
-          selected: false,
-          checkbox: false,
-          children: children
-        };
-        items.push(nodeItemMap[n.id]);
-      });
-
-      dirList.treeList('data',items);
-
-      $("#node-input-seeker-target-select").on("click", function(e) {
-        e.preventDefault();
-        var preselected = dirList.treeList('selected').map(function(n) {
-          return n.node.id
-        });
-
-        RED.tray.hide();
-        RED.view.selectNodes({
-          selected: preselected,
-          onselect: function(selection) {
-            RED.tray.show();
-          },
-          oncancel: function() {
-            RED.tray.show();
-          },
-          filter: function(n) {
-            return n.id !== that.id;
-          }
-        });
-      })
-    },
-
-    oneditsave: function() {
-    },
-
-    oneditresize: function(size) {
-      this._resize();
-    }
-
-});
+RED.nodes.registerType("Seeker",{color:"#e5e4ef",icon:"font-awesome/fa-ship",category:"introspection",paletteLabel:"Seeker",defaults:{name:{value:""}},inputs:0,outputs:1,label:function(){return this.name||this._def.paletteLabel},labelStyle:function(){return this.name?"node_label_italic":""},oneditprepare:function(){var n=this,o=(window._introSpectionSeekerStack=[],$("#node-input-seeker-target-filter").searchBox({style:"compact",delay:300,change:function(){let t=$(this).val().trim().toLowerCase();var e,n=$("#node-input-seeker-target-container-div").treeList("data");""===t?($("#node-input-seeker-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-seeker-target-container-div").treeList("filter",function(e){return-1<e._label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||e.sublabel.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+n.length))}}));$("#node-input-seeker-target-container-div").css({width:"100%",height:"95%"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistconfirm",function(e,t){t.node&&!t.children&&(RED.view.reveal(t.node.id),RED.view.select(t.node.id),setTimeout(()=>{RED.editor.edit(t.node)},100))}).on("treelistselect",function(e,t){var n;t.node&&(t.children?(n=t.children.filter(e=>e.node.z==RED.workspaces.active()).map(e=>e.node.id),RED.tray.hide(),RED.view.selectNodes({selected:n,onselect:()=>{RED.tray.show()},oncancel:()=>{RED.tray.show()}})):(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw()))});let i=e=>{var t=RED.nodes.node(e[e.length-1]);let n=[];return e.forEach(function(e){var t,e=RED.nodes.node(e)||RED.nodes.junction(e);void 0!==e&&(t=RED.nodes.workspace(e.z)||RED.nodes.subflow(e.z),n.push({label:"",_label:RED.utils.getNodeLabel(e),node:e,sublabel:t&&RED.utils.getNodeLabel(t)||e.z,icon:RED.utils.createNodeIcon(e,!0),class:"intro-remove-top-left"}))}),{node:t,label:RED.utils.getNodeLabel(t),_label:RED.utils.getNodeLabel(t),_pathlen:e.length,sublabel:"Length: "+e.length,selected:!1,checkbox:!1,children:n}};var r=function(t,n){if(n.indexOf(t.id)<0)switch(t.type){case"link call":RED.nodes.getNodeLinks(t).forEach(e=>{r(e.target,[...n,t.id])}),t.links.forEach(e=>{e=RED.nodes.node(e);e&&r(e,[...n,t.id])});break;case"link out":t.links.forEach(e=>{e=RED.nodes.node(e);e&&r(e,[...n,t.id])});break;case"Sink":n.push(t.id),window._introSpectionSeekerStack=[n,...window._introSpectionSeekerStack];break;default:RED.nodes.getNodeLinks(t).forEach(e=>{r(e.target,[...n,t.id])})}};$("#node-input-seeker-start-but").on("click",e=>{e&&e.preventDefault(),$("#node-input-seeker-start-but").prop("disabled",!0),$("#node-input-seeker-totalPaths").html(""),$("#node-input-seeker-spinner").show(),window._introSpectionSeekerStack=[],setTimeout(()=>{RED.nodes.getNodeLinks(n).forEach(e=>{r(e.target,[n.id])});var t,e=window._introSpectionSeekerStack.length;$("#node-input-seeker-start-but").prop("disabled",!1),$("#node-input-seeker-totalPaths").html(e),$("#node-input-seeker-spinner").hide(),50<e?($("#node-input-seeker-show-percent").show(),(t=$("#node-input-seeker-show-percent")).html(""),["-",5,10,20,30,40,50,75,100].forEach(function(e){t.append($("<option></option>").val(e).html(100==e?"All":"-"==e?"Select..":e+"%"))}),t.val("-"),$("#node-input-seeker-show-percent").on("change",e=>{e&&e.preventDefault();e=window._introSpectionSeekerStack.length;let t=25;"-"!=$("#node-input-seeker-show-percent").val()&&(t=parseInt(e*(parseInt($("#node-input-seeker-show-percent").val())/100))),$("#node-input-seeker-totalPaths").html(t+" / "+e),setTimeout(()=>{$("#node-input-seeker-target-container-div").treeList("data",window._introSpectionSeekerStack.sort((e,t)=>e.length<t.length?-1:1).slice(0,t).map(e=>i(e)))},300)}),$("#node-input-seeker-show-percent").trigger("change")):setTimeout(()=>{$("#node-input-seeker-target-container-div").treeList("data",window._introSpectionSeekerStack.sort((e,t)=>e.length<t.length?-1:1).map(e=>i(e)))},300)},300)})},oneditsave:function(){delete window._introSpectionSeekerStack},oneditcancel:function(){delete window._introSpectionSeekerStack},oneditresize:function(e){for(var t=$("#dialog-form>div:not(.node-input-target-list-row)"),n=$("#dialog-form").height(),o=0;o<t.length;o++)n-=$(t[o]).outerHeight(!0);$("#dialog-form>div.node-input-target-list-row").css("height",n+"px")}});
 </script>
 
 <script type="text/html" data-template-name="Seeker">
-
-  <div class="form-row node-input-target-row">
-    <button id="node-input-seeker-target-select" class="red-ui-button">Show Selected</button>
-  </div>
-
-  <div class="form-row node-input-target-row node-input-target-list-row" style="position: relative; min-height: 100px">
-    <div style="position: absolute; top: -30px; right: 0;"><input type="text" id="node-input-seeker-target-filter"></div>
-
-    <div id="node-input-seeker-target-container-div"></div>
-  </div>
 
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name">Name</span></label>
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
 
+  <div class="form-row node-input-target-row">
+    <button id="node-input-seeker-start-but" class="red-ui-button"><span><i class="fa fa-refresh"></i> Find Pathways</span></button>
+    <select class='hide' id="node-input-seeker-show-percent"></select>
+  </div>
+
+  <div class="form-row node-input-target-row node-input-target-list-row" style="margin-top: 40px; position: relative; min-height: 100px">
+    <div style="position: absolute; top: -30px; right: 0;"><input type="text" id="node-input-seeker-target-filter"></div>
+
+    <div id="node-input-seeker-target-container-div"></div>
+  </div>
+
+  <div class="form-row" style="margin-top: -40px;">
+    <label>Total Paths: 
+        <span id="node-input-seeker-totalPaths"></span><img class='hide' id="node-input-seeker-spinner" src='red/images/spin.svg'/>
+    </label>
+  </div>
+
 </script>
+
+<style>
+  .intro-remove-top-left i.red-ui-palette-icon-fa {
+    top: -2px !important;
+    left: 0px !important;
+  }
+</style>
 
 
 <script type="text/html" data-help-name="Seeker">
@@ -15258,27 +15316,7 @@ This page is intentional left blank.
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/sink] --- -->
 <script type="text/javascript">
-  RED.nodes.registerType('Sink',{
-    color: '#e5e4ef',
-    icon: "font-awesome/fa-anchor",
-    category: 'introspection',
-    paletteLabel: "Sink",
-    defaults: {
-      name: {
-        value:"",
-      },
-    },
-    inputs:1,
-    outputs:0,
-
-    label: function() {
-      return (this.name || this._def.paletteLabel);
-    },
-
-    labelStyle: function() {
-      return this.name?"node_label_italic":"";
-    },
-});
+RED.nodes.registerType("Sink",{color:"#e5e4ef",icon:"font-awesome/fa-anchor",category:"introspection",paletteLabel:"Sink",defaults:{name:{value:""}},inputs:1,outputs:0,label:function(){return this.name||this._def.paletteLabel},labelStyle:function(){return this.name?"node_label_italic":""},oneditprepare:function(){var n=this;let i=1;window._introSpectionsinkStack=[];var o=$("#node-input-sink-target-filter").searchBox({style:"compact",delay:300,change:function(){let t=$(this).val().trim().toLowerCase();var e,n=$("#node-input-sink-target-container-div").treeList("data");""===t?($("#node-input-sink-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-sink-target-container-div").treeList("filter",function(e){return-1<e._label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||e.sublabel.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+n.length))}});$("#node-input-sink-target-container-div").css({width:"100%",height:"95%"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistconfirm",function(e,t){t.node&&!t.children&&(RED.view.reveal(t.node.id),RED.view.select(t.node.id),setTimeout(()=>{RED.editor.edit(t.node)},100))}).on("treelistselect",function(e,t){var n;t.node&&(t.children?(n=t.children.filter(e=>e.node.z==RED.workspaces.active()).map(e=>e.node.id),RED.tray.hide(),RED.view.selectNodes({selected:n,onselect:()=>{RED.tray.show()},oncancel:()=>{RED.tray.show()}})):(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw()))});let s=e=>{var t=RED.nodes.node(e[e.length-1]);let n=[];return e.forEach(function(e){var t,e=RED.nodes.node(e)||RED.nodes.junction(e);void 0!==e&&(t=RED.nodes.workspace(e.z)||RED.nodes.subflow(e.z),n.push({label:"",_label:RED.utils.getNodeLabel(e),node:e,sublabel:t&&RED.utils.getNodeLabel(t)||e.z,icon:RED.utils.createNodeIcon(e,!0),class:"intro-remove-top-left"}))}),{node:t,label:RED.utils.getNodeLabel(t),_label:RED.utils.getNodeLabel(t),_pathlen:e.length,sublabel:"Length: "+e.length,selected:!1,checkbox:!1,children:n}};var a=function(t,n){if(n.indexOf(t.id)<0)switch(t.type){case"link in":t.links.forEach(e=>{e=RED.nodes.node(e);e&&a(e,[...n,t.id])});break;case"Seeker":n.push(t.id),window._introSpectionsinkStack=[n,...window._introSpectionsinkStack];break;default:RED.nodes.getNodeLinks(t,i).forEach(e=>{a(e.source,[...n,t.id])})}};$("#node-input-sink-start-but").on("click",e=>{e&&e.preventDefault(),$("#node-input-sink-start-but").prop("disabled",!0),$("#node-input-sink-totalPaths").html(""),$("#node-input-sink-spinner").show(),window._introSpectionsinkStack=[],setTimeout(()=>{RED.nodes.getNodeLinks(n,i).forEach(e=>{a(e.source,[n.id])});var t,e=window._introSpectionsinkStack.length;$("#node-input-sink-start-but").prop("disabled",!1),$("#node-input-sink-totalPaths").html(e),$("#node-input-sink-spinner").hide(),50<e?($("#node-input-sink-show-percent").show(),(t=$("#node-input-sink-show-percent")).html(""),["-",5,10,20,30,40,50,75,100].forEach(function(e){t.append($("<option></option>").val(e).html(100==e?"All":"-"==e?"Select..":e+"%"))}),t.val("-"),$("#node-input-sink-show-percent").on("change",e=>{e&&e.preventDefault();e=window._introSpectionsinkStack.length;let t=25;"-"!=$("#node-input-sink-show-percent").val()&&(t=parseInt(e*(parseInt($("#node-input-sink-show-percent").val())/100))),$("#node-input-sink-totalPaths").html(t+" / "+e),setTimeout(()=>{$("#node-input-sink-target-container-div").treeList("data",window._introSpectionsinkStack.sort((e,t)=>e.length<t.length?-1:1).slice(0,t).map(e=>s(e)))},300)}),$("#node-input-sink-show-percent").trigger("change")):setTimeout(()=>{$("#node-input-sink-target-container-div").treeList("data",window._introSpectionsinkStack.sort((e,t)=>e.length<t.length?-1:1).map(e=>s(e)))},300)},300)})},oneditsave:function(){delete window._introSpectionsinkStack},oneditcancel:function(){delete window._introSpectionsinkStack},oneditresize:function(e){for(var t=$("#dialog-form>div:not(.node-input-target-list-row)"),n=$("#dialog-form").height(),i=0;i<t.length;i++)n-=$(t[i]).outerHeight(!0);$("#dialog-form>div.node-input-target-list-row").css("height",n+"px")}});
 </script>
 
 <script type="text/html" data-template-name="Sink">
@@ -15286,7 +15324,31 @@ This page is intentional left blank.
     <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name">Name</span></label>
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
+
+  <div class="form-row node-input-target-row">
+    <button id="node-input-sink-start-but" class="red-ui-button"><i class="fa fa-refresh"></i> Find Pathways</button>
+    <select class='hide' id="node-input-sink-show-percent"></select>
+  </div>
+
+  <div class="form-row node-input-target-row node-input-target-list-row" style="margin-top: 40px; position: relative; min-height: 100px">
+    <div style="position: absolute; top: -30px; right: 0;"><input type="text" id="node-input-sink-target-filter"></div>
+
+    <div id="node-input-sink-target-container-div"></div>
+  </div>
+
+  <div class="form-row" style="margin-top: -40px;">
+    <label>Total Paths: 
+        <span id="node-input-sink-totalPaths"></span><img id="node-input-sink-spinner" class="hide" src='red/images/spin.svg'/>
+    </label>
+  </div>
 </script>
+
+<style>
+  .intro-remove-top-left i.red-ui-palette-icon-fa {
+    top: -2px !important;
+    left: 0px !important;
+  }
+</style>
 
 
 <script type="text/html" data-help-name="Sink">
@@ -15295,7 +15357,7 @@ This page is intentional left blank.
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/clientcode] --- -->
 <script type="text/javascript">
 
-function handleMsgTracePacket(e,r){if(r.nodeid){let a=RED.nodes.node(r.nodeid);if(a){r=$("#node-input-msgtracer-trace-treelist").treeList("data");let t=!1;if(r.forEach(e=>{e.id==a.id&&(t=!0,e.seenCounter+=1,e.sublabel=e.seenCounter+" @ "+e.workspaceLabel)}),t)$("#node-input-msgtracer-trace-treelist").treeList("data",r);else{var l=RED.nodes.getType(a.type);let e;e=l&&("function"==typeof(l=l.label)?l.call(a):l)||a.type;l={id:a.id,label:"",seenCounter:1,workspaceLabel:(RED.nodes.workspace(a.z)||{label:a.z}).label,sublabel:"1 @ "+(RED.nodes.workspace(a.z)||{label:a.z}).label,selected:!1,checkbox:!1,node:a,icon:RED.utils.createNodeIcon(a,!0)};$("#node-input-msgtracer-trace-treelist").treeList("data",[l,...r])}}}}RED.comms.subscribe("msgtracer:node-received",(e,t)=>{try{handleMsgTracePacket(e,t)}catch(e){console.error(e)}});
+function handleMsgTracePacket(e,r){if(r.nodeid){let a=RED.nodes.node(r.nodeid);if(a){var s,r=$("#node-input-msgtracer-trace-treelist").treeList("data");let t=!1;r.forEach(e=>{e.id==a.id&&(t=!0,e.seenCounter+=1,e.sublabel=e.seenCounter+" @ "+e.workspaceLabel)}),t?$("#node-input-msgtracer-trace-treelist").treeList("data",r):(s={id:a.id,label:"",_label:RED.utils.getNodeLabel(a),seenCounter:1,workspaceLabel:(RED.nodes.workspace(a.z)||{label:a.z}).label,sublabel:"1 @ "+(RED.nodes.workspace(a.z)||{label:a.z}).label,selected:!1,checkbox:!1,node:a,icon:RED.utils.createNodeIcon(a,!0)},$("#node-input-msgtracer-trace-treelist").treeList("data",[s,...r]))}}}RED.comms.subscribe("msgtracer:node-received",(e,t)=>{try{handleMsgTracePacket(e,t)}catch(e){console.error(e)}});
  
 function handleClientCodeFrontend(event,data){var doSend,doStatus,doError,nodeid,_msg,msg,node,payload,topic;"execfunc"==data.msg&&(doSend=(o,d,e)=>{"object"==typeof o&&(o={...e,...o}),$.ajax({url:"ClientCode/"+d,type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify(o),success:function(o){},error:function(o,e,t){RED.notify("ClientCode Communcation Failure: "+d+": "+e,{type:"error",id:d,timeout:3e3})}})},doStatus=(o,d,e)=>{$.ajax({url:"ClientCode/"+d+"/status",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify(o),success:function(o){},error:function(o,e,t){RED.notify("ClientCode Communcation Failure: "+d+": "+e,{type:"error",id:d,timeout:3e3})}})},doError=(o,e,t)=>{RED.notify("ClientCode Failed: "+e+": "+o,{type:"error",id:e,timeout:3e3}),console.log("ClientCode: Error with node: "+e+": "+o)},nodeid=data.nodeid,_msg=data._msg,msg=data._msg,node={id:data.nodeid,send:o=>{doSend(o,nodeid,_msg)},error:o=>{doError(o,nodeid,_msg)},status:o=>{doStatus(o,nodeid,_msg)}},payload=data.payload,topic=data.topic,eval(data.func))}RED.comms.subscribe("introspect:client-code-perform",(o,e)=>{try{handleClientCodeFrontend(o,e)}catch(o){console.error(o)}});
 
@@ -15309,7 +15371,7 @@ function handleClientCodeFrontend(event,data){var doSend,doStatus,doError,nodeid
         value:"",
       },
       clientcode: {
-        value: ""
+        value: "node.send(msg)"
       },
       format: {
         value: "javascript"
@@ -15349,6 +15411,7 @@ function handleClientCodeFrontend(event,data){var doSend,doStatus,doError,nodeid
           msg:true,          
           RED: true,
           node: true,
+          alert: true,
           console: true,
           Buffer: true,
           setTimeout: true,
@@ -15482,6 +15545,10 @@ Functionality:
     <p>
     An example flow with some use cases is included and can be accessed either via 
     the Import Flow dialog or accessed online <a style="color: blue" href="https://flowhub.org/f/e02ba6e534f7a0f4" target="_blank">at here <i class="fa fa-external-link"></i></a>.
+    <p>
+    The code to be executed by the client can also be passed in via the `msg` object using the
+    `clientcode` attribute on the `msg` object. If this attribute is set, it will take precendence
+    over the code defined in the node itself.
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/getflows] --- -->
 <script type="text/javascript">
@@ -15872,210 +15939,226 @@ Functionality:
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops] --- -->
 <script type="text/javascript">
-  (function(){
-  
-    function sendToBackend(node,data = {}) {
+  (function(){  
+    function sendToBackend(node, data = {}) {
+  $.ajax({
+    url: "NodeDevOps/" + node.id,
+    type: "POST",
+    contentType: "application/json; charset=utf-8",
 
-      $.ajax({
-        url:         "NodeDevOps/" + node.id,
-        type:        "POST",
-        contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(data),
 
-        data: JSON.stringify(data),
-
-        success: function (resp) {
-          RED.notify("Node Developer Operation trigger", {
-            type: "success",
-            id: "NodeDevOps",
-            timeout: 2000
-          });
-        },
-
-        error: function (jqXHR, textStatus, errorThrown) {
-          if (jqXHR.status == 404) {
-            RED.notify("Node has not yet been deployed, please deploy.", "error");
-          } else if (jqXHR.status == 405) {
-            RED.notify("Not Allowed.", "error");
-          } else if (jqXHR.status == 500) {
-            RED.notify(node._("common.notification.error", {
-              message: node._("inject.errors.failed")
-            }), "error");
-          } else if (jqXHR.status == 0) {
-            RED.notify(node._("common.notification.error", {
-              message: node._("common.notification.errors.no-response")
-            }), "error");
-          } else {
-            RED.notify(node._("common.notification.error", {
-              message: node._("common.notification.errors.unexpected", {
-                status: jqXHR.status, message: textStatus }) }), "error");
-          }
-        }
+    success: function (resp) {
+      RED.notify("Node Developer Operation trigger", {
+        type: "success",
+        id: "NodeDevOps",
+        timeout: 2000
       });
-    }
-  
-  RED.nodes.registerType('NodeDevOps',{
-    color: '#e5e4ef',
-    icon: "font-awesome/fa-terminal",
-    category: 'nodedev',
-    defaults: {
-      name: { value:"" },
-
-      pname:        { value: "", required: true },
-      pversion:     { value: "", required: true },
-      pauthorname:  { value: "", required: true },
-      pauthoremail: { value: "", required: true },
-      pdescription: { value: "", required: true },
-
-      noderedinstall: { value: false },
-      randompackagename: { value: false },
-
-      nodered_uninstall: { value: false },
-
-      ignore_package_check: { value: false },
-
-      gitcommit:         { value: false },
-      gitcheckforchange: { value: false },
-      githubowner:       { value: ""},
-      githubrepo:        { value: ""},
-      githubbranch:      { value: "main"},
-      githubauthor:      { value: ""},
-      githubauthoremail: { value: "" },
-      githubmessage:     { value: "" },
-      githubgettar:      { value: false },
-
-      npmpublish: { value: false },
-      npmunpublish: { value: false },
-      npmotp: { value: ""},
-
-      writetgzfile: { value: false },
     },
 
-    inputs: 0,
-    outputs: 1,
-
-    label: function() {
-      return (this.name || this._def.paletteLabel);
-    },
-
-    labelStyle: function() {
-      return this.name?"node_label_italic":"";
-    },
-
-    onpaletteadd: function() {
-    },
-
-    oneditprepare: function() {
-     $('#node-input-nodered_uninstall').on('change', () => {
-        if ( $('#node-input-nodered_uninstall').is(":checked") ) {
-           $('#node-input-noderedinstall').prop('checked',false).trigger('change')
-        }
-     })
-
-     $('#node-input-noderedinstall').on('change', () => {
-          if ( $('#node-input-noderedinstall').is(":checked") ) {
-              $('#node-input-nodered_uninstall').prop('checked',false).trigger('change')
-              $("#noderedinstall-options").animate({opacity: 'show', height: 'show'}, 450);
-          } else {
-              $("#noderedinstall-options").animate({opacity: 'hide', height: 'hide'}, 450);
-          }
-     });
-
-     $('#node-input-gitcommit').on('change', () => {
-          if ( $('#node-input-gitcommit').is(":checked") ) {
-              $("#github-options").animate({opacity: 'show', height: 'show'}, 450);
-              $("#gitcommit-options").animate({opacity: 'show', height: 'show'}, 450);
-              $('#node-input-gitcheckforchange').prop('checked',false)
-          } else {
-              $("#gitcommit-options").animate({opacity: 'hide', height: 'hide'}, 450);
-              if ( !$('#node-input-gitcheckforchange').is(":checked") ) {
-                $("#github-options").animate({opacity: 'hide', height: 'hide'}, 450);
-              }
-          }
-     });
-
-     $('#node-input-gitcheckforchange').on('change', () => {
-          if ( $('#node-input-gitcheckforchange').is(":checked") ) {
-              $("#github-options").animate({opacity: 'show', height: 'show'}, 450);
-              $("#gitcommit-options").animate({opacity: 'hide', height: 'hide'}, 450);
-              $('#node-input-gitcommit').prop('checked',false)
-          } else {
-            if ( !$('#node-input-gitcommit').is(":checked") ) {
-              $("#github-options").animate({opacity: 'hide', height: 'hide'}, 450);
-              $("#gitcommit-options").animate({opacity: 'hide', height: 'hide'}, 450);
-            }
-          }
-     });
-
-     $('#node-input-githubgettar').on('change', () => {
-          if ( $('#node-input-githubgettar').is(":checked") ) {
-              $("#github-options").animate({opacity: 'show', height: 'show'}, 450);
-              $('#node-input-ignore_package_check').prop('checked',true)
-          } else {
-             if ( !$('#node-input-gitcheckforchange').is(":checked") && !$('#node-input-gitcommit').is(":checked") ) {
-              $("#github-options").animate({opacity: 'hide', height: 'hide'}, 450);
-            }
-          }
-     });
-
-     $('#node-input-npmpublish').on('change', () => {
-          if ( $('#node-input-npmpublish').is(":checked") ) {
-              $("#npmpublish-options").animate({opacity: 'show', height: 'show'}, 450);
-              $('#node-input-npmunpublish').prop('checked',false)
-          } else {
-            if ( !$('#node-input-npmunpublish').is(":checked") ) {
-              $("#npmpublish-options").animate({opacity: 'hide', height: 'hide'}, 450);
-            }
-          }
-     });
-
-     $('#node-input-npmunpublish').on('change', () => {
-          if ( $('#node-input-npmunpublish').is(":checked") ) {
-              $("#npmpublish-options").animate({opacity: 'show', height: 'show'}, 450);
-              $('#node-input-npmpublish').prop('checked',false)
-          } else {
-            if ( !$('#node-input-npmpublish').is(":checked") ) {
-              $("#npmpublish-options").animate({opacity: 'hide', height: 'hide'}, 450);
-            }
-          }
-     });
-
-    },
-
-    oneditcancel: function() {
-    },
-
-    oneditsave: function() {
-    },
-
-    onpaletteremove: function() {
-    },
-
-
-    button: {
-      enabled: function() {
-        return !this.changed
-      },
-
-      onclick: function () {
-        if (this.changed) {
-          return RED.notify(RED._("notification.warning", {
-            message: RED._("notification.warnings.undeployedChanges")
-          }), "warning");
-        }
-
-        var that = this;
-        var data = {}
-
-        Object.keys(that._def.defaults).forEach( kname => {
-          data[kname] = that[kname]
-        })
-        
-        sendToBackend(that, data)
+    error: function (jqXHR, textStatus, errorThrown) {
+      if (jqXHR.status == 404) {
+        RED.notify("Node has not yet been deployed, please deploy.", "error");
+      } else if (jqXHR.status == 405) {
+        RED.notify("Not Allowed.", "error");
+      } else if (jqXHR.status == 500) {
+        RED.notify(node._("common.notification.error", {
+          message: node._("inject.errors.failed")
+        }), "error");
+      } else if (jqXHR.status == 0) {
+        RED.notify(node._("common.notification.error", {
+          message: node._("common.notification.errors.no-response")
+        }), "error");
+      } else {
+        RED.notify(node._("common.notification.error", {
+          message: node._("common.notification.errors.unexpected", {
+            status: jqXHR.status, message: textStatus
+          })
+        }), "error");
       }
+    }
+  });
+}
+
+RED.nodes.registerType('NodeDevOps', {
+  color: '#e5e4ef',
+  icon: "font-awesome/fa-terminal",
+  category: 'nodedev',
+  defaults: {
+    name: { value: "" },
+
+    pname: { value: "", required: true },
+    pversion: { value: "", required: true },
+    pauthorname: { value: "", required: true },
+    pauthoremail: { value: "", required: true },
+    pdescription: { value: "", required: true },
+
+    noderedinstall: { value: false },
+    randompackagename: { value: false },
+
+    nodered_uninstall: { value: false },
+
+    ignore_package_check: { value: false },
+
+    gitcommit: { value: false },
+    gitcheckforchange: { value: false },
+    githubowner: { value: "" },
+    githubrepo: { value: "" },
+    githubbranch: { value: "main" },
+    githubauthor: { value: "" },
+    githubauthoremail: { value: "" },
+    githubmessage: { value: "" },
+    githubgettar: { value: false },
+    githubtoken: { value: "GITHUB_TOKEN" },
+    githubtokenType: { value: "env" },
+
+    npmpublish: { value: false },
+    npmunpublish: { value: false },
+    npmotp: { value: "" },
+    npmtoken: { value: "NPM_AUTH_TOKEN" },
+    npmtokenType: { value: "env" },
+
+    writetgzfile: { value: false },
+
+  },
+
+  inputs: 0,
+  outputs: 1,
+
+  label: function () {
+    return (this.name || this._def.paletteLabel);
+  },
+
+  labelStyle: function () {
+    return this.name ? "node_label_italic" : "";
+  },
+
+  onpaletteadd: function () {
+  },
+
+  oneditprepare: function () {
+    $('#node-input-nodered_uninstall').on('change', () => {
+      if ($('#node-input-nodered_uninstall').is(":checked")) {
+        $('#node-input-noderedinstall').prop('checked', false).trigger('change')
+      }
+    })
+
+    $('#node-input-noderedinstall').on('change', () => {
+      if ($('#node-input-noderedinstall').is(":checked")) {
+        $('#node-input-nodered_uninstall').prop('checked', false).trigger('change')
+        $("#noderedinstall-options").animate({ opacity: 'show', height: 'show' }, 450);
+      } else {
+        $("#noderedinstall-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+      }
+    });
+
+    $('#node-input-gitcommit').on('change', () => {
+      if ($('#node-input-gitcommit').is(":checked")) {
+        $("#github-options").animate({ opacity: 'show', height: 'show' }, 450);
+        $("#gitcommit-options").animate({ opacity: 'show', height: 'show' }, 450);
+        $('#node-input-gitcheckforchange').prop('checked', false)
+      } else {
+        $("#gitcommit-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        if (!$('#node-input-gitcheckforchange').is(":checked")) {
+          $("#github-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        }
+      }
+    });
+
+    $('#node-input-gitcheckforchange').on('change', () => {
+      if ($('#node-input-gitcheckforchange').is(":checked")) {
+        $("#github-options").animate({ opacity: 'show', height: 'show' }, 450);
+        $("#gitcommit-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        $('#node-input-gitcommit').prop('checked', false)
+      } else {
+        if (!$('#node-input-gitcommit').is(":checked")) {
+          $("#github-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+          $("#gitcommit-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        }
+      }
+    });
+
+    $('#node-input-githubgettar').on('change', () => {
+      if ($('#node-input-githubgettar').is(":checked")) {
+        $("#github-options").animate({ opacity: 'show', height: 'show' }, 450);
+        $('#node-input-ignore_package_check').prop('checked', true)
+      } else {
+        if (!$('#node-input-gitcheckforchange').is(":checked") && !$('#node-input-gitcommit').is(":checked")) {
+          $("#github-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        }
+      }
+    });
+
+    $('#node-input-npmpublish').on('change', () => {
+      if ($('#node-input-npmpublish').is(":checked")) {
+        $("#npmpublish-options").animate({ opacity: 'show', height: 'show' }, 450);
+        $('#node-input-npmunpublish').prop('checked', false)
+      } else {
+        if (!$('#node-input-npmunpublish').is(":checked")) {
+          $("#npmpublish-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        }
+      }
+    });
+
+    $('#node-input-npmunpublish').on('change', () => {
+      if ($('#node-input-npmunpublish').is(":checked")) {
+        $("#npmpublish-options").animate({ opacity: 'show', height: 'show' }, 450);
+        $('#node-input-npmpublish').prop('checked', false)
+      } else {
+        if (!$('#node-input-npmpublish').is(":checked")) {
+          $("#npmpublish-options").animate({ opacity: 'hide', height: 'hide' }, 450);
+        }
+      }
+    });
+
+    $("#node-input-npmtoken").typedInput({
+      types: ["env", "msg", "global", "cred"],
+      typeField: "#node-input-npmtokenType"
+    });
+
+    $("#node-input-githubtoken").typedInput({
+      types: ["env", "msg", "global", "cred"],
+      typeField: "#node-input-githubtokenType"
+    });
+
+  },
+
+  oneditcancel: function () {
+  },
+
+  oneditsave: function () {
+  },
+
+  onpaletteremove: function () {
+  },
+
+
+  button: {
+    enabled: function () {
+      return !this.changed
     },
 
-  });
-})();
+    onclick: function () {
+      if (this.changed) {
+        return RED.notify(RED._("notification.warning", {
+          message: RED._("notification.warnings.undeployedChanges")
+        }), "warning");
+      }
+
+      var that = this;
+      var data = {}
+
+      Object.keys(that._def.defaults).forEach(kname => {
+        data[kname] = that[kname]
+      })
+
+      sendToBackend(that, data)
+    }
+  },
+
+});
+
+  })();
 </script>
 
 <script type="text/html" data-template-name="NodeDevOps">
@@ -16084,8 +16167,8 @@ Functionality:
     <input type="text" id="node-input-name" placeholder="Name"/>
   </div>
 
-  <hr/>
-  
+  <hr />
+
   <div class="form-row">
     <label for="node-input-pname" style="min-width: 150px;">Package Details:</label>
   </div>
@@ -16099,7 +16182,7 @@ Functionality:
     <label for="node-input-pversion" style="min-width: 150px;"><i class="fa fa-tag"></i> Version</label>
     <input type="text" id="node-input-pversion" placeholder="0.0.1"/>
   </div>
-  
+
   <div class="form-row">
     <label for="node-input-pauthorname" style="min-width: 150px;"><i class="fa fa-address-book-o"></i> Author Name</label>
     <input type="text" id="node-input-pauthorname" placeholder="Alfred E. Neumann"/>
@@ -16129,15 +16212,15 @@ Functionality:
     <input type="checkbox" id="node-input-writetgzfile" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
 
-  <hr/>
+  <hr />
 
   <div class="form-row">
-    <label for="node-input-noderedinstall" style="min-width: 120px;">
+    <label for="node-input-noderedinstall" style="min-width: 180px;">
               <span>Install locally?</span>
           </label>
-    <input type="checkbox" id="node-input-noderedinstall" style="display:inline-block; width:15px; vertical-align:baseline;">
+    <input type="checkbox" id="node-input-noderedinstall" style="margin-left: 10px; display:inline-block; width:15px; vertical-align:baseline;">
   </div>
-  
+
   <div id="noderedinstall-options">
     <div class="form-row">
       <label for="node-input-randompackagename" style="min-width: 180px;">
@@ -16148,13 +16231,13 @@ Functionality:
   </div>
 
   <div class="form-row">
-    <label for="node-input-nodered_uninstall" style="min-width: 120px;">
-                <span>Uninstall package?</span>
+    <label for="node-input-nodered_uninstall" style="min-width: 180px;">
+                <span>Remove package locally?</span>
             </label>
-    <input type="checkbox" id="node-input-nodered_uninstall" style="display:inline-block; width:15px; vertical-align:baseline;">
+    <input type="checkbox" id="node-input-nodered_uninstall" style="margin-left: 10px; display:inline-block; width:15px; vertical-align:baseline;">
   </div>
 
-  <hr/>
+  <hr />
   <div class="form-row">
     <label for="node-input-npmpublish" style="min-width: 120px;">
          <span>NPMjs: Publish</span>
@@ -16168,6 +16251,14 @@ Functionality:
 
   <div id="npmpublish-options">
     <div class="form-row">
+      <label for="node-input-npmtoken" style="min-width: 150px;">
+        <i class="fa fa-key"></i>NPM Auth Token
+      </label>
+      <input type="text" id="node-input-npmtoken">
+      <input type="hidden" id="node-input-npmtokenType">
+    </div>
+
+    <div class="form-row">
       <label for="node-input-npmotp" style="min-width: 150px;"><i class="fa fa-tag"></i> One Time Password</label>
       <input type="text" id="node-input-npmotp" placeholder="111999"/>
     </div>
@@ -16175,7 +16266,7 @@ Functionality:
 
   <hr />
   <div class="form-row">
-      <label for="node-input-gitcommit" style="min-width: 120px;">
+    <label for="node-input-gitcommit" style="min-width: 120px;">
                <span>GitHub: Commit?</span>
       </label>
     <input type="checkbox" id="node-input-gitcommit" style="display:inline-block; width:15px; vertical-align:baseline;">
@@ -16183,26 +16274,34 @@ Functionality:
     <label for="node-input-gitcheckforchange" style="margin-left: 30px; min-width: 100px;">
                 <span>What changed?</span>
      </label>
-     <input type="checkbox" id="node-input-gitcheckforchange" style="display:inline-block; width:15px; vertical-align:baseline;">
+    <input type="checkbox" id="node-input-gitcheckforchange" style="display:inline-block; width:15px; vertical-align:baseline;">
 
     <label for="node-input-githubgettar" style="margin-left: 15px; min-width: 100px;">
-                <span>Get Repo?</span>
+                <span>Retrieve Repo?</span>
      </label>
-     <input type="checkbox" id="node-input-githubgettar" style="display:inline-block; width:15px; vertical-align:baseline;">
+    <input type="checkbox" id="node-input-githubgettar" style="display:inline-block; width:15px; vertical-align:baseline;">
   </div>
 
   <div id="github-options">
+    <div class="form-row">
+      <label for="node-input-githubtoken" style="min-width: 150px;">
+        <i class="fa fa-key"></i>GitHub Auth Token
+      </label>
+      <input type="text" id="node-input-githubtoken">
+      <input type="hidden" id="node-input-githubtokenType">
+    </div>
+
     <div class="form-row">
       <label for="node-input-githubowner" style="min-width: 150px;"><i class="fa fa-user-o"></i> GitHub Username</label>
       <input type="text" id="node-input-githubowner" placeholder="username"/>
     </div>
     <div class="form-row">
-       <label for="node-input-githubrepo" style="min-width: 150px;"><i class="fa fa-paw"></i> Repository</label>
-       <input type="text" id="node-input-githubrepo" placeholder=""/>
+      <label for="node-input-githubrepo" style="min-width: 150px;"><i class="fa fa-paw"></i> Repository</label>
+      <input type="text" id="node-input-githubrepo" placeholder=""/>
     </div>
     <div class="form-row">
-       <label for="node-input-githubbranch" style="min-width: 150px;"><i class="fa fa-tree"></i> Branch</label>
-       <input type="text" id="node-input-githubbranch" placeholder="main"/>
+      <label for="node-input-githubbranch" style="min-width: 150px;"><i class="fa fa-tree"></i> Branch</label>
+      <input type="text" id="node-input-githubbranch" placeholder="main"/>
     </div>
   </div>
 
@@ -16219,6 +16318,7 @@ Functionality:
       <label for="node-input-githubauthoremail" style="min-width: 150px;"><i class="fa fa-envelope-o"></i> Author Email</label>
       <input type="text" id="node-input-githubauthoremail" placeholder="joe@spreads-the.love"/>
     </div>
+
   </div>
 </script>
 
@@ -16696,6 +16796,100 @@ Functionality:
                 <option value="base64">Base64</option>
                 <option value="text">Text</option>
                 <option value="typescript">TypeScript</option>
+                <option value="python">Python</option>
+                <option value="go">Go</option>
+                <option value="postiats">ATS</option>
+                <option value="apex">Apex</option>
+                <option value="azcli">Azure CLI</option>
+                <option value="bat">Batch</option>
+                <option value="bicep">Bicep</option>
+                <option value="c">C</option>
+                <option value="csharp">C#</option>
+                <option value="cpp">C++</option>
+                <option value="csp">CSP</option>
+                <option value="css">CSS</option>
+                <option value="cameligo">Cameligo</option>
+                <option value="coffeescript">CoffeeScript</option>
+                <option value="cypher">Cypher</option>
+                <option value="msdax">DAX</option>
+                <option value="dart">Dart</option>
+                <option value="dockerfile">Dockerfile</option>
+                <option value="ecl">ECL</option>
+                <option value="elixir">Elixir</option>
+                <option value="fsharp">F#</option>
+                <option value="flow9">Flow9</option>
+                <option value="freemarker2">FreeMarker2</option>
+                <option value="freemarker2.tag-angle.interpolation-bracket">FreeMarker2 (Angle&#x2F;Bracket)</option>
+                <option value="freemarker2.tag-angle.interpolation-dollar">FreeMarker2 (Angle&#x2F;Dollar)</option>
+                <option value="freemarker2.tag-auto.interpolation-bracket">FreeMarker2 (Auto&#x2F;Bracket)</option>
+                <option value="freemarker2.tag-auto.interpolation-dollar">FreeMarker2 (Auto&#x2F;Dollar)</option>
+                <option value="freemarker2.tag-bracket.interpolation-bracket">FreeMarker2 (Bracket&#x2F;Bracket)</option>
+                <option value="freemarker2.tag-bracket.interpolation-dollar">FreeMarker2 (Bracket&#x2F;Dollar)</option>
+                <option value="go">Go</option>
+                <option value="graphql">GraphQL</option>
+                <option value="html">HTML</option>
+                <option value="handlebars">Handlebars</option>
+                <option value="ini">Ini</option>
+                <option value="json">JSON</option>
+                <option value="java">Java</option>
+                <option value="javascript">JavaScript</option>
+                <option value="kotlin">Kotlin</option>
+                <option value="less">Less</option>
+                <option value="lexon">Lexon</option>
+                <option value="liquid">Liquid</option>
+                <option value="lua">Lua</option>
+                <option value="mdx">MDX</option>
+                <option value="mips">MIPS</option>
+                <option value="markdown">Markdown</option>
+                <option value="m3">Modula-3</option>
+                <option value="mysql">MySQL</option>
+                <option value="objective-c">Objective-C</option>
+                <option value="php">PHP</option>
+                <option value="powerquery">PQ</option>
+                <option value="pascal">Pascal</option>
+                <option value="pascaligo">Pascaligo</option>
+                <option value="perl">Perl</option>
+                <option value="plaintext">Plain Text</option>
+                <option value="pgsql">PostgreSQL</option>
+                <option value="powershell">PowerShell</option>
+                <option value="pug">Pug</option>
+                <option value="python">Python</option>
+                <option value="qsharp">Q#</option>
+                <option value="r">R</option>
+                <option value="razor">Razor</option>
+                <option value="redshift">Redshift</option>
+                <option value="ruby">Ruby</option>
+                <option value="rust">Rust</option>
+                <option value="sql">SQL</option>
+                <option value="systemverilog">SV</option>
+                <option value="scss">Sass</option>
+                <option value="scala">Scala</option>
+                <option value="shell">Shell</option>
+                <option value="sb">Small Basic</option>
+                <option value="st">StructuredText</option>
+                <option value="swift">Swift</option>
+                <option value="hcl">Terraform</option>
+                <option value="twig">Twig</option>
+                <option value="typescript">TypeScript</option>
+                <option value="typespec">TypeSpec</option>
+                <option value="verilog">V</option>
+                <option value="vb">Visual Basic</option>
+                <option value="wgsl">WebGPU Shading Language</option>
+                <option value="xml">XML</option>
+                <option value="yaml">YAML</option>
+                <option value="abap">abap</option>
+                <option value="aes">aes</option>
+                <option value="clojure">clojure</option>
+                <option value="jsonata">jsonata</option>
+                <option value="julia">julia</option>
+                <option value="pla">pla</option>
+                <option value="proto">protobuf</option>
+                <option value="restructuredtext">reStructuredText</option>
+                <option value="redis">redis</option>
+                <option value="scheme">scheme</option>
+                <option value="sol">sol</option>
+                <option value="sparql">sparql</option>
+                <option value="tcl">tcl</option>
             </select>
             <button type="button" id="node-pkgfile-expand-editor" class="red-ui-button red-ui-button-small"><i class="fa fa-expand"></i></button>
         </div>
@@ -17158,19 +17352,19 @@ Functionality:
         category: 'nodedev',
         color: '#e5e4ef',
         defaults: {
-            name: {value:""},
+            name: { value:"" },
 
-            otptype: {value:"totp"},
-            secret: { value: "OTP_SECRET"},
-            secretType: { value: "env"},
-            issuer: { value: "" },
-            label: { value: "" },
-            digits: { value: 6 },
-            period: { value: 30 },
-            algorithm: { value: "SHA1" },
-            counter: { value: 0 },
+            otptype:    { value:"totp" },
+            secret:     { value: "OTP_SECRET" },
+            secretType: { value: "env" },
+            issuer:     { value: "" },
+            label:      { value: "" },
+            digits:     { value: 6 },
+            period:     { value: 30 },
+            algorithm:  { value: "SHA1" },
+            counter:    { value: 0 },
 
-            property: { value:"payload" },
+            property:     { value:"payload" },
             propertyType: { value:"msg" }
         },
         inputs:1,

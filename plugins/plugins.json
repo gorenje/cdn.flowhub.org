@@ -2,18 +2,6 @@
     {
         "editor": true,
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhub_sidebar",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
-        "name": "flowhub_sidebar",
-        "plugins": [],
-        "runtime": false,
-        "user": false,
-        "version": "0.8.3"
-    },
-    {
-        "editor": true,
-        "enabled": true,
         "id": "@gregoriusrippenstein/node-red-contrib-introspection/screenshot",
         "local": true,
         "module": "@gregoriusrippenstein/node-red-contrib-introspection",
@@ -21,7 +9,7 @@
         "plugins": [],
         "runtime": false,
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "editor": true,
@@ -45,7 +33,19 @@
         "plugins": [],
         "runtime": false,
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-nodedev/supportdraganddrop",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-nodedev",
+        "name": "supportdraganddrop",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.5.0"
     },
     {
         "editor": true,
@@ -94,5 +94,29 @@
         "runtime": false,
         "user": false,
         "version": "6.7.195"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhub_sidebar",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhub_sidebar",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.8.4"
+    },
+    {
+        "editor": true,
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/customdraganddrop",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "customdraganddrop",
+        "plugins": [],
+        "runtime": false,
+        "user": false,
+        "version": "0.3.7"
     }
 ]

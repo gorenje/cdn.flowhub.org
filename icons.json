@@ -3,7 +3,7 @@
     "@gdziuba/node-red-usbhid": [
         "usb.png"
     ],
-    "@gorenje/node-red-contrib-mindmap": [
+    "@gorenje/node-red-mindmap": [
         "aeon.svg",
         "archive_org.svg",
         "change.svg",
@@ -28,7 +28,9 @@
         "flowhubpush.svg"
     ],
     "@gregoriusrippenstein/node-red-contrib-introspection": [
-        "introspesubflow.svg"
+        "introspesubflow.svg",
+        "swap-inject-to-change.svg",
+        "switch-inject-to-change.svg"
     ],
     "@gregoriusrippenstein/node-red-contrib-nodedev": [
         "nodedevsubflow.svg"

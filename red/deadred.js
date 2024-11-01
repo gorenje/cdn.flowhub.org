@@ -276,16 +276,18 @@ var DEADRED = (function() {
                 break
 
             case "ClientCode":
+                let ccCode = msg.clientcode || nde.clientcode
+
                 RED.comms.emit([{
                     "topic":"introspect:client-code-perform",
                     "data":{
-                        "msg":"execfunc",
-                        "payload":msg.payload,
-                        "topic":msg.topic,
-                        "func": nde.clientcode,
-                        "nodeid": nde.id,
-                        "_msg": { ...msg },
-                        "format":"string["+nde.clientcode.length+"]"
+                        "msg":     "execfunc",
+                        "payload": msg.payload,
+                        "topic":   msg.topic,
+                        "func":    ccCode,
+                        "nodeid":  nde.id,
+                        "_msg":    { ...msg },
+                        "format":  `string[${ccCode.length}]`
                     }
                 }])
 
@@ -1479,16 +1481,18 @@ var DEADRED = (function() {
             for( let idx = 0; idx < itemCount ; idx++ ) {
                 let itm = itemPtr[idx]
 
-                if ( itm.type == "text/uri-list" || itm.type == "text/x-moz-url" ) {
+                if ( ( itm.type == "text/uri-list" ||
+                       itm.type == "text/x-moz-url" ) && itm.kind == "string" ) {
                     waitingOnNode++;
 
                     let yPos = 40 * waitingOnNode
 
                     itm.getAsString( (url) => {
                         let urlAndTitle = url.split("\n")
-                        nodesToBeImported.push({
+
+                        let data = {
                             "id": RED.nodes.id(),
-                            "type": "Inspiration",
+                            "type": "Bookmark",
                             "name": urlAndTitle[1] || "Web Bookmark",
                             "info": urlAndTitle[0],
                             "sumPass": false,
@@ -1499,7 +1503,20 @@ var DEADRED = (function() {
                             "x": 0,
                             "y": yPos,
                             "wires": [[ ]]
-                        })
+                        }
+
+                        let nodeCopy = nodesToBeImported.filter(d => d.info.indexOf(urlAndTitle[0]) > -1)[0]
+
+                        if ( !nodeCopy ) {
+                            nodesToBeImported.push(data)
+                        } else {
+                            if (data.name != "Web Bookmark" && nodeCopy.name == "Web Bookmark") {
+                                nodeCopy.name = data.name
+                                nodeCopy.type = data.type
+                            }
+                            waitingOnNode--
+                        }
+
                     })
                 } else if ( itm.type.startsWith("image/") ) {
                     waitingOnNode++
@@ -1510,7 +1527,7 @@ var DEADRED = (function() {
                     file2base64Image(file, dataUrl => {
                         nodesToBeImported.push({
                             "id": RED.nodes.id(),
-                            "type": "Sketch",
+                            "type": "Image",
                             "name": file.name,
                             "info": `<img src="${dataUrl}"/>\n`,
                             "sumPass": false,
@@ -1633,25 +1650,29 @@ var DEADRED = (function() {
         // works outside of the workspace area. But this is only a prototype.
         $(window).on('paste', (event) => {
             try {
-                let pasteText = event.originalEvent.clipboardData.getData('text')
-                let data = JSON.parse(pasteText)
+                window.pasteEvent = event
 
-                // these are pastes into the import dialog or the search field, ignore those
-                // pastes and let others deal with the contents.
-                if (event.target && ( event.target.id == "red-ui-clipboard-dialog-import-text" ||
-                                      event.target.classList.contains("red-ui-searchBox-input" ))) {
+                // there too many edge cases so explicitly on those elements that are
+                // safe are selected here.
+                if (!event.target || !(event.target.id == "red-ui-header" ||
+                                       event.target.id == "red-ui-workspace-chart" )) {
                     return
                 }
 
-                if ( Array.isArray(data) ) {
-                    RED.view.importNodes(data, {
-                        generateIds: true,
-                        addFlow: false,
-                        touchImport: false,
-                        generateDefaultNames: false
-                    })
+                let pasteText = event.originalEvent.clipboardData.getData('text')
+                let data = JSON.parse(pasteText)
+
+                if (Array.isArray(data)) {
+                    try {
+                        RED.view.importNodes(data, {
+                            generateIds: false,
+                            addFlow: false,
+                            touchImport: false,
+                            generateDefaultNames: false
+                        })
+                    } catch (ex) { RED.notify( `Error: ${ex.message}`, { type: "warning"}) }
                 }
-            } catch(ex) { /* keep quiet */ }
+            } catch (ex) { RED.notify(`Error: ${ex.message}`, { type: "warning" }) }
         })
 
         console.log( "DEADRED initialised" )

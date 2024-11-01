@@ -458,30 +458,6 @@
     },
     {
         "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
-        "name": "flowhubpull",
-        "types": [
-            "FlowHubPull"
-        ],
-        "user": false,
-        "version": "0.8.3"
-    },
-    {
-        "enabled": true,
-        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg",
-        "local": true,
-        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
-        "name": "flowhubcfg",
-        "types": [
-            "FlowHubCfg"
-        ],
-        "user": false,
-        "version": "0.8.3"
-    },
-    {
-        "enabled": true,
         "id": "node-red-contrib-dnsquery/dnsquery",
         "local": true,
         "module": "node-red-contrib-dnsquery",
@@ -885,7 +861,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "enabled": true,
@@ -897,7 +873,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "enabled": true,
@@ -909,7 +885,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "enabled": true,
@@ -921,7 +897,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "enabled": true,
@@ -933,7 +909,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "enabled": true,
@@ -945,7 +921,7 @@
             "InstallPackage"
         ],
         "user": false,
-        "version": "0.9.3"
+        "version": "0.9.11"
     },
     {
         "enabled": true,
@@ -982,7 +958,7 @@
             "NodeDevOps"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -994,7 +970,7 @@
             "NodeFactory"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1006,7 +982,7 @@
             "PkgFile"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1018,7 +994,7 @@
             "NpmTarBall"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1030,7 +1006,7 @@
             "NodeRedInstall"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1042,7 +1018,7 @@
             "NpmPublish"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1054,7 +1030,7 @@
             "OTPGenerate"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1066,7 +1042,7 @@
             "NodeFactorySidebarCfg"
         ],
         "user": false,
-        "version": "0.4.5"
+        "version": "0.5.0"
     },
     {
         "enabled": true,
@@ -1394,292 +1370,6 @@
     },
     {
         "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/base",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "base",
-        "types": [],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/topic",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "topic",
-        "types": [
-            "Topic"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/observation",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "observation",
-        "types": [
-            "Observation"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/question",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "question",
-        "types": [
-            "Question"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/thought",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "thought",
-        "types": [
-            "Thought"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/idea",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "idea",
-        "types": [
-            "Idea"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/analogy",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "analogy",
-        "types": [
-            "Analogy"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/aphorism",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "aphorism",
-        "types": [
-            "Aphorism"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/poesie",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "poesie",
-        "types": [
-            "Poesie"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/humour",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "humour",
-        "types": [
-            "Humour"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/treasure",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "treasure",
-        "types": [
-            "Treasure"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/consequence",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "consequence",
-        "types": [
-            "Consequence"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/advantage",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "advantage",
-        "types": [
-            "Advantage"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/disadvantage",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "disadvantage",
-        "types": [
-            "Disadvantage"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/text",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "text",
-        "types": [
-            "Text"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/blog-post",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "blog-post",
-        "types": [
-            "Blog-Post"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/comment",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "comment",
-        "types": [
-            "Comment"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/codebase",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "codebase",
-        "types": [
-            "Code-Base"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/sketch",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "sketch",
-        "types": [
-            "Sketch"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/inspiration",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "inspiration",
-        "types": [
-            "Inspiration"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/quote",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "quote",
-        "types": [
-            "Quote"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/definition",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "definition",
-        "types": [
-            "Definition"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/book",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "book",
-        "types": [
-            "Book"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
-        "id": "@gorenje/node-red-contrib-mindmap/author",
-        "local": true,
-        "module": "@gorenje/node-red-contrib-mindmap",
-        "name": "author",
-        "types": [
-            "Author"
-        ],
-        "user": false,
-        "version": "0.1.4"
-    },
-    {
-        "enabled": true,
         "id": "@gregoriusrippenstein/node-red-scratchpad/scratchpad",
         "local": true,
         "module": "@gregoriusrippenstein/node-red-scratchpad",
@@ -1717,5 +1407,363 @@
         ],
         "user": false,
         "version": "0.5.473"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhubpull",
+        "types": [
+            "FlowHubPull"
+        ],
+        "user": false,
+        "version": "0.8.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg",
+        "local": true,
+        "module": "@gregoriusrippenstein/node-red-contrib-flowhub",
+        "name": "flowhubcfg",
+        "types": [
+            "FlowHubCfg"
+        ],
+        "user": false,
+        "version": "0.8.4"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/base",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "base",
+        "types": [],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/topic",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "topic",
+        "types": [
+            "Topic"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/observation",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "observation",
+        "types": [
+            "Observation"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/question",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "question",
+        "types": [
+            "Question"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/thought",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "thought",
+        "types": [
+            "Thought"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/idea",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "idea",
+        "types": [
+            "Idea"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/dream",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "dream",
+        "types": [
+            "Dream"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/metaphor",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "metaphor",
+        "types": [
+            "Metaphor"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/aphorism",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "aphorism",
+        "types": [
+            "Aphorism"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/poesie",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "poesie",
+        "types": [
+            "Poesie"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/humour",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "humour",
+        "types": [
+            "Humour"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/treasure",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "treasure",
+        "types": [
+            "Treasure"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/consequence",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "consequence",
+        "types": [
+            "Consequence"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/advantage",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "advantage",
+        "types": [
+            "Advantage"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/disadvantage",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "disadvantage",
+        "types": [
+            "Disadvantage"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/text",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "text",
+        "types": [
+            "Text"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/blog-post",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "blog-post",
+        "types": [
+            "Blog-Post"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/image",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "image",
+        "types": [
+            "Image"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/comment",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "comment",
+        "types": [
+            "Comment"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/codebase",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "codebase",
+        "types": [
+            "Code-Base"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/art",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "art",
+        "types": [
+            "Art"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/learning",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "learning",
+        "types": [
+            "Learning"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/inspiration",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "inspiration",
+        "types": [
+            "Inspiration"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/quote",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "quote",
+        "types": [
+            "Quote"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/definition",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "definition",
+        "types": [
+            "Definition"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/bookmark",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "bookmark",
+        "types": [
+            "Bookmark"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/book",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "book",
+        "types": [
+            "Book"
+        ],
+        "user": false,
+        "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "@gorenje/node-red-mindmap/author",
+        "local": true,
+        "module": "@gorenje/node-red-mindmap",
+        "name": "author",
+        "types": [
+            "Author"
+        ],
+        "user": false,
+        "version": "0.3.7"
     }
 ]
