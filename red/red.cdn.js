@@ -392,10 +392,16 @@ var RED = (function() {
                     var currentHash = window.location.hash;
                     // store the initial flow to local storage for the
                     // flowcompare node
-                    RED.settings.setLocal("flowdata", JSON.stringify({
+                    let localContent = JSON.stringify({
                         rev: RED.nodes.id() + RED.nodes.id(),
                         flows: nodes.flows
-                    }))
+                    })
+                    // causes DOMException if this is very large on start
+                    if ( localContent.length < 10000000 ) {
+                        RED.settings.setLocal("flowdata", localContent)
+                    }
+
+
                     RED.nodes.version(nodes.rev);
                     loader.reportProgress(RED._("event.importFlows"),90 )
                     try {
