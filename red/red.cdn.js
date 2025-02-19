@@ -39504,6 +39504,12 @@ RED.editor = (function() {
         reader.readAsDataURL(file);
     }
 
+    function file2Text(file,cb) {
+        file.arrayBuffer().then(d => {
+            cb( new TextDecoder().decode(d) )
+        }).catch(ex => { cb(`error: ${ex}`) })
+    }
+
     var initialized = false;
     var currentEditor = null;
     /**
@@ -39529,6 +39535,7 @@ RED.editor = (function() {
                     if (files.length === 1) {
                         var file = files[0];
                         var name = file.name.toLowerCase();
+                        var fileType = file.type.toLowerCase();
 
                         if (name.match(/\.(apng|avif|gif|jpeg|png|svg|webp)$/)) {
                             file2base64Image(file, function (image) {
@@ -39540,6 +39547,19 @@ RED.editor = (function() {
                             });
                             return;
                         }
+
+                        /* support text-based file types */
+                        if ( name.match(/\.(txt|md|js|php|py)$/) || fileType.startsWith("text/") ) {
+                            file2Text(file, function (txt) {
+                                var session = currentEditor.getSession();
+                                var pos = session.getCursorPosition();
+                                session.insert(pos, txt);
+                                $("#red-ui-image-drop-target").hide();
+                            });
+                            return;
+                        }
+
+                        console.log(`Unsupported drop type or extension: ${fileType} / ${name}`)
                     }
                 }
                 $("#red-ui-image-drop-target").hide();
