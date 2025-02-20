@@ -39561,6 +39561,18 @@ RED.editor = (function() {
 
                         console.log(`Unsupported drop type or extension: ${fileType} / ${name}`)
                     }
+                } else if ($.inArray("text/plain", ev.originalEvent.dataTransfer.types) != -1) {
+                    let item = Object.values(ev.originalEvent.dataTransfer.items).filter(d => d.type == "text/plain")[0]
+
+                    if (item) {
+                         item.getAsString(txt => {
+                            var session = currentEditor.getSession();
+                            var pos = session.getCursorPosition();
+                            session.insert(pos, txt);
+                            $("#red-ui-image-drop-target").hide();
+                         })
+                         return
+                    }
                 }
                 $("#red-ui-image-drop-target").hide();
             });
