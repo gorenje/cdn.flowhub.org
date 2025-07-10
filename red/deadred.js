@@ -1180,6 +1180,31 @@ var DEADRED = (function() {
             jqXHR.abort();
         }
 
+        mth = options.url.match(/^MsgTracer\/debug\/(.+)/i)
+        if ( mth ) {
+            let state = mth[1]
+            let req = {
+                body: JSON.parse(options.data)
+            }
+
+            const OnReceiveHookName = "onReceive.introspectionMsgTracer"
+
+            try {
+                RED.hooks.remove(OnReceiveHookName)
+
+                if ( state == "on" ) {
+                    RED.hooks.add(OnReceiveHookName, msgTracerOnReceiveHookWithDebug)
+                }
+
+                options.success({})
+            } catch (err) {
+                console.log( err )
+                options.error({})
+            }
+
+            jqXHR.abort();
+        }
+
         // handle the client code node callbacks, there are two:
         // one for the status and one for sending on messages.
         mth = options.url.match(/^ClientCode\/([a-z0-9]{16})\/?(.+)?/i)

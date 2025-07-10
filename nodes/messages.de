@@ -41,6 +41,7 @@
     "@gregoriusrippenstein/node-red-contacts/generator": {},
     "@gregoriusrippenstein/node-red-contrib-aisbreaker/aisbreaker": {},
     "@gregoriusrippenstein/node-red-contrib-flow2uml/flowtomermaid": {},
+    "@gregoriusrippenstein/node-red-contrib-flow2uml/mermaid-flowchart": {},
     "@gregoriusrippenstein/node-red-contrib-flowcompare/flowcompare": {},
     "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubcfg": {},
     "@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull": {},
