@@ -13889,6 +13889,975 @@ msg.cookies = {
 <script type="text/html" data-help-name="Author">
   <p>A writermap node.</p>
 </script>
+<!-- --- [red-module:@gregoriusrippenstein/erlang-red-supervisor-node/erlsupervisor] --- -->
+<script type="text/javascript">
+  (function(){
+    
+  RED.nodes.registerType('erlsupervisor',{
+    color: '#E9967A',
+    icon: "font-awesome/fa-ambulance",
+    category: 'behaviour',
+    paletteLabel: 'Supervisor',
+    
+    defaults: {
+      name: {
+        value:"",
+      },
+
+      scope: { value: "flow", type: "*[]" },
+
+      supervisor_type: { value: "static" },
+      strategy: { value: "one_for_one" },
+      auto_shutdown: { value: "never" },
+      intensity: { value: "1" },
+      period: { value: "5" },
+
+      child_type: { value: "worker" },
+      child_restart: { value: "permanent" },
+      child_shutdown: { value: "infinite" },
+      child_shutdown_timeout: { value: "0" }
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+        if (this.name) {
+            return this.name;
+        }
+        if (this.scope === "group") {
+            return this._("erlsupervisor.superviseGroup");
+        } else if (Array.isArray(this.scope)) {
+            return this._("erlsupervisor.nodeCount",{number:this.scope.length});
+        }
+        return this._("erlsupervisor.superviseFlow")
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      var node = this;
+
+      var tabs = RED.tabs.create({
+        id: "erlsupervisor-tabs",
+        onchange: function (tab) {
+          $("#erlsupervisor-tabs-content").children().hide();
+          $("#" + tab.id).show();
+        }
+      });
+
+      tabs.addTab({
+        id: "erlsupervisor-tab-supervisor-config",
+        iconClass: "fa fa-cog",
+        label: node._("erlsupervisor.label.tab.supervisor_config")
+      });
+
+      tabs.addTab({
+        id: "erlsupervisor-tab-child-config",
+        iconClass: "fa fa-child",
+        label: node._("erlsupervisor.label.tab.child_config")
+      });
+
+      tabs.activateTab("erlsupervisor-tab-supervisor-config");
+
+      var scope = node.scope || [];
+
+      this._resize = function () {
+        var rows = $("#dialog-form>div:not(.node-input-target-list-row)");
+        var height = $("#dialog-form").height();
+        for (var i = 0; i < rows.length; i++) {
+          height -= $(rows[i]).outerHeight(true);
+        }
+        var editorRow = $("#dialog-form>div.node-input-target-list-row");
+        editorRow.css("height", height + "px");
+      };
+      var search = $("#node-input-erlsupervisor-target-filter").searchBox({
+        style: "compact",
+        delay: 300,
+        change: function () {
+          var val = $(this).val().trim().toLowerCase();
+          if (val === "") {
+            dirList.treeList("filter", null);
+            search.searchBox("count", "");
+          } else {
+            var count = dirList.treeList("filter", function (item) {
+              return item.label.toLowerCase().indexOf(val) > -1 || item.node.type.toLowerCase().indexOf(val) > -1
+            });
+            search.searchBox("count", count + " / " + candidateNodes.length);
+          }
+        }
+      });
+
+      /*
+        sortable is a hidden feature of treeList --> https://github.com/node-red/node-red/blob/master/packages/node_modules/%40node-red/editor-client/src/js/ui/common/treeList.js --> which is a feature of editableList ==> https://github.com/node-red/node-red/blob/master/packages/node_modules/%40node-red/editor-client/src/js/ui/common/editableList.js
+       */
+      var dirList = $("#node-input-erlsupervisor-target-container-div").css({ 
+          width: "100%", 
+          height: "100%" 
+        }).treeList({ 
+          multi: true, 
+          sortable: true 
+        }).on("treelistitemmouseover", function (e, item) {
+          item.node.highlighted = true;
+          item.node.dirty = true;
+          RED.view.redraw();
+        }).on("treelistitemmouseout", function (e, item) {
+          item.node.highlighted = false;
+          item.node.dirty = true;
+          RED.view.redraw();
+        })
+
+      var candidateNodes = RED.nodes.filterNodes({ z: node.z });
+      var items = [];
+      var scopedItems = [];
+      var nodeItemMap = {};
+
+      candidateNodes.forEach(function (n) {
+        if (n.id === node.id || n.type === "erlmodule") {
+          return;
+        }
+        var isChecked = scope.indexOf(n.id) !== -1;
+
+        var nodeDef = RED.nodes.getType(n.type);
+        var label;
+        var sublabel;
+        if (nodeDef) {
+          var l = nodeDef.label;
+          label = (typeof l === "function" ? l.call(n) : l) || "";
+          sublabel = n.type;
+          if (sublabel.indexOf("subflow:") === 0) {
+            var subflowId = sublabel.substring(8);
+            var subflow = RED.nodes.subflow(subflowId);
+            sublabel = "subflow : " + subflow.name;
+          }
+        }
+        if (!nodeDef || !label) {
+          label = n.type;
+        }
+
+        nodeItemMap[n.id] = {
+          node: n,
+          id: n.id,
+          label: label,
+          sublabel: sublabel,
+          selected: isChecked,
+          checkbox: true
+        };
+
+        if ( isChecked ) {
+          scopedItems.push(nodeItemMap[n.id]);
+        } else {
+          items.push(nodeItemMap[n.id]);
+        }
+      });
+      
+      scopedItems.sort( (a,b) => { return scope.indexOf(a.id) < scope.indexOf(b.id) ? -1 : 1})
+
+      dirList.treeList('data', [...scopedItems, ...items]);
+
+      $("#node-input-erlsupervisor-target-select").on("click", function (e) {
+        e.preventDefault();
+        var preselected = dirList.treeList('selected').map(function (n) { return n.node.id });
+        RED.tray.hide();
+        RED.view.selectNodes({
+          selected: preselected,
+          onselect: function (selection) {
+            RED.tray.show();
+            var newlySelected = {};
+            selection.forEach(function (n) {
+              newlySelected[n.id] = true;
+              if (nodeItemMap[n.id]) {
+                nodeItemMap[n.id].treeList.select(true);
+              }
+            })
+            preselected.forEach(function (id) {
+              if (!newlySelected[id]) {
+                nodeItemMap[id].treeList.select(false);
+              }
+            })
+          },
+          oncancel: function () {
+            RED.tray.show();
+          },
+          filter: function (n) {
+            return n.id !== node.id;
+          }
+        });
+      })
+
+      $("#node-input-scope-select").on("change", function (e) {
+        var scope = $(this).val();
+        if (scope === "target") {
+          $(".node-input-target-row").show();
+        } else {
+          $(".node-input-target-row").hide();
+        }
+        node._resize();
+      });
+
+      $("#node-input-child_shutdown").on("change", function (e) {
+        var sdown = $(this).val();
+        if (sdown === "timeout") {
+          $("#node-input-child_shutdown_timeout").show();
+        } else {
+          $("#node-input-child_shutdown_timeout").hide();
+        }
+      });
+      $("#node-input-child_shutdown").trigger('change')
+
+      if (this.scope === null || this.scope === "flow") {
+        $("#node-input-scope-select").val("flow");
+      } else if (this.scope === "group") {
+        $("#node-input-scope-select").val("group");
+      } else {
+        $("#node-input-scope-select").val("target");
+      }
+      $("#node-input-scope-select").trigger("change");
+
+      $('#node-input-erlsupervisor-target-container-div > .red-ui-treeList-container').css({ "height": "40vh" })
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+      var scope = $("#node-input-scope-select").val();
+      if (scope === null || scope === 'flow') {
+        this.scope = 'flow';
+      } else if (scope === 'group') {
+        this.scope = "group";
+      } else {
+        // this seems to be the only way to get the list of ids in sorted ordered ...
+        this.scope = Array.from($("#node-input-erlsupervisor-target-container-div").find('li').find('.selected').map( (d,o) => $($(o).parent()).data().data.id )) 
+      }
+    },
+
+    oneditresize: function(size) {
+      this._resize();
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="erlsupervisor">
+
+      <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+      </div>
+
+      <div class="form-row func-tabs-row">
+        <ul style="min-width: 400px; margin-bottom: 20px;" id="erlsupervisor-tabs"></ul>
+      </div>
+
+      <div id="erlsupervisor-tabs-content" style="min-height: calc(100% - 95px);">
+
+        <div id="erlsupervisor-tab-supervisor-config" style="display:none">
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-supervisor_type" data-i18n="erlsupervisor.label.supervisor_type"></label>
+            <select id="node-input-supervisor_type" disabled>
+                <option value="dynamic" data-i18n="erlsupervisor.supervisor_type.dynamic"></option>
+                <option value="static" data-i18n="erlsupervisor.supervisor_type.static"></option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-strategy" data-i18n="erlsupervisor.label.restart_strategy"></label>
+            <select id="node-input-strategy">
+                <option value="one_for_one" data-i18n="erlsupervisor.restart_strategy.one_for_one"></option>
+                <option value="one_for_all" data-i18n="erlsupervisor.restart_strategy.one_for_all"></option>
+                <option value="rest_for_one" data-i18n="erlsupervisor.restart_strategy.rest_for_one"></option>
+                <option value="simple_one_for_one" data-i18n="erlsupervisor.restart_strategy.simple_one_for_one"></option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-auto_shutdown" data-i18n="erlsupervisor.label.auto_shutdown"></label>
+            <select id="node-input-auto_shutdown">
+                <option value="never" data-i18n="erlsupervisor.auto_shutdown.never"></option>
+                <option value="any_significant" data-i18n="erlsupervisor.auto_shutdown.any_significant"></option>
+                <option value="all_significant" data-i18n="erlsupervisor.auto_shutdown.all_significant"></option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-intensity" data-i18n="erlsupervisor.label.intensity"></label>
+            <input type="number" id="node-input-intensity" data-i18n="[placeholder]erlsupervisor.placeholder.intensity" style="width: 100px;"></input>
+          </div>
+          
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-period" data-i18n="erlsupervisor.label.period"></label>
+            <input type="number" id="node-input-period" data-i18n="[placeholder]erlsupervisor.placeholder.period"  style="width: 100px;"></input>
+          </div>
+
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-scope" data-i18n="erlsupervisor.label.source"></label>
+            <select id="node-input-scope-select">
+                <option value="flow" data-i18n="erlsupervisor.scope.all"></option>
+                <option value="group" data-i18n="erlsupervisor.scope.group"></option>
+                <option value="target" data-i18n="erlsupervisor.scope.selected"></option>
+            </select>
+          </div>
+
+          <div class="form-row node-input-target-row">
+            <button type="button" id="node-input-erlsupervisor-target-select" class="red-ui-button" data-i18n="node-red:common.label.selectNodes"></button>
+          </div>
+
+          <div class="form-row node-input-target-row node-input-target-list-row" style="position: relative; min-height: 100px">
+            <div style="position: absolute; top: -30px; right: 0;"><input type="text" id="node-input-erlsupervisor-target-filter"></div>
+            <div id="node-input-erlsupervisor-target-container-div"></div>
+          </div>
+        </div>
+
+        <div id="erlsupervisor-tab-child-config" style="display:none">
+
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-supervisor_type" data-i18n="erlsupervisor.label.child_type"></label>
+            <select id="node-input-child_type">
+                <option value="worker" data-i18n="erlsupervisor.child_type.worker"></option>
+                <option value="supervisor" data-i18n="erlsupervisor.child_type.supervisor"></option>
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-child_restart" data-i18n="erlsupervisor.label.child_restart"></label>
+            <select id="node-input-child_restart">
+                <option value="permanent" data-i18n="erlsupervisor.child_restart.permanent"></option>
+                <option value="temporary" data-i18n="erlsupervisor.child_restart.temporary"></option>
+                <option value="transient" data-i18n="erlsupervisor.child_restart.transient"></option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label style="width: 150px;" for="node-input-child_shutdown" data-i18n="erlsupervisor.label.child_shutdown"></label>
+            <select id="node-input-child_shutdown">
+                <option value="brutal_kill" data-i18n="erlsupervisor.child_shutdown.brutal_kill"></option>
+                <option value="timeout" data-i18n="erlsupervisor.child_shutdown.timeout"></option>
+                <option value="infinite" data-i18n="erlsupervisor.child_shutdown.infinite"></option>
+            </select>
+            <input type="number" id="node-input-child_shutdown_timeout" data-i18n="[placeholder]erlsupervisor.placeholder.timeout"  style="width: 100px; display: none;"></input>
+          </div>
+        </div>
+
+    </div>
+</script>
+<script type="text/html" data-help-name="erlsupervisor">
+  <p>Supervisor for restarting selected nodes if they die.</p>
+  Supervisor for restarting selected nodes if they die.
+
+<p>This will restart nodes or a group of nodes, depening on the strategy if they die.
+
+<p>Failure is throwing an exception, die is if the process dies, disappears, vanishes.
+
+<p>For more detauls, <a href="https://www.erlang.org/doc/apps/stdlib/supervisor.html">Erlang documentation</a>.
+
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/erlang-red-supervisor-node/erlmodule] --- -->
+<script type="text/javascript">
+  (function(){
+  
+  RED.nodes.registerType('erlmodule',{
+    color: '#fdd0a2',
+    icon: "font-awesome/fa-keyboard-o",
+    category: 'function',
+    paletteLabel: 'Module Code',
+    defaults: {
+      name: {
+        value: "",
+      },
+      module_name: {
+        value:"",
+        required: true,
+        validate: RED.validators.regex(/^[a-z0-9_]+$/)        
+      },
+      code: {
+        value: "-module().\n\n-import(module, [\n   funct/1\n]).\n\n\n-export([\n   something/1\n]).\n\nsomething(V) ->\n  io:format(\"hello world~n\",[]).\n\n",
+        required: true
+      }
+    },
+
+    inputs: 0,
+
+    outputs: 0,
+
+    label: function() {
+      return (this.name || this.module_name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      var node = this;
+
+      this.editor = RED.editor.createEditor({
+        id: 'node-input-erlmodule-editor',
+        mode: 'ace/mode/erlang',
+        value: this.code,
+        width: "Infinity",
+        height: "calc(90vh)",
+        focus: true
+      });
+    },
+
+    oneditcancel: function() {
+      this.editor.destroy();
+      delete this.editor;      
+    },
+
+    oneditsave: function() {
+      this.code = this.editor.getValue();
+      this.editor.destroy();
+      delete this.editor;      
+    },
+
+    oneditresize: function(size) {
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="erlmodule">
+  <div class="form-row">
+    <label for="node-input-module_name"><i class="fa fa-tag"></i> <span data-i18n="erlmodule.label.module_name"></span></label>
+    <input type="text" id="node-input-module_name" data-i18n="[placeholder]erlmodule.label.module_name">
+  </div>
+  
+  <div class="form-row">
+      <div style="height: 73vh; min-height:150px;" class="node-text-editor" id="node-input-erlmodule-editor"></div>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="erlmodule.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]erlmodule.label.name">
+  </div>
+</script>
+<script type="text/html" data-help-name="erlmodule">
+  <p>Node for encapsulating erlang module code.</p>
+  Node for encapsulating erlang module code.
+
+Defines a module that can be used with a state machine and other elements of Erlang-Red.
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/erlang-red-supervisor-node/erlstatemachine] --- -->
+<script type="text/javascript">
+  (function(){
+    
+  RED.nodes.registerType('erlstatemachine',{
+    color: '#FFCC66',
+    icon: "font-awesome/fa-gears",
+    category: 'behaviour',
+    paletteLabel: 'State Machine',
+    defaults: {
+      name: {
+        value:"",
+      },
+      module_name: {
+        value: ""
+      },
+      nodeid: {
+        value: "",
+        required: true,
+        validate: RED.validators.regex(/[a-zA-Z0-9]{16}/)
+      },
+      emit_on_state_change: {
+        value: false
+      }
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      let label = this._def.paletteLabel
+      if (this.module_name) {
+        label = `[${this.module_name}]\t${this.emit_on_state_change ? "⋮" : "➝"}`
+      }
+      return (this.name || label);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      var node = this;
+
+      var tabs = RED.tabs.create({
+        id: "erlstatemachine-tabs",
+        onchange: function (tab) {
+          $("#erlstatemachine-tabs-content").children().hide();
+          $("#" + tab.id).show();
+        }
+      });
+
+      tabs.addTab({
+        id: "erlstatemachine-tab-statem-config",
+        iconClass: "fa fa-cog",
+        label: node._("erlstatemachine.label.tab.statem_config")
+      });
+
+      tabs.addTab({
+        id: "erlstatemachine-tab-handler-config",
+        iconClass: "fa fa-keyboard-o",
+        label: node._("erlstatemachine.label.tab.handler_config")
+      });
+
+      tabs.activateTab("erlstatemachine-tab-handler-config");
+
+      var dirList = $("#node-input-handler-target-container-div").css({
+        width: "100%",
+        height: "calc(100%)"
+      }).treeList(
+        {
+          multi: false
+        }
+      ).on('treelistselect', function (event, item) {
+        if (item && item.nodeid) {
+          RED.view.reveal(item.nodeid);
+          RED.view.select(item.nodeid);
+        }
+      }).on('treelistconfirm', function (event, item) {
+      }).on("treelistitemmouseover", function (e, item) {
+        item.node.highlighted = true;
+        item.node.dirty = true;
+        RED.view.redraw();
+      }).on("treelistitemmouseout", function (e, item) {
+        item.node.highlighted = false;
+        item.node.dirty = true;
+        RED.view.redraw();
+      }) 
+      
+      var search = $("#node-input-handler-target-filter").searchBox({
+        style: "compact",
+        delay: 300,
+        change: function () {
+          var val = $(this).val().trim().toLowerCase();
+          if (val === "") {
+            dirList.treeList("filter", null);
+            search.searchBox("count", "");
+          } else {
+            var count = dirList.treeList("filter", function (item) {
+              return item.label.toLowerCase().indexOf(val) > -1 || item.sublabel.toLowerCase().indexOf(val) > -1
+            });
+            search.searchBox("count", count + " / " + dirList.treeList("data").length);
+          }
+        }
+      });
+
+      let data = RED.nodes.filterNodes({ z: RED.workspaces.active() }).filter(n => n.id != this.id).filter(n => n.type == "erlmodule").map(nde => {
+        return {
+          label: RED.utils.getNodeLabel(nde),
+          icon: "",
+          nodeid: nde.id,
+          node: nde,
+          sublabel: nde.type,
+          selected: nde.id == this.nodeid,
+          checkbox: false,
+          radio: true,
+          children: undefined
+        }
+      })
+
+      dirList.treeList('data', data)      
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+      if ($("#node-input-handler-target-container-div").treeList('selected').nodeid) {
+        this.nodeid = $("#node-input-handler-target-container-div").treeList('selected').nodeid;
+
+        let node = RED.nodes.node(this.nodeid)
+        this.module_name = node.module_name;
+      }
+    },
+
+    oneditresize: function(size) {
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="erlstatemachine">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row func-tabs-row">
+    <ul style="min-width: 400px; margin-bottom: 20px;" id="erlstatemachine-tabs"></ul>
+  </div>
+
+  <div id="erlstatemachine-tabs-content" style="min-height: calc(100% - 95px);">
+
+    <div id="erlstatemachine-tab-statem-config" style="display:none">
+      <div class="form-row">
+        <input type="checkbox" id="node-input-emit_on_state_change"
+                style="display:inline-block; width:15px; vertical-align:baseline;">
+        <label for="node-input-emit_on_state_change"><span data-i18n="erlstatemachine.label.emit-on-state-change"></span></label>
+      </div>
+    </div>
+
+    <div id="erlstatemachine-tab-handler-config" style="display:none">
+      <div class="form-row" style="margin-left: 10px; position: relative; height: 40vh; margin-right: 15px; min-height: 5vh;">
+        <div style=" margin-bottom: 5px; width: 35%; padding-left: 60%;">
+          <input type="text" id="node-input-handler-target-filter">
+        </div>
+      
+        <div id="node-input-handler-target-container-div"></div>
+      </div>
+    </div>
+  </div>
+</script>
+<script type="text/html" data-help-name="erlstatemachine">
+  <p>Implements that State Machine behaviour.</p>
+  Implements the Erlang state machine behaviour.
+
+<p>
+See <a href="https://www.erlang.org/doc/apps/stdlib/gen_statem">OTP Docu</a> for more details.
+</p>
+
+<p>
+A handler can only be of type <code>erlmodule</code>.
+</p>
+
+<p>
+  <a href='https://flows.red-erik.org/f/5672fa442b2b881d' target='_blank'>Example</a>
+</p>
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/erlang-red-supervisor-node/erleventhandler] --- -->
+<script type="text/javascript">
+  (function(){
+    
+  RED.nodes.registerType('erleventhandler',{
+    color: '#FFCC66',
+    icon: "font-awesome/fa-snowflake-o",
+    category: 'behaviour',
+    paletteLabel: 'Event Handler',
+    defaults: {
+      name: {
+        value:"",
+      },
+      handlers: {
+        value: [{ nodeid: ""}]
+      }
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function() {
+      return (this.name || this._def.paletteLabel);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      let allModules = [ ["", "-- select module --"], ...RED.nodes.filterNodes({ type: "erlmodule" }).map( d => [d.id, d.module_name] )]
+
+      this.handlers.sort((a, b) => a.nodeid < b.nodeid).forEach(currVal => {
+        var sltObj = $('<select>', { class: 'erleventhandler-erlmodule' })
+
+        for (var idx = 0; idx < allModules.length; idx++) {
+          let val = allModules[idx]
+          let selected = val[0] == currVal.nodeid ? { selected: "selected" } : {}
+
+          sltObj.append($("<option>", { value: val[0], ...selected }).append(val[1]))
+        }
+
+        var container = $("<div>", { class: "form-row" });
+
+        container.append('<a href="#" style="float: right; color: red;" onclick="$(this).parent().remove(); return false;"><i class="fa fa-close"></i></a>')
+        container.append('<a href="#" style="float: right; margin-right: 10px; color: green;" onclick="$(\'#erleventhandler-handler-config-container\').append($(this).parent().clone()); return false;"><i class="fa fa-plus"></i></a>')
+
+        container.append(sltObj)
+
+        container.appendTo($('#erleventhandler-handler-config-container'))
+      })      
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+      let result = []
+      $($('#erleventhandler-handler-config-container').find('.erleventhandler-erlmodule')).each((idx, elem) => {
+        result.push({ nodeid: $(elem).val() })
+      })
+      this.handlers = result
+    },
+
+    oneditresize: function(size) {
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="erleventhandler">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+
+  <div class="form-row">
+    <span>Select a static selection of event handlers. <br>
+       Need to define Erlang Module node first else <br>
+      this selection will be empty.</span>
+      
+    <p><p>
+    <span>This can be dynamically extended at runtime <br>
+    using the <b>add_handler</b> message.</span>
+  </div>
+
+  <div class="form-row">
+    <div id="erleventhandler-handler-config-container"></div>
+  </div>
+</script>
+<script type="text/html" data-help-name="erleventhandler">
+  <p>Implements that event handler behaviour.</p>
+  Implements the Erlang event behaviour.
+
+See <a href="https://www.erlang.org/doc/apps/stdlib/gen_event.html">OTP Docu</a> for more details.
+
+<p>
+<a href='https://flows.red-erik.org/f/b70a7ce34819e4d5' target="_blank">Example</a>.
+</p>
+
+</script>
+
+<!-- --- [red-module:@gregoriusrippenstein/erlang-red-supervisor-node/erlgenserver] --- -->
+<script type="text/javascript">
+  (function(){
+    RED.nodes.registerType('erlgenserver',{
+    color: '#FFCC66',
+    icon: "font-awesome/fa-server",
+    category: 'behaviour',
+    paletteLabel: 'Generic Server',
+    defaults: {
+      name: {
+        value:"",
+      },
+      module_name: {
+        value: ""
+      },
+      nodeid: {
+        value: "",
+        required: true,
+        validate: RED.validators.regex(/[a-zA-Z0-9]{16}/)
+      }
+    },
+
+    inputs: 1,
+
+    outputs: 1,
+
+    label: function () {
+      let label = this._def.paletteLabel
+      if (this.module_name) {
+        label = `[${this.module_name}]`
+      }
+      return (this.name || label);
+    },
+
+    labelStyle: function() {
+      return this.name?"node_label_italic":"";
+    },
+
+    onpaletteadd: function() {
+    },
+
+    onpaletteremove: function() {
+    },
+
+    oneditprepare: function() {
+      var node = this;
+
+      var tabs = RED.tabs.create({
+        id: "erlgenserver-tabs",
+        onchange: function (tab) {
+          $("#erlgenserver-tabs-content").children().hide();
+          $("#" + tab.id).show();
+        }
+      });
+
+      tabs.addTab({
+        id: "erlgenserver-tab-statem-config",
+        iconClass: "fa fa-cog",
+        label: node._("erlgenserver.label.tab.statem_config")
+      });
+
+      tabs.addTab({
+        id: "erlgenserver-tab-handler-config",
+        iconClass: "fa fa-keyboard-o",
+        label: node._("erlgenserver.label.tab.handler_config")
+      });
+
+      tabs.activateTab("erlgenserver-tab-handler-config");
+
+      var dirList = $("#node-input-handler-target-container-div").css({
+        width: "100%",
+        height: "calc(100%)"
+      }).treeList(
+        {
+          multi: false
+        }
+      ).on('treelistselect', function (event, item) {
+        if (item && item.nodeid) {
+          RED.view.reveal(item.nodeid);
+          RED.view.select(item.nodeid);
+        }
+      }).on('treelistconfirm', function (event, item) {
+      }).on("treelistitemmouseover", function (e, item) {
+        item.node.highlighted = true;
+        item.node.dirty = true;
+        RED.view.redraw();
+      }).on("treelistitemmouseout", function (e, item) {
+        item.node.highlighted = false;
+        item.node.dirty = true;
+        RED.view.redraw();
+      })
+
+      var search = $("#node-input-handler-target-filter").searchBox({
+        style: "compact",
+        delay: 300,
+        change: function () {
+          var val = $(this).val().trim().toLowerCase();
+          if (val === "") {
+            dirList.treeList("filter", null);
+            search.searchBox("count", "");
+          } else {
+            var count = dirList.treeList("filter", function (item) {
+              return item.label.toLowerCase().indexOf(val) > -1 || item.sublabel.toLowerCase().indexOf(val) > -1
+            });
+            search.searchBox("count", count + " / " + dirList.treeList("data").length);
+          }
+        }
+      });
+
+      let data = RED.nodes.filterNodes({ z: RED.workspaces.active() }).filter(n => n.id != this.id).filter(n => n.type == "erlmodule").map(nde => {
+        return {
+          label: RED.utils.getNodeLabel(nde),
+          icon: "",
+          nodeid: nde.id,
+          node: nde,
+          sublabel: nde.type,
+          selected: nde.id == this.nodeid,
+          checkbox: false,
+          radio: true,
+          children: undefined
+        }
+      })
+
+      dirList.treeList('data', data)      
+    },
+
+    oneditcancel: function() {
+    },
+
+    oneditsave: function() {
+      if ($("#node-input-handler-target-container-div").treeList('selected').nodeid) {
+        this.nodeid = $("#node-input-handler-target-container-div").treeList('selected').nodeid;
+
+        let node = RED.nodes.node(this.nodeid)
+        this.module_name = node.module_name;
+      }      
+    },
+
+    oneditresize: function(size) {
+    },
+
+
+  });
+})();
+
+</script>
+
+<script type="text/html" data-template-name="erlgenserver">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+    
+    <div class="form-row func-tabs-row">
+      <ul style="min-width: 400px; margin-bottom: 20px;" id="erlgenserver-tabs"></ul>
+    </div>
+    
+    <div id="erlgenserver-tabs-content" style="min-height: calc(100% - 95px);">
+    
+      <div id="erlgenserver-tab-statem-config" style="display:none">
+        <div class="form-row">
+          No options at the moment.
+        </div>
+      </div>
+    
+      <div id="erlgenserver-tab-handler-config" style="display:none">
+        <div class="form-row"
+          style="margin-left: 10px; position: relative; height: 40vh; margin-right: 15px; min-height: 5vh;">
+          <div style=" margin-bottom: 5px; width: 35%; padding-left: 60%;">
+            <input type="text" id="node-input-handler-target-filter">
+          </div>
+    
+          <div id="node-input-handler-target-container-div"></div>
+        </div>
+      </div>
+    </div>
+</script>
+<script type="text/html" data-help-name="erlgenserver">
+  <p>Implements that gen_server behaviour.</p>
+  Implements the Erlang generic server behaviour.
+
+See <a href="https://www.erlang.org/doc/apps/stdlib/gen_server.html">OTP Docu</a> for more details.
+
+</script>
+
 <!-- --- [red-module:@gregoriusrippenstein/node-red-artworks/artwork] --- -->
 <script type="text/javascript">
   (function(){
@@ -14984,7 +15953,7 @@ ${ $("#node-input-description").val() }
 <!-- The html for the config node info panel (in right sidebar) -->
 <script type="text/x-red" data-template-name="FlowCompareCfg">
    <p>Visually compare local flow with flow deployed on the server.</p>
-   Viusal comparison of flows being edited and flow that has been deployed.
+   Visual comparison of flows being edited and flow that has been deployed.
 </script>
 
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-flowhub/flowhubpull] --- -->
@@ -15274,7 +16243,7 @@ This page is intentional left blank.
 
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/seeker] --- -->
 <script type="text/javascript">
-RED.nodes.registerType("Seeker",{color:"#e5e4ef",icon:"font-awesome/fa-ship",category:"introspection",paletteLabel:"Seeker",defaults:{name:{value:""}},inputs:0,outputs:1,label:function(){return this.name||this._def.paletteLabel},labelStyle:function(){return this.name?"node_label_italic":""},oneditprepare:function(){var n=this,o=(window._introSpectionSeekerStack=[],$("#node-input-seeker-target-filter").searchBox({style:"compact",delay:300,change:function(){let t=$(this).val().trim().toLowerCase();var e,n=$("#node-input-seeker-target-container-div").treeList("data");""===t?($("#node-input-seeker-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-seeker-target-container-div").treeList("filter",function(e){return-1<e._label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||e.sublabel.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+n.length))}}));$("#node-input-seeker-target-container-div").css({width:"100%",height:"95%"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistconfirm",function(e,t){t.node&&!t.children&&(RED.view.reveal(t.node.id),RED.view.select(t.node.id),setTimeout(()=>{RED.editor.edit(t.node)},100))}).on("treelistselect",function(e,t){var n;t.node&&(t.children?(n=t.children.filter(e=>e.node.z==RED.workspaces.active()).map(e=>e.node.id),RED.tray.hide(),RED.view.selectNodes({selected:n,onselect:()=>{RED.tray.show()},oncancel:()=>{RED.tray.show()}})):(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw()))});let i=e=>{var t=RED.nodes.node(e[e.length-1]);let n=[];return e.forEach(function(e){var t,e=RED.nodes.node(e)||RED.nodes.junction(e);void 0!==e&&(t=RED.nodes.workspace(e.z)||RED.nodes.subflow(e.z),n.push({label:"",_label:RED.utils.getNodeLabel(e),node:e,sublabel:t&&RED.utils.getNodeLabel(t)||e.z,icon:RED.utils.createNodeIcon(e,!0),class:"intro-remove-top-left"}))}),{node:t,label:RED.utils.getNodeLabel(t),_label:RED.utils.getNodeLabel(t),_pathlen:e.length,sublabel:"Length: "+e.length,selected:!1,checkbox:!1,children:n}};var r=function(t,n){if(n.indexOf(t.id)<0)switch(t.type){case"link call":RED.nodes.getNodeLinks(t).forEach(e=>{r(e.target,[...n,t.id])}),t.links.forEach(e=>{e=RED.nodes.node(e);e&&r(e,[...n,t.id])});break;case"link out":t.links.forEach(e=>{e=RED.nodes.node(e);e&&r(e,[...n,t.id])});break;case"Sink":n.push(t.id),window._introSpectionSeekerStack=[n,...window._introSpectionSeekerStack];break;default:RED.nodes.getNodeLinks(t).forEach(e=>{r(e.target,[...n,t.id])})}};$("#node-input-seeker-start-but").on("click",e=>{e&&e.preventDefault(),$("#node-input-seeker-start-but").prop("disabled",!0),$("#node-input-seeker-totalPaths").html(""),$("#node-input-seeker-spinner").show(),window._introSpectionSeekerStack=[],setTimeout(()=>{RED.nodes.getNodeLinks(n).forEach(e=>{r(e.target,[n.id])});var t,e=window._introSpectionSeekerStack.length;$("#node-input-seeker-start-but").prop("disabled",!1),$("#node-input-seeker-totalPaths").html(e),$("#node-input-seeker-spinner").hide(),50<e?($("#node-input-seeker-show-percent").show(),(t=$("#node-input-seeker-show-percent")).html(""),["-",5,10,20,30,40,50,75,100].forEach(function(e){t.append($("<option></option>").val(e).html(100==e?"All":"-"==e?"Select..":e+"%"))}),t.val("-"),$("#node-input-seeker-show-percent").on("change",e=>{e&&e.preventDefault();e=window._introSpectionSeekerStack.length;let t=25;"-"!=$("#node-input-seeker-show-percent").val()&&(t=parseInt(e*(parseInt($("#node-input-seeker-show-percent").val())/100))),$("#node-input-seeker-totalPaths").html(t+" / "+e),setTimeout(()=>{$("#node-input-seeker-target-container-div").treeList("data",window._introSpectionSeekerStack.sort((e,t)=>e.length<t.length?-1:1).slice(0,t).map(e=>i(e)))},300)}),$("#node-input-seeker-show-percent").trigger("change")):setTimeout(()=>{$("#node-input-seeker-target-container-div").treeList("data",window._introSpectionSeekerStack.sort((e,t)=>e.length<t.length?-1:1).map(e=>i(e)))},300)},300)})},oneditsave:function(){delete window._introSpectionSeekerStack},oneditcancel:function(){delete window._introSpectionSeekerStack},oneditresize:function(e){for(var t=$("#dialog-form>div:not(.node-input-target-list-row)"),n=$("#dialog-form").height(),o=0;o<t.length;o++)n-=$(t[o]).outerHeight(!0);$("#dialog-form>div.node-input-target-list-row").css("height",n+"px")}});
+RED.nodes.registerType("Seeker",{color:"#e5e4ef",icon:"font-awesome/fa-ship",category:"introspection",paletteLabel:"Seeker",defaults:{name:{value:""}},inputs:0,outputs:1,label:function(){return this.name||this._def.paletteLabel},labelStyle:function(){return this.name?"node_label_italic":""},oneditprepare:function(){var n=this;window._introSpectionSeekerStack=[],window._introWorker=void 0;let i=e=>{var t=RED.nodes.node(e[e.length-1]);let n=[];return e.forEach(function(e){var t,e=RED.nodes.node(e)||RED.nodes.junction(e);void 0!==e&&(t=RED.nodes.workspace(e.z)||RED.nodes.subflow(e.z),n.push({label:"",_label:RED.utils.getNodeLabel(e),node:e,sublabel:t&&RED.utils.getNodeLabel(t)||e.z,icon:RED.utils.createNodeIcon(e,!0),class:"intro-remove-top-left"}))}),{node:t,label:RED.utils.getNodeLabel(t),_label:RED.utils.getNodeLabel(t),_pathlen:e.length,sublabel:"Length: "+e.length,selected:!1,checkbox:!1,children:n}};var o=$("#node-input-seeker-target-filter").searchBox({style:"compact",delay:300,change:function(){let t=$(this).val().trim().toLowerCase();var e,n=$("#node-input-seeker-target-container-div").treeList("data");""===t?($("#node-input-seeker-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-seeker-target-container-div").treeList("filter",function(e){return-1<e._label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||e.sublabel.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+n.length))}});{var e="seeker";let n=`#node-input-${e}-target-container-div`,o=`#node-input-${e}-extract-pathway-but`,i=`#node-input-${e}-show-pathway-but`;$(n).css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistconfirm",function(e,t){t.node&&!t.children&&(RED.view.reveal(t.node.id),RED.view.select(t.node.id),setTimeout(()=>{RED.editor.edit(t.node)},100))}).on("treelistselect",function(e,t){t.node&&!t.children&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw()),1==$(n).treeList("data").filter(e=>e.expanded).length?($(o).prop("disabled",!1),$(i).prop("disabled",!1)):($(o).prop("disabled",!0),$(i).prop("disabled",!0))})}var r=function(t,n){if(n.indexOf(t.id)<0&&!t.d)switch(t.type){case"link call":RED.nodes.getNodeLinks(t).forEach(e=>{r(e.target,[...n,t.id])}),t.links.forEach(e=>{e=RED.nodes.node(e);e&&r(e,[...n,t.id])});break;case"link out":t.links.forEach(e=>{e=RED.nodes.node(e);e&&r(e,[...n,t.id])});break;case"Sink":n.push(t.id),window._introSpectionSeekerStack=[n,...window._introSpectionSeekerStack];break;default:RED.nodes.getNodeLinks(t).forEach(e=>{r(e.target,[...n,t.id])})}};let a=e=>{e&&e.preventDefault();let t=window._introSpectionSeekerStack.length,n=25,o=("-"!=$("#node-input-seeker-show-percent").val()&&(n=parseInt(t*(parseInt($("#node-input-seeker-show-percent").val())/100))),e=$("#node-input-seeker-show-ordering").val(),{1:(e,t)=>e.length<t.length?-1:1,2:(e,t)=>e.length>t.length?-1:1,3:(e,t)=>{return RED.utils.getNodeLabel(RED.nodes.node(e[e.length-1]))<RED.utils.getNodeLabel(RED.nodes.node(t[t.length-1]))?-1:1},4:(e,t)=>{e=RED.utils.getNodeLabel(RED.nodes.node(e[e.length-1]));return RED.utils.getNodeLabel(RED.nodes.node(t[t.length-1]))<e?-1:1},5:(e,t)=>.5<Math.random()?-1:1}[parseInt(e)]||((e,t)=>e.length<t.length?-1:1));setTimeout(()=>{setTimeout(()=>{$("#node-input-seeker-totalPaths").html(n>t?""+t:n+" / "+t)},10),setTimeout(()=>{$("#node-input-seeker-target-container-div").treeList("data",window._introSpectionSeekerStack.sort(o).slice(0,n).map(e=>i(e)))},20)},100)},d=()=>{let e=window._introSpectionSeekerStack.length;setTimeout(()=>{$("#node-input-seeker-start-but").prop("disabled",!1),$("#node-input-seeker-totalPaths").html(e),$("#node-input-seeker-spinner").hide()},10);var t="seeker",n=e;$(`#node-input-${t}-show-percent`).show(),$(`#node-input-${t}-show-ordering`).show();var o,i=$(`#node-input-${t}-show-percent`),r=(i.html(""),i.append($("<option></option>").val("-").html("Show..")),[5,10,20,30,40,50,75].forEach(e=>{var t=parseInt(e*n/100);0!=t&&i.append($("<option></option>").val(e).html(t+" paths"))}),i.append($("<option></option>").val(100).html("All")),i.val("-"),(i=$(`#node-input-${t}-show-ordering`)).html(""),{"Count Asc":1,"Count Desc":2,"Name Asc":3,"Name Desc":4,Random:5});for(o in r)i.append($("<option></option>").val(r[o]).html(o));i.val(1),$("#node-input-seeker-show-ordering").on("change",a),$("#node-input-seeker-show-percent").on("change",a),$("#node-input-seeker-show-percent").trigger("change")};$("#node-input-seeker-show-pathway-but").on("click",e=>{e&&e.preventDefault();var e=$("#node-input-seeker-target-container-div").treeList("data").filter(e=>e.expanded);1==(e=e).length?(e=e[0].children.filter(e=>e.node.z==RED.workspaces.active()).map(e=>e.node.id),RED.tray.hide(),RED.view.selectNodes({selected:e,onselect:()=>{RED.tray.show()},oncancel:()=>{RED.tray.show()}})):RED.notify("Only one expanded pathway can be shown.",{type:"warning"})}),$("#node-input-seeker-extract-pathway-but").on("click",e=>{e&&e.preventDefault();e=$("#node-input-seeker-target-container-div").treeList("data").filter(e=>e.expanded);if(1==e.length){e=e[0].children.map(e=>e.node).filter(e=>["link in","link out","Seeker","Sink","junction"].indexOf(e.type)<0);let o=RED.nodes.createExportableNodeSet(e).map(e=>(e.id=RED.nodes.id(),e)),i=0;o=o.map((e,t)=>{try{var n;e._def=e._def||RED.nodes.getType(e.type),e._def&&e._def._&&e._?(n=RED.utils.getNodeLabel(e,e.info).split("\\n").length,i+=30*n+30):i+=50}catch(e){i+=50}return delete e.z,e.y=i,e.x=0,e.wires=[[]],t!=o.length-1&&(e.wires=[[o[t+1].id]]),e}),RED.clipboard.copyText(JSON.stringify(o))&&RED.notify("Pathway copied to clipboard",{type:"success"})}else RED.notify("Only one expanded pathway can be extracted.",{type:"warning"})}),$("#node-input-seeker-start-but").on("click",e=>{if(e&&e.preventDefault(),setTimeout(()=>{$("#node-input-seeker-start-but").prop("disabled",!0),$("#node-input-seeker-totalPaths").html(""),$("#node-input-seeker-spinner").show(),$("#node-input-seeker-show-percent").hide(),$("#node-input-seeker-show-ordering").hide()},10),window._introSpectionSeekerStack=[],"undefined"!=typeof Worker){let t=new Worker("data:text/javascript;base64,bGV0IGludHJvU3BlY3Rpb25TdGFjaz1bXSxncmFwaD1bXSxncmFwaEluZGV4PXt9LFJFRD17bm9kZXM6e25vZGU6ZT0+Z3JhcGhbZ3JhcGhJbmRleFtlXV0sZ2V0Tm9kZUxpbmtzOmE9PmEuZmxhdHdpcmVzLm1hcChlPT4oe3RhcmdldDpSRUQubm9kZXMubm9kZShlKSxzb3VyY2U6YX0pKX19LHRyYXZlcnNlPWZ1bmN0aW9uKGEscyl7aWYocy5pbmRleE9mKGEuaWQpPDAmJiFhLmQpc3dpdGNoKGEudHlwZSl7Y2FzZSJsaW5rIGNhbGwiOlJFRC5ub2Rlcy5nZXROb2RlTGlua3MoYSkuZm9yRWFjaChlPT57dHJhdmVyc2UoZS50YXJnZXQsWy4uLnMsYS5pZF0pfSksYS5saW5rcy5mb3JFYWNoKGU9PntlPVJFRC5ub2Rlcy5ub2RlKGUpO2UmJnRyYXZlcnNlKGUsWy4uLnMsYS5pZF0pfSk7YnJlYWs7Y2FzZSJsaW5rIG91dCI6YS5saW5rcy5mb3JFYWNoKGU9PntlPVJFRC5ub2Rlcy5ub2RlKGUpO2UmJnRyYXZlcnNlKGUsWy4uLnMsYS5pZF0pfSk7YnJlYWs7Y2FzZSJTaW5rIjpzLnB1c2goYS5pZCkscG9zdE1lc3NhZ2Uocyk7YnJlYWs7ZGVmYXVsdDpSRUQubm9kZXMuZ2V0Tm9kZUxpbmtzKGEpLmZvckVhY2goZT0+e3RyYXZlcnNlKGUudGFyZ2V0LFsuLi5zLGEuaWRdKX0pfX07b25tZXNzYWdlPWZ1bmN0aW9uKGUpe2xldCBhPWUuZGF0YS5zZWVrZXJJZDsoZ3JhcGg9ZS5kYXRhLm5vZGVzLm1hcChlPT4oe3dpcmVzOmUud2lyZXMsbGlua3M6ZS5saW5rcyxkOmUuZGlzYWJsZWR8fGUuZCxpZDplLmlkLHR5cGU6ZS50eXBlfSkpLmZpbHRlcihlPT4hIWUud2lyZXMpLm1hcChlPT4oZS5mbGF0d2lyZXM9ZS53aXJlcy5mbGF0KCksZSkpKS5mb3JFYWNoKChlLGEpPT5ncmFwaEluZGV4W2UuaWRdPWEpLFJFRC5ub2Rlcy5nZXROb2RlTGlua3MoUkVELm5vZGVzLm5vZGUoYSkpLmZvckVhY2goZT0+e3RyYXZlcnNlKGUudGFyZ2V0LFthXSl9KSxwb3N0TWVzc2FnZSgiZG9uZSIpfTs=");(window._introWorker=t).onmessage=function(e){"done"==e.data?(t.terminate(),delete window._introWorker,d()):(window._introSpectionSeekerStack.push(e.data),$("#node-input-seeker-totalPaths").html(window._introSpectionSeekerStack.length),26==window._introSpectionSeekerStack.length&&$("#node-input-seeker-target-container-div").treeList("data",window._introSpectionSeekerStack.sort((e,t)=>e.length<t.length?-1:1).slice(0,25).map(e=>i(e))))},setTimeout(()=>{t.postMessage({seekerId:n.id,nodes:RED.nodes.createCompleteNodeSet({credentials:!1})})},10)}else setTimeout(()=>{RED.nodes.getNodeLinks(n).forEach(e=>{r(e.target,[n.id])}),d()},300)})},oneditsave:function(){window._introWorker&&(window._introWorker.terminate(),delete window._introWorker),delete window._introSpectionSeekerStack},oneditcancel:function(){window._introWorker&&(window._introWorker.terminate(),delete window._introWorker),delete window._introSpectionSeekerStack},oneditresize:function(e){for(var t=$("#dialog-form>div:not(.node-input-target-list-row)"),n=$("#dialog-form").height(),o=0;o<t.length;o++)n-=$(t[o]).outerHeight(!0);$("#dialog-form>div.node-input-target-list-row").css("height",n+"px")}});
 </script>
 
 <script type="text/html" data-template-name="Seeker">
@@ -15286,7 +16255,9 @@ RED.nodes.registerType("Seeker",{color:"#e5e4ef",icon:"font-awesome/fa-ship",cat
 
   <div class="form-row node-input-target-row">
     <button id="node-input-seeker-start-but" class="red-ui-button"><span><i class="fa fa-refresh"></i> Find Pathways</span></button>
-    <select class='hide' id="node-input-seeker-show-percent"></select>
+    <select class='hide' style="width:100px;" id="node-input-seeker-show-percent"></select>
+    <select class='hide' style="width:100px;" id="node-input-seeker-show-ordering"></select>
+    <button id="node-input-seeker-show-pathway-but" class="red-ui-button">Show Pathway</button>
   </div>
 
   <div class="form-row node-input-target-row node-input-target-list-row" style="margin-top: 40px; position: relative; min-height: 100px">
@@ -15295,10 +16266,11 @@ RED.nodes.registerType("Seeker",{color:"#e5e4ef",icon:"font-awesome/fa-ship",cat
     <div id="node-input-seeker-target-container-div"></div>
   </div>
 
-  <div class="form-row" style="margin-top: -40px;">
+  <div class="form-row" style="margin-top: 0px; margin-bottom: 20px;">
     <label>Total Paths: 
         <span id="node-input-seeker-totalPaths"></span><img class='hide' id="node-input-seeker-spinner" src='red/images/spin.svg'/>
     </label>
+    <button id="node-input-seeker-extract-pathway-but" style="float: right" class="red-ui-button">Extract Pathway to Clipboard</button>
   </div>
 
 </script>
@@ -15316,7 +16288,7 @@ RED.nodes.registerType("Seeker",{color:"#e5e4ef",icon:"font-awesome/fa-ship",cat
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/sink] --- -->
 <script type="text/javascript">
-RED.nodes.registerType("Sink",{color:"#e5e4ef",icon:"font-awesome/fa-anchor",category:"introspection",paletteLabel:"Sink",defaults:{name:{value:""}},inputs:1,outputs:0,label:function(){return this.name||this._def.paletteLabel},labelStyle:function(){return this.name?"node_label_italic":""},oneditprepare:function(){var n=this;let i=1;window._introSpectionsinkStack=[];var o=$("#node-input-sink-target-filter").searchBox({style:"compact",delay:300,change:function(){let t=$(this).val().trim().toLowerCase();var e,n=$("#node-input-sink-target-container-div").treeList("data");""===t?($("#node-input-sink-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-sink-target-container-div").treeList("filter",function(e){return-1<e._label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||e.sublabel.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+n.length))}});$("#node-input-sink-target-container-div").css({width:"100%",height:"95%"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistconfirm",function(e,t){t.node&&!t.children&&(RED.view.reveal(t.node.id),RED.view.select(t.node.id),setTimeout(()=>{RED.editor.edit(t.node)},100))}).on("treelistselect",function(e,t){var n;t.node&&(t.children?(n=t.children.filter(e=>e.node.z==RED.workspaces.active()).map(e=>e.node.id),RED.tray.hide(),RED.view.selectNodes({selected:n,onselect:()=>{RED.tray.show()},oncancel:()=>{RED.tray.show()}})):(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw()))});let s=e=>{var t=RED.nodes.node(e[e.length-1]);let n=[];return e.forEach(function(e){var t,e=RED.nodes.node(e)||RED.nodes.junction(e);void 0!==e&&(t=RED.nodes.workspace(e.z)||RED.nodes.subflow(e.z),n.push({label:"",_label:RED.utils.getNodeLabel(e),node:e,sublabel:t&&RED.utils.getNodeLabel(t)||e.z,icon:RED.utils.createNodeIcon(e,!0),class:"intro-remove-top-left"}))}),{node:t,label:RED.utils.getNodeLabel(t),_label:RED.utils.getNodeLabel(t),_pathlen:e.length,sublabel:"Length: "+e.length,selected:!1,checkbox:!1,children:n}};var a=function(t,n){if(n.indexOf(t.id)<0)switch(t.type){case"link in":t.links.forEach(e=>{e=RED.nodes.node(e);e&&a(e,[...n,t.id])});break;case"Seeker":n.push(t.id),window._introSpectionsinkStack=[n,...window._introSpectionsinkStack];break;default:RED.nodes.getNodeLinks(t,i).forEach(e=>{a(e.source,[...n,t.id])})}};$("#node-input-sink-start-but").on("click",e=>{e&&e.preventDefault(),$("#node-input-sink-start-but").prop("disabled",!0),$("#node-input-sink-totalPaths").html(""),$("#node-input-sink-spinner").show(),window._introSpectionsinkStack=[],setTimeout(()=>{RED.nodes.getNodeLinks(n,i).forEach(e=>{a(e.source,[n.id])});var t,e=window._introSpectionsinkStack.length;$("#node-input-sink-start-but").prop("disabled",!1),$("#node-input-sink-totalPaths").html(e),$("#node-input-sink-spinner").hide(),50<e?($("#node-input-sink-show-percent").show(),(t=$("#node-input-sink-show-percent")).html(""),["-",5,10,20,30,40,50,75,100].forEach(function(e){t.append($("<option></option>").val(e).html(100==e?"All":"-"==e?"Select..":e+"%"))}),t.val("-"),$("#node-input-sink-show-percent").on("change",e=>{e&&e.preventDefault();e=window._introSpectionsinkStack.length;let t=25;"-"!=$("#node-input-sink-show-percent").val()&&(t=parseInt(e*(parseInt($("#node-input-sink-show-percent").val())/100))),$("#node-input-sink-totalPaths").html(t+" / "+e),setTimeout(()=>{$("#node-input-sink-target-container-div").treeList("data",window._introSpectionsinkStack.sort((e,t)=>e.length<t.length?-1:1).slice(0,t).map(e=>s(e)))},300)}),$("#node-input-sink-show-percent").trigger("change")):setTimeout(()=>{$("#node-input-sink-target-container-div").treeList("data",window._introSpectionsinkStack.sort((e,t)=>e.length<t.length?-1:1).map(e=>s(e)))},300)},300)})},oneditsave:function(){delete window._introSpectionsinkStack},oneditcancel:function(){delete window._introSpectionsinkStack},oneditresize:function(e){for(var t=$("#dialog-form>div:not(.node-input-target-list-row)"),n=$("#dialog-form").height(),i=0;i<t.length;i++)n-=$(t[i]).outerHeight(!0);$("#dialog-form>div.node-input-target-list-row").css("height",n+"px")}});
+RED.nodes.registerType("Sink",{color:"#e5e4ef",icon:"font-awesome/fa-anchor",category:"introspection",paletteLabel:"Sink",defaults:{name:{value:""}},inputs:1,outputs:0,label:function(){return this.name||this._def.paletteLabel},labelStyle:function(){return this.name?"node_label_italic":""},oneditprepare:function(){var n=this;let o=1,i=(window._introSpectionsinkStack=[],window._introWorker=void 0,e=>{var t=RED.nodes.node(e[e.length-1]);let n=[];return e.forEach(function(e){var t,e=RED.nodes.node(e)||RED.nodes.junction(e);void 0!==e&&(t=RED.nodes.workspace(e.z)||RED.nodes.subflow(e.z),n.push({label:"",_label:RED.utils.getNodeLabel(e),node:e,sublabel:t&&RED.utils.getNodeLabel(t)||e.z,icon:RED.utils.createNodeIcon(e,!0),class:"intro-remove-top-left"}))}),{node:t,label:RED.utils.getNodeLabel(t),_label:RED.utils.getNodeLabel(t),_pathlen:e.length,sublabel:"Length: "+e.length,selected:!1,checkbox:!1,children:n}});var a=$("#node-input-sink-target-filter").searchBox({style:"compact",delay:300,change:function(){let t=$(this).val().trim().toLowerCase();var e,n=$("#node-input-sink-target-container-div").treeList("data");""===t?($("#node-input-sink-target-container-div").treeList("filter",null),a.searchBox("count","")):(e=$("#node-input-sink-target-container-div").treeList("filter",function(e){return-1<e._label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)||e.sublabel.toLowerCase().indexOf(t)}),a.searchBox("count",e+" / "+n.length))}});{var e="sink";let n=`#node-input-${e}-target-container-div`,o=`#node-input-${e}-extract-pathway-but`,i=`#node-input-${e}-show-pathway-but`;$(n).css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistconfirm",function(e,t){t.node&&!t.children&&(RED.view.reveal(t.node.id),RED.view.select(t.node.id),setTimeout(()=>{RED.editor.edit(t.node)},100))}).on("treelistselect",function(e,t){t.node&&!t.children&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw()),1==$(n).treeList("data").filter(e=>e.expanded).length?($(o).prop("disabled",!1),$(i).prop("disabled",!1)):($(o).prop("disabled",!0),$(i).prop("disabled",!0))})}var d=function(t,n){if(n.indexOf(t.id)<0&&!t.d)switch(t.type){case"link in":t.links.forEach(e=>{e=RED.nodes.node(e);e&&d(e,[...n,t.id])});break;case"Seeker":n.push(t.id),window._introSpectionsinkStack=[n,...window._introSpectionsinkStack];break;default:RED.nodes.getNodeLinks(t,o).forEach(e=>{d(e.source,[...n,t.id])})}};let l=e=>{e&&e.preventDefault();let t=window._introSpectionsinkStack.length,n=25,o=("-"!=$("#node-input-sink-show-percent").val()&&(n=parseInt(t*(parseInt($("#node-input-sink-show-percent").val())/100))),e=$("#node-input-sink-show-ordering").val(),{1:(e,t)=>e.length<t.length?-1:1,2:(e,t)=>e.length>t.length?-1:1,3:(e,t)=>{return RED.utils.getNodeLabel(RED.nodes.node(e[e.length-1]))<RED.utils.getNodeLabel(RED.nodes.node(t[t.length-1]))?-1:1},4:(e,t)=>{e=RED.utils.getNodeLabel(RED.nodes.node(e[e.length-1]));return RED.utils.getNodeLabel(RED.nodes.node(t[t.length-1]))<e?-1:1},5:(e,t)=>.5<Math.random()?-1:1}[parseInt(e)]||((e,t)=>e.length<t.length?-1:1));setTimeout(()=>{setTimeout(()=>{$("#node-input-sink-totalPaths").html(n>t?""+t:n+" / "+t)},10),setTimeout(()=>{$("#node-input-sink-target-container-div").treeList("data",window._introSpectionsinkStack.sort(o).slice(0,n).map(e=>i(e)))},20)},100)},r=()=>{let e=window._introSpectionsinkStack.length;setTimeout(()=>{$("#node-input-sink-start-but").prop("disabled",!1),$("#node-input-sink-totalPaths").html(e),$("#node-input-sink-spinner").hide()},10);var t="sink",n=e;$(`#node-input-${t}-show-percent`).show(),$(`#node-input-${t}-show-ordering`).show();var o,i=$(`#node-input-${t}-show-percent`),a=(i.html(""),i.append($("<option></option>").val("-").html("Show..")),[5,10,20,30,40,50,75].forEach(e=>{var t=parseInt(e*n/100);0!=t&&i.append($("<option></option>").val(e).html(t+" paths"))}),i.append($("<option></option>").val(100).html("All")),i.val("-"),(i=$(`#node-input-${t}-show-ordering`)).html(""),{"Count Asc":1,"Count Desc":2,"Name Asc":3,"Name Desc":4,Random:5});for(o in a)i.append($("<option></option>").val(a[o]).html(o));i.val(1),$("#node-input-sink-show-ordering").on("change",l),$("#node-input-sink-show-percent").on("change",l),$("#node-input-sink-show-percent").trigger("change")};$("#node-input-sink-show-pathway-but").on("click",e=>{e&&e.preventDefault();var e=$("#node-input-sink-target-container-div").treeList("data").filter(e=>e.expanded);1==(e=e).length?(e=e[0].children.filter(e=>e.node.z==RED.workspaces.active()).map(e=>e.node.id),RED.tray.hide(),RED.view.selectNodes({selected:e,onselect:()=>{RED.tray.show()},oncancel:()=>{RED.tray.show()}})):RED.notify("Only one expanded pathway can be shown.",{type:"warning"})}),$("#node-input-sink-extract-pathway-but").on("click",e=>{e&&e.preventDefault();e=$("#node-input-sink-target-container-div").treeList("data").filter(e=>e.expanded);if(1==e.length){e=e[0].children.map(e=>e.node).filter(e=>["link in","link out","Seeker","Sink","junction"].indexOf(e.type)<0);let o=RED.nodes.createExportableNodeSet(e).map(e=>(e.id=RED.nodes.id(),e)),i=0;o=o.map((e,t)=>{try{var n;e._def=e._def||RED.nodes.getType(e.type),e._def&&e._def._&&e._?(n=RED.utils.getNodeLabel(e,e.info).split("\\n").length,i+=30*n+30):i+=50}catch(e){i+=50}return delete e.z,e.y=i,e.x=0,e.wires=[[]],t!=o.length-1&&(e.wires=[[o[t+1].id]]),e}),RED.clipboard.copyText(JSON.stringify(o))&&RED.notify("Pathway copied to clipboard",{type:"success"})}else RED.notify("Only one expanded pathway can be extracted.",{type:"warning"})}),$("#node-input-sink-start-but").on("click",e=>{if(e&&e.preventDefault(),setTimeout(()=>{$("#node-input-sink-start-but").prop("disabled",!0),$("#node-input-sink-totalPaths").html(""),$("#node-input-sink-spinner").show(),$("#node-input-sink-show-percent").hide(),$("#node-input-sink-show-ordering").hide()},10),window._introSpectionsinkStack=[],"undefined"!=typeof Worker){let t=new Worker("data:text/javascript;base64,bGV0IGludHJvU3BlY3Rpb25TdGFjaz1bXSxncmFwaD1bXSxncmFwaEluZGV4PXt9LFJFRD17bm9kZXM6e25vZGU6ZT0+Z3JhcGhbZ3JhcGhJbmRleFtlXV0sZ2V0Tm9kZUxpbmtzOnM9PnMuaW53aXJlcy5tYXAoZT0+KHt0YXJnZXQ6cyxzb3VyY2U6UkVELm5vZGVzLm5vZGUoZSl9KSl9fTt2YXIgdHJhdmVyc2U9ZnVuY3Rpb24ocyxhKXtpZihhLmluZGV4T2Yocy5pZCk8MCYmIXMuZClzd2l0Y2gocy50eXBlKXtjYXNlImxpbmsgaW4iOnMubGlua3MuZm9yRWFjaChlPT57ZT1SRUQubm9kZXMubm9kZShlKTtlJiZ0cmF2ZXJzZShlLFsuLi5hLHMuaWRdKX0pO2JyZWFrO2Nhc2UiU2Vla2VyIjphLnB1c2gocy5pZCkscG9zdE1lc3NhZ2UoYSk7YnJlYWs7ZGVmYXVsdDpSRUQubm9kZXMuZ2V0Tm9kZUxpbmtzKHMpLmZvckVhY2goZT0+e3RyYXZlcnNlKGUuc291cmNlLFsuLi5hLHMuaWRdKX0pfX07b25tZXNzYWdlPWZ1bmN0aW9uKGUpe2xldCBzPWUuZGF0YS5zaW5rSWQ7KGdyYXBoPShncmFwaD1lLmRhdGEubm9kZXMubWFwKGU9Pih7d2lyZXM6ZS53aXJlcyxsaW5rczplLmxpbmtzLGQ6ZS5kaXNhYmxlZHx8ZS5kLGlkOmUuaWQsdHlwZTplLnR5cGV9KSkuZmlsdGVyKGU9PiEhZS53aXJlcykubWFwKGU9PihlLmZsYXR3aXJlcz1lLndpcmVzLmZsYXQoKSxlKSkpLm1hcChzPT4ocy5pbndpcmVzPWdyYXBoLmZpbHRlcihlPT4tMTxlLmZsYXR3aXJlcy5pbmRleE9mKHMuaWQpKS5tYXAoZT0+ZS5pZCkscykpKS5mb3JFYWNoKChlLHMpPT5ncmFwaEluZGV4W2UuaWRdPXMpLFJFRC5ub2Rlcy5nZXROb2RlTGlua3MoUkVELm5vZGVzLm5vZGUocykpLmZvckVhY2goZT0+e3RyYXZlcnNlKGUuc291cmNlLFtzXSl9KSxwb3N0TWVzc2FnZSgiZG9uZSIpfTs=");(window._introWorker=t).onmessage=function(e){"done"==e.data?(t.terminate(),delete window._introWorker,r()):(window._introSpectionsinkStack.push(e.data),$("#node-input-sink-totalPaths").html(window._introSpectionsinkStack.length),26==window._introSpectionsinkStack.length&&$("#node-input-sink-target-container-div").treeList("data",window._introSpectionsinkStack.sort((e,t)=>e.length<t.length?-1:1).slice(0,25).map(e=>i(e))))},setTimeout(()=>{t.postMessage({sinkId:n.id,nodes:RED.nodes.createCompleteNodeSet({credentials:!1})})},10)}else setTimeout(()=>{RED.nodes.getNodeLinks(n,o).forEach(e=>{d(e.source,[n.id])}),r()},300)})},oneditsave:function(){window._introWorker&&(window._introWorker.terminate(),delete window._introWorker),delete window._introSpectionsinkStack},oneditcancel:function(){window._introWorker&&(window._introWorker.terminate(),delete window._introWorker),delete window._introSpectionsinkStack},oneditresize:function(e){for(var t=$("#dialog-form>div:not(.node-input-target-list-row)"),n=$("#dialog-form").height(),o=0;o<t.length;o++)n-=$(t[o]).outerHeight(!0);$("#dialog-form>div.node-input-target-list-row").css("height",n+"px")}});
 </script>
 
 <script type="text/html" data-template-name="Sink">
@@ -15327,7 +16299,9 @@ RED.nodes.registerType("Sink",{color:"#e5e4ef",icon:"font-awesome/fa-anchor",cat
 
   <div class="form-row node-input-target-row">
     <button id="node-input-sink-start-but" class="red-ui-button"><i class="fa fa-refresh"></i> Find Pathways</button>
-    <select class='hide' id="node-input-sink-show-percent"></select>
+    <select class='hide' style="width:100px;" id="node-input-sink-show-percent"></select>
+    <select class='hide' style="width:100px;" id="node-input-sink-show-ordering"></select>
+    <button id="node-input-sink-show-pathway-but" class="red-ui-button">Show Pathway</button>
   </div>
 
   <div class="form-row node-input-target-row node-input-target-list-row" style="margin-top: 40px; position: relative; min-height: 100px">
@@ -15336,10 +16310,11 @@ RED.nodes.registerType("Sink",{color:"#e5e4ef",icon:"font-awesome/fa-anchor",cat
     <div id="node-input-sink-target-container-div"></div>
   </div>
 
-  <div class="form-row" style="margin-top: -40px;">
+  <div class="form-row" style="margin-top: 0px; margin-bottom: 20px;">
     <label>Total Paths: 
         <span id="node-input-sink-totalPaths"></span><img id="node-input-sink-spinner" class="hide" src='red/images/spin.svg'/>
-    </label>
+     </label>
+     <button id="node-input-sink-extract-pathway-but" class="red-ui-button" style="float: right">Extract Pathway to Clipboard</button>
   </div>
 </script>
 
@@ -15668,7 +16643,10 @@ Functionality:
 
 
 <script type="text/html" data-help-name="GetFlows">
-  <p>Retrieves the current flow file from the server. This uses the Node-RED API and is therefore storage-method independent. Return value is a JSON.</p>
+  <p>Retrieves the current flow file from this server. This uses the Node-RED API and is therefore storage-method independent. Payload becomes a Json string.</p>
+
+  If the response is to sent to another host, then insert a JSON node to convert the response of this node to a Javascript array which can be passed as payload 
+  to the SendFlow node.
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/sendflow] --- -->
 <script type="text/javascript">
@@ -15680,9 +16658,15 @@ Functionality:
       name: {
         value:"",
       },
+
       hostUrl: {
-        value: ""
+        value:"hostUrl", 
+        required:true
       },
+      hostUrlType: {
+        value:"str"
+      },
+
       flowVersion: {
         value: "v1"
       },
@@ -15702,6 +16686,7 @@ Functionality:
         value: "env",
       },
     },
+    
     inputs:1,
     outputs:1,
 
@@ -15712,6 +16697,7 @@ Functionality:
     labelStyle: function() {
       return this.name?"node_label_italic":"";
     },
+
     oneditprepare: function() {
       $("#node-input-apiUsername").typedInput({
         types:["env", "msg", "flow","global", "cred"],
@@ -15719,8 +16705,13 @@ Functionality:
       });
 
       $("#node-input-apiPassword").typedInput({
-        types:["env", "msg", "flow","global", "env", "cred"],
+        types:["env", "msg", "flow","global", "cred"],
         typeField: "#node-input-apiPasswordType"
+      });
+
+      $("#node-input-hostUrl").typedInput({
+        types:["str", "msg", "flow", "global", "env"],
+        typeField: "#node-input-hostUrlType"
       });
 
       if ( $('#node-input-useAuthentication').is(":checked") ) {
@@ -15748,7 +16739,8 @@ Functionality:
 
     <div class="form-row">
         <label for="node-input-hostUrl"><i class="fa fa-tag"></i> Host</label>
-        <input type="text" id="node-input-hostUrl" placeholder="Host URL">
+        <input type="text" id="node-input-hostUrl" placeholder="hostUrl">
+        <input type="hidden" id="node-input-hostUrlType" value="str">
     </div>
 
     <div class="form-row">
@@ -15797,6 +16789,8 @@ Functionality:
 
 <script type="text/html" data-help-name="SendFlow">
   <p>Send flow to another Node-RED instance.</p>
+
+  Payload is assumed to be a Javascript array containing flow data.
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-introspection/installpackage] --- -->
 <script type="text/javascript">
@@ -15809,9 +16803,15 @@ Functionality:
       name: {
         value:"",
       },
+
       hostUrl: {
-        value: ""
+        value:"hostUrl", 
+        required:true
       },
+      hostUrlType: {
+        value:"str"
+      },
+
       useAuthentication: {
         value:false
       },
@@ -15831,6 +16831,7 @@ Functionality:
         value: false
       }
     },
+    
     inputs:1,
     outputs:1,
 
@@ -15841,6 +16842,7 @@ Functionality:
     labelStyle: function() {
       return this.name?"node_label_italic":"";
     },
+
     oneditprepare: function() {
       $("#node-input-apiUsername").typedInput({
         types:["env", "msg", "flow","global", "cred"],
@@ -15850,6 +16852,11 @@ Functionality:
       $("#node-input-apiPassword").typedInput({
         types:["env", "msg", "flow","global", "env", "cred"],
         typeField: "#node-input-apiPasswordType"
+      });
+
+      $("#node-input-hostUrl").typedInput({
+        types:["str", "msg", "flow", "global", "env"],
+        typeField: "#node-input-hostUrlType"
       });
 
       if ( $('#node-input-useAuthentication').is(":checked") ) {
@@ -15898,8 +16905,9 @@ Functionality:
 -->
 
     <div class="form-row hostUrl-row">
-        <label for="node-input-hostUrl"><i class="fa fa-tag"></i> Host</label>
-        <input type="text" id="node-input-hostUrl" placeholder="Host URL">
+      <label for="node-input-hostUrl"><i class="fa fa-tag"></i> Host</label>
+      <input type="text" id="node-input-hostUrl" placeholder="hostUrl">
+      <input type="hidden" id="node-input-hostUrlType" value="str">
     </div>
 
     <div class="form-row">
@@ -15936,6 +16944,24 @@ Functionality:
 
 <script type="text/html" data-help-name="InstallPackage">
   <p>Install package on another Node-RED instance.</p>
+
+  <p>This takes two forms, it can either install a package by name and version (defaults to "latest") or it can 
+  accept a buffer object containing a .tgz package file.</p>
+
+  <p></p>For the first case:
+  <pre>
+    msg.payload = {
+      module: "@gregoriusrippenstein/node-red-contrib-introspection",
+      version: "0.10.0"
+    }
+  </pre>
+
+  <p>To install a .tgz file, read it into a Buffer object and set the payload to:</p>
+  <pre>
+    msg.payload = {
+      data: new Buffer("ddd")
+    }
+  </pre>
 </script>
 <!-- --- [red-module:@gregoriusrippenstein/node-red-contrib-nodedev/nodedevops] --- -->
 <script type="text/javascript">
@@ -22369,6 +23395,813 @@ RED.nodes.registerType('NodeDevOps', {
     When selected this adds an output wire to the node in order to pass the original message through to a following node.
     This performs better than forking the wires, however it does remove the enable/disable button.
     </p> 
+</script>
+<!-- --- [red-module:node-red-contrib-string/string] --- -->
+<script type="text/x-red" data-template-name="string">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-prop"><i class="fa fa-sign-in"></i> <span>From</span></label>
+        <input type="text" id="node-input-prop" style="width:70%">
+        <input type="hidden" id="node-input-object">
+    </div>
+
+    <div class="form-row" style="margin-bottom:0;">
+        <label><i class="fa fa-list"></i> <span>Methods</span></label>
+    </div>
+
+    <div class="form-row node-input-method-container-row">
+        <ol id="node-input-method-container"></ol>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-propout"><i class="fa fa-sign-out"></i> <span>To</span></label>
+        <input type="text" id="node-input-propout" style="width:70%">
+        <input type="hidden" id="node-input-objectout">
+    </div>
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('string',{
+        category: 'function',
+        color: '#C0C0C0',
+        defaults: {
+            name: {value:""},
+            methods: [],
+            prop: {value: 'payload'},
+            propout: {value: 'payload'},
+            object: {value: 'msg'},
+            objectout: {value: 'msg'}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "string.png",
+        label: function() {
+            return this.name||"string";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function() {
+            var node = this;
+            node.resizeMethods = function() {
+              var newWidth = $(".node-input-method-container-row").width();
+              newWidth = ((newWidth - 460) + 222).toString() + 'px';
+              var selector = '.node-input-methods-applied .red-ui-typedInput-container';
+              if ($(selector).length) {
+                $(selector).css('width', newWidth);
+              }
+            };
+            var methods = [
+                {
+                  name: "append",
+                  params: [{
+                    default:'str',
+                    types:['msg','flow','global','str'],
+                    placeholder:'chars'
+                  }]
+                },
+            		{
+            			name: "between",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'left'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'right'
+            			}]
+            		},
+            		{
+            			name: "camelize",
+            			params: []
+            		},
+            		{
+            			name: "capitalize",
+            			params: []
+            		},
+            		{
+            			name: "chompLeft",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'prefix'
+            			}]
+            		},
+            		{
+            			name: "chompRight",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'suffix'
+            			}]
+            		},
+            		{
+            			name: "collapseWhitespace",
+            			params: []
+            		},
+            		{
+            			name: "contains",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'find'
+            			}]
+            		},
+            		{
+            			name: "count",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'find'
+            			}]
+            		},
+            		{
+            			name: "dasherize",
+            			params: []
+            		},
+            		{
+            			name: "decodeHTMLEntities",
+            			params: []
+            		},
+                {
+            			name: "decodeURIComponent",
+            			params: []
+            		},
+            		{
+            			name: "delLeftMost",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'find'
+            			}]
+            		},
+            		{
+            			name: "delRightMost",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'find'
+            			}]
+            		},
+                {
+            			name: "encodeURIComponent",
+            			params: []
+            		},
+            		{
+            			name: "endsWith",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'chars'
+            			}]
+            		},
+            		{
+            			name: "escapeHTML",
+            			params: []
+            		},
+            		{
+            			name: "ensureLeft",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'prefix'
+            			}]
+            		},
+            		{
+            			name: "ensureRight",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'suffix'
+            			}]
+            		},
+            		{
+            			name: "getRightMost",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'find'
+            			}]
+            		},
+            		{
+            			name: "getLeftMost",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'find'
+            			}]
+            		},
+            		{
+            			name: "humanize",
+            			params: []
+            		},
+            		{
+            			name: "isAlpha",
+            			params: []
+            		},
+            		{
+            			name: "isAlphaNumeric",
+            			params: []
+            		},
+            		{
+            			name: "isEmpty",
+            			params: []
+            		},
+            		{
+            			name: "isLower",
+            			params: []
+            		},
+            		{
+            			name: "isNumeric",
+            			params: []
+            		},
+            		{
+            			name: "isUpper",
+            			params: []
+            		},
+            		{
+            			name: "latinise",
+            			params: []
+            		},
+            		{
+            			name: "left",
+            			params: [{
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'number of chars'
+            			}]
+            		},
+            		{
+            			name: "length",
+            			params: []
+            		},
+            		{
+            			name: "lines",
+            			params: []
+            		},
+            		{
+            			name: "pad",
+            			params: [{
+            				default:'num',
+            				types:['msg','flow','global','num',],
+                    placeholder:'length'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'char'
+            			}]
+            		},
+            		{
+            			name: "padLeft",
+                  params: [{
+            				default:'num',
+            				types:['msg','flow','global','num',],
+                    placeholder:'length'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'char'
+            			}]
+                },
+            		{
+            			name: "padRight",
+                  params: [{
+            				default:'num',
+            				types:['msg','flow','global','num',],
+                    placeholder:'length'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'char'
+            			}]
+                },
+            		{
+            			name: "parseCSV",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'delimiter'
+            			},
+                  {
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'qualifier'
+            			},
+                  {
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'escape'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'lineDelimiter'
+            			}]
+            		},
+                {
+                  name: "prepend",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'chars'
+            			}]
+                },
+            		{
+            			name: "repeat",
+            			params: [{
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'number of times'
+            			}]
+            		},
+            		{
+            			name: "replaceAll",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'search'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'replace'
+            			}]
+            		},
+            		{
+            			name: "right",
+            			params: [{
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'number of chars'
+            			}]
+            		},
+            		{
+            			name: "setValue",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'chars'
+            			}]
+            		},
+            		{
+            			name: "slugify",
+            			params: []
+            		},
+            		{
+            			name: "split",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'separator'
+            			},
+            			{
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'limit'
+            			}]
+            		},
+            		{
+            			name: "splitLeft",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'separator'
+            			},
+                  {
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'max'
+            			},
+                  {
+                    default:'num',
+                    types:['msg','flow','global','num'],
+                    placeholder:'limit'
+                  }]
+            		},
+            		{
+            			name: "splitRight",
+                  params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'separator'
+            			},
+                  {
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'max'
+            			},
+                  {
+                    default:'num',
+                    types:['msg','flow','global','num'],
+                    placeholder:'limit'
+                  }]
+            		},
+            		{
+            			name: "startsWith",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'prefix'
+            			}]
+            		},
+                {
+            			name: "strip",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'chars'
+            			}]
+            		},
+            		{
+            			name: "stripPunctuation",
+            			params: []
+            		},
+            		{
+            			name: "stripTags",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'tag, leave blank for all tags'
+            			}]
+            		},
+            		{
+            			name: "template",
+            			params: [{
+            				default:'json',
+            				types:['msg','flow','global','json'],
+                    placeholder:"values"
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'open, leave blank for {{'
+            			},
+                  {
+                    default:'str',
+                    types:['msg','flow','global','str'],
+                    placeholder:'close, leave blank for }}'
+                  }]
+                },
+                {
+                  name:'titleCase',
+                  params: []
+                },
+            		{
+            			name: "toBoolean",
+            			params: []
+            		},
+                {
+                  name: "toCSV",
+                  params: [{
+                    default:'json',
+                    types:['json'],
+                    placeholder:'{"delimiter":",", "qualifier": "\"", "escape":"\\", "enclosedNumbers":true, "keys":false}'
+                  }]
+                },
+            		{
+            			name: "toFloat",
+            			params: [{
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'precision'
+            			}]
+            		},
+            		{
+            			name: "toInteger",
+            			params: []
+                },
+                {
+                  name: "toLowerCase",
+                  params: []
+                },
+                {
+                  name: "toString",
+                  params: []
+                },
+                {
+                  name: "toUpperCase",
+                  params: []
+                },
+            		{
+            			name: "trim",
+            			params: []
+            		},
+            		{
+            			name: "trimLeft",
+            			params: []
+            		},
+            		{
+            			name: "trimRight",
+            			params: []
+            		},
+            		{
+            			name: "truncate",
+            			params: [{
+            				default:'num',
+            				types:['msg','flow','global','num'],
+                    placeholder:'length'
+            			},
+            			{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'chars'
+            			}]
+            		},
+            		{
+            			name: "underscore",
+            			params: []
+            		},
+            		{
+            			name: "unescapeHTML",
+            			params: []
+            		},
+            		{
+            			name: "wrapHTML",
+            			params: [{
+            				default:'str',
+            				types:['msg','flow','global','str'],
+                    placeholder:'tag'
+            			},
+            			{
+            				default:'json',
+            				types:['msg','flow','global','json'],
+                    placeholder:'attributes'
+            			}]
+            		}
+            ];
+
+            $('#node-input-prop').typedInput({
+                default: 'msg',
+                typeField: $("#node-input-object"),
+                types:['flow','global','msg', 'str']
+            });
+            $('#node-input-propout').typedInput({
+                default: 'msg',
+                typeField: $("#node-input-objectout"),
+                types:['flow','global','msg']
+            });
+            $('#node-input-method-container').css('min-height','300px').css('min-width','450px').editableList({
+                addItem: function(container, i, method) {
+                    var row = $('<div/>', {class:"node-input-methods-applied"}).appendTo(container);
+                    var selectField = $('<select/>',{class:"node-input-method-type",style:"width:165px; margin-right:10px;"}).appendTo(row);
+                    for (var i=0; i < methods.length; i++) {
+                      selectField.append($("<option></option>").val(methods[i].name).text(methods[i].name));
+                    }
+
+                    // Build the parameter typedInput UI array by the given selectField
+                    var params = [];
+                    function updateMethodParamUI(name) {
+
+                      // Remove prior params UI elements
+                      params.forEach(function(p){
+                        p.remove();
+                      });
+
+                      // Find the method index by name
+                      for (var m=0; m < methods.length; m++) {
+                        if (methods[m].name == name) {
+                          selectField.val(name);
+                          break;
+                        }
+                      }
+
+                      // Build the params UI elements
+                      methods[m].params.forEach(function(p, i) {
+                        if (i == 0) {
+                          var paramDiv = $('<div/>',{style:"display:inline;"}).appendTo(row);
+                        }else{
+                          var paramDiv = $('<div/>',{style:"display:block;margin-top:10px;margin-left:175px"}).appendTo(row);
+                        }
+                        $('<input/>',{class:"node-input-method-param" + i.toString(),
+                          type:"text",style:"width:222px;",
+                          placeholder:p.placeholder})
+                        .appendTo(paramDiv)
+                        .typedInput(p);
+                        params.push(paramDiv);
+                      });
+                    }
+
+                    // Build default append method's params on initial add or load method
+                    if (!method.name) {
+                        updateMethodParamUI('append');
+                    }else{
+                        updateMethodParamUI(method.name);
+
+                        //Fill out existing param data
+                        method.params.forEach(function(p, i){
+                            row.find(".node-input-method-param"+i).typedInput('type', p.type);
+                            row.find(".node-input-method-param"+i).typedInput('value', p.value);
+                        });
+                    }
+                    node.resizeMethods();
+
+                    // Rebuild method's params on select change
+                    selectField.change(function() {
+                        updateMethodParamUI($(this).val());
+                        node.resizeMethods();
+                    });
+                },
+                removable: true,
+                sortable: true
+            });
+
+            // Load prior data
+            if (node.methods) {
+              node.methods.forEach(function(m){
+                $('#node-input-method-container').editableList('addItem', m);
+              });
+            }
+        },
+        oneditresize: function() {
+            this.resizeMethods();
+        },
+        oneditsave: function() {
+            var methodItems = $("#node-input-method-container").editableList('items');
+            var methods = [];
+            methodItems.each(function(){
+                var method = {
+                  name: $(this).find(".node-input-method-type").val(),
+                  params: []
+                };
+                var i = 0;
+                while($(this).find(".node-input-method-param"+i).length) {
+                    var param = {};
+                    param.type = $(this).find(".node-input-method-param"+i).typedInput('type');
+                    param.value = $(this).find(".node-input-method-param"+i).typedInput('value');
+                    method.params.push(param);
+                    i++;
+                }
+                methods.push(method);
+            });
+            this.methods = methods;
+        }
+    });
+</script>
+<script type="text/x-red" data-help-name="string">
+  <p>Applies string methods from a given context property and assigns the results
+  optionally to the same or another context property. Methods can be chained by
+  adding multiple methods sequentially and with parameters that are literal or
+  from other context properties. The string object always passes along the msg
+  object with (if any) changes applied.</p>
+
+  <p>By default, string <b><i>from</i></b> and <b><i>to</i></b>
+  methods apply to the <code>msg.payload</code> property but may be set to any
+  property of <code>global</code>, <code>flow</code>, or <code>msg</code>
+  contexts.</p>
+
+  <h3>Details</h3>
+  <p>Note: this node expects the given context property to contain string data.
+  The result may or may not contain string data. See behavior description for
+  details.</p>
+
+  <p>The methods that can be applied via the node editor user
+  interface and their resulting behavior:</p>
+  <dl class="message-properties">
+  <dt>append(<i>chars</i>)</dt>
+  <dd>Appends the given string in <i>chars</i> to the string. I.e. 'Hello' <code>append</code> <i>'World'</i> becomes 'HelloWorld'.</dd>
+  <dt>between(<i>left</i>, <i>right</i>)</dt>
+  <dd>Extacts a string between <i>left</i> and <i>right</i> strings. I.e. 'The quick brown fox.' <code>between</code> <i>'quick'</i> and <i>'fox'</i> is ' brown '.</dd>
+  <dt>camelize()</dt>
+  <dd>Remove any underscores or dashes and convert a string into camel casing. I.e. 'data_rate' becomes 'dataRate'.</dd>
+  <dt>capitalize()</dt>
+  <dd>Capitalizes the first character of a string. I.e. 'jon' becomes 'Jon'.</dd>
+  <dt>chompLeft(<i>prefix</i>)</dt>
+  <dd>Removes the <i>prefix</i> from the start of a string. I.e. 'foobar' <code>chompLeft</code> <i>'foo'</i> becomes 'bar'.</dd>
+  <dt>chompRight(<i>suffix</i>)</dt>
+  <dd>Removes the <i>suffix</i> from the end of a string. I.e. 'foobar' <code>chompRight</code> <i>'bar'</i> becomes 'foo'.</dd>
+  <dt>collapseWhitespace()</dt>
+  <dd>Converts all adjacent whitespace characters to a single space.</dd>
+  <dt>contains(<i>find</i>)</dt>
+  <dd>Returns true if the string contains <i>find</i>. I.e. 'JavaScript is one of the best languages.' <code>contains</code> <i>'one'</i> is true.</dd>
+  <dt>count(<i>find</i>)</dt>
+  <dd>Returns the number of occurences of <i>find</i>. I.e. 'JP likes to program. JP does not play in the NBA.' <code>count</code> <i>'JP'</i> is the number 2.</dd>
+  <dt>dasherize()</dt>
+  <dd>Returns a converted camel cased string into a string delimited by dashes. I.e. 'dataRate' becomes 'data-rate'.</dd>
+  <dt>decodeHTMLEntities()</dt>
+  <dd>Decodes HTML entities into their string representation. I.e. 'Ken Thompson &amp;amp; Dennis Ritchie' becomes 'Ken Thompson &amp; Dennis Ritchie'.</dd>
+  <dt>decodeURIComponent()</dt>
+  <dd>Decodes a URI component. I.e. 'http%3A%2F' becomes 'http://'.</dd>
+  <dt>delLeftMost(<i>find</i>)</dt>
+  <dd>Returns the remaining string after removing the first occurrence of <i>find</i> and everything to the left of <i>find</i> when scanning from <b>left to right</b>. If <i>find</i> is not found, the unmodified string is returned. I.e. '\Parent\child\folders' <code>delLeftMost</code> <i>'\child'</i> leaves '\folders'.</dd>
+  <dt>delRightMost(<i>find</i>)</dt>
+  <dd>Returns the remaining string after removing the first occurrence of <i>find</i> and everything to the right of <i>find</i> when scanning from <b>right to left</b>. If <i>find</i> is not found, the unmodified string is returned. I.e. '\Parent\child\folders' <code>delRightMost</code> <i>'\child'</i> leaves '\Parent'.</dd>
+  <dt>encodeURIComponent()</dt>
+  <dd>Encodes a URI component. I.e. 'http://' becomes 'http%3A%2F'.</dd>
+  <dt>endsWith(<i>chars</i>)</dt>
+  <dd>Returns true if the string ends with <i>chars</i>. I.e. 'hello jon' <code>endsWith</code> 'jon' is true.</dd>
+  <dt>escapeHTML()</dt>
+  <dd>Escapes the html. I.e. '&lt;div&gt;hi&lt;/div&gt;' becomes '&amp;lt;div&amp;gt;hi&amp;lt;/div&amp;gt;'.</dd>
+  <dt>ensureLeft(<i>prefix</i>)</dt>
+  <dd>Ensures string starts with <i>prefix</i>. I.e. 'subdir' <code>ensureLeft</code> <i>'/'</i> becomes '/subdir'.</dd>
+  <dt>ensureRight(<i>suffix</i>)</dt>
+  <dd>Ensures string ends with <i>suffix</i>. I.e. 'dir' <code>ensureRight</code> <i>'/'</i> becomes 'dir/'.</dd>
+  <dt>getRightMost(<i>find</i>)</dt>
+  <dd>Finds the first occurrence of <i>find</i> and returns everything to the right of <i>find</i> (not including <i>find</i> itself) when scanning from <b>right to left</b>. If <i>find</i> is not found, the unmodified string is returned. I.e. '\Parent\child\folders' <code>getRightMost</code> '\child' is '\folders'.</dd>
+  <dt>getLeftMost(<i>find</i>)</dt>
+  <dd>Finds the first occurrence of <i>find</i> and returns everything to the left of <i>find</i> (not including <i>find</i> itself) when scanning from <b>left to right</b>. If <i>find</i> is not found, the unmodified string is returned. I.e. '\Parent\child\folders' <code>getLeftMost</code> '\child' is '\Parent'.</dd>
+  <dt>humanize()</dt>
+  <dd>Transforms the input into a human friendly/readable form. I.e. '   capitalize dash-CamelCase_underscore trim  ' becomes 'Capitalize dash camel case underscore trim'.</dd>
+  <dt>isAlpha()</dt>
+  <dd>Return true if the string contains only letters.</dd>
+  <dt>isAlphaNumeric()</dt>
+  <dd>Return true if the string contains only letters and numbers.</dd>
+  <dt>isEmpty()</dt>
+  <dd>Return true if the string is solely composed of whitespace or is null/undefined.</dd>
+  <dt>isLower()</dt>
+  <dd>Return true if the character or string is lowercase.</dd>
+  <dt>isNumeric()</dt>
+  <dd>Return true if the string only contains digits.</dd>
+  <dt>isUpper()</dt>
+  <dd>Returns true if the character or string is uppercase.</dd>
+  <dt>latinise()</dt>
+  <dd>Removes accents from Latin characters. I.e. 'crème brûlée' becomes 'creme brulee'.</dd>
+  <dt>left(<i>n</i>)</dt>
+  <dd>Return the substring denoted by <i>n</i> positive left-most characters. I.e. 'My name is JP' <code>left</code> <i>2</i> is 'My'.</dd>
+  <dt>length()</dt>
+  <dd>Property to return the length of the string object. I.e. 'hi' <code>length</code> is 2.</dd>
+  <dt>lines()</dt>
+  <dd>Returns an array with the lines. Cross-platform compatible.</dd>
+  <dt>pad(<i>length</i>, <i>char</i>)</dt>
+  <dd>Pads the string in the center with specified <i>char</i>. <i>char</i> may be a string. I.e. 'hello' <code>pad</code> <i>'.'</i> is '...hello..'.</dd>
+  <dt>padLeft(<i>length</i>, <i>char</i>)</dt>
+  <dd>Left pads the string. I.e. 'hello' <code>padLeft</code> <i>'.'</i> is '.....hello'.</dd>
+  <dt>padRight(<i>length</i>, <i>char</i>)</dt>
+  <dd>Right pads the string. I.e. 'hello' <code>padRight</code> <i>'.'</i> is 'hello.....'.</dd>
+  <dt>parseCSV()</dt>
+  <dd>Parses a CSV line into an array. I.e. "'a','b','c'" becomes ['a', 'b', 'c'].</dd>
+  <dt>repeat(<i>n</i>)</dt>
+  <dd>Returns a string repeated <i>n</i> times. I.e. '*' <code>repeat</code> <i>5</i> is '*****'.</dd>
+  <dt>replaceAll(<i>search</i>, <i>replace</i>)</dt>
+  <dd>Return the new string with all occurrences of <i>search</i> replaced with <i>replace</i>. I.e. ' does IT work? ' <code>replaceAll</code> <i>' '</i>, <i>'_'</i> becomes '_does_IT_work?_'.</dd>
+  <dt>right(<i>n</i>)</dt>
+  <dd>Return the substring denoted by <i>n</i> positive right-most characters. I.e. 'My name is JP' <code>right</code> <i>2</i> is 'JP'.</dd>
+  <dt>setValue(<i>chars</i>)</dt>
+  <dd>Sets the content to <i>chars</i>.</dd>
+  <dt>slugify()</dt>
+  <dd>Converts the text into a valid url slug. Removes accents from Latin characters. I.e. 'The Quick Brown Fox' becomes 'the-quick-brown-fox'.</dd>
+  <dt>split(<i>separator</i>, <i>limit</i>)</dt>
+  <dd>Split the string to an array of substrings using the <i>separator</i> string to determine where to make each split. A limit of separations can be specified in the optional <i>limit</i>. I.e. 'Hello planet earth' <code>split</code> <i>' '</i> returns ['Hello', 'planet', 'earth'].</dd>
+  <dt>splitLeft(<i>separator</i>, <i>maxSplit</i>, <i>limit</i>)</dt>
+  <dd>Returns an array of strings, split from the left at <i>separator</i>. Performs at most <i>maxSplit</i> splits, and slices the result into an array with at most <i>limit</i> elements. I.e. 'We built this city' <code>splitLeft</code> <i>' '</i> and <i>1</i> becomes ['We', 'built this city'].</dd>
+  <dt>splitRight(<i>separator</i>, <i>maxSplit</i>, <i>limit</i>)</dt>
+  <dd>Returns an array of strings, split from the left at <i>separator</i>. Performs at most <i>maxSplit</i> splits, and slices the result into an array with at most <i>limit</i> elements. I.e. 'We built this city' <code>splitLeft</code> <i>' '</i> and <i>1</i> becomes ['We built this', 'city'].</dd>
+  <dt>startsWith(<i>prefix</i>)</dt>
+  <dd>Return true if the string starts with <i>prefix</i>. I.e. 'Steve was here' <code>startsWith</code> <i>'Steve'</i> is true.</dd>
+  <dt>strip(<i>chars</i>)</dt>
+  <dd>Removes <i>chars</i> from the given string. I.e. ' Hello World ' <code>strip</code> <i>' '</i> becomes 'HelloWorld'.</dd>
+  <dt>stripPunctuation()</dt>
+  <dd>Strip all of the punctuation. I.e. 'My, st[ring] *full* of %punctuation)' becomes 'My string full of punctuation'.</dd>
+  <dt>stripTags(<i>tag</i>)</dt>
+  <dd>Strip all of the HTML with the specified <i>tag</i> or all tags when <i>tag</i> is empty. I.e. '&lt;p&gt;just &lt;b&gt;some&lt;/b&gt; text&lt;/p&gt;' <code>stripTags</code> becomes 'just some text'.</dd>
+  <dt>template(<i>values</i>, <i>open</i>, <i>close</i>)</dt>
+  <dd>Takes the string and interpolates the <i>values</i>. Defaults <i>open</i> to <i>{{</i> and <i>close</i> to <i>}}</i> if <i>open</i> and <i>close</i> are left empty for Mustache compatible templates. However, you can change this default by supplying <i>open</i> and <i>close</i>. I.e. 'Hello {{planet}}!!!' <code>template</code> <i>{"planet":"Earth"}</i> becomes 'Hello Earth!!!'.</dd>
+  <dt>titleCase()</dt>
+  <dd>Changes the string with the first letter of each word uppercased, including hyphenated words. I.e. 'hello world' <code>titleCase</code> becomes 'Hello World'.</dd>
+  <dt>toBoolean()</dt>
+  <dd>Converts a logical truth string to a boolean. A string containing 'true', 'on', 'yes', or '1' will become a boolean true, otherwise false.</dd>
+  <dt>toCSV(<i>JSON</i>)</dt>
+  <dd>Converts an array or object to a CSV line. </dd>
+  <dt>toFloat(<i>precision</i>)</dt>
+  <dd>Parses the string and returns a floating point number with the specified <i>precision</i>. I.e. '3.45522' <code>toFloat</code> <i>2</i> becomes 3.45.</dd>
+  <dt>toInteger()</dt>
+  <dd>Parses a string argument and returns an integer. I.e. '5.3' <code>toInteger</code> becomes 5.</dd>
+  <dt>toLowerCase()</dt>
+  <dd>Changes the case of the entire string to lowercase. I.e. 'Hello world' <code>toLowerCase</code> becomes 'hello world'.</dd>
+  <dt>toString()</dt>
+  <dd>Converts the current value to a string. I.e. 123 <code>toString</code> becomes '123'.</dd>
+  <dt>toUpperCase()</dt>
+  <dd>Changes the case of the entire string to uppercase. I.e. 'Hello world' <code>toUpperCase</code> becomes 'HELLO WORLD'.</dd>
+  <dt>trim()</dt>
+  <dd>Remove the leading and trailing whitespace from the string. I.e. ' hello ' <code>trim</code> becomes 'hello'.</dd>
+  <dt>trimLeft()</dt>
+  <dd>Removes the leading whitespace from the string. I.e. '  hello there.' <code>trimLeft</code> becomes 'hello there'.</dd>
+  <dt>trimRight()</dt>
+  <dd>Removes the trailing whitespace from the string. I.e. 'hello there  ' <code>trimRight</code> becomes 'hello there'.</dd>
+  <dt>truncate(<i>length</i>, <i>chars</i>)</dt>
+  <dd>Truncates the string, accounting for word placement and character count. I.e. 'this is some long text' <code>truncate</code> <i>14</i> and <i>' read more'</i> becomes 'this is some read more'.</dd>
+  <dt>underscore()</dt>
+  <dd>Converts a camel cased string into a string delimited by underscores. I.e. 'dataRate' <code>underscore</code> becomes 'data-rate'.</dd>
+  <dt>unescapeHTML()</dt>
+  <dd>Unescapes the HTML. I.e. '&amp;lt;div&amp;gt;hi&amp;lt;/div&amp;gt;' <code>unescapeHTML</code> becomes '&lt;div&gt;hi&lt;/div&gt;'</dd>
+  <dt>wrapHTML(<i>tag</i>, <i>attributes</i>)</dt>
+  <dd>The string will be wrapped with HTML Element <i>tag</i> and their <i>attributes</i> provided in JSON format. I.e. 'Venkat' <code>wrapHTML</code> <i>'div'</i> and <i>{ "class": "left bullet" }</i> becomes '&lt;div id="content" class="left bullet"&gt;Venkat&lt;/div&gt;'</dd>
+  </dl>
+  <h3>References</h3>
+  <ul>
+       <li>The method operations are derived from the lightweight, open source <a href="http://stringjs.com" target=_blank>stringjs.com</a> project.</li>
+       <li>The official <a href="https://github.com/Steveorevo/node-red-contrib-string" target=_blank>node-red-contrib-string</a> project on GitHub.</li>
+   </ul>
 </script>
 <!-- --- [red-module:node-red-contrib-switch-break/switchBreak] --- -->
 

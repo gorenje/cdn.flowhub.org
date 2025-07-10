@@ -14,6 +14,7 @@
         "node-red.svg",
         "open_mind_logo.svg"
     ],
+    "@gregoriusrippenstein/erlang-red-supervisor-node": [],
     "@gregoriusrippenstein/node-red-artworks": [],
     "@gregoriusrippenstein/node-red-contacts": [],
     "@gregoriusrippenstein/node-red-contrib-aisbreaker": [
@@ -100,6 +101,9 @@
     "node-red-contrib-fastxml": [],
     "node-red-contrib-i2c": [],
     "node-red-contrib-image-output": [],
+    "node-red-contrib-string": [
+        "string.png"
+    ],
     "node-red-contrib-switch-break": [],
     "node-red-contrib-ui-upload": [],
     "node-red-dashboard": [

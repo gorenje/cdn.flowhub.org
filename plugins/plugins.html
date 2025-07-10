@@ -5,12 +5,12 @@
    var globalRefToSvgData;
 
    let obfuscateHelpers={getFlowDataFromCurrentWorkspace:e=>{var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)},openImportDialog:e=>{RED.clipboard.import();let t=e;setTimeout(()=>{$("#red-ui-clipboard-dialog-import-text").val(JSON.stringify(t)).trigger("paste")},300)}};function obfuscatieCurrentFlow(l){let p=obfuscateHelpers.getFlowDataFromCurrentWorkspace(),f=(l.remove_groups&&(p=p.filter(e=>"group"!=e.type)).forEach(e=>{delete e.g}),{}),t={},d={},c={},s=[],h={},r={};if(p.forEach(e=>{"subflow"==(f[e.id]=e).type&&(r[e.id]=e),"junction"==e.type&&(t[e.id]=e),"link out"==e.type&&(c[e.id]=e),"link in"==e.type&&(d[e.id]=e),"link call"==e.type&&s.push(e.id),"catch"==e.type&&(h[e.id]=(e.wires||[])[0]||[])}),l.remove_junctions&&(Object.keys(t).forEach(n=>{let s=t[n];r[s.z]||p.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r=t.wires[e].indexOf(n);-1<r&&(t.wires[e].splice(r,1),t.wires[e].push(...s.wires[0]))}})}),p=p.filter(e=>!("junction"==e.type&&!r[e.z]))),l.remove_linkout_nodes||l.remove_linkcall_nodes){let r=[],n=[],i=[],a=(l.remove_linkout_nodes&&!l.copy_linkin_nodes&&Object.keys(c).forEach(n=>{var e=c[n];let s=e.links||[];s.reduce((e,t)=>e&&(!!d[t]||l.ignore_off_flow_links),!0)&&"return"!=e.mode&&(r.push(n),p.forEach(r=>{for(let t=0;t<(r.wires||[]).length;t++){var e=r.wires[t].indexOf(n);-1<e&&(r.wires[t].splice(e,1),s.forEach(e=>{d[e]&&r.wires[t].push(...d[e].wires[0])}))}}))}),(s,e)=>{if(!e)return!1;let t=[],o=[],r=[];function u(e){if(r.indexOf(e.id)<0)switch(r.push(e.id),t.push(e),e.type){case"link out":if("return"!=e.mode)throw"not handable";break;case"link call":throw"unhandled";default:RED.nodes.getNodeLinks(e).forEach(function(e){u(e.target)})}}try{RED.nodes.getNodeLinks(e).forEach(function(e){u(e.target),o.push(e.target.id)});if(Object.keys(h).forEach(e=>{((t,e)=>{try{return e.map(e=>e.id).forEach(e=>{if(t.includes(e))throw"yes"}),!1}catch(e){return!0}})(h[e],t)&&t.push(f[e])}),0==t.length)return!1;let r={};var i=t[0];let n={x:s.x-i.x,y:s.y-i.y};var a=t.map(e=>{var t=structuredClone(f[e.id]);return t||console.log("WARNING: nodeid not found",[e.id,f[e.id]]),t.id=RED.nodes.id(),t.x+=n.x,t.y+=n.y,r[e.id]=t});return a.forEach(e=>{"catch"==e.type&&Array.isArray(e.scope)&&(e.scope=e.scope.map(e=>{var t=r[e];return t&&t.id||e})),e.wires&&(e.wires=e.wires.map(e=>e.map(e=>{var t=r[e];return t&&"link out"==t.type?[...s.wires[0],(t||{}).id||e]:(t||{}).id||e}).flat()))}),{nodes:a.filter(e=>"link out"!=e.type),entryNodes:o.map(e=>r[e])}}catch(e){return!1}});l.remove_linkout_nodes&&l.copy_linkin_nodes&&Object.keys(c).forEach(s=>{let o=c[s],u=o.links||[];if("return"!=o.mode){let t=u.map(e=>{var t=d[e],t=a(o,t);return t?[e,t]:[void 0,void 0]});t.reduce((e,t)=>e&&(!!t[0]||l.ignore_off_flow_links),!0)&&(r.push(s),p.forEach(n=>{for(let r=0;r<(n.wires||[]).length;r++){var e=n.wires[r].indexOf(s);-1<e&&(n.wires[r].splice(e,1),(t=u.map(e=>{var t=d[e],t=a(o,t);return t?[e,t]:[void 0,void 0]})).forEach(([,e])=>{var t;e&&(t=e.entryNodes.map(e=>e.id),n.wires[r].push(...t),i.push(...e.nodes))}))}}))}}),l.remove_linkcall_nodes&&s.forEach(s=>{var e=f[s],t=d[e.links[0]];let o=a(e,t);t&&o&&(n.push(e.id),p.forEach(t=>{for(let e=0;e<(t.wires||[]).length;e++){var r,n=t.wires[e].indexOf(s);-1<n&&(r=o.entryNodes.map(e=>e.id),t.wires[e].splice(n,1),t.wires[e].push(...r),i.push(...o.nodes))}}))}),(p=p.filter(e=>r.indexOf(e.id)<0&&n.indexOf(e.id)<0)).push(...i)}if((p=l.remove_debugs?p.filter(e=>"debug"!=e.type&&"comment"!=e.type):p).forEach(e=>{l.name&&(e.name=RED.nodes.id()),l.shrink_node&&(e.l=!1),l.info&&(e.info="",delete e.outputLabels,delete e.inputLabels),l.add_license&&(l.append_license?e.info=(e.info||"")+"\n---\n\n"+l.license_text:e.info=l.license_text),l.position&&(e.x=150,e.y=150),l.remove_icons&&delete e.icon}),l.replace_switch){let n=(t,r)=>{for(let e=0;e<r.rules.length;e++){var n=r.rules[e];if("nnull"==n.t)t.push("if ( _propValue != null ) {  _returnValue.push(msg) ; return node.send(_returnValue) } else { _returnValue.push(undefined) }");else if("null"==n.t)t.push("if ( _propValue == null ) {  _returnValue.push(msg) ; return node.send(_returnValue) } else { _returnValue.push(undefined) }");else if("eq"==n.t&&"str"==n.vt){s=n.v;s=btoa(encodeURIComponent(s).replace(/%([0-9A-F]{2})/g,function(e,t){return String.fromCharCode("0x"+t)}));t.push("if ( _propValue === Buffer.from('"+s+"', 'base64').toString('utf-8') ) {  _returnValue.push(msg) ; return node.send(_returnValue) } else { _returnValue.push(undefined) }")}else if("gt"==n.t&&"num"==n.vt)t.push("if ( _propValue > "+n.v+" ) {  _returnValue.push(msg) ; return node.send(_returnValue) } else { _returnValue.push(undefined) }");else if("eq"==n.t&&"num"==n.vt)t.push("if ( _propValue == "+n.v+" ) {  _returnValue.push(msg) ; return node.send(_returnValue) } else { _returnValue.push(undefined) }");else if("empty"==n.t)t.push('let p = _propValue ;  if (  (Array.isArray(p) && p.length == 0) || ((typeof p === "object") && p != null && Object.keys(p).length == 0) || ((typeof p === "string") && p.length == 0) ) { _returnValue.push(msg) ; return node.send(_returnValue) } else {  _returnValue.push(undefined) }');else if("nempty"==n.t)t.push('let p = _propValue ;  if (  (Array.isArray(p) && p.length > 0) || ((typeof p === "object") && p != null && Object.keys(p).length > 0) || ((typeof p === "string") && p.length > 0) ) { _returnValue.push(msg) ; return node.send(_returnValue) } else {  _returnValue.push(undefined) }');else{if("else"!=n.t)throw"unhandled";t.push("_returnValue.push(msg)","return node.send(_returnValue)")}}var s};p=p.map(t=>{if("switch"!=t.type)return t;var e={id:t.id,name:t.name,type:"function",x:t.x,y:t.y,func:"",outputs:t.outputs,timeout:"",noerr:0,initialize:"",finalize:"",libs:[{var:"process",module:"process"},{var:"jsonata",module:"jsonata"}],wires:t.wires};t.hasOwnProperty("z")&&(e.z=t.z),t.hasOwnProperty("l")&&(e.l=t.l);try{var r=[];if(t.checkAll)throw"unhandled";if("msg"==t.propertyType)r.push("((msg,node) => {","let _propValue = undefined","try { _propValue = RED.util.getMessageProperty(msg, '"+t.property+"') } catch (ex) {}","let _returnValue = []"),n(r,t),r.push("})(msg,node);");else{if("jsonata"!=t.propertyType)throw"unhandled";r.push("jsonata('"+t.property+"').evaluate(msg).then(_propValue => {","let _returnValue = []"),n(r,t),r.push("})")}return e.func=r.join("\n"),e}catch(e){return t}})}if(l.replace_change){let s=e=>btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g,function(e,t){return String.fromCharCode("0x"+t)}));p=p.map(t=>{if("change"!=t.type)return t;var e={id:t.id,name:t.name,type:"function",x:t.x,y:t.y,func:"",outputs:1,timeout:"",noerr:0,initialize:"",finalize:"",libs:[{var:"process",module:"process"},{var:"jsonata",module:"jsonata"}],wires:t.wires};t.hasOwnProperty("z")&&(e.z=t.z),t.hasOwnProperty("l")&&(e.l=t.l);try{var r=["(async (msg,node) => {","let __s = RED.util.setMessageProperty","let __g = RED.util.getMessageProperty"];for(let e=0;e<t.rules.length;e++){var n=t.rules[e];if("set"==n.t){if(n.dc)throw"unhandled";if("msg"==n.pt&&"str"==n.tot)r.push("__s(msg,'"+n.p+"', Buffer.from('"+s(n.to)+"', 'base64').toString('utf-8') )");else if("msg"==n.pt&&"bool"==n.tot)r.push("__s(msg,'"+n.p+"', "+n.to+")");else if("msg"==n.pt&&"num"==n.tot)r.push("__s(msg,'"+n.p+"', Number(Buffer.from('"+s(n.to)+"', 'base64').toString('utf-8')))");else if("msg"==n.pt&&"json"==n.tot)r.push("__s(msg,'"+n.p+"', JSON.parse(Buffer.from('"+s(n.to)+"', 'base64').toString('utf-8')))");else if("msg"==n.pt&&"msg"==n.tot)r.push("try { __s(msg,'"+n.p+"',  __g(msg, '"+n.to+"')) } catch (ex) {}");else if("msg"==n.pt&&"env"==n.tot)r.push("__s(msg,'"+n.p+"',  process.env['"+n.to+"'])");else{if("msg"!=n.pt||"jsonata"!=n.tot||!n.to.startsWith("/* @obfuscate-safe */"))throw"unhandlable";r.push("__s(msg,'"+n.p+"',  await jsonata(Buffer.from('"+s(n.to)+"', 'base64').toString('utf-8')).evaluate(msg) )")}}else{if("delete"!=n.t||"msg"!=n.pt)throw"unhandlable";r.push("delete msg."+n.p)}}return r.push("node.send(msg) })(msg,node);"),e.func=r.join("\n"),e}catch(e){return console.log(e),t}})}if(l.javascript){let r={},t=[];p.forEach(e=>{"javascript"!=(r[e.id]=e).format&&"function"!=e.type&&"css"!=e.format&&"json"!=e.format||t.push(e)});var e={parse:{bare_returns:!0,expression:!1},compress:{},mangle:{reserved:["$","export","require"]},output:null,sourceMap:null,nameCache:null,toplevel:!1,warnings:!1},o={compatibility:"*",level:2};$.ajax({url:"ClientCode/"+RED.nodes.id()+"/ugify",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({nodes:t,jscfg:e,csscfg:o}),success:function(e){e.forEach(e=>{var t=r[e.id];e._error&&console.log("ERROR NODE",e),"function"==t.type?t.func=e.func:"javascript"!=t.format&&"css"!=t.format&&"json"!=t.format||(t.template=e.template)}),obfuscateHelpers.openImportDialog(p)},error:function(e,t,r){RED.notify("ClientCode Communcation Failure: "+n.id+": "+t,{type:"error",timeout:3e3})}})}else obfuscateHelpers.openImportDialog(p)}
-
+   
    function setupTreelist(){var e=collectOrphans();if(0==e.length){RED.notify("No Orphans Found",{type:"success",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var n=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectOrphans(){let t=new Set;var n=[],i=(RED.nodes.eachLink(e=>{t.add(e.source),t.add(e.target)}),RED.nodes.eachNode(e=>{(!t.has(e)||"link out"==e.type&&"link"==e.mode&&0==e.links.reduce((e,t)=>e||!!RED.nodes.node(t),!1))&&n.push(e)}),[]),r={};return n.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var n=t.label,n=("function"==typeof n?n.call(e):n)||"",o=e.type;if(0===o.indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:o,selected:!1,checkbox:!1},i.push(r[e.id])}),i}
+   
+   function nr_intro_generate_svg_4_0(r,t){return e=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),e,t)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_1(r,t){return e=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),e,t)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_0(r,t){return e=>{try{handleSvgObject($($("svg")[0]),e,t)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function handleSvgObject(a,t,e){var n=a.clone(),r=(n.find("foreignObject").remove(),n.find("svg.__screenshot").remove(),'width="'+a.attr("width")+'" height="'+a.attr("height")+'"'),s=RED.settings.version.split("."),i=parseInt(s[0]),s=parseInt(s[1]);if(3<=i&&1<=s||4<=i){var o=$($($(a).children("g")[0]).children("g")[0]).children("g"),l={x:8e3,y:8e3,w:-1,h:-1};for(let t=1;t<o.length;t++){var g=o[t].getBBox();0==g.width&&0==g.height||(l.x=Math.min(g.x,l.x),l.y=Math.min(g.y,l.y),l.w=Math.max(g.width,l.w),l.h=Math.max(g.height,l.h))}r+=` viewBox='${l.x} ${l.y} ${l.w} ${l.h}'`}function c(t,e){for(var n=0;n<t.length;n++){var s=t.item(n),i=e[n];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))}),["fill","stroke"].forEach(function(t){var e,n,r=(e=$(i).attr(t)||$(i).css(t))&&null!==e&&"none"!=e?(n=e.match(/^#(.)(.)(.)$/))?"#"+n[1]+n[1]+n[2]+n[2]+n[3]+n[3]:(n=e.match(/^#......$/))?e:null===(n=e.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(r=e.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2),opa:r[4]}:(console.log("Screenshot node: returned unknown color: "+e),e):"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2):"none";"object"==typeof r?(s.setAttribute(t+"-opacity",r.opa),s.setAttribute(t,r.clr)):s.setAttribute(t,r)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var s='<?xml version="1.0" standalone="no"?>\r\n<svg '+r+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',i=n.html(),h=(new DOMParser).parseFromString(s+i+"\r\n</svg>","image/svg+xml"),v=t=>t,f=(e.rmidsandclasses&&(v=e=>(["g","rect","line","path","circle","image","text"].forEach(t=>{$(e.getElementsByTagName(t)).each((t,e)=>{e.setAttribute("class",""),e.setAttribute("id","")})}),e)),["g","rect","line","path","circle","image"].forEach(function(t){c(h.getElementsByTagName(t),a.find(t))}),["text"].forEach(function(t){c(h.getElementsByTagName(t),a.find(t));for(var e=h.getElementsByTagName(t),n=a.find(t),r=0;r<e.length;r++){var s=e.item(r),i=n[r];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))})}}),h.getElementsByTagName("image")),w={},m=(n,r,s)=>{var i=n.getAttribute("xlink:href")||n.getAttribute("href"),a=i.substr(-4,4).toLowerCase(),o={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(w[i])return n.setAttribute("xlink:href","data:image/"+o[a]+";base64,"+w[i]),s(r-1);switch(a){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onerror=function(t){s(r-1)},l.onload=function(t){var e=l.response;e&&(e=(t=>{for(var e="",n=new Uint8Array(t),r=n.byteLength,s=0;s<r;s++)e+=String.fromCharCode(n[s]);return window.btoa(e)})(e),w[i]=e,n.setAttribute("xlink:href","data:image/"+o[a]+";base64,"+e)),s(r-1)},l.send(null);break;case".svg":$.get(i,function(t){var e=new XMLSerializer,e=btoa(e.serializeToString(t));w[i]=e,n.setAttribute("xlink:href","data:image/svg+xml;base64,"+e),s(r-1)});break;default:console.log("SVG Capture ignoring file prefix: "+a),s(r-1)}},d=e=>{if(e<0)t((new XMLSerializer).serializeToString(v(h)));else try{m(f.item(e),e,d)}catch(t){d(e-1)}};0<f.length?m(f.item(f.length-1),f.length-1,d):t((new XMLSerializer).serializeToString(v(h)))}function generatorFunctionForVersion(t,e){var n,r=t.settings.version.split("."),s=r[0],r=r[1];if("3"==s){if("0"==r)return nr_intro_generate_svg_3_0(t,e);if("1"==r)return nr_intro_generate_svg_3_1(t,e)}return"4"==s&&"0"==r?nr_intro_generate_svg_4_0(t,e):(n=t,t=>{var e="Node-RED version ("+n.settings.version+") not supported";n.notify(e,{type:"error"}),t&&t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+e+"</text></svg>")})}function addPanZoom(){var t=d3.select("#node-input-screenshot-svgcontainer svg"),e=(t.html("<g>"+t.html()+"</g>"),setTimeout(()=>{var t=$("#node-input-screenshot-svgcontainer svg"),e=$(t).attr("viewBox").split(" ");t.animate({height:parseInt(e[3]),width:parseInt(e[2])},800,"swing")},100),t.select("g")),n=d3.behavior.zoom().scaleExtent([.1,200]).on("zoom",function(t){e.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});t.call(n)}
 
-   function nr_intro_generate_svg_4_0(r,t){return e=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),e,t)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_1(r,t){return e=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),e,t)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function nr_intro_generate_svg_3_0(r,t){return e=>{try{handleSvgObject($($("svg")[0]),e,t)}catch(t){var n="Error Generating SVG: "+JSON.stringify(t);r.notify(n,{type:"error"}),e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+n+"</text></svg>")}}}function handleSvgObject(a,e,t){var n=a.clone(),r=(n.find("foreignObject").remove(),n.find("svg.__screenshot").remove(),'width="'+a.attr("width")+'" height="'+a.attr("height")+'"'),s=RED.settings.version.split("."),i=parseInt(s[0]),s=parseInt(s[1]);if(3<=i&&1<=s){var o=$($($(a).children("g")[0]).children("g")[0]).children("g"),l={x:8e3,y:8e3,w:-1,h:-1};for(let t=1;t<o.length;t++){var g=o[t].getBBox();0==g.width&&0==g.height||(l.x=Math.min(g.x,l.x),l.y=Math.min(g.y,l.y),l.w=Math.max(g.width,l.w),l.h=Math.max(g.height,l.h))}r+=` viewBox='${l.x} ${l.y} ${l.w} ${l.h}'`}function c(t,e){for(var n=0;n<t.length;n++){var s=t.item(n),i=e[n];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))}),["fill","stroke"].forEach(function(t){var e,n,r=(e=$(i).attr(t)||$(i).css(t))&&null!==e&&"none"!=e?(n=e.match(/^#(.)(.)(.)$/))?"#"+n[1]+n[1]+n[2]+n[2]+n[3]+n[3]:(n=e.match(/^#......$/))?e:null===(n=e.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(r=e.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2),opa:r[4]}:(console.log("Screenshot node: returned unknown color: "+e),e):"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2):"none";"object"==typeof r?(s.setAttribute(t+"-opacity",r.opa),s.setAttribute(t,r.clr)):s.setAttribute(t,r)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var i='<?xml version="1.0" standalone="no"?>\r\n<svg '+r+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',s=n.html(),h=(new DOMParser).parseFromString(i+s+"\r\n</svg>","image/svg+xml"),v=t=>t,f=(t.rmidsandclasses&&(v=e=>(["g","rect","line","path","circle","image","text"].forEach(t=>{$(e.getElementsByTagName(t)).each((t,e)=>{e.setAttribute("class",""),e.setAttribute("id","")})}),e)),["g","rect","line","path","circle","image"].forEach(function(t){c(h.getElementsByTagName(t),a.find(t))}),["text"].forEach(function(t){c(h.getElementsByTagName(t),a.find(t));for(var e=h.getElementsByTagName(t),n=a.find(t),r=0;r<e.length;r++){var s=e.item(r),i=n[r];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(t){s.setAttribute(t,$(i).attr(t)||$(i).css(t))})}}),h.getElementsByTagName("image")),w={},m=(n,r,s)=>{var i=n.getAttribute("xlink:href")||n.getAttribute("href"),a=i.substr(-4,4).toLowerCase(),o={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(w[i])return n.setAttribute("xlink:href","data:image/"+o[a]+";base64,"+w[i]),s(r-1);switch(a){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onload=function(t){var e=l.response;e&&(e=(t=>{for(var e="",n=new Uint8Array(t),r=n.byteLength,s=0;s<r;s++)e+=String.fromCharCode(n[s]);return window.btoa(e)})(e),w[i]=e,n.setAttribute("xlink:href","data:image/"+o[a]+";base64,"+e)),s(r-1)},l.send(null);break;case".svg":$.get(i,function(t){var e=new XMLSerializer,e=btoa(e.serializeToString(t));w[i]=e,n.setAttribute("xlink:href","data:image/svg+xml;base64,"+e),s(r-1)})}},d=t=>{t<0?e((new XMLSerializer).serializeToString(v(h))):m(f.item(t),t,d)};0<f.length?m(f.item(f.length-1),f.length-1,d):e((new XMLSerializer).serializeToString(v(h)))}function generatorFunctionForVersion(t,e){var n,r=t.settings.version.split("."),s=r[0],r=r[1];if("3"==s){if("0"==r)return nr_intro_generate_svg_3_0(t,e);if("1"==r)return nr_intro_generate_svg_3_1(t,e)}return"4"==s&&"0"==r?nr_intro_generate_svg_4_0(t,e):(n=t,t=>{var e="Node-RED version ("+n.settings.version+") not supported";n.notify(e,{type:"error"}),t&&t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+e+"</text></svg>")})}function addPanZoom(){var t=d3.select("#node-input-screenshot-svgcontainer svg"),e=(t.html("<g>"+t.html()+"</g>"),setTimeout(()=>{var t=$("#node-input-screenshot-svgcontainer svg"),e=$(t).attr("viewBox").split(" ");t.animate({height:parseInt(e[3]),width:parseInt(e[2])},800,"swing")},100),t.select("g")),n=d3.behavior.zoom().scaleExtent([.1,200]).on("zoom",function(t){e.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});t.call(n)}
-
-   function setupTreelistInfoness(){var e=collectUndocumentedNodes();if(0==e.length){RED.notify("All nodes documented",{type:"success",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var i;t.node&&(i=t.node.id,setTimeout(()=>{var e=RED.nodes.node(i);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e,"editor-tab-description")),i==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var i=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),i.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),i.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectUndocumentedNodes(){let t=[];RED.nodes.eachNode(e=>{if($("#"+e.id).find(".red-ui-info-available-indicator").remove(),e.info&&e.info.trim()){var i=document.createElementNS("http://www.w3.org/2000/svg","g"),n=(i.setAttribute("class","red-ui-info-available-indicator"),document.createElementNS("http://www.w3.org/2000/svg","circle"));n.setAttribute("cx","5"),n.setAttribute("cy","5"),n.setAttribute("r","5"),n.setAttribute("fill","yellow"),n.setAttribute("id","infoclk-"+e.id),n.setAttribute("style","cursor: pointer;"),i.append(n),$(i).insertBefore($("#"+e.id).find(".red-ui-flow-node-changed"));let t=e.id;$("#infoclk-"+e.id).on("click",e=>{e&&e.preventDefault();e=RED.nodes.node(t);RED.editor.edit(e,"editor-tab-description"),RED.sidebar.show("info")})}else e.z==RED.workspaces.active()&&t.push(e)});var o=[],r={};return t.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var i,n=t.label,n=("function"==typeof n?n.call(e):n)||"";if(0===(i=e.type).indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:i,selected:!1,checkbox:!1},o.push(r[e.id])}),o}
+   function setupTreelistInfoness(){var e=collectUndocumentedNodes();if(0==e.length){RED.notify("All nodes documented",{type:"success",timeout:2e3});try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-orphan-target-container-div").treeList("empty")}catch(e){$("#node-input-orphan-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var i;t.node&&(i=t.node.id,setTimeout(()=>{var e=RED.nodes.node(i);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e,"editor-tab-description")),i==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-orphan-target-filter").show();var i=$("#node-input-orphan-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-orphan-target-container-div").treeList("filter",null),i.searchBox("count","")):(e=$("#node-input-orphan-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),i.searchBox("count",e+" / "+$("#node-input-orphan-target-container-div").treeList("data").length))}})}$("#node-input-orphan-target-container-div").treeList("data",e.sort((e,t)=>e.node.z>t.node.z))}}function collectUndocumentedNodes(){let t=[];RED.nodes.eachNode(e=>{if($("#"+e.id).find(".red-ui-info-available-indicator").remove(),e.info&&e.info.trim()&&$("#"+e.id)[0]){var i=document.createElementNS("http://www.w3.org/2000/svg","g"),n=(i.setAttribute("class","red-ui-info-available-indicator"),i.setAttribute("transform","translate(20,10)"),i.setAttribute("id","infoclk-"+e.id),document.createElementNS("http://www.w3.org/2000/svg","g")),o=(n.setAttribute("class","tip"),n.setAttribute("fill","lightyellow"),document.createElementNS("http://www.w3.org/2000/svg","rect")),o=(o.setAttribute("width","30"),o.setAttribute("height","20"),o.setAttribute("x",$("#"+e.id)[0].getBBox().width-60),o.setAttribute("y","-15"),o.setAttribute("rx","2"),o.setAttribute("style","cursor: pointer;"),n.append(o),document.createElementNS("http://www.w3.org/2000/svg","text"));o.setAttribute("x",$("#"+e.id)[0].getBBox().width-55),o.setAttribute("y","-6"),o.appendChild(document.createTextNode("docs")),n.append(o),i.append(n),$(i).insertBefore($("#"+e.id).find(".red-ui-flow-node"));let t=e.id;$("#infoclk-"+e.id).on("click",e=>{e&&e.preventDefault();e=RED.nodes.node(t);RED.editor.edit(e,"editor-tab-description"),RED.sidebar.show("info")})}else e.z==RED.workspaces.active()&&["link in","link out","link call"].indexOf(e.type)<0&&t.push(e)});var o=[],r={};return t.forEach(function(e){var t=RED.nodes.getType(e.type);if(t){var i,n=t.label,n=("function"==typeof n?n.call(e):n)||"";if(0===(i=e.type).indexOf("subflow:"))return}t&&n||(n=e.type),r[e.id]={node:e,label:n,sublabel:i,selected:!1,checkbox:!1},o.push(r[e.id])}),o}
 
    function highlightAllLinkCalls(){let e=[];RED.nodes.eachNode(t=>{t.z==RED.workspaces.active()&&"link call"==t.type&&e.push(t)}),e.forEach(t=>{$("#grplnkcallclk-"+t.id).remove();var e=document.createElementNS("http://www.w3.org/2000/svg","g"),l=(e.setAttribute("class","red-ui-linkcall-link-indicator"),e.setAttribute("transform","translate(12,0)"),e.setAttribute("id","grplnkcallclk-"+t.id),document.createElementNS("http://www.w3.org/2000/svg","circle")),i=(l.setAttribute("cx","5"),l.setAttribute("cy","5"),l.setAttribute("r","5"),l.setAttribute("id","lnkcallclk-"+t.id),l.setAttribute("style","cursor: pointer;"),t.links[0]);i?RED.nodes.node(i)?l.setAttribute("fill","green"):l.setAttribute("fill","red"):l.setAttribute("fill","orange"),e.append(l),$(e).insertBefore($("#"+t.id).find(".red-ui-flow-node-changed"));let r=t.id;$("#lnkcallclk-"+t.id).on("click",t=>{t&&t.preventDefault();t=RED.nodes.node(r);if(t){let l=t.links[0];1<t.links.length&&RED.notify("Multiple links, showing first","warning"),RED.nodes.node(l)?(RED.view.reveal(l),RED.view.select(l),setTimeout(()=>{$("#lnkcallclk-"+l).remove();var t=document.createElementNS("http://www.w3.org/2000/svg","g"),e=(t.setAttribute("class","red-ui-linkcall-link-indicator"),t.setAttribute("transform","translate(12,0)"),t.setAttribute("id","lnkcallclk-"+l),document.createElementNS("http://www.w3.org/2000/svg","circle"));e.setAttribute("cx","5"),e.setAttribute("cy","5"),e.setAttribute("r","5"),e.setAttribute("id","lnkcallclk-"+l),e.setAttribute("style","cursor: pointer;"),e.setAttribute("fill","green"),t.append(e),$(t).insertBefore($("#"+l).find(".red-ui-flow-node-changed")),$("#lnkcallclk-"+l).on("click",t=>{t&&t.preventDefault(),RED.view.reveal(r),RED.view.select(r),setTimeout(highlightAllLinkCalls,500)})},500)):RED.notify("Link in node not found","error")}else RED.notify("Node not found","error")})})}
 
@@ -26,7 +26,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="Screenshot"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -45,14 +45,14 @@
                $('#' + tab.id).show();
             }
       });
-
+      
       // Add first tab, screenshot
       tabs.addTab({
             id: 'func-introspection-tab-screenshot',
             iconClass: 'fa fa-photo',
             label: 'Screenshot'
       });
-
+      
       // Add tab, orphans
       tabs.addTab({
             id: 'func-introspection-tab-lint',
@@ -66,15 +66,15 @@
             iconClass: 'fa fa-user-secret',
             label: 'Obfuscation'
       });
-
+      
       $('#node-input-obfuscation-generate-btn').on("click", function (e) {
          if ( e ) { e.preventDefault() }
-
+         
          obfuscatieCurrentFlow({
             name: $('#node-input-obfuscate-name').is(":checked"),
             info: $('#node-input-obfuscate-info').is(":checked"),
             position: $('#node-input-obfuscate-position').is(":checked"),
-
+            
             shrink_node: $('#node-input-obfuscate-shrink-size').is(":checked"),
             remove_groups: $('#node-input-obfuscate-remove-groups').is(":checked"),
             javascript: $('#node-input-obfuscate-javascript').is(":checked"),
@@ -145,7 +145,7 @@
             type: "success"
             }
          );
-
+         
          $.ajax({
             type: "POST",
             url: postEndpoint,
@@ -187,7 +187,7 @@
                };
             },
          });
-
+         
       })
 
       // handle the download button under the editor window.
@@ -242,6 +242,7 @@
       $('#node-input-orphan-clear-workspace-btn').on('click', (e) => {
          if ( e ) { e.preventDefault() }
          $('.red-ui-linkcall-link-indicator').remove()
+         $('.red-ui-info-available-indicator').remove()
       })
 
       $('#node-input-msgtrace-clear-debug-btn').on('click', (e) => {
@@ -265,11 +266,11 @@
       $('#node-input-msgtracer-toggle').on("change", toggleMsgTracingInBackend)
 
       RED.actions.add( "introspection:show-link-call-links", highlightAllLinkCalls)
-
+      
       $('#node-input-linkcalls-find-btn').on('click', (e) => {
          if ( e ) { e.preventDefault() }
          highlightAllLinkCalls()
-
+         
          /*
          try {
             $("#node-input-orphan-target-container-div").treeList('empty')
@@ -282,6 +283,14 @@
          if ( e ) { e.preventDefault() }
          setupTreeListForNodeStats()
       })
+
+      RED.panels.create({
+        id: 'func-introspection-tab-lint',
+        resize: (topSze,botSze) => {
+            $('#node-input-msgtracer-trace-treelist').parent().css("height", `calc(${botSze}px - 13vh)`)
+            $('#node-input-orphan-target-container-div').parent().css('height', `calc(${topSze}px - 15vh)`)
+        }
+      })
    };
    RED.events.on('runtime-state', initialiseConfigNodeOnce);
 })();
@@ -291,18 +300,18 @@
    .col-100 .red-ui-typedInput-container {
    width: 70% !important;
    }
-
+   
    .col-100.no-label .red-ui-typedInput-container {
    width: 100% !important;
    }
    .w-30 {
       width: 40% !important;
       margin-left: 10px;
-   }
+   }   
    .w-25 {
       width: 25% !important;
       margin-left: 10px;
-   }
+   }   
    .ml-30 {
       margin-left: 30px !important;
    }
@@ -318,6 +327,34 @@
       position: relative;
       top: -4px;
    }
+
+    svg g.tip {
+        transition: transform 0.3s ease, fill-opacity 0.3s ease, stroke-opacity 0.3s ease;
+        fill-opacity: 0.3;
+        stroke-opacity: 0.3;
+        cursor: pointer;
+    }
+    
+    svg g.tip text {
+        font-style="normal";
+        font-size: 8px;
+        font-family: sans-serif;
+        stroke-width: 0.0;
+        fill: #000;
+        color: #000;
+    }
+    
+    svg .tip rect {
+      fill: lightyellow;
+      stroke-width: 0.5;
+      stroke: #000;
+    }
+    
+    svg:hover g.tip:hover {
+        transform: translatey(-6px);
+        fill-opacity: 1;
+        stroke-opacity: 1;
+    }
 </style>
 
 <!-- The html for the right sidebar plugin screen -->
@@ -342,7 +379,7 @@
                   <span>Remove Classes and Ids?</span>
                </label>
                <input type="checkbox" checked="checked" id="node-input-screenshot-remove-classes-and-ids"
-                                             style="display:inline-block; width:15px; vertical-align:baseline;">
+                                             style="display:inline-block; width:15px; vertical-align:baseline;">                          
             </div>
 
             <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
@@ -375,80 +412,83 @@
    <!-- Lint Tab in Sidebar -->
 
    <div id="func-introspection-tab-lint" style="display:none; min-height: calc(100%);">
-      <div class="form-row" style="margin-left: 10px; margin-top: 30px">
-         <button id="node-input-orphan-find-btn"
-                     class="red-ui-button"><i class="fa fa-life-ring"></i> Unconnected</button>
-         <button id="node-input-documentation-find-btn"
-                     class="red-ui-button"><i class="fa fa-cc"></i> Undocumented</button>
-         <button id="node-input-linkin-nodes-find-btn"
-                     class="red-ui-button"><i class="fa fa-link"></i> Link Ins</button>
-         <button id="node-input-linkcalls-find-btn"
-                     class="red-ui-button"><i class="fa fa-link"></i> Link Calls</button>
-         <button id="node-input-orphan-clear-workspace-btn"
-                     class="red-ui-button">Clear dots</button>
-         <button id="node-input-transform-inject-to-change-btn"
-                     class="red-ui-button"><i class='icon-button' style="background-image: url('icons/@gregoriusrippenstein/node-red-contrib-introspection/swap-inject-to-change.svg');"></i><span class='icon-button-text'>Inj-&gt;Chg</span></button>
-         <button id="node-input-statistics-btn"
-                    class="red-ui-button"><i class="fa fa-pie-chart"></i> Stats</button>
-      </div>
-
-      <div class="form-row"
-         style="margin-left: 10px; position: relative; min-height: 200px; height: 430px; margin-right: 15px;">
-         <div style="margin-bottom: 5px; width: 35%; padding-left: 60%;">
-            <input type="text" id="node-input-orphan-target-filter" style="display: none;">
+      <div>
+         <div class="form-row" style="margin-left: 10px; margin-top: 30px">
+            <button id="node-input-orphan-find-btn"
+                        class="red-ui-button"><i class="fa fa-life-ring"></i> Unconnected</button>
+            <button id="node-input-documentation-find-btn"
+                        class="red-ui-button"><i class="fa fa-cc"></i> Undocumented</button>
+            <button id="node-input-linkin-nodes-find-btn"
+                        class="red-ui-button"><i class="fa fa-link"></i> Link Ins</button>
+            <button id="node-input-linkcalls-find-btn"
+                        class="red-ui-button"><i class="fa fa-link"></i> Link Calls</button>
+            <button id="node-input-orphan-clear-workspace-btn"
+                        class="red-ui-button">Clear dots</button>
+            <button id="node-input-transform-inject-to-change-btn"
+                        class="red-ui-button"><i class='icon-button' style="background-image: url('icons/@gregoriusrippenstein/node-red-contrib-introspection/swap-inject-to-change.svg');"></i><span class='icon-button-text'>Inj-&gt;Chg</span></button>
+            <button id="node-input-statistics-btn"
+                       class="red-ui-button"><i class="fa fa-pie-chart"></i> Stats</button>
          </div>
-         <div id="node-input-orphan-target-container-div"></div>
-      </div>
-
-      <!-- message tracing stuff -->
-
-      <div class="form-row" style="margin-left: 10px; margin-top: 40px">
-         <label for="node-input-msgtracer-toggle"  class="w-25">
-            <i class="fa fa-stethoscope"></i>
-            <span>Trace selected nodes?</span>
-         </label>
-         <input type="checkbox" id="node-input-msgtracer-toggle"
-                style="display:inline-block; width:15px; vertical-align:baseline;">
-
-         <label for="node-input-msgtracer-toggle-all"  class="w-25">
-            <i class="fa fa-warning"></i>
-            <span>All nodes?</span>
-         </label>
-         <input type="checkbox" id="node-input-msgtracer-toggle-all"
-                style="display:inline-block; width:15px; vertical-align:baseline;">
-
-         <button id="node-input-msgtrace-clear-trace-btn" style="margin-left: 10px;"
-                       class="red-ui-button">Clear Trace</button>
-      </div>
-
-      <div class="form-row"
-         style="margin-left: 10px; position: relative; min-height: 200px; height: 430px; margin-right: 15px;">
-         <div style="margin-bottom: 5px; width: 35%; padding-left: 60%;">
-            <input type="text" id="node-input-msgtracer-trace-treelist-filter" style="display: none;">
+   
+         <div class="form-row"
+            style="margin-left: 10px; position: relative; min-height: 5vh; height: 20vh; margin-right: 15px;">
+            <div style="margin-bottom: 5px; width: 35%; padding-left: 60%;">
+               <input type="text" id="node-input-orphan-target-filter" style="display: none;">
+            </div>
+            <div id="node-input-orphan-target-container-div"></div>
          </div>
-         <div id="node-input-msgtracer-trace-treelist"></div>
       </div>
-
-      <div class="form-row" style="margin-left: 10px; margin-top: 40px;">
-         <label for="node-input-msgtracer-msgtodebug" class="w-25">
-                     <i class="fa fa-bug"></i>
-                     <span>Msgs from selected nodes to Debug?</span>
-               </label>
-         <input type="checkbox" id="node-input-msgtracer-msgtodebug"
-                      style="display:inline-block; width:15px; vertical-align:baseline;">
-
-         <label for="node-input-msgtracer-msgtodebug-all" class="w-25">
-                     <i class="fa fa-warning"></i>
-                     <span>All nodes?</span>
-               </label>
-         <input type="checkbox" id="node-input-msgtracer-msgtodebug-all"
-                      style="display:inline-block; width:15px; vertical-align:baseline;">
-
-         <button id="node-input-msgtrace-clear-debug-btn" style="margin-left: 10px;"
-                                   class="red-ui-button">Clear Debug</button>
+      
+      <div>
+         <!-- message tracing stuff -->
+   
+         <div class="form-row" style="margin-left: 10px; margin-top: 40px">
+            <label for="node-input-msgtracer-toggle"  class="w-25">
+               <i class="fa fa-stethoscope"></i>
+               <span>Trace selected nodes?</span>
+            </label>
+            <input type="checkbox" id="node-input-msgtracer-toggle"
+                   style="display:inline-block; width:15px; vertical-align:baseline;">
+   
+            <label for="node-input-msgtracer-toggle-all"  class="w-25">
+               <i class="fa fa-warning"></i>
+               <span>All nodes?</span>
+            </label>
+            <input type="checkbox" id="node-input-msgtracer-toggle-all"
+                   style="display:inline-block; width:15px; vertical-align:baseline;">
+   
+            <button id="node-input-msgtrace-clear-trace-btn" style="margin-left: 10px;"
+                          class="red-ui-button">Clear Trace</button>
+         </div>
+   
+         <div class="form-row"
+            style="margin-left: 10px; position: relative; min-height: 5vh; height: 20vh; margin-right: 15px;">
+            <div style="margin-bottom: 5px; width: 35%; padding-left: 60%;">
+               <input type="text" id="node-input-msgtracer-trace-treelist-filter" style="display: none;">
+            </div>
+            <div id="node-input-msgtracer-trace-treelist"></div>
+         </div>
+   
+         <div class="form-row" style="margin-left: 10px; margin-top: 40px;">
+            <label for="node-input-msgtracer-msgtodebug" class="w-25">
+                        <i class="fa fa-bug"></i>
+                        <span>Msgs from selected nodes to Debug?</span>
+                  </label>
+            <input type="checkbox" id="node-input-msgtracer-msgtodebug"
+                         style="display:inline-block; width:15px; vertical-align:baseline;">
+   
+            <label for="node-input-msgtracer-msgtodebug-all" class="w-25">
+                        <i class="fa fa-warning"></i>
+                        <span>All nodes?</span>
+                  </label>
+            <input type="checkbox" id="node-input-msgtracer-msgtodebug-all"
+                         style="display:inline-block; width:15px; vertical-align:baseline;">
+   
+            <button id="node-input-msgtrace-clear-debug-btn" style="margin-left: 10px;"
+                                      class="red-ui-button">Clear Debug</button>
+         </div>
       </div>
    </div>
-
    <!-- Obfuscation Tab in Sidebar -->
 
    <div id="func-introspection-tab-obfuscation" style="display:none; min-height: calc(100%);">
@@ -596,7 +636,7 @@
          </label>
          <input type="checkbox" id="node-input-obfuscate-add-license-text" style="display:inline-block; width:15px; vertical-align:baseline;">
       </div>
-
+      
       <div id="node-input-obfuscate-add-license-text-row" style="display: none;">
          <div class="form-row ml-30">
             <label for="node-input-obfuscate-append-license-text" style="width: 150px">
@@ -633,7 +673,7 @@
 (function() {
    var globalYourConfigNode = null;
 
-   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function addPanZoom(){var e=$(".flowviewer svg"),t=(e.attr("width",""),e.attr("height",""),e.css("width",$(".flowviewer").width()+"px"),e.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());e.attr("viewBox",[t.x,t.y,t.width,t.height].join(" "));(e=d3.select(".flowviewer svg")).html("<g>"+e.html()+"</g>");var o=e.select("g"),n=d3.behavior.zoom().scaleExtent([.3,100]).on("zoom",function(e){o.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});e.call(n)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled",w:"Width",h:"Height"};function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function createDiff(r,c){var s=[],l=[];if(Object.keys(c).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],s.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],s.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(n){if(-1<Object.keys(c).indexOf(n))if(JSON.stringify(r[n])!==JSON.stringify(c[n])){let o=null,t=void 0;l.push(n);try{t=Diff.diffLines(c[n],r[n])}catch(e){t=Diff.diffLines(JSON.stringify(c[n],void 0,1),JSON.stringify(r[n],void 0,1))}const a=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),a.appendChild(o)});var e,d=document.createElement("tr"),i=(d.setAttribute("class","dv-differ"),document.createElement("th"));i.appendChild(document.createTextNode(n)),descMap[n]&&((e=document.createElement("i")).style["font-size"]="80%",e.appendChild(document.createTextNode("("+descMap[n]+")")),i.appendChild(e)),d.append(i),(i=document.createElement("td")).setAttribute("colspan","2"),i.append(a),d.append(i),s.push(d.outerHTML)}else s.push("<tr><th>"+n+"</th><td><code>"+escapeHtml(r[n])+"</code></td><td><code>"+escapeHtml(c[n])+"</code></td></tr>")}),0==l.length){let o=null;var e="OBJ",t=Diff.diffJson(c,r);const i=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),i.appendChild(o)});var n,t=document.createElement("tr"),d=(t.setAttribute("class","dv-differ"),document.createElement("th"));return d.appendChild(document.createTextNode(e)),descMap[e]&&((n=document.createElement("i")).style["font-size"]="80%",n.appendChild(document.createTextNode("("+descMap[e]+")")),d.appendChild(n)),t.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(i),t.append(d),{html:t.outerHTML,icon:"fa-question"}}var o=["x","y","w","h","g","wires"];return{html:s.join(""),icon:0==l.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getFlowDataFromCurrentWorkspace(){var e=RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function doSubmission(n){var t=RED.workspaces.active(),e=n.filter(e=>e.z==t||e.id==t);$($($("#svgelem .container-diff02")[0]).find(".containerGroup")[0]).find("g").html(""),$($($("#svgelem .container-diff01")[0]).find(".containerGroup")[0]).find("g").html(""),$.ajax({url:"FlowCompareCfg",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowdata:e||{},flowlabel:(RED.nodes.workspace(t)||{label:"subflow"}).label}),success:function(e){var a=[],r={};if("failed"==e.status)RED.notify("Error happened, please check console",{type:"error",timeout:2e3}),console.error("Error in flow compare: ",e);else{renderFlow(e.flowid,e.nodes,$($("#svgelem .container-diff02")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0}),renderFlow(e.flowid,n,$($("#svgelem .container-diff01")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0});var t=$(".flowviewer svg"),o=(t.attr("width",""),t.attr("height",""),t.css("width",$(".flowviewer").width()+"px"),t.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());if(t.attr("viewBox",[o.x,o.y,o.width,o.height].join(" ")),document.getElementById("node-input-compare-slider").oninput=function(){$(".container-diff01").css("opacity",this.value/100),$(".container-diff02").css("opacity",(100-this.value)/100)},e.changes.forEach(function(e){var t,o,n,d,i=e.id;"deleted"==e.type?(r[i]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-times",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+i).addClass("deleted"),$(".group-"+i).addClass("deleted"),a.push(r[i])):"added"==e.type?(r[i]={objid:i,label:e.newObj.name||e.newObj.type,icon:"fa fa-check",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+i).addClass("added"),$(".group-"+i).addClass("added"),a.push(r[i])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(d=createDiff(e.newObj,e.oldObj),r[i]={objid:i,label:e.oldObj.name||e.oldObj.type,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+i).addClass("moved"),$(".group-"+i).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+i).addClass("changed"),$(".group-"+i).addClass("changed")),a.push(r[i])):((t=RED.nodes.node(i))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),d=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:i,label:n,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+i).addClass("moved"),$(".group-"+i).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+i).addClass("changed"),$(".group-"+i).addClass("changed")),a.push(r[t.id]))}),0==a.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowcompare-target-container-div").treeList("empty"),$("#node-input-flowcompare-diffcontainer").html("")}catch(e){}}else{try{$("#node-input-flowcompare-target-container-div").treeList("empty")}catch(e){$("#node-input-flowcompare-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){$(".node-"+t.objid).addClass("highlight"),$(".group-"+t.objid).addClass("highlight")}).on("treelistitemmouseout",function(e,t){$(".node-"+t.objid).removeClass("highlight"),$(".group-"+t.objid).removeClass("highlight")}).on("treelistselect",function(e,t){t.diffcontent?($("#node-input-flowcompare-diffcontainer").html(t.diffcontent),t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw())):$("#node-input-flowcompare-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))})}$("#node-input-flowcompare-target-container-div").treeList("data",a.sort((e,t)=>e.icon>t.icon))}}},error:function(e,t,o){404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify(node._("common.notification.error",{message:node._("inject.errors.failed")}),"error"):0==e.status?RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.no-response")}),"error"):RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.unexpected",{status:e.status,message:t})}),"error")}})}function flowCompareEventListener(e){$("#node-input-flowcompare-autoupdate-button").is(":checked")&&e.old!=e.workspace&&doSubmission(getFlowDataFromCurrentWorkspace())}
+   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function addPanZoom(){var e=$(".flowviewer svg"),t=(e.attr("width",""),e.attr("height",""),e.css("width",$(".flowviewer").width()+"px"),e.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());e.attr("viewBox",[t.x,t.y,t.width,t.height].join(" "));(e=d3.select(".flowviewer svg")).html("<g>"+e.html()+"</g>");var o=e.select("g"),n=d3.behavior.zoom().scaleExtent([.3,100]).on("zoom",function(e){o.attr({transform:"translate("+n.translate()+") scale("+n.scale()+")"})});e.call(n)}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled",w:"Width",h:"Height"};function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function createDiff(r,c){var s=[],l=[];if(Object.keys(c).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof c[e]?JSON.stringify(c[e]):c[e],s.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(c).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],s.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),l.push(e))}),Object.keys(r).forEach(function(d){if(-1<Object.keys(c).indexOf(d))if(JSON.stringify(r[d])!==JSON.stringify(c[d])){let o=null,t=void 0;l.push(d);try{t=Diff.diffLines(c[d],r[d])}catch(e){t=Diff.diffLines(JSON.stringify(c[d],void 0,1),JSON.stringify(r[d],void 0,1))}let n=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),n.appendChild(o)});var e,a=document.createElement("tr"),i=(a.setAttribute("class","dv-differ"),document.createElement("th"));i.appendChild(document.createTextNode(d)),descMap[d]&&((e=document.createElement("i")).style["font-size"]="80%",e.appendChild(document.createTextNode("("+descMap[d]+")")),i.appendChild(e)),a.append(i),(i=document.createElement("td")).setAttribute("colspan","2"),i.append(n),a.append(i),s.push(a.outerHTML)}else s.push("<tr><th>"+d+"</th><td><code>"+escapeHtml(r[d])+"</code></td><td><code>"+escapeHtml(c[d])+"</code></td></tr>")}),0==l.length){let o=null;var e="OBJ",t=Diff.diffJson(c,r);let n=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),n.appendChild(o)});var d,t=document.createElement("tr"),a=(t.setAttribute("class","dv-differ"),document.createElement("th"));return a.appendChild(document.createTextNode(e)),descMap[e]&&((d=document.createElement("i")).style["font-size"]="80%",d.appendChild(document.createTextNode("("+descMap[e]+")")),a.appendChild(d)),t.append(a),(a=document.createElement("td")).setAttribute("colspan","2"),a.append(n),t.append(a),{html:t.outerHTML,icon:"fa-question"}}var o=["x","y","w","h","g","wires"];return{html:s.join(""),icon:0==l.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getFlowDataFromCurrentWorkspace(){var e=RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function doSubmission(n){$("#node-input-flowcompare-next-change-btn").hide();var t=RED.workspaces.active(),e=n.filter(e=>e.z==t||e.id==t);$($($("#svgelem .container-diff02")[0]).find(".containerGroup")[0]).find("g").html(""),$($($("#svgelem .container-diff01")[0]).find(".containerGroup")[0]).find("g").html(""),$.ajax({url:"FlowCompareCfg",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:t,flowdata:e||{},flowlabel:(RED.nodes.workspace(t)||{label:"subflow"}).label}),success:function(e){var i=[],r={};if("failed"==e.status)RED.notify("Error happened, please check console",{type:"error",timeout:2e3}),console.error("Error in flow compare: ",e);else{renderFlow(e.flowid,e.nodes,$($("#svgelem .container-diff02")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0}),renderFlow(e.flowid,n,$($("#svgelem .container-diff01")[0]),{arrows:!1,gridlines:!1,zoom:!1,images:!0,linklines:!0,dllink:!1,labels:!0});var t=$(".flowviewer svg"),o=(t.attr("width",""),t.attr("height",""),t.css("width",$(".flowviewer").width()+"px"),t.css("height","300px"),$(".flowviewer svg .containerGroup")[0].getBBox());if(t.attr("viewBox",[o.x,o.y,o.width,o.height].join(" ")),document.getElementById("node-input-compare-slider").oninput=function(){$(".container-diff01").css("opacity",this.value/100),$(".container-diff02").css("opacity",(100-this.value)/100)},e.changes.forEach(function(e){var t,o,n,d,a=e.id;"deleted"==e.type?(r[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-times",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("deleted"),$(".group-"+a).addClass("deleted"),i.push(r[a])):"added"==e.type?(r[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-check",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},$(".node-"+a).addClass("added"),$(".group-"+a).addClass("added"),i.push(r[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(d=createDiff(e.newObj,e.oldObj),r[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[a])):((t=RED.nodes.node(a))||console.log("Node not found",e),(o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),d=createDiff(e.newObj,e.oldObj),r[t.id]={node:t,objid:a,label:n,icon:"fa "+d.icon,class:"",diffcontent:d.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},"fa-eye"==d.icon&&($(".node-"+a).addClass("moved"),$(".group-"+a).addClass("moved")),"fa-pencil"==d.icon&&($(".node-"+a).addClass("changed"),$(".group-"+a).addClass("changed")),i.push(r[t.id]))}),0==i.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowcompare-target-container-div").treeList("empty"),$("#node-input-flowcompare-diffcontainer").html("")}catch(e){}}else{try{$("#node-input-flowcompare-target-container-div").treeList("empty")}catch(e){$("#node-input-flowcompare-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){$(".node-"+t.objid).addClass("highlight"),$(".group-"+t.objid).addClass("highlight")}).on("treelistitemmouseout",function(e,t){$(".node-"+t.objid).removeClass("highlight"),$(".group-"+t.objid).removeClass("highlight")}).on("treelistselect",function(e,t){t.diffcontent?($("#node-input-flowcompare-diffcontainer").html(t.diffcontent),t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw()),$("#node-input-flowcompare-next-change-btn").show(),$("#node-input-flowcompare-next-change-btn").data("cntr",0),setTimeout(()=>{var e=$("#node-input-flowcompare-diffcontainer").find(".dv-pre-elem").length;0<e&&RED.notify("Total changes: "+e,{type:"success"})},300)):($("#node-input-flowcompare-diffcontainer").html(""),$("#node-input-flowcompare-next-change-btn").hide(),$("#node-input-flowcompare-next-change-btn").data("cntr",0))}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))})}$("#node-input-flowcompare-target-container-div").treeList("data",i.sort((e,t)=>e.icon>t.icon))}}},error:function(e,t,o){404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify(node._("common.notification.error",{message:node._("inject.errors.failed")}),"error"):0==e.status?RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.no-response")}),"error"):RED.notify(node._("common.notification.error",{message:node._("common.notification.errors.unexpected",{status:e.status,message:t})}),"error")}})}function flowCompareEventListener(e){$("#node-input-flowcompare-autoupdate-button").is(":checked")&&e.old!=e.workspace&&doSubmission(getFlowDataFromCurrentWorkspace())}function showNextChangeButtonPressed(e){var t;e&&e.preventDefault(),0<$("#node-input-flowcompare-diffcontainer").find(".dv-pre-elem").length&&(e=parseInt($("#node-input-flowcompare-next-change-btn").data("cntr")),(t=$("#node-input-flowcompare-diffcontainer").find(".dv-pre-elem")[e])?(t.scrollIntoView(),$("#node-input-flowcompare-next-change-btn").data("cntr",e+1)):(RED.notify("Cycled through all changes.",{type:"success"}),$("#node-input-flowcompare-next-change-btn").data("cntr",0)))}
 
    function ensureYourConfigNodeExists() {
       // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
@@ -649,8 +689,8 @@
       if (globalYourConfigNode === null) {
          var configNodes = [];
          RED.nodes.eachConfig(function(configNode) {
-             if (configNode.type === 'FlowCompareCfg') {
-                 configNodes.push(configNode);
+             if (configNode.type === 'FlowCompareCfg') { 
+                 configNodes.push(configNode); 
              }
          });
 
@@ -675,7 +715,7 @@
              id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
              _def: RED.nodes.getType("FlowCompareCfg"),
              type: "FlowCompareCfg",
-             hasUsers: false,
+             hasUsers: false, 
              users: [],
              name: "FlowCompare",
              label: function() { return this.name || "FlowCompare"},
@@ -688,7 +728,7 @@
 
          // Make sure the "Deploy" button becomes active
          RED.nodes.dirty(true);
-      }
+      }      
    }
 
    // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
@@ -697,7 +737,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="FlowCompare"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -710,7 +750,7 @@
          enableOnEdit: true,
          iconClass: "fa fa-map" // your fontawesome icon
       });
-
+      
       addPanZoom();
       ensureYourConfigNodeExists();
 
@@ -725,6 +765,16 @@
          if ( e ) { e.preventDefault(); }
          doSubmission(getFlowDataFromCurrentWorkspace())
       });
+
+      $('#node-input-flowcompare-next-change-btn').on('click', showNextChangeButtonPressed)
+      
+      RED.panels.create({
+         id: "flowcompare-diff-panel",
+         resize: (topSze,botSze) => {
+            $('#node-input-flowcompare-diffcontainer').parent().parent().css("height",botSze)
+            $('#node-input-flowcompare-target-container-div').parent().css('height',`calc(${topSze}px - 32vh)`)
+         }
+      })
    };
    RED.events.on('runtime-state', initialiseConfigNodeOnce);
 })();
@@ -771,14 +821,9 @@
   stroke-width: 10px !important;
 }
 
-.diff-viewer {
+.flowcompare-diff-viewer {
   overflow: scroll;
-  background-color: rgb(244, 244, 244);
-  border: 1px solid rgb(196, 196, 196);
-  height: 80vh;
-  padding: 20px;
   max-width: 90vw;
-  border-radius: 5px;
 }
 
 .dv-differ {
@@ -801,21 +846,6 @@
   display: block;
   word-wrap: break-word;
   margin: 0px !important;
-}
-
-
-#diff-viewer{
-  overflow:scroll;
-  background-color:rgb(244, 244, 244);
-  border: 2px solid #000;
-  height:80vh;
-  display:none;
-  position:fixed;
-  top:10vh;
-  left:5vw;
-  z-index: 1000;
-  padding: 20px;
-  max-width: 90vw;
 }
 
 .dv-differ {
@@ -844,53 +874,64 @@
 
 <!-- The html for the right sidebar plugin screen -->
 <script type="text/x-red" data-template-name="FlowCompare">
-  <div class="form-row" style="margin-left: 15px; margin-top: 30px; margin-right: 15px;">
-    <button id="node-input-flowcompare-button"
+<div id="flowcompare-diff-panel" style=" height: 91vh;">
+  <div>
+    <div class="form-row" style="margin-left: 15px; margin-top: 15px;">
+      <button id="node-input-flowcompare-button"
                 class="red-ui-button">Compare</button>
-    <input type="checkbox" id="node-input-flowcompare-autoupdate-button"
-               style="display:inline-block; width:15px; vertical-align:baseline; margin-left: 20px;">
-    <label for="node-input-flowcompare-autoupdate-button">Auto Compare</label>
-  </div>
 
-  <div class="form-row node-input-target-row node-input-target-list-row"
-           style="position: relative; min-height: 100px; margin-left: 10px; margin-right: 15px;">
-    <div id="node-input-flowcompare-target-container-div" style="min-height: 100px"></div>
-  </div>
+      <button id="node-input-flowcompare-next-change-btn"
+           class="red-ui-button hide"><i class="fa fa-arrow-right"></i> Next Change</button>
 
-  <div class="form-row" style="position: relative; min-height: 300px;  margin-left: 10px; margin-right: 15px;">
-    <div id="node-input-flowcompare-svgcontainer" class="flowviewer">
-      <svg id="svgelem" pointer-events="all" style="cursor: crosshair; min-height: 300px;"
-        version="1.1" xmlns="http://www.w3.org/2000/svg">
-        <!-- Use group elems to ensure that layering of shapes is correct, i.e. nodes always over wires -->
-        <g class='container-gridlines'>
-          <g class='flowGridlines'></g>
-        </g>
-
-        <g class='container-diff01' style="opacity: 0;">
-          <g class="containerGroup">
-            <g class="flowDescription"></g>
-            <g class='flowGroups'></g>
-            <g class='flowWires'></g>
-            <g class='flowNodes'></g>
-          </g>
-        </g>
-        <g class='container-diff02'  style="opacity: 1;">
-          <g class="containerGroup">
-            <g class="flowDescription"></g>
-            <g class='flowGroups'></g>
-            <g class='flowWires'></g>
-            <g class='flowNodes'></g>
-          </g>
-        </g>
-      </svg>
+      <label style="margin-left: 5px;" for="node-input-flowcompare-autoupdate-button">Auto Compare</label>
+      <input type="checkbox" id="node-input-flowcompare-autoupdate-button"
+               style="width:20px; vertical-align:baseline; margin-left:  20px;">
     </div>
-    <input style="width: 100%; min-width: 300px;" id="node-input-compare-slider" type="range" min="0" max="100" step="1" value="0"></input>
+
+    <div class="form-row node-input-target-row node-input-target-list-row"
+        style="position: relative; min-height: 5vh; height: 20vh; margin-left: 10px; margin-right: 15px;">
+      <div id="node-input-flowcompare-target-container-div"></div>
+    </div>
+
+    <div style="position: relative; min-height: 300px;  margin-left: 10px; margin-right: 15px; margin-bottom: 10px;">
+      <input style="width: 100%; min-width: 300px;" id="node-input-compare-slider" type="range" min="0" max="100" step="1" value="0"></input>
+       <div id="node-input-flowcompare-svgcontainer" class="flowviewer">
+        <svg id="svgelem" pointer-events="all" style="cursor: crosshair; min-height: 300px;" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <!-- Use group elems to ensure that layering of shapes is correct, i.e. nodes always over wires -->
+          <g class='container-gridlines'>
+            <g class='flowGridlines'></g>
+          </g>
+
+          <g class='container-diff01' style="opacity: 0;">
+            <g class="containerGroup">
+              <g class="flowDescription"></g>
+              <g class='flowGroups'></g>
+              <g class='flowWires'></g>
+              <g class='flowNodes'></g>
+            </g>
+          </g>
+          <g class='container-diff02' style="opacity: 1;">
+            <g class="containerGroup">
+              <g class="flowDescription"></g>
+              <g class='flowGroups'></g>
+              <g class='flowWires'></g>
+              <g class='flowNodes'></g>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
   </div>
 
-  <div class="form-row" style="position: relative; min-height: 100px;  margin-left: 10px; margin-right: 15px;">
-    <div id="node-input-flowcompare-diffcontainer" class="diff-viewer"></div>
+  <div>
+      <div style="margin-left: 10px; overflow: hidden; display: flex; flex-direction: column; width: 97%; height: 40vh; margin-top: 10px;">
+         <div class="red-ui-help" style="flex: 1 1 auto; overflow-y: auto;">
+          <div id="node-input-flowcompare-diffcontainer" class="flowcompare-diff-viewer"></div>
+         </div>
+      </div>
   </div>
-
+</div>
 </script>
 <!-- --- [red-plugin:@gregoriusrippenstein/node-red-contrib-nodedev/nodefactory_sidebar] --- -->
 <script type="text/javascript">
@@ -922,7 +963,7 @@
             });
             console.log(textStatus,errorThrown )
          }
-      });
+      });      
 
    }
 
@@ -956,7 +997,7 @@
             });
             console.log(textStatus,errorThrown )
          }
-      });
+      });      
    }
 
    function ensureYourConfigNodeExists() {
@@ -973,8 +1014,8 @@
       if (globalYourConfigNode === null) {
          var configNodes = [];
          RED.nodes.eachConfig(function(configNode) {
-             if (configNode.type === 'NodeFactorySidebarCfg') {
-                 configNodes.push(configNode);
+             if (configNode.type === 'NodeFactorySidebarCfg') { 
+                 configNodes.push(configNode); 
              }
          });
 
@@ -1001,12 +1042,12 @@
             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
             _def: typ,
             type: "NodeFactorySidebarCfg",
-            hasUsers: false,
+            hasUsers: false, 
             users: [],
             name: "NodeFactorySidebar",
             label: function() { return this.name || "NodeFactorySidebar"},
             /* values and data defined by this config node */
-            pkgname: typ.defaults.pkgname.value,
+            pkgname: typ.defaults.pkgname.value, 
             pkgversion: typ.defaults.pkgversion.value,
             otptype: typ.defaults.otptype.value,
             algorithm: typ.defaults.algorithm.value,
@@ -1024,7 +1065,7 @@
 
          // Make sure the "Deploy" button becomes active
          RED.nodes.dirty(true);
-      }
+      }      
    }
 
    // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
@@ -1033,7 +1074,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="NodeFactorySidebar"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -1054,7 +1095,7 @@
                $('#' + tab.id).show();
             }
       });
-
+      
       // Add first tab, pkg importer
       tabs.addTab({
             id: 'func-nodedev-pkgimporter-tab-pkgimport',
@@ -1133,7 +1174,7 @@
 
       $("#node-input-nodedev-sidebar-otp-secret").on('change', () => {
          ensureYourConfigNodeExists();
-
+         
          let val = $("#node-input-nodedev-sidebar-otp-secret").typedInput('value');
          let typ = $("#node-input-nodedev-sidebar-otp-secret").typedInput('type');
 
@@ -1468,7 +1509,7 @@
                     }).catch( ex => { console.log(ex) })
                 }
             }
-
+            
             let checkIfAllIsThere = () => {
                 if (waitingOnNode > 0 && nodesToBeImported.length == waitingOnNode) {
                     setTimeout(() => {
@@ -1498,6 +1539,7 @@
                 setTimeout(defineCustomDropHandler, 300)
             }
         }
+        setTimeout(defineCustomDropHandler, 300)
     };
 
     RED.events.on('runtime-state', initialiseConfigNodeOnce);
@@ -1511,7 +1553,7 @@
    var globalYourConfigNode = null;
 
    window.FlowToMermaid={constructMermaid:function(e,l="TB",r=void 0){for(var n={payload:e},e=n.payload.filter(e=>"tab"!=e.type&&"group"!=e.type),t={},i=0;i<e.length;i++){var a=e[i];t[a.id]=a}var s=r,o=(r||(s={nodes:{node:e=>t[e],subflow:e=>t[e]}}),e=>e&&{nnull:"not null",eq:"==",neq:"!=",lt:"<",lte:"<=",gt:">",gte:">=",hask:"has key",cont:"contains"}[e]||e),c=e=>e.replaceAll("&","&amp;").replaceAll("#","#35;").replaceAll("[","#91;").replaceAll("]","#93;").replaceAll("(","#40;").replaceAll(")","#41;").replaceAll("|","#124;").replaceAll(">","&gt;").replaceAll("<","&lt;").replaceAll("{","#123;").replaceAll("}","#125;").replaceAll("/","#47;").replaceAll('"',"#34;"),p=(e,l=void 0)=>{if(!e)return"";var r=e.name||e.type;switch(l=l?'|"'+c(l)+'"| ':"",r=c(r),e.type){case"switch":case"join":case"split":return l+e.id+'{"'+r+'"}';case"link call":case"link out":if(e.mode&&"return"==e.mode)return l+e.id+"[\\Link Return/]";if(!e.name||e.name.match(/^link out/)){if("dynamic"==e.linkType)return l+e.id+'{{"'+(r="\\Dynamic Target/")+'"}}';var n=e.links&&0<e.links.length&&(t[e.links[0]]||s.nodes.node(e.links[0])),r=c(n&&n.name||e.type)}return l+e.id+'{{"'+r+'"}}';case"link in":return r=c(e.name||e.links&&0<e.links.length&&t[e.links[0]]&&t[e.links[0]].name||e.type),l+e.id+'{{"'+r+'"}}';case"junction":return l+e.id+'(("conn"))';case"inject":case"debug":return l+e.id+'(["'+r+'"])';case"http in":return l+e.id+'["'+c("["+e.method+"] "+e.url)+'"]';default:return e.type.startsWith("subflow:")?(n=s.nodes.subflow(e.type.replace(/subflow:/,"")),r=c(n&&n.name||e.type),l+e.id+'[/"'+r+'"/]'):l+e.id+'["'+r+'"]'}};n.mermaid=["%% change this to LR Node-RED like UML","graph "+l];for(var u,i=0;i<e.length;i++){var d=e[i];if(d.links&&0<d.links.length&&"link out"==d.type)for(var h=0;h<d.links.length;h++)t[d.links[h]]&&n.mermaid.push(p(d)+" -.-> "+d.links[h]);if(d.wires&&0<d.wires.length)if("switch"==d.type)for(var m=0;m<d.wires.length;m++)for(var f=0;f<d.wires[m].length;f++)t[d.wires[m][f]]&&n.mermaid.push(p(d)+" --\x3e "+p(t[d.wires[m][f]],(u=d.rules[m]).v&&u.t?o(u.t)+" "+u.v:u.v&&!u.t?u.v:o(u.t)));else{var k,w=d.outputLabels;d.type.startsWith("subflow:")&&(w=(k=s.nodes.subflow(d.type.replace(/subflow:/,"")))&&k.outputLabels||w);for(m=0;m<d.wires.length;m++)for(f=0;f<d.wires[m].length;f++)t[d.wires[m][f]]&&n.mermaid.push(p(d)+" --\x3e "+p(t[d.wires[m][f]],w&&w[m]||void 0))}}return n.mermaid.join("\n")}};
-
+  
    function obtainCurrentActiveFlow() {
       // check whether there is a current selection of nodes: if so, use that instead
       // of the current active tab.
@@ -1543,7 +1585,7 @@
    };
 
    function getMermaidLink(mermaidTxt) {
-      /*
+      /* 
        * this snippet isn't taken from
        *   https://github.com/mermaid-js/mermaid-live-editor/blob/develop/src/lib/util/serde.ts
        * but it comes from there. Using base64 instead of pako because
@@ -1564,7 +1606,7 @@
       }
       return "https://mermaid.live/edit#base64:" + btoa( JSON.stringify(payload) )
    };
-
+   
    function ensureYourConfigNodeExists() {
       // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
       // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
@@ -1579,8 +1621,8 @@
       if (globalYourConfigNode === null) {
          var configNodes = [];
          RED.nodes.eachConfig(function(configNode) {
-             if (configNode.type === 'Flow2MermaidCfg') {
-                 configNodes.push(configNode);
+             if (configNode.type === 'Flow2MermaidCfg') { 
+                 configNodes.push(configNode); 
              }
          });
 
@@ -1605,7 +1647,7 @@
              id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
              _def: RED.nodes.getType("Flow2MermaidCfg"),
              type: "Flow2MermaidCfg",
-             hasUsers: false,
+             hasUsers: false, 
              users: [],
              name: "Flow2Uml",
              label: function() { return this.name || "Flow2Uml"},
@@ -1619,7 +1661,7 @@
 
          // Make sure the "Deploy" button becomes active
          RED.nodes.dirty(true);
-      }
+      }      
    }
 
    // Add your plugin as a new tabsheet in the right sidebar AFTER the flow editor is completely started
@@ -1628,7 +1670,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="Flow2Mermaid"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -1662,7 +1704,7 @@
       $("#btn_genmersave").on('click', (e) => {
          var data = atob($('#node-input-genmereditor-mermaid-code').data('mermaid'));
          ensureYourConfigNodeExists();
-
+         
          if (globalYourConfigNode.genmereditor != data) {
             globalYourConfigNode.genmereditor = data;
             $('#genmermaid-view-uml-link').attr('href', getMermaidLink(data));
@@ -1674,7 +1716,7 @@
          if (e) { e.preventDefault(); }
          ensureYourConfigNodeExists();
 
-         var mermaidTxt = FlowToMermaid.constructMermaid(obtainCurrentActiveFlow(), globalYourConfigNode.direction, RED);
+         var mermaidTxt = FlowToMermaid.constructMermaid(obtainCurrentActiveFlow(), globalYourConfigNode.direction, RED);         
 
          try {
             /*
@@ -1739,7 +1781,7 @@
             types: [
                {
                   value: "genmerdirection",
-
+                  
                   options: [
                         { "value":"TB", "label": "Top to Bottom"},
                         { "value":"LR", "label": "Left to Right"},
@@ -1752,7 +1794,7 @@
       // At startup load your config node data into the plugin sidebar html elements
       $('#node-input-genmerdirection').val(globalYourConfigNode.direction)
 
-      // Allow dynamic re-size after init. appearance
+      // Allow dynamic re-size after init. appearance 
       setTimeout(function () {
             $('#node-props').css('width', '100%');
       }, 30);
@@ -1898,7 +1940,7 @@
    function selectAllNodesInTreeList(){try{var t=$("#node-input-search-results-target-container-div").treeList("data");if(0==t.length)return RED.notify("No Contacts Found",{type:"success",timeout:2e3});RED.view.select({nodes:t.map(t=>t.node)})}catch(t){return RED.notify("No Contacts Found",{type:"success",timeout:2e3})}}function selectAllNodesInTreeListInCurrentTab(){let e=RED.workspaces.active();try{var t=$("#node-input-search-results-target-container-div").treeList("data");if(0==t.length)return RED.notify("No Contacts Found",{type:"success",timeout:2e3});RED.view.select({nodes:t.map(t=>t.node).filter(t=>t.z==e)})}catch(t){return RED.notify("No Contacts Found",{type:"success",timeout:2e3})}}
 
    function setupTreelistForNonPrefixedPhones(e){e=findNonPrefixedPhones(e);if(0==e.length){RED.notify("No Contacts Found",{type:"success",timeout:2e3});try{$("#node-input-search-results-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-search-results-target-container-div").treeList("empty")}catch(e){$("#node-input-search-results-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.node&&(RED.workspaces.show(t.node.z,!1,!1,!0),RED.view.reveal(t.node.id,!0),RED.view.redraw())}).on("treelistconfirm",function(e,t){var n;t.node&&(n=t.node.id,setTimeout(()=>{var e=RED.nodes.node(n);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),n==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-search-results-target-filter").show();var n=$("#node-input-search-results-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-search-results-target-container-div").treeList("filter",null),n.searchBox("count","")):(e=$("#node-input-search-results-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),n.searchBox("count",e+" / "+$("#node-input-search-results-target-container-div").treeList("data").length))}})}$("#node-input-search-results-target-container-div").treeList("data",e.sort((e,t)=>e.sublabel>t.sublabel))}}function findNonPrefixedPhones(e){let t=[],n=e.currentOnly;e=e.inverse;let r=RED.workspaces.active(),s=[],o=new Set,i=void 0;RED.nodes.eachNode(t=>{var e;"Contact"!=t.type||n&&t.z!=r||(e=JSON.parse(t.rawJsonData),s.push(t.id),e[1].forEach(e=>{"tel"!=e[0]||""==(i=Array.isArray(e[3])?e[3].join(";"):e[3]||"")||i.match(/^[\s\t\n]*[+]/)||i.match(/^[\s\t\n]*00/)||o.add(t.id)}))}),e?s.forEach(e=>{o.has(e)||t.push(RED.nodes.node(e))}):o.forEach(e=>{t.push(RED.nodes.node(e))});var a=[],c={};return t.forEach(e=>{var t=RED.nodes.getType(e.type);if(t){var n=t.label,n=("function"==typeof n?n.call(e):n)||"",r=e.type;if(0===r.indexOf("subflow:"))return}t&&n||(n=e.type),c[e.id]={node:e,label:n,sublabel:r,selected:!1,checkbox:!1},a.push(c[e.id])}),a}
-
+   
    function ensureYourConfigNodeExists() {
       // This function makes sure there is 1 instance of your config node is available, and that the globalYourConfigNode variable refers to it.
       // Explained in the next step of this tutorial... --> https://discourse.nodered.org/t/tutorial-create-a-sidebar-plugin-and-persist-the-data-in-a-config-node/82020
@@ -1913,8 +1955,8 @@
       if (globalYourConfigNode === null) {
          var configNodes = [];
          RED.nodes.eachConfig(function(configNode) {
-             if (configNode.type === 'AdressBookCfg') {
-                 configNodes.push(configNode);
+             if (configNode.type === 'AdressBookCfg') { 
+                 configNodes.push(configNode); 
              }
          });
 
@@ -1939,7 +1981,7 @@
              id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
              _def: RED.nodes.getType("AdressBookCfg"),
              type: "AdressBookCfg",
-             hasUsers: false,
+             hasUsers: false, 
              users: [],
              name: "AdressBook",
              label: function() { return this.name || "AdressBook"},
@@ -1954,7 +1996,7 @@
 
          // Make sure the "Deploy" button becomes active
          RED.nodes.dirty(true);
-      }
+      }      
    }
 
    function doSubmission(e){ensureYourConfigNodeExists(),$.ajax({url:"vCardContactSidebarCfg",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({rawjsondata:e}),success:function(e){var e=new Blob([e.data.vcards],{type:"text/vcard;charset=utf-8"}),e=URL.createObjectURL(e),t=document.createElement("a");t.href=e,t.download="contacts.vcf",document.body.appendChild(t),t.click(),document.body.removeChild(t)},error:function(e,t,o){RED.notify("Submission failed: "+t,{type:"error",id:"AdressBook",timeout:2e3}),console.log(t,o)}})}
@@ -1965,7 +2007,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="AdressBook"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -1988,9 +2030,9 @@
 
       $('#inverse-search-results').on('change', () => {
          ensureYourConfigNodeExists();
-
+         
          let data = $(this).is(":checked");
-
+         
          if (globalYourConfigNode.inverseSearch != data) {
             globalYourConfigNode.inverseSearch = data;
             RED.nodes.dirty(true);
@@ -1999,9 +2041,9 @@
 
       $('#only-current-tab').on('change', () => {
          ensureYourConfigNodeExists();
-
+         
          let data = $(this).is(":checked");
-
+         
          if (globalYourConfigNode.currentTabOnly != data) {
             console.log( "UPDATE" )
             globalYourConfigNode.currentTabOnly = data;
@@ -2020,13 +2062,13 @@
             RED.nodes.dirty(true);
          }
       })
-
+      
       $('button.search-button').click( e => {
          if ( e ) { e.preventDefault() }
-
-         setupTreelistForSearch( {
-            term: $('#node-input-data').val(),
-            attr: $(e.target).data('attr'),
+         
+         setupTreelistForSearch( { 
+            term: $('#node-input-data').val(), 
+            attr: $(e.target).data('attr'), 
             currentOnly: $('#only-current-tab').is(":checked"),
             inverse: $('#inverse-search-results').is(":checked")
          })
@@ -2034,9 +2076,9 @@
 
       $('button.duplicate-button').click( e => {
          if ( e ) { e.preventDefault() }
-         setupTreelistForDuplicates( {
-            term: $('#node-input-data').val(),
-            attr: $(e.target).data('attr'),
+         setupTreelistForDuplicates( { 
+            term: $('#node-input-data').val(), 
+            attr: $(e.target).data('attr'), 
             currentOnly: $('#only-current-tab').is(":checked"),
             inverse: $('#inverse-search-results').is(":checked")
          })
@@ -2100,7 +2142,7 @@
    <button class="red-ui-button search-button" data-attr="url"><i class="fa fa-link"></i> URL</button>
 </div>
 
-<div class="form-row" style="margin-left: 10px; margin-top: 15px">
+<div class="form-row" style="margin-left: 10px; margin-top: 15px">   
    <button class="red-ui-button duplicate-button" data-attr="fn"><i class="fa fa-tag"></i> Duplicate - Fullname</button>
    <button class="red-ui-button duplicate-button" data-attr="url"><i class="fa fa-link"></i> Duplicate - Url</button>
    <button class="red-ui-button duplicate-button" data-attr="tel"><i class="fa fa-phone"></i> Duplicate - Phone</button>
@@ -2122,7 +2164,7 @@
 <div class="form-row" style="margin-left: 10px; margin-top: 40px">
    <button id="select-all-contacts" class="red-ui-button" data-attr="fn"><i class="fa fa-tag"></i> Select All</button>
    <button id="select-all-contacts-in-current-tab" class="red-ui-button" data-attr="fn"><i class="fa fa-tag"></i> Select All in Current Tab</button>
-   <button id="export-as-vcards" class="red-ui-button" data-attr="fn"><i class="fa fa-download"></i> Export Selected</button>
+   <button id="export-as-vcards" class="red-ui-button" data-attr="fn"><i class="fa fa-download"></i> Export Selected</button>   
 </div>
 </script>
 
@@ -2146,7 +2188,7 @@
 <script type="text/javascript">
 (function() {
     var globalAutoLayoutConfigNode = null;
-
+    
     function findSelectedNodes(/*thisNode*/) {
         /*
          * Take the selection and create a nodeset from it.
@@ -2199,11 +2241,11 @@
             return;
         }
 
-        /*
+        /* 
          * From here it's all nodeset based.
          */
 
-        // Convert nodes to flows.json format since all the wires, i.e. links, are
+        // Convert nodes to flows.json format since all the wires, i.e. links, are 
         // contained in one simple json format.
         let fixedNode = RED.nodes.node(fixedNodeId)
         var allnodes = RED.nodes.createExportableNodeSet(ns).filter((n) => {
@@ -2253,7 +2295,7 @@
             fixedNodeId: fixedNodeId
         };
     }
-
+    
     function moveNodes(fixedNodeId, children) {
         //var children = payload.nodes;
         //var fixedNodeId = payload.fixedNodeId;
@@ -2292,7 +2334,7 @@
         RED.nodes.dirty(true);
         RED.view.redraw(true);
     }
-
+    
     function getDefaultSettings() {
         return {
             "dagre_lr": {
@@ -2360,7 +2402,7 @@
             }
         }
     }
-
+  
     // Ensure that the globalAutoLayoutConfigNode (still) exists, because the user might have deleted it meanwhile...
     // !!!!!!!!!!!!!!! CALL THIS FUNCTION EVERYWHERE THE globalAutoLayoutConfigNode IS BEING USED !!!!!!!!!!!!!!!
     function ensureAutoLayoutConfigNode() {
@@ -2375,8 +2417,8 @@
             var configNodes = [];
             console.log("=======================> HIER configNodes via eachConfig nodig")
             RED.nodes.eachConfig(function(configNode) {
-                if (configNode.type === 'auto_layout_config') {
-                    configNodes.push(configNode);
+                if (configNode.type === 'auto_layout_config') { 
+                    configNodes.push(configNode); 
                 }
             });
 
@@ -2403,7 +2445,7 @@
                 id: RED.nodes.id(),
                 _def: RED.nodes.getType("auto_layout_config"),
                 type: "auto_layout_config",
-                hasUsers: false,
+                hasUsers: false, 
                 users: [],
                 // TODO default values for all properties
                 name: "AutoLayout",
@@ -2439,7 +2481,7 @@
                 // Which came from https://discourse.nodered.org/t/read-flows-json-and-position-the-nodes-in-most-efficient-readable-way/78158/12
                 var g = new dagre.graphlib.Graph();
                 g.setGraph(currentAlgorithmSettings);
-                g.setDefaultEdgeLabel(function () { return {}; });
+                g.setDefaultEdgeLabel(function () { return {}; });                       
 
                 for (var idx = 0; idx < selection.allnodes.length; idx++) {
                     var n = selection.allnodes[idx];
@@ -2447,7 +2489,7 @@
                         ...n,
                     })
                 }
-
+                
                 // The above loop can be replaced by :
                 // for (var idx = 0; idx < selection.allnodes.length; idx++) {
                 //     var node = selection.allnodes[idx];
@@ -2462,13 +2504,13 @@
                 }
 
                 dagre.layout(g);
-
+                
                 var nodes = g.nodes().map(function (v) {
                      return {
                           ...g.node(v)
                         }
-                })
-
+                })   
+                
                 try {
                     moveNodes(selection.fixedNodeId, nodes);
                 } catch ( ex ) {
@@ -2477,10 +2519,10 @@
                     RED.notify("Dagre autoroute error: " + ex);
                 }
                 break;
-            case "elkjs_mr_tree":
-            case "elkjs_layered_upwards":
-            case "elkjs_layered_downwards":
-            case "elkjs_box":
+            case "elkjs_mr_tree": 
+            case "elkjs_layered_upwards": 
+            case "elkjs_layered_downwards": 
+            case "elkjs_box": 
                 // see https://github.com/kieler/elkjs#api for more details
                 var graph = {
                     id: "root",
@@ -2500,17 +2542,17 @@
                         RED.notify("ElkJs autoroute error: " + ex);
                     });
                 break;
-
-            case "pull_request_2267":
+            
+            case "pull_request_2267": 
                 // Code Taken from https://github.com/node-red/node-red/pull/2267/files
                 // I only replaced 'selection' by 'selection_', but it would be better to use the above 'selection' variable.
                 var selection_ = RED.view.selection();
-
+                
                 if (!selection_.nodes || selection_.nodes.length !== 1) {
                     RED.notify("Select exactly one node");
                     return;
                 }
-
+                
                 var ns = undefined;
                 if (selection_.nodes[0].type == "group") {
                     ns = RED.group.getNodes(selection_.nodes[0])
@@ -2667,7 +2709,7 @@
                     RED.nodes.dirty(true);
                     RED.view.redraw(true);
                 }
-
+                
                 break;
 
         }
@@ -2676,7 +2718,7 @@
     RED.plugins.registerPlugin("autolayout-sidebar-plugin", {});
 
     // Make sure the editor is completely loaded, before filling the sidebar with content.
-    // Because only just before that, RED.nodes will be loaded.  Otherwise RED.nodes.getType("auto_layout_config") would
+    // Because only just before that, RED.nodes will be loaded.  Otherwise RED.nodes.getType("auto_layout_config") would 
     // return undefined, and RED.nodes.add would throw an exception...
     // The problem is that Node-RED does not offer an "editor-loaded" event.
     // I did a feature request for that, but for some obscure reason it was not accepted...
@@ -2684,7 +2726,7 @@
     // On Discourse there was a workaround shared, but the 'workspace:change' is emitted a bit too early.
     // Because it is emitted just before the config nodes are loaded, so RED.nodes.eachConfig above would not find our config node.
     // (see https://discourse.nodered.org/t/add-sidebar-tab-on-app-start-not-working/64726/4).
-    // I found that the 'runtime-state' event is triggered just after the config nodes are loaded, so it works fine.
+    // I found that the 'runtime-state' event is triggered just after the config nodes are loaded, so it works fine. 
     // But it is a non-official unpublished event, so it might be changed or removed in the future...
     var dothisOneTimePlease = () => {
         RED.events.off('runtime-state', dothisOneTimePlease )
@@ -2694,10 +2736,10 @@
         if( RED.actions.list().filter( (d) => { return d.id == "core:auto-layout-flow"} ).length == 0 ) {
             RED.actions.add("core:auto-layout-flow", executeAutoLayout);
         }
-
+        
         // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
         var content = $($('script[type="text/x-red"][data-template-name="auto_layout_sidebar"]').i18n().html());
-
+       
         // Add a "Auto Layout" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
         RED.sidebar.addTab({
             id: "sidebar-auto-layout",
@@ -2745,7 +2787,7 @@
                 globalAutoLayoutConfigNode.algorithm = currentAlgorithm;
                 RED.nodes.dirty(true);
             }
-
+            
             $("#node-input-settings").typedInput('value', JSON.stringify(currentAlgorithmSettings));
         })
         $("#node-input-algorithm").change();
@@ -2753,8 +2795,8 @@
         $("#auto-layout-button").click( executeAutoLayout );
 
         $("#auto-layout-revert-button").click(function() {
-            // revert the last change by calling undo but also maintain the
-            // original selection, making it easier to try out different
+            // revert the last change by calling undo but also maintain the 
+            // original selection, making it easier to try out different 
             // algorithms.
             var sle = RED.view.selection();
 
@@ -2783,7 +2825,7 @@
 
         <label for="node-input-settings" style="margin-top: 15px"><i class="fa fa-cog"></i> Settings</label>
         <input type="text" id="node-input-settings" style="width: 100%; margin-top: 30px">
-
+        
         <button type="button" id="auto-layout-button" style="font-size: larger;width:100%;background-color: yellowgreen;color:white;border: none;height: 32px;margin-top: 30px;">Execute auto-layout</button>
 
         <button type="button" id="auto-layout-revert-button" style="font-size: smaller;width:50%;background-color: rgb(225, 119, 129); color: rgb(246, 246, 246); border: 1px solid rgb(173, 22, 37); height: 32px; margin-top: 30px;"><i class="fa fa-undo"></i> Undo</button>
@@ -2804,7 +2846,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="ScratchPad"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -2885,11 +2927,11 @@
 <script type="text/javascript">
 (function() {
    var globalYourConfigNode = null;
+      
+   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function checkToken(e){$("#flowhubpush-check-token-result-content").fadeOut(300,()=>{$.get({url:"https://flowhub.org/integration/token/check?format=json&t="+e}).done(e=>{if(!e.data)return RED.notify("Check failed: "+e.msg,{type:"error",id:"FlowHubTokenCheck",timeout:2e3});RED.notify("FlowHub token is good!",{type:"success",id:"FlowHubTokenCheck",timeout:2e3}),$("#flowhubpush-check-token-result-content").find(".user").attr("href","mailto:"+e.data.email).html(e.data.name),$("#flowhubpush-check-token-result-content").find(".email").html(e.data.email),$("#flowhubpush-check-token-result-content").find(".repo").attr("href",e.data.repo_url).html(e.data.repo),$("#flowhubpush-check-token-result-content").find(".permission").html(e.data.permission),$("#flowhubpush-check-token-result-content").find(".branch").html(e.data.branch),$("#flowhubpush-check-token-result-content").fadeIn(300)}).fail(e=>{RED.notify("Check failed: "+e.msg,{type:"error",id:"FlowHubTokenCheck",timeout:2e3})})})}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled"},setOldToNewForNode=(e,t,o)=>{e[t]=o,e.dirty=!0,RED.nodes.dirty(!0),RED.view.redraw()},defaultRevertHandler=(e,t,o)=>{e=RED.nodes.node(e)||RED.nodes.junction(e);e&&setOldToNewForNode(e,t,o)},revertableAttributes={},revertableAttributesNames=(["x","y","template","name","info","func","label","tooltip","timeout","repeat"].forEach(function(e){revertableAttributes[e]=defaultRevertHandler}),Object.keys(revertableAttributes));function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function clickBaitDiff(){$("th.revertable").on("click",e=>{e.preventDefault();var t,o=$($(e.target).parent()).data("attr");confirm('Really revert changes to attribute "'+o+'"?')&&(t=revertableAttributes[o])&&t($($(e.target).parent()).data("id"),o,JSON.parse(atob($($(e.target).parent()).data("oldval"))))})}function createDiff(r,s){var f=[],c=[];try{if(Object.keys(s).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof s[e]?JSON.stringify(s[e]):s[e],f.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),c.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(s).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],f.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),c.push(e))}),Object.keys(r).forEach(function(i){if(-1<Object.keys(s).indexOf(i))if(JSON.stringify(r[i])!==JSON.stringify(s[i]))try{let o=null,t=void 0;c.push(i);try{t=Diff.diffLines(s[i],r[i])}catch(e){t=Diff.diffLines(JSON.stringify(s[i],void 0,1),JSON.stringify(r[i],void 0,1))}let n=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),n.appendChild(o)});var a=-1<revertableAttributesNames.indexOf(i)?" revertable":"",e=document.createElement("tr");e.setAttribute("class","dv-differ"),e.setAttribute("data-id",r.id),e.setAttribute("data-attr",i);try{e.setAttribute("data-oldval",btoa(JSON.stringify(s[i])))}catch(e){a=""}var d,l=document.createElement("th");l.setAttribute("class",a),l.appendChild(document.createTextNode(i)),descMap[i]&&((d=document.createElement("i")).style["font-size"]="80%",d.appendChild(document.createTextNode("("+descMap[i]+")")),l.appendChild(d)),e.append(l),(l=document.createElement("td")).setAttribute("colspan","2"),l.append(n),e.append(l),f.push(e.outerHTML)}catch(e){console.log("--Exceeption",e),f.push("<tr><th class='dv-error'>"+i+" CAUSED EXCEP</th><td><code>"+escapeHtml(r[i])+"</code></td><td><code>"+escapeHtml(s[i])+"</code></td></tr>")}else f.push("<tr><th>"+i+"</th><td><code>"+escapeHtml(r[i])+"</code></td><td><code>"+escapeHtml(s[i])+"</code></td></tr>")}),0==c.length){let o=null;var e="OBJ",t=Diff.diffJson(s,r);let n=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),n.appendChild(o)});var i,a=document.createElement("tr"),d=(a.setAttribute("class","dv-differ"),document.createElement("th"));return d.appendChild(document.createTextNode(e)),descMap[e]&&((i=document.createElement("i")).style["font-size"]="80%",i.appendChild(document.createTextNode("("+descMap[e]+")")),d.appendChild(i)),a.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(n),a.append(d),{html:a.outerHTML,icon:"fa-question"}}}catch(e){console.log("Exception",e)}var o=["x","y","w","h","g"];return{html:f.join(""),icon:0==c.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getInstalledNodeDetails(e){$.ajax({url:"nodes",headers:{Accept:"application/json"},success:e,error:()=>{e(["error"])}})}function doTokenCheck(e,t){$.ajax({url:"FlowHubTokenCheck",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({cfgnode:e}),success:function(e){t(e)},error:function(e,t,o){RED.notify("Check failed: "+t,{type:"error",id:"FlowHubTokenCheck",timeout:2e3})}})}function doPushSubmission(e,t,o,n){var i=RED.workspaces.active();let a=e.map(e=>e.type);n=n.filter(e=>-1<a.indexOf(e.types[0])),$.ajax({url:"FlowHubPush",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:i,flowdata:e||{},flowlabel:RED.nodes.workspace(i).label,cfgnode:t,svgdata:o,nodedetails:n}),success:function(e){RED.notify("Submission triggered",{type:"warning",id:"FlowHubPush",timeout:2e3}),obtainFhbToken(obtainConfigNode(),e=>{""!==e&&(e=e&&"?t="+tokenToUrl(e)),$("#flowhubpush-view-flow-link").attr("href","https://flowhub.org/f/"+i+e).show()})},error:function(e,t,o){RED.notify("Submission failed: "+t,{type:"error",id:"FlowHubPush",timeout:2e3}),console.log(t,o)}})}function getFlowDataFromCurrentWorkspace(e){var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeRemoveHighlight(){document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({msg:"removehighlight"},"*")}function iframeHighlightItem(e){iframeRemoveHighlight(),document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({item:{label:e.label,icon:e.icon,class:e.class,sublabel:e.sublabel,objid:e.objid},msg:"highlightitem"},"*")}function iframeHasBeenLoaded(e){let t=$(e).data("flowid");var o=getFlowDataFromCurrentWorkspace(t);setTimeout(()=>{e.contentWindow&&e.contentWindow.postMessage({nodes:o,msg:"renderlocalflow",flowid:t||RED.workspaces.active()},"*")},345)}function doComparison(e,t){var n=RED.workspaces.active();if($("#node-input-flowhubdiff-next-change-btn").hide(),RED.nodes.workspace(n))RED.notify("Flow Comparison Triggered",{type:"warning",id:"FlowHubDiff",timeout:2e3}),$.ajax({url:"FlowHubDiff",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:n,flowhub:"submission from ",flowdata:e||{},flowlabel:RED.nodes.workspace(n).label,cfgnode:t}),success:function(t){var e,d=[],l={};if("failed"==t.status){RED.notify(t.msg||"This does not seem to be a FlowHub flow id: "+n,{type:"error",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else if(t.revision&&""!=t.revision&&(e=ensureYourConfigNodeExists()).flowrevisions&&e.flowrevisions[t.flowid]&&e.flowrevisions[t.flowid].substr(0,8)!=t.revision.substr(0,8)&&RED.notify(`WARNING: Revision mismatch: Local: ${e.flowrevisions[t.flowid].substr(0,8)}, Remote: `+t.revision.substr(0,8),{type:"warning",timeout:4e3}),obtainFhbToken(obtainConfigNode(),e=>{(""!==e&&e?$("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+t.flowid+"?t="+tokenToUrl(e)):$("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+t.flowid)).show()}),t.changes.forEach(function(e){var t,o,n,i,a=e.id;"deleted"==e.type?(l[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-trash",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0,objid:a},d.push(l[a])):"added"==e.type?(l[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-plus-square",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},d.push(l[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(i=createDiff(e.newObj,e.oldObj),l[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+i.icon,class:"",diffcontent:i.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(l[a])):(t=RED.nodes.node(a))?((o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),i=createDiff(e.newObj,e.oldObj),l[t.id]={node:t,objid:a,label:n,icon:"fa "+i.icon,class:"",diffcontent:i.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(l[t.id])):console.log("Node ignore, Type: "+e.type,e)}),t.ifurl&&$("#node-input-flowhubdiff-svgcontainer").html('<iframe id="flowhubdiff-svgimageiframe" width="100%" height="100%" src="'+t.ifurl+'" onload="window.iframeHasBeenLoaded(this)" style="border: none; min-height: 300px;" data-flowid="'+n+'"></iframe>'),0==d.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){$("#node-input-flowhubdiff-target-container-div").css({width:"100%",height:"calc(100%)"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.objid&&iframeHighlightItem(t)}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw()),t.diffcontent?($("#node-input-flowhubdiff-next-change-btn").show(),$("#node-input-flowhubdiff-next-change-btn").data("cntr",0),$("#node-input-flowhubdiff-diffcontainer").html(t.diffcontent),clickBaitDiff(),setTimeout(()=>{var e=$("#node-input-flowhubdiff-diffcontainer").find(".dv-pre-elem").length;0<e&&RED.notify("Total changes: "+e,{type:"success"})},300)):($("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-next-change-btn").hide(),$("#node-input-flowhubdiff-next-change-btn").data("cntr",void 0))}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-flowhubdiff-target-filter").show();var o=$("#node-input-flowhubdiff-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-flowhubdiff-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-flowhubdiff-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+$("#node-input-flowhubdiff-target-container-div").treeList("data").length))}})}$("#node-input-flowhubdiff-target-container-div").treeList("data",d.sort((e,t)=>e.icon==t.icon?e.label.toLowerCase()>t.label.toLowerCase():e.icon>t.icon))}},error:function(e,t,o){$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify("Not Allowed - 500.","error"):0==e.status?RED.notify("Not Allowed - 0.","error"):RED.notify("Not Allowed - Unexpected.","error")}});else{RED.notify("Comparing subflows not supported.",{type:"error",id:"FlowHubDiff",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}}function addTokenToList(e,t){$("#node-input-flowhubpush-token-list").append(`<tr class='${e}' data-type='${t.type}' data-name='${t.name}' data-token='${t.val}'>`+`<td><a class='flowhubpush-token-select-link' href='#'>${t.name}</a></td>`+"<td><a class='flowhubpush-token-select-link button' href='#'>Use</a></td><td><a class='flowhubpush-token-remove-link button' href='#'>Remove</a></td><td><a class='flowhubpush-token-hide-link button' href='#'>Hide</a></td><td><a class='flowhubpush-token-check-link button' href='#'>Check</a></td><td><a class='flowhubpush-token-copy-link button' href='#'>Copy</a></td></tr>")}function addEventHandlersToTokenList(n){$(".flowhubpush-token-copy-link").off("click"),$(".flowhubpush-token-copy-link").on("click",e=>{RED.clipboard.copyText($($(e.target).closest("tr")).data("token"))&&RED.notify("Token copied","success")}),$(".flowhubpush-token-check-link").off("click"),$(".flowhubpush-token-check-link").on("click",e=>{checkToken($($(e.target).closest("tr")).data("token"))}),$(".flowhubpush-token-hide-link").off("click"),$(".flowhubpush-token-hide-link").on("click",e=>{e&&e.preventDefault();let t=$($(e.target).closest("tr"));$($(e.target).closest("tr")).fadeOut(300,()=>{RED.notify("Hidden token <b>"+t.data("name")+"</b>, will reappear with reload","success")})}),$(".flowhubpush-token-remove-link").off("click"),$(".flowhubpush-token-remove-link").on("click",e=>{e&&e.preventDefault();let t=$($(e.target).closest("tr")),o=n;confirm(`Remove token "${t.data("name")}"?`)&&$($(e.target).closest("tr")).fadeOut(300,()=>{o.tokens=o.tokens.filter(e=>!(e.name==t.data("name")&&e.val==t.data("token")&&e.type==t.data("type"))),RED.nodes.dirty(!0),RED.notify("Removed token <b>"+t.data("name")+"</b>.","success")})}),$(".flowhubpush-token-select-link").off("click"),$(".flowhubpush-token-select-link").on("click",e=>{e&&e.preventDefault();e=$($(e.target).closest("tr"));$(".flowhub-token-selected").removeClass("flowhub-token-selected"),$("#node-input-flowhubpush-apiToken").typedInput("value",e.data("token")),$("#node-input-flowhubpush-apiToken").typedInput("type",e.data("type")),e.addClass("flowhub-token-selected"),RED.notify("Using token <b>"+e.data("name")+"</b>","success")})}function showNextChangeButtonPressed(e){var t;e&&e.preventDefault(),0<$("#node-input-flowhubdiff-diffcontainer").find(".dv-pre-elem").length&&(e=parseInt($("#node-input-flowhubdiff-next-change-btn").data("cntr")),(t=$("#node-input-flowhubdiff-diffcontainer").find(".dv-pre-elem")[e])?(t.scrollIntoView(),$("#node-input-flowhubdiff-next-change-btn").data("cntr",e+1)):(RED.notify("Cycled through all changes.",{type:"success"}),$("#node-input-flowhubdiff-next-change-btn").data("cntr",0)))}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
 
-   function escapeHtml(e){return String(e).replace(/[&<>"'`=\/]/g,function(e){return entityMap[e]})}function checkToken(e){$("#flowhubpush-check-token-result-content").fadeOut(300,()=>{$.get({url:"https://flowhub.org/integration/token/check?format=json&t="+e}).done(e=>{if(!e.data)return RED.notify("Check failed: "+e.msg,{type:"error",id:"FlowHubTokenCheck",timeout:2e3});RED.notify("FlowHub token is good!",{type:"success",id:"FlowHubTokenCheck",timeout:2e3}),$("#flowhubpush-check-token-result-content").find(".user").attr("href","mailto:"+e.data.email).html(e.data.name),$("#flowhubpush-check-token-result-content").find(".email").html(e.data.email),$("#flowhubpush-check-token-result-content").find(".repo").attr("href",e.data.repo_url).html(e.data.repo),$("#flowhubpush-check-token-result-content").find(".permission").html(e.data.permission),$("#flowhubpush-check-token-result-content").find(".branch").html(e.data.branch),$("#flowhubpush-check-token-result-content").fadeIn(300)}).fail(e=>{RED.notify("Check failed: "+e.msg,{type:"error",id:"FlowHubTokenCheck",timeout:2e3})})})}var entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},descMap={z:"Flow Tab Id",g:"Group Id",d:"Disabled"},setOldToNewForNode=(e,t,o)=>{e[t]=o,e.dirty=!0,RED.nodes.dirty(!0),RED.view.redraw()},defaultRevertHandler=(e,t,o)=>{e=RED.nodes.node(e)||RED.nodes.junction(e);e&&setOldToNewForNode(e,t,o)},revertableAttributes={},revertableAttributesNames=(["x","y","template","name","info","func","label","tooltip","timeout","repeat"].forEach(function(e){revertableAttributes[e]=defaultRevertHandler}),Object.keys(revertableAttributes));function attrDesc(e){return descMap[e]?" <i style='font-size: 80%;'>("+descMap[e]+")</i>":""}function clickBaitDiff(){$("th.revertable").on("click",e=>{e.preventDefault();var t,o=$($(e.target).parent()).data("attr");confirm('Really revert changes to attribute "'+o+'"?')&&(t=revertableAttributes[o])&&t($($(e.target).parent()).data("id"),o,JSON.parse(atob($($(e.target).parent()).data("oldval"))))})}function createDiff(r,s){var c=[],f=[];try{if(Object.keys(s).forEach(function(e){var t;Object.keys(r).indexOf(e)<0&&(t="object"==typeof s[e]?JSON.stringify(s[e]):s[e],c.push("<tr class='dv-removed'><th>"+e+attrDesc(e)+"</th><td><i>MISSING</i></td><td><code>"+escapeHtml(t)+"</code></td></tr>"),f.push(e))}),Object.keys(r).forEach(function(e){var t;Object.keys(s).indexOf(e)<0&&(t="object"==typeof r[e]?JSON.stringify(r[e]):r[e],c.push("<tr class='dv-added'><th>"+e+attrDesc(e)+"</th><td><code>"+escapeHtml(t)+"</code></td><td><i>ADDED</i></td></tr>"),f.push(e))}),Object.keys(r).forEach(function(i){if(-1<Object.keys(s).indexOf(i))if(JSON.stringify(r[i])!==JSON.stringify(s[i]))try{let o=null,t=void 0;f.push(i);try{t=Diff.diffLines(s[i],r[i])}catch(e){t=Diff.diffLines(JSON.stringify(s[i],void 0,1),JSON.stringify(r[i],void 0,1))}let n=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),n.appendChild(o)});var a=-1<revertableAttributesNames.indexOf(i)?" revertable":"",e=document.createElement("tr");e.setAttribute("class","dv-differ"),e.setAttribute("data-id",r.id),e.setAttribute("data-attr",i);try{e.setAttribute("data-oldval",btoa(JSON.stringify(s[i])))}catch(e){a=""}var d,l=document.createElement("th");l.setAttribute("class",a),l.appendChild(document.createTextNode(i)),descMap[i]&&((d=document.createElement("i")).style["font-size"]="80%",d.appendChild(document.createTextNode("("+descMap[i]+")")),l.appendChild(d)),e.append(l),(l=document.createElement("td")).setAttribute("colspan","2"),l.append(n),e.append(l),c.push(e.outerHTML)}catch(e){console.log("--Exceeption",e),c.push("<tr><th class='dv-error'>"+i+" CAUSED EXCEP</th><td><code>"+escapeHtml(r[i])+"</code></td><td><code>"+escapeHtml(s[i])+"</code></td></tr>")}else c.push("<tr><th>"+i+"</th><td><code>"+escapeHtml(r[i])+"</code></td><td><code>"+escapeHtml(s[i])+"</code></td></tr>")}),0==f.length){let o=null;var e="OBJ",t=Diff.diffJson(s,r);let n=document.createDocumentFragment();t.forEach(e=>{var t=e.added?"green":e.removed?"red":"#040506";(o=document.createElement("pre")).setAttribute("class","dv-pre-elem"),o.style.color=t,o.appendChild(document.createTextNode(e.value)),o.appendChild(document.createElement("br")),n.appendChild(o)});var i,a=document.createElement("tr"),d=(a.setAttribute("class","dv-differ"),document.createElement("th"));return d.appendChild(document.createTextNode(e)),descMap[e]&&((i=document.createElement("i")).style["font-size"]="80%",i.appendChild(document.createTextNode("("+descMap[e]+")")),d.appendChild(i)),a.append(d),(d=document.createElement("td")).setAttribute("colspan","2"),d.append(n),a.append(d),{html:a.outerHTML,icon:"fa-question"}}}catch(e){console.log("Exception",e)}var o=["x","y","w","h","g"];return{html:c.join(""),icon:0==f.filter(e=>o.indexOf(e)<0).length?"fa-eye":"fa-pencil"}}function getInstalledNodeDetails(e){$.ajax({url:"nodes",headers:{Accept:"application/json"},success:e,error:()=>{e(["error"])}})}function doTokenCheck(e,t){$.ajax({url:"FlowHubTokenCheck",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({cfgnode:e}),success:function(e){t(e)},error:function(e,t,o){RED.notify("Check failed: "+t,{type:"error",id:"FlowHubTokenCheck",timeout:2e3})}})}function doPushSubmission(e,t,o,n){var i=RED.workspaces.active();let a=e.map(e=>e.type);n=n.filter(e=>-1<a.indexOf(e.types[0])),$.ajax({url:"FlowHubPush",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:i,flowdata:e||{},flowlabel:RED.nodes.workspace(i).label,cfgnode:t,svgdata:o,nodedetails:n}),success:function(e){RED.notify("Submission triggered",{type:"warning",id:"FlowHubPush",timeout:2e3}),obtainFhbToken(obtainConfigNode(),e=>{""!==e&&(e=e&&"?t="+tokenToUrl(e)),$("#flowhubpush-view-flow-link").attr("href","https://flowhub.org/f/"+i+e).show()})},error:function(e,t,o){RED.notify("Submission failed: "+t,{type:"error",id:"FlowHubPush",timeout:2e3}),console.log(t,o)}})}function getFlowDataFromCurrentWorkspace(e){var e=e||RED.workspaces.active(),t=RED.nodes.groups(e),e=(t=(t=t.concat(RED.nodes.junctions(e))).concat(RED.nodes.filterNodes({z:e})),RED.nodes.eachConfig(function(e){e.z===RED.workspaces.active()&&!1===e._def.hasUsers&&t.push(e)}),RED.nodes.workspace(e)||RED.nodes.subflow(e));return t.unshift(e),RED.nodes.createExportableNodeSet(t)}function iframeRemoveHighlight(){document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({msg:"removehighlight"},"*")}function iframeHighlightItem(e){iframeRemoveHighlight(),document.getElementById("flowhubdiff-svgimageiframe").contentWindow.postMessage({item:{label:e.label,icon:e.icon,class:e.class,sublabel:e.sublabel,objid:e.objid},msg:"highlightitem"},"*")}function iframeHasBeenLoaded(e){let t=$(e).data("flowid");var o=getFlowDataFromCurrentWorkspace(t);setTimeout(()=>{e.contentWindow&&e.contentWindow.postMessage({nodes:o,msg:"renderlocalflow",flowid:t||RED.workspaces.active()},"*")},345)}function doComparison(e,t){var n=RED.workspaces.active();if(RED.nodes.workspace(n))RED.notify("Flow Comparison Triggered",{type:"warning",id:"FlowHubDiff",timeout:2e3}),$.ajax({url:"FlowHubDiff",type:"POST",contentType:"application/json; charset=utf-8",data:JSON.stringify({flowid:n,flowhub:"submission from ",flowdata:e||{},flowlabel:RED.nodes.workspace(n).label,cfgnode:t}),success:function(t){var e,d=[],l={};if("failed"==t.status){RED.notify(t.msg||"This does not seem to be a FlowHub flow id: "+n,{type:"error",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else if(t.revision&&""!=t.revision&&(e=ensureYourConfigNodeExists()).flowrevisions&&e.flowrevisions[t.flowid]&&e.flowrevisions[t.flowid].substr(0,8)!=t.revision.substr(0,8)&&RED.notify(`WARNING: Revision mismatch: Local: ${e.flowrevisions[t.flowid].substr(0,8)}, Remote: `+t.revision.substr(0,8),{type:"warning",timeout:4e3}),obtainFhbToken(obtainConfigNode(),e=>{(""!==e&&e?$("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+t.flowid+"?t="+tokenToUrl(e)):$("#flowhubdiff-view-flow-link").attr("href","https://flowhub.org/f/"+t.flowid)).show()}),t.changes.forEach(function(e){var t,o,n,i,a=e.id;"deleted"==e.type?(l[a]={label:e.oldObj.name||e.oldObj.type,icon:"fa fa-trash",class:"",diffcontent:createDiff({},e.oldObj).html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0,objid:a},d.push(l[a])):"added"==e.type?(l[a]={objid:a,label:e.newObj.name||e.newObj.type,icon:"fa fa-plus-square",class:"",diffcontent:createDiff(e.newObj,{}).html,sublabel:e.newObj.type,selected:!1,checkbox:!1,children:void 0},d.push(l[a])):"tab"==e.oldObj.type||"group"==e.oldObj.type||"junction"==e.oldObj.type?(i=createDiff(e.newObj,e.oldObj),l[a]={objid:a,label:e.oldObj.name||e.oldObj.type,icon:"fa "+i.icon,class:"",diffcontent:i.html,sublabel:e.type+" - "+e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(l[a])):(t=RED.nodes.node(a))?((o=RED.nodes.getType(t.type))&&(n=("function"==typeof(n=o.label)?n.call(t):n)||""),o&&n||(n=t.type),i=createDiff(e.newObj,e.oldObj),l[t.id]={node:t,objid:a,label:n,icon:"fa "+i.icon,class:"",diffcontent:i.html,sublabel:e.oldObj.type,selected:!1,checkbox:!1,children:void 0},d.push(l[t.id])):console.log("Node ignore, Type: "+e.type,e)}),t.ifurl&&$("#node-input-flowhubdiff-svgcontainer").html('<iframe id="flowhubdiff-svgimageiframe" width="100%" height="100%" src="'+t.ifurl+'" onload="window.iframeHasBeenLoaded(this)" style="border: none; min-height: 300px;" data-flowid="'+n+'"></iframe>'),0==d.length){RED.notify("No Flow Changes",{type:"warning",timeout:2e3});try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}else{try{$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){$("#node-input-flowhubdiff-target-container-div").css({width:"100%",height:"200px"}).treeList({multi:!1}).on("treelistitemmouseover",function(e,t){t.objid&&iframeHighlightItem(t)}).on("treelistitemmouseout",function(e,t){}).on("treelistselect",function(e,t){t.objid&&(RED.view.reveal(t.objid,!0),RED.view.redraw()),t.diffcontent?($("#node-input-flowhubdiff-diffcontainer").html(t.diffcontent),clickBaitDiff()):$("#node-input-flowhubdiff-diffcontainer").html("")}).on("treelistconfirm",function(e,t){var o;t.objid&&(o=t.objid,setTimeout(()=>{var e=RED.nodes.node(o);e&&(RED.view.reveal(e.id),RED.view.select(e.id),RED.editor.edit(e)),o==RED.workspaces.active()&&RED.workspaces.edit()},50))}),$("#node-input-flowhubdiff-target-filter").show();var o=$("#node-input-flowhubdiff-target-filter").searchBox({style:"compact",delay:300,change:function(){var e,t=$(this).val().trim().toLowerCase();""===t?($("#node-input-flowhubdiff-target-container-div").treeList("filter",null),o.searchBox("count","")):(e=$("#node-input-flowhubdiff-target-container-div").treeList("filter",function(e){return-1<e.label.toLowerCase().indexOf(t)||-1<e.node.type.toLowerCase().indexOf(t)}),o.searchBox("count",e+" / "+$("#node-input-flowhubdiff-target-container-div").treeList("data").length))}})}$("#node-input-flowhubdiff-target-container-div").treeList("data",d.sort((e,t)=>e.icon==t.icon?e.label.toLowerCase()>t.label.toLowerCase():e.icon>t.icon))}},error:function(e,t,o){$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}404==e.status?RED.notify("Node has not yet been deployed, please deploy.","error"):405==e.status?RED.notify("Not Allowed.","error"):500==e.status?RED.notify("Not Allowed - 500.","error"):0==e.status?RED.notify("Not Allowed - 0.","error"):RED.notify("Not Allowed - Unexpected.","error")}});else{RED.notify("Comparing subflows not supported.",{type:"error",id:"FlowHubDiff",timeout:2e3}),$("#flowhubdiff-view-flow-link").hide();try{$("#node-input-flowhubdiff-diffcontainer").html(""),$("#node-input-flowhubdiff-svgcontainer").html(""),$("#node-input-flowhubdiff-target-container-div").treeList("empty")}catch(e){}}}function addTokenToList(e,t){$("#node-input-flowhubpush-token-list").append(`<tr class='${e}' data-type='${t.type}' data-name='${t.name}' data-token='${t.val}'>`+`<td><a class='flowhubpush-token-select-link' href='#'>${t.name}</a></td>`+"<td><a class='flowhubpush-token-select-link button' href='#'>Use</a></td><td><a class='flowhubpush-token-remove-link button' href='#'>Remove</a></td><td><a class='flowhubpush-token-hide-link button' href='#'>Hide</a></td><td><a class='flowhubpush-token-check-link button' href='#'>Check</a></td><td><a class='flowhubpush-token-copy-link button' href='#'>Copy</a></td></tr>")}function addEventHandlersToTokenList(n){$(".flowhubpush-token-copy-link").off("click"),$(".flowhubpush-token-copy-link").on("click",e=>{RED.clipboard.copyText($($(e.target).closest("tr")).data("token"))&&RED.notify("Token copied","success")}),$(".flowhubpush-token-check-link").off("click"),$(".flowhubpush-token-check-link").on("click",e=>{checkToken($($(e.target).closest("tr")).data("token"))}),$(".flowhubpush-token-hide-link").off("click"),$(".flowhubpush-token-hide-link").on("click",e=>{e&&e.preventDefault();let t=$($(e.target).closest("tr"));$($(e.target).closest("tr")).fadeOut(300,()=>{RED.notify("Hidden token <b>"+t.data("name")+"</b>, will reappear with reload","success")})}),$(".flowhubpush-token-remove-link").off("click"),$(".flowhubpush-token-remove-link").on("click",e=>{e&&e.preventDefault();let t=$($(e.target).closest("tr")),o=n;confirm(`Remove token "${t.data("name")}"?`)&&$($(e.target).closest("tr")).fadeOut(300,()=>{o.tokens=o.tokens.filter(e=>!(e.name==t.data("name")&&e.val==t.data("token")&&e.type==t.data("type"))),RED.nodes.dirty(!0),RED.notify("Removed token <b>"+t.data("name")+"</b>.","success")})}),$(".flowhubpush-token-select-link").off("click"),$(".flowhubpush-token-select-link").on("click",e=>{e&&e.preventDefault();e=$($(e.target).closest("tr"));$(".flowhub-token-selected").removeClass("flowhub-token-selected"),$("#node-input-flowhubpush-apiToken").typedInput("value",e.data("token")),$("#node-input-flowhubpush-apiToken").typedInput("type",e.data("type")),e.addClass("flowhub-token-selected"),RED.notify("Using token <b>"+e.data("name")+"</b>","success")})}window.iframeHasBeenLoaded=iframeHasBeenLoaded;
-
-   function nr_intro_generate_svg_4_0(n){return t=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),t)}catch(e){var r="Error Generating SVG: "+JSON.stringify(e);n.notify(r,{type:"error"}),t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+r+"</text></svg>")}}}function nr_intro_generate_svg_3_1(n){return t=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),t)}catch(e){var r="Error Generating SVG: "+JSON.stringify(e);n.notify(r,{type:"error"}),t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+r+"</text></svg>")}}}function nr_intro_generate_svg_3_0(n){return t=>{try{handleSvgObject($($("svg")[0]),t)}catch(e){var r="Error Generating SVG: "+JSON.stringify(e);n.notify(r,{type:"error"}),t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+r+"</text></svg>")}}}function handleSvgObject(o,t){o.find("g.red-ui-flow-group-selected").removeClass("red-ui-flow-group-selected"),o.find("rect.red-ui-flow-group-outline-select").css("stroke-opacity","0"),o.find(".red-ui-flow-node-selected").removeClass("red-ui-flow-node-selected"),o.find(".red-ui-flow-link-selected").removeClass("red-ui-flow-link-selected");var e=o.clone(),r=(e.find("foreignObject").remove(),e.find("svg.__screenshot").remove(),'width="'+o.attr("width")+'" height="'+o.attr("height")+'"'),n=RED.settings.version.split("."),s=parseInt(n[0]),n=parseInt(n[1]);if(3==s&&1==n||4==s&&0==n){var i=$($($(o).children("g")[0]).children("g")[0]).children("g"),a={x:8e3,y:8e3,w:-1,h:-1};for(let e=1;e<i.length;e++){var l=i[e].getBBox();0==l.width&&0==l.height||(a.x=Math.min(l.x,a.x),a.y=Math.min(l.y,a.y),a.w=Math.max(l.width,a.w),a.h=Math.max(l.height,a.h))}r+=` viewBox='${a.x} ${a.y} ${a.w} ${a.h}'`}function g(e,t){for(var r=0;r<e.length;r++){var s=e.item(r),i=t[r];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(e){s.setAttribute(e,$(i).attr(e)||$(i).css(e))}),["fill","stroke"].forEach(function(e){var t,r,n=(t=$(i).attr(e)||$(i).css(e))&&null!==t&&"none"!=t?(r=t.match(/^#(.)(.)(.)$/))?"#"+r[1]+r[1]+r[2]+r[2]+r[3]+r[3]:(r=t.match(/^#......$/))?t:null===(r=t.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(n=t.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2),opa:n[4]}:(console.log("Screenshot node: returned unknown color: "+t),t):"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2):"none";"object"==typeof n?(s.setAttribute(e+"-opacity",n.opa),s.setAttribute(e,n.clr)):s.setAttribute(e,n)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var s='<?xml version="1.0" standalone="no"?>\r\n<svg '+r+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',n=e.html(),c=(new DOMParser).parseFromString(s+n+"\r\n</svg>","image/svg+xml"),h=t=>(["g","rect","line","path","circle","image","text"].forEach(e=>{$(t.getElementsByTagName(e)).each((e,t)=>{t.setAttribute("class",""),t.setAttribute("id","")})}),t),f=(["g","rect","line","path","circle","image"].forEach(function(e){g(c.getElementsByTagName(e),o.find(e))}),["text"].forEach(function(e){g(c.getElementsByTagName(e),o.find(e));for(var t=c.getElementsByTagName(e),r=o.find(e),n=0;n<t.length;n++){var s=t.item(n),i=r[n];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(e){s.setAttribute(e,$(i).attr(e)||$(i).css(e))})}}),c.getElementsByTagName("image")),v={},d=(r,n,s)=>{var i=r.getAttribute("xlink:href")||r.getAttribute("href");if(!i)return s(n-1);var o=i.substr(-4,4).toLowerCase(),a={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(v[i])return r.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+v[i]),s(n-1);switch(o){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onload=function(e){var t=l.response;t&&(t=(e=>{for(var t="",r=new Uint8Array(e),n=r.byteLength,s=0;s<n;s++)t+=String.fromCharCode(r[s]);return window.btoa(t)})(t),v[i]=t,r.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+t)),s(n-1)},l.send(null);break;case".svg":$.get(i,function(e){var t=new XMLSerializer,t=btoa(t.serializeToString(e));v[i]=t,r.setAttribute("xlink:href","data:image/svg+xml;base64,"+t),s(n-1)})}},w=e=>{e<0?t((new XMLSerializer).serializeToString(h(c))):d(f.item(e),e,w)};0<f.length?d(f.item(f.length-1),f.length-1,w):t((new XMLSerializer).serializeToString(h(c)))}function svgGeneratorFunctionForVersion(e){var r,t=e.settings.version.split("."),n=t[0],t=t[1];if("3"==n){if("0"==t)return nr_intro_generate_svg_3_0(e);if("1"==t)return nr_intro_generate_svg_3_1(e)}return"4"==n&&"0"==t?nr_intro_generate_svg_4_0(e):(r=e,e=>{var t="Node-RED version ("+r.settings.version+") not supported";r.notify(t,{type:"error"}),e&&e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+t+"</text></svg>")})}
-
+   function nr_intro_generate_svg_4_0(n){return t=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),t)}catch(e){var r="Error Generating SVG: "+JSON.stringify(e);n.notify(r,{type:"error"}),t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+r+"</text></svg>")}}}function nr_intro_generate_svg_3_1(n){return t=>{try{handleSvgObject($($("#red-ui-workspace-chart").find("svg")[0]),t)}catch(e){var r="Error Generating SVG: "+JSON.stringify(e);n.notify(r,{type:"error"}),t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+r+"</text></svg>")}}}function nr_intro_generate_svg_3_0(n){return t=>{try{handleSvgObject($($("svg")[0]),t)}catch(e){var r="Error Generating SVG: "+JSON.stringify(e);n.notify(r,{type:"error"}),t('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+r+"</text></svg>")}}}function handleSvgObject(o,e){o.find("g.red-ui-flow-group-selected").removeClass("red-ui-flow-group-selected"),o.find("rect.red-ui-flow-group-outline-select").css("stroke-opacity","0"),o.find(".red-ui-flow-node-selected").removeClass("red-ui-flow-node-selected"),o.find(".red-ui-flow-link-selected").removeClass("red-ui-flow-link-selected");var t=o.clone(),r=(t.find("foreignObject").remove(),t.find(".mindmap-image-preview-element").remove(),t.find("svg.__screenshot").remove(),'width="'+o.attr("width")+'" height="'+o.attr("height")+'"'),n=RED.settings.version.split("."),s=parseInt(n[0]),n=parseInt(n[1]);if(3==s&&1==n||4==s&&0==n){var i=$($($(o).children("g")[0]).children("g")[0]).children("g"),a={x:8e3,y:8e3,w:-1,h:-1};for(let e=1;e<i.length;e++){var l=i[e].getBBox();0==l.width&&0==l.height||(a.x=Math.min(l.x,a.x),a.y=Math.min(l.y,a.y),a.w=Math.max(l.width,a.w),a.h=Math.max(l.height,a.h))}r+=` viewBox='${a.x} ${a.y} ${a.w} ${a.h}'`}function g(e,t){for(var r=0;r<e.length;r++){var s=e.item(r),i=t[r];["stroke-width","fill-opacity","stroke-opacity","opacity","stroke-dasharray"].forEach(function(e){s.setAttribute(e,$(i).attr(e)||$(i).css(e))}),["fill","stroke"].forEach(function(e){var t,r,n=(t=$(i).attr(e)||$(i).css(e))&&null!==t&&"none"!=t?(r=t.match(/^#(.)(.)(.)$/))?"#"+r[1]+r[1]+r[2]+r[2]+r[3]+r[3]:(r=t.match(/^#......$/))?t:null===(r=t.match(/^rgb\(([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?(n=t.match(/^rgba\(([0-9]+),\s+([0-9]+),\s+([0-9]+),\s+([0-9]+)/))?{clr:"#"+("0"+parseInt(n[1],10).toString(16)).slice(-2)+("0"+parseInt(n[2],10).toString(16)).slice(-2)+("0"+parseInt(n[3],10).toString(16)).slice(-2),opa:n[4]}:(console.log("Screenshot node: returned unknown color: "+t),t):"#"+("0"+parseInt(r[1],10).toString(16)).slice(-2)+("0"+parseInt(r[2],10).toString(16)).slice(-2)+("0"+parseInt(r[3],10).toString(16)).slice(-2):"none";"object"==typeof n?(s.setAttribute(e+"-opacity",n.opa),s.setAttribute(e,n.clr)):s.setAttribute(e,n)}),$(i).hasClass("hide")&&("g"==s.tagName&&s.setAttribute("opacity","0"),s.setAttribute("visibility","hidden"))}}var s='<?xml version="1.0" standalone="no"?>\r\n<svg '+r+' pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" class="__screenshot" xmlns:xlink="http://www.w3.org/1999/xlink">\r\n',n=t.html(),c=(new DOMParser).parseFromString(s+n+"\r\n</svg>","image/svg+xml"),h=t=>(["g","rect","line","path","circle","image","text"].forEach(e=>{$(t.getElementsByTagName(e)).each((e,t)=>{t.setAttribute("class",""),t.setAttribute("id","")})}),t),f=(["g","rect","line","path","circle","image"].forEach(function(e){g(c.getElementsByTagName(e),o.find(e))}),["text"].forEach(function(e){g(c.getElementsByTagName(e),o.find(e));for(var t=c.getElementsByTagName(e),r=o.find(e),n=0;n<t.length;n++){var s=t.item(n),i=r[n];["font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","text-anchor","dominant-baseline"].forEach(function(e){s.setAttribute(e,$(i).attr(e)||$(i).css(e))})}}),c.getElementsByTagName("image")),v={},d=(r,n,s)=>{var i=r.getAttribute("xlink:href")||r.getAttribute("href");if(!i)return s(n-1);var o=i.substr(-4,4).toLowerCase(),a={".jpg":"jpeg",jpeg:"jpeg",".png":"png",".svg":"svg+xml"};if(v[i])return r.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+v[i]),s(n-1);switch(o){case".jpg":case"jpeg":case".png":var l=new XMLHttpRequest;l.open("GET",i,!0),l.responseType="arraybuffer";l.onerror=function(e){s(n-1)},l.onload=function(e){var t=l.response;t&&(t=(e=>{for(var t="",r=new Uint8Array(e),n=r.byteLength,s=0;s<n;s++)t+=String.fromCharCode(r[s]);return window.btoa(t)})(t),v[i]=t,r.setAttribute("xlink:href","data:image/"+a[o]+";base64,"+t)),s(n-1)},l.send(null);break;case".svg":$.get(i,function(e){var t=new XMLSerializer,t=btoa(t.serializeToString(e));v[i]=t,r.setAttribute("xlink:href","data:image/svg+xml;base64,"+t),s(n-1)})}},w=t=>{if(t<0)e((new XMLSerializer).serializeToString(h(c)));else try{d(f.item(t),t,w)}catch(e){w(t-1)}};0<f.length?d(f.item(f.length-1),f.length-1,w):e((new XMLSerializer).serializeToString(h(c)))}function svgGeneratorFunctionForVersion(e){var r,t=e.settings.version.split("."),n=t[0],t=t[1];if("3"==n){if("0"==t)return nr_intro_generate_svg_3_0(e);if("1"==t)return nr_intro_generate_svg_3_1(e)}return"4"==n&&"0"==t?nr_intro_generate_svg_4_0(e):(r=e,e=>{var t="Node-RED version ("+r.settings.version+") not supported";r.notify(t,{type:"error"}),e&&e('<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg width="1000" height="1000" viewBox="0 0 1000 1000" pointer-events="all" style="cursor: crosshair; touch-action: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.small { font: bold 20px sans-serif; fill: red;}</style><text x="10" y="30" class="small">'+t+"</text></svg>")})}
+   
    function ensureYourConfigNodeExists() {
       // If we had found it previously, check if it has been deleted by the user behind our back
       if (globalYourConfigNode !== null) {
@@ -2901,8 +2943,8 @@
       if (globalYourConfigNode === null) {
          var configNodes = [];
          RED.nodes.eachConfig(function(configNode) {
-             if (configNode.type === 'FlowHubCfg') {
-                 configNodes.push(configNode);
+             if (configNode.type === 'FlowHubCfg') { 
+                 configNodes.push(configNode); 
              }
          });
 
@@ -2921,12 +2963,12 @@
       if (globalYourConfigNode === null) {
 
          let typ = RED.nodes.getType("FlowHubCfg");
-
+         
          globalYourConfigNode = {
             id: RED.nodes.id(), // on the server side, this is called RED.util.generateId()
             _def: typ,
             type: "FlowHubCfg",
-            hasUsers: false,
+            hasUsers: false, 
             users: [],
             name: "FlowHubCfg",
             label: function() { return this.name || "FlowHubCfg"},
@@ -2950,8 +2992,8 @@
 
          // Make sure the "Deploy" button becomes active
          RED.nodes.dirty(true);
-      }
-
+      }    
+      
       return globalYourConfigNode
    }
 
@@ -2963,7 +3005,7 @@
 
       // The html content of the sidebar has been specified below as a data-template, from where it can be loaded:
       var content = $($('script[type="text/x-red"][data-template-name="FlowHubDiff"]').i18n().html());
-
+    
       // Add a "Your sidebar" tabsheet to the right sidebar panel, in which this sidebar panel can be displayed
       // --> more details: https://nodered.org/docs/api/ui/sidebar/
       RED.sidebar.addTab({
@@ -2975,7 +3017,7 @@
          iconClass: "fa fa-window-minimize",
          visible: true
       });
-
+      
       let cfgNode = ensureYourConfigNodeExists();
 
       /* for older config nodes, add new parameters */
@@ -3003,28 +3045,28 @@
                $('#' + tab.id).show();
             }
       });
-
-      // Add first tab, pull
+      
+      // Add pull tab
       tabs.addTab({
             id: 'func-flowhub-tab-pull',
             iconClass: 'fa fa-arrow-down',
             label: 'Pull'
       });
 
-      // Add first tab, compare
+      // Add compare tab
       tabs.addTab({
             id: 'func-flowhub-tab-compare',
             iconClass: 'fa fa-clone',
             label: 'Compare'
       });
-
-      // Add tab, push
+      
+      // Add push tab
       tabs.addTab({
             id: 'func-flowhub-tab-push',
             iconClass: 'fa fa-arrow-up',
             label: 'Push'
       });
-
+      
       tabs.activateTab("func-flowhub-tab-pull");
 
       $('#node-input-flowhubdiff-compare-btn').on('click', (e) => {
@@ -3032,6 +3074,8 @@
          ensureYourConfigNodeExists();
          doComparison( getFlowDataFromCurrentWorkspace(), globalYourConfigNode)
       })
+
+      $('#node-input-flowhubdiff-next-change-btn').on( 'click', showNextChangeButtonPressed)
 
       $('#node-input-flowhubpush-push-btn').on('click', (e) => {
          if ( e ) { e.preventDefault(); }
@@ -3072,7 +3116,7 @@
 
       $("#node-input-flowhubpush-apiToken").on('change', () => {
          ensureYourConfigNodeExists();
-
+         
          var val = $("#node-input-flowhubpush-apiToken").typedInput('value');
          var typ = $("#node-input-flowhubpush-apiToken").typedInput('type');
 
@@ -3092,7 +3136,7 @@
          ensureYourConfigNodeExists();
 
          let val = $('#node-input-flowhubpush-email').val();
-         if ( val != globalYourConfigNode.email ) {
+         if ( val != globalYourConfigNode.email ) { 
             globalYourConfigNode.email = val;
             RED.nodes.dirty(true);
          }
@@ -3104,7 +3148,7 @@
          ensureYourConfigNodeExists();
 
          let val = $('#node-input-flowhubpush-fullname').val();
-         if ( val != globalYourConfigNode.fullname ) {
+         if ( val != globalYourConfigNode.fullname ) { 
             globalYourConfigNode.fullname = val;
             RED.nodes.dirty(true);
          }
@@ -3116,7 +3160,7 @@
          ensureYourConfigNodeExists();
 
          let val = $('#node-input-flowhubpush-comment').val();
-         if ( val != globalYourConfigNode.pushcomment ) {
+         if ( val != globalYourConfigNode.pushcomment ) { 
             globalYourConfigNode.pushcomment = val;
             RED.nodes.dirty(true);
          }
@@ -3130,7 +3174,7 @@
           timeout: data.statusType == "error" ? 3000 : 2000
         });
 
-        /* update an existing revision of a flow, this happens after the
+        /* update an existing revision of a flow, this happens after the 
           flow was successfully submitted and updated */
         if ( data.flowid && data.flowrevision ) {
           let cfgNode = ensureYourConfigNodeExists();
@@ -3152,7 +3196,7 @@
          $('#flowhubpull-dialog-import-opt-sb-new').addClass('selected')
          $('#flowhubpull-dialog-import-opt-sb-current').removeClass('selected')
        }
-
+       
        $('#flowhubpull-dialog-import-opt-sb-current').on('click', (e) => {
          e.preventDefault();
 
@@ -3196,9 +3240,9 @@
               }
               $('#flowhubpull-sb-view-flow-link').attr(
                 'href', 'https://flowhub.org/f/' + item.flowid + token
-              ).show();
+              ).show();              
            })
-
+           
            $('#node-input-flowhubpull-sb-import-flow-but').prop('disabled',false)
          }
        }).on('treelistconfirm', function(event, item) {
@@ -3271,11 +3315,11 @@
           ensureYourConfigNodeExists();
 
           obtainFhbToken(globalYourConfigNode, (token) => {
-            flowHubPullUpdateFlows( (lst) => {
-              dirList.treeList('empty')
+            flowHubPullUpdateFlows( (lst) => { 
+              dirList.treeList('empty') 
               $('#flowhubpull-sb-view-flow-link').hide()
               setTimeout( () => {
-                dirList.treeList('data', lst)
+                dirList.treeList('data', lst) 
               },300)
             }, token);
           })
@@ -3287,12 +3331,12 @@
       })
 
       $('#node-input-flowhubpush-clear-token-btn').on('click', e => {
-        if ( e ) { e.preventDefault() }
+        if ( e ) { e.preventDefault() }      
         $('#node-input-flowhubpush-new-token-name-field').val("")
         $('#node-input-flowhubpush-new-token-field').val("")
         $('#node-input-flowhubpush-new-token-field').trigger('change')
       })
-
+      
       $('#node-input-flowhubpush-add-token-btn').on('click', e => {
         if ( e ) { e.preventDefault() }
 
@@ -3371,20 +3415,28 @@
       $('#node-input-flowhubpull-flowrevision').on('change', () => {
         ensureYourConfigNodeExists();
         let val = $('#node-input-flowhubpull-flowrevision').val();
-
+        
         if (globalYourConfigNode.flowrevision != val ) {
           globalYourConfigNode.flowrevision = val
           RED.nodes.dirty(true);
         }
       })
-   };
 
+    RED.panels.create({
+        id: 'func-flowhub-tab-compare',
+        resize: (topSze,botSze) => {
+          $('#node-input-flowhubdiff-target-container-div').parent().css('height', `calc( ${topSze}px - 32vh)`)
+          $('#node-input-flowhubdiff-diffcontainer').parent().parent().css('height', botSze)
+        }
+    })
+   };
+   
    RED.events.on('runtime-state', initialiseConfigNodeOnce);
 })();
 </script>
 
 <style>
-.diff-viewer{overflow:scroll;background-color:#f4f4f4;border:1px solid #c4c4c4;height:80vh;padding:20px;max-width:90vw;border-radius:5px}.dv-differ{background-color:rgba(244,170,23,.476)!important}.dv-removed{background-color:#cbcb26!important}.dv-added{background-color:#56de78!important}.dv-error{background-color:#ff4b09!important}.dv-pre-elem{page-break-inside:avoid;font-family:monospace;max-width:100%;overflow:auto;display:block;word-wrap:break-word;margin:0!important}.flowhublogo{background-image:url("icons/@gregoriusrippenstein/node-red-contrib-flowhub/flowhublogo.svg");background-size:cover;background-repeat:no-repeat;background-position-x:center;background-position-y:top}th.revertable:after{content:" ⟲";color:"green"}.red-ui-tray-content #dialog-form{white-space:nowrap}.full-row .red-ui-typedInput-container{min-width:70%}.col input{min-width:100%}.sml-lbl{height:66px}.sml-lbl label{font-size:smaller;margin-bottom:0;display:block!important}.reg-lbl label{white-space:nowrap;margin-top:5px;height:0}.red-ui-editor .form-row label.full-lbl{white-space:normal;width:100%}.col{float:left;margin-right:5px;min-height:36px}.col .red-ui-typedInput-container{width:100%!important}.col-50{width:50%}.col-33{width:33%}.col-66{width:66%}.col-25{width:25%}.col-75{width:75%}.col-100 .red-ui-typedInput-container{width:70%!important}.col-100.no-label .red-ui-typedInput-container{width:100%!important}.txtarea{padding-bottom:26px}.txtarea label{vertical-align:top;margin-top:3px}.txtarea textarea{width:70%;margin-bottom:-28px!important}.btn-regular{margin-bottom:14px!important}.flowhub-token-selected{background-color:rgba(12,208,208,.709)}
+.flowhub-diff-viewer{overflow:scroll;max-width:90vw;padding-bottom:5px}.dv-differ{background-color:rgba(244,170,23,.476)!important}.dv-removed{background-color:#cbcb26!important}.dv-added{background-color:#56de78!important}.dv-error{background-color:#ff4b09!important}.dv-pre-elem{page-break-inside:avoid;font-family:monospace;max-width:100%;overflow:auto;display:block;word-wrap:break-word;margin:0!important}.flowhublogo{background-image:url("icons/@gregoriusrippenstein/node-red-contrib-flowhub/flowhublogo.svg");background-size:cover;background-repeat:no-repeat;background-position-x:center;background-position-y:top}th.revertable:after{content:" ⟲";color:"green"}.red-ui-tray-content #dialog-form{white-space:nowrap}.full-row .red-ui-typedInput-container{min-width:70%}.col input{min-width:100%}.sml-lbl{height:66px}.sml-lbl label{font-size:smaller;margin-bottom:0;display:block!important}.reg-lbl label{white-space:nowrap;margin-top:5px;height:0}.red-ui-editor .form-row label.full-lbl{white-space:normal;width:100%}.col{float:left;margin-right:5px;min-height:36px}.col .red-ui-typedInput-container{width:100%!important}.col-50{width:50%}.col-33{width:33%}.col-66{width:66%}.col-25{width:25%}.col-75{width:75%}.col-100 .red-ui-typedInput-container{width:70%!important}.col-100.no-label .red-ui-typedInput-container{width:100%!important}.txtarea{padding-bottom:26px}.txtarea label{vertical-align:top;margin-top:3px}.txtarea textarea{width:70%;margin-bottom:-28px!important}.btn-regular{margin-bottom:14px!important}.flowhub-token-selected{background-color:rgba(12,208,208,.709)}
 </style>
 
 <!-- The html for the right sidebar plugin screen -->
@@ -3394,41 +3446,8 @@
 </div>
 
 <!--func-flowhub-tabs-row-->
-<div id="func-flowhub-tabs-content" style="min-height: calc(100% - 95px);">
+<div id="func-flowhub-tabs-content">
 
-   <!--func-flowhub-tab-compare#-->
-   <div id="func-flowhub-tab-compare" style="display:none">
-      <div class="form-row">
-         <div class="col-100">
-
-            <div class="form-row" style="margin-left: 10px; margin-top: 30px;">
-               <button id="node-input-flowhubdiff-compare-btn"
-                                             class="red-ui-button"><i class="fa fa-balance-scale"></i> Compare Changes</button>
-               <a id="flowhubdiff-view-flow-link" style="color: blue; display: none; margin-left: 40px;" target="_blank"
-                  href="">Webiliser <i class="fa fa-external-link"></i></a>
-            </div>
-
-            <div class="form-row node-input-target-row node-input-target-list-row"
-               style="min-height: 100px; margin-left: 10px; margin-right: 15px;">
-               <div style="margin-right: 15px; margin-bottom: 5px; width: 35%; padding-left: 60%;">
-                  <input type="text" id="node-input-flowhubdiff-target-filter" style="display: none;">
-               </div>
-
-               <div id="node-input-flowhubdiff-target-container-div" style="min-height: 100px"></div>
-            </div>
-
-            <div class="form-row" style="min-height: 300px; margin-left: 10px; margin-right: 15px;">
-               <div id="node-input-flowhubdiff-svgcontainer"></div>
-            </div>
-
-            <div class="form-row" style="min-height: 100px; margin-left: 10px; margin-right: 15px;">
-               <div id="node-input-flowhubdiff-diffcontainer" class="diff-viewer"></div>
-            </div>
-
-         </div>
-      </div>
-      <!--form-row-->
-   </div>
 
    <!--func-flowhub-tab-pull#-->
    <div id="func-flowhub-tab-pull" style="display:none" style="min-height: calc(100% - 95px);">
@@ -3444,7 +3463,7 @@
             </div>
 
             <div class="form-row node-input-target-row node-input-target-list-row"
-               style="position: relative; min-height: 100px; height: 500px; margin-left: 10px; margin-right: 15px;">
+               style="position: relative; min-height: 100px; height: 500px; margin-left: 10px; margin-right: 15px; margin-top: 5px;">
                <div style="position: absolute; top: -30px; right: 0px;">
                   <input type="text" id="node-input-flowhubpull-sb-target-filter" placeholder="Name or Flow Id">
                </div>
@@ -3456,7 +3475,7 @@
                <label>
                  <span>Flow ID:</span>
                </label>
-              <input type="text"
+               <input type="text"
                disabled="disabled"
                id="node-input-flowhubpull-flowid"
                style="display:inline-block; width:40%; vertical-align:baseline;"
@@ -3468,7 +3487,7 @@
                 <span>Import to:</span>
               </label>
 
-              <span>
+               <span>
                  <a id="flowhubpull-dialog-import-opt-sb-current" class="red-ui-button toggle" href="#" data-i18n="clipboard.export.current">current flow tab</a>
                  <a id="flowhubpull-dialog-import-opt-sb-new" class="red-ui-button toggle" href="#" data-i18n="clipboard.import.newFlow">new flow tab</a>
               </span>
@@ -3490,6 +3509,41 @@
             <div class="form-row node-input-target-row node-input-target-list-row"
                style="position: relative; min-height: 100px; height: 300px; margin-left: 10px; margin-right: 15px;">
                <div id="node-input-flowhubpull-sb-duplication-container-div" style="min-height: 300px;"></div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!--func-flowhub-tab-compare#-->
+   <div id="func-flowhub-tab-compare" style="display:none; height: 87vh;">
+      <div>
+         <div style="margin-left: 10px; height: 5vh;">
+            <button id="node-input-flowhubdiff-compare-btn"
+               class="red-ui-button"><i class="fa fa-balance-scale"></i> Compare</button>
+            <button id="node-input-flowhubdiff-next-change-btn"
+               class="red-ui-button hide"><i class="fa fa-arrow-right"></i> Next Change</button>
+
+            <a id="flowhubdiff-view-flow-link" style="color: blue; display: none; margin-left: 40px;"
+               target="_blank" href="">Webiliser <i class="fa fa-external-link"></i></a>
+         </div>
+
+         <div style="margin-left: 10px; margin-right: 15px; height: 15vh; min-height: 5vh;">
+            <div style="margin-right: 15px; width: 35%; float: right; margin-top: -38px;">
+               <input type="text" id="node-input-flowhubdiff-target-filter" style="display: none;">
+            </div>
+
+            <div id="node-input-flowhubdiff-target-container-div"></div>
+         </div>
+
+         <div style="height: 25vh; margin-left: 10px; margin-right: 15px;">
+            <div id="node-input-flowhubdiff-svgcontainer"></div>
+         </div>
+      </div>
+
+      <div>
+         <div style="margin-left: 10px; overflow: hidden; display: flex; flex-direction: column; width: 97%; height: 47vh; margin-top: 10px;">
+            <div style="flex: 1 1 auto; overflow-y: auto;">
+               <div id="node-input-flowhubdiff-diffcontainer" class="flowhub-diff-viewer"></div>
             </div>
          </div>
       </div>
@@ -3524,7 +3578,7 @@
             </div>
 
             <div class="form-row" style="margin-left: 10px;">
-               <hr/>
+               <hr />
             </div>
 
             <div class="form-row" style="margin-left: 10px;">
@@ -3554,8 +3608,10 @@
 
             <div class="form-row" style="margin-left: 10px;">
                Check out the instructions for generating your own <a style="color: blue;" target="_blank"
-                  href="https://flowhub.org/integration">FlowHub.org token <i class='fa fa-external-link'></i></a>. You will then be
-               able to commit your Node-RED flows directly to your own GitHub repository - public or private. You will also be able
+                  href="https://flowhub.org/integration">FlowHub.org token <i class='fa fa-external-link'></i></a>. You
+               will then be
+               able to commit your Node-RED flows directly to your own GitHub repository - public or private. You will
+               also be able
                to view those flows at FlowHub.org using the "View Flow" links.
             </div>
 
@@ -3579,7 +3635,7 @@
 
             <div class="form-row" style="margin-left: 10px;">
                <table border=0 id="node-input-flowhubpush-token-list" style="margin-left: 10px;">
-              </table>
+               </table>
             </div>
 
          </div>
@@ -3616,7 +3672,7 @@
                 if ( (itm.type == "text/uri-list" || itm.type == "text/x-moz-url") && itm.kind == "string" ) {
                     waitingOnNode++;
                     let yPos = 40 * waitingOnNode
-
+                    
                     itm.getAsString((url) => {
                         let urlAndTitle = url.split("\n")
 
@@ -3740,7 +3796,7 @@
                     waitingOnNode++
 
                     let yPos = waitingOnNode * 40
-
+                    
                     event.originalEvent.dataTransfer.items[idx].getAsString( content => {
                         nodesToBeImported.push({
                             "id": RED.nodes.id(),
@@ -3792,7 +3848,36 @@
                 setTimeout(defineCustomDropHandler, 300)
             }
         }
+        setTimeout(defineCustomDropHandler, 300)
 
+        // handle a generate paste in the browser window. But this only
+// works outside of the workspace area. But this is only a prototype.
+$(window).on('paste', (event) => {
+    try {
+        window.pasteEvent = event
+        
+        // there too many edge cases so explicitly on those elements that are 
+        // safe are selected here.
+        if (!event.target || !(event.target.id == "red-ui-header" || 
+                               event.target.id == "red-ui-workspace-chart" )) {
+            return
+        }
+
+        let pasteText = event.originalEvent.clipboardData.getData('text')
+        let data = JSON.parse(pasteText)
+
+        if (Array.isArray(data)) {
+            try {
+                RED.view.importNodes(data, {
+                    generateIds: false,
+                    addFlow: false,
+                    touchImport: false,
+                    generateDefaultNames: false
+                })
+            } catch (ex) { RED.notify( `Error: ${ex.message}`, { type: "warning"}) }
+        }
+    } catch (ex) { RED.notify(`Error: ${ex.message}`, { type: "warning" }) }
+})
 
     };
 

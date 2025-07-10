@@ -29,6 +29,127 @@
     "@gorenje/node-red-mindmap/thought": {},
     "@gorenje/node-red-mindmap/topic": {},
     "@gorenje/node-red-mindmap/treasure": {},
+    "@gregoriusrippenstein/erlang-red-supervisor-node/erleventhandler": {
+        "erleventhandler": {
+            "label": {
+                "statusset": "Status Set"
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
+    "@gregoriusrippenstein/erlang-red-supervisor-node/erlgenserver": {
+        "erlgenserver": {
+            "label": {
+                "statusset": "Status Set",
+                "tab": {
+                    "handler_config": "Module",
+                    "statem_config": "Options"
+                }
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
+    "@gregoriusrippenstein/erlang-red-supervisor-node/erlmodule": {
+        "erlmodule": {
+            "label": {
+                "module_name": "Module Name",
+                "name": "Name",
+                "statusset": "Status Set",
+                "tab": {
+                    "code": "Code",
+                    "config": "Settings"
+                }
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
+    "@gregoriusrippenstein/erlang-red-supervisor-node/erlstatemachine": {
+        "erlstatemachine": {
+            "label": {
+                "emit-on-state-change": "Only emit output message on state change",
+                "statusset": "Status Set",
+                "tab": {
+                    "handler_config": "Module",
+                    "statem_config": "Options"
+                }
+            },
+            "status": {
+                "timeout": "No more time to waiting",
+                "waiting": "Waiting for Godot"
+            }
+        }
+    },
+    "@gregoriusrippenstein/erlang-red-supervisor-node/erlsupervisor": {
+        "erlsupervisor": {
+            "auto_shutdown": {
+                "all_significant": "All Significant",
+                "any_significant": "Any Significant",
+                "never": "Never"
+            },
+            "child_restart": {
+                "permanent": "Permanent",
+                "temporary": "Temporary",
+                "transient": "Transient"
+            },
+            "child_shutdown": {
+                "brutal_kill": "Brutal Kill",
+                "infinite": "Infinite Timeout",
+                "timeout": "Timeout"
+            },
+            "child_type": {
+                "supervisor": "Supervisor",
+                "worker": "Worker"
+            },
+            "label": {
+                "auto_shutdown": "Auto Shutdown",
+                "child_restart": "Restart",
+                "child_shutdown": "Shutdown",
+                "child_type": "Type",
+                "intensity": "Intensity (count)",
+                "period": "Period (seconds)",
+                "restart_strategy": "Restart Strategy",
+                "selectAll": "select all",
+                "source": "Supervised Nodes",
+                "supervisor_type": "Type of Supervisor",
+                "tab": {
+                    "child_config": "Children",
+                    "supervisor_config": "Options"
+                }
+            },
+            "nodeCount": "supervisor: __number__",
+            "placeholder": {
+                "intensity": "Count",
+                "period": "Seconds",
+                "timeout": "Timeout (secs)"
+            },
+            "restart_strategy": {
+                "one_for_all": "One for All",
+                "one_for_one": "One for one",
+                "rest_for_one": "Rest for one",
+                "simple_one_for_one": "Simple One for one"
+            },
+            "scope": {
+                "all": "All flow nodes",
+                "group": "In same group",
+                "selected": "Selected nodes"
+            },
+            "superviseFlow": "supervisor: flow",
+            "superviseGroup": "supervisor: group",
+            "supervisor_type": {
+                "dynamic": "Dynamic child specification",
+                "static": "Static child specification"
+            }
+        }
+    },
     "@gregoriusrippenstein/node-red-artworks/artwork": {
         "artwork": {
             "label": {
@@ -339,6 +460,7 @@
     "node-red-contrib-fastxml/fastxml": {},
     "node-red-contrib-i2c/i2c": {},
     "node-red-contrib-image-output/image": {},
+    "node-red-contrib-string/string": {},
     "node-red-contrib-switch-break/switchBreak": {
         "label": {
             "defaultState": "Break by default",

@@ -861,7 +861,7 @@
             "Seeker"
         ],
         "user": false,
-        "version": "0.9.11"
+        "version": "0.10.0"
     },
     {
         "enabled": true,
@@ -873,7 +873,7 @@
             "Sink"
         ],
         "user": false,
-        "version": "0.9.11"
+        "version": "0.10.0"
     },
     {
         "enabled": true,
@@ -885,7 +885,7 @@
             "ClientCode"
         ],
         "user": false,
-        "version": "0.9.11"
+        "version": "0.10.0"
     },
     {
         "enabled": true,
@@ -897,7 +897,7 @@
             "GetFlows"
         ],
         "user": false,
-        "version": "0.9.11"
+        "version": "0.10.0"
     },
     {
         "enabled": true,
@@ -909,7 +909,7 @@
             "SendFlow"
         ],
         "user": false,
-        "version": "0.9.11"
+        "version": "0.10.0"
     },
     {
         "enabled": true,
@@ -921,7 +921,7 @@
             "InstallPackage"
         ],
         "user": false,
-        "version": "0.9.11"
+        "version": "0.10.0"
     },
     {
         "enabled": true,
@@ -946,7 +946,7 @@
             "FlowCompareCfg"
         ],
         "user": false,
-        "version": "0.1.6"
+        "version": "0.2.0"
     },
     {
         "enabled": true,
@@ -1418,7 +1418,7 @@
             "FlowHubPull"
         ],
         "user": false,
-        "version": "0.8.4"
+        "version": "0.8.7"
     },
     {
         "enabled": true,
@@ -1430,7 +1430,7 @@
             "FlowHubCfg"
         ],
         "user": false,
-        "version": "0.8.4"
+        "version": "0.8.7"
     },
     {
         "enabled": true,
@@ -1765,5 +1765,77 @@
         ],
         "user": false,
         "version": "0.3.7"
+    },
+    {
+        "enabled": true,
+        "id": "node-red-contrib-string/string",
+        "local": true,
+        "module": "node-red-contrib-string",
+        "name": "string",
+        "types": [
+            "string"
+        ],
+        "user": false,
+        "version": "1.0.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/erlang-red-supervisor-node/erlsupervisor",
+        "local": true,
+        "module": "@gregoriusrippenstein/erlang-red-supervisor-node",
+        "name": "erlsupervisor",
+        "types": [
+            "erlsupervisor"
+        ],
+        "user": false,
+        "version": "0.2.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/erlang-red-supervisor-node/erlmodule",
+        "local": true,
+        "module": "@gregoriusrippenstein/erlang-red-supervisor-node",
+        "name": "erlmodule",
+        "types": [
+            "erlmodule"
+        ],
+        "user": false,
+        "version": "0.2.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/erlang-red-supervisor-node/erlstatemachine",
+        "local": true,
+        "module": "@gregoriusrippenstein/erlang-red-supervisor-node",
+        "name": "erlstatemachine",
+        "types": [
+            "erlstatemachine"
+        ],
+        "user": false,
+        "version": "0.2.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/erlang-red-supervisor-node/erleventhandler",
+        "local": true,
+        "module": "@gregoriusrippenstein/erlang-red-supervisor-node",
+        "name": "erleventhandler",
+        "types": [
+            "erleventhandler"
+        ],
+        "user": false,
+        "version": "0.2.0"
+    },
+    {
+        "enabled": true,
+        "id": "@gregoriusrippenstein/erlang-red-supervisor-node/erlgenserver",
+        "local": true,
+        "module": "@gregoriusrippenstein/erlang-red-supervisor-node",
+        "name": "erlgenserver",
+        "types": [
+            "erlgenserver"
+        ],
+        "user": false,
+        "version": "0.2.0"
     }
 ]
