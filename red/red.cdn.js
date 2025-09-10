@@ -925,6 +925,7 @@ var RED = (function() {
         // set to true to inspect all the events raised, before, during and
         // after Node-REDs appearance
         RED.events.DEBUG = false;
+        RED.view.DEBUG = false;
 
         // initialise everything to catch everything that needs catching.
         DEADRED.init();
@@ -22549,6 +22550,10 @@ RED.view = (function() {
             var maxY = space_height;
             for (var n = 0; n<movingSet.length(); n++) {
                 node = movingSet.get(n);
+                // don't allow moving a node that is locked.
+                if ( node.n.locked ) {
+                    continue;
+                }
                 if (d3.event.shiftKey) {
                     node.n.ox = node.n.x;
                     node.n.oy = node.n.y;
