@@ -26104,7 +26104,16 @@ RED.view = (function() {
                 g.on("touchstart", function() {groupMouseDown.call(g[0][0],d); d3.event.preventDefault();});
                 g.on("touchend", function() {groupMouseUp.call(g[0][0],d); d3.event.preventDefault();});
 
-                g.append('svg:text').attr("class","red-ui-flow-group-label");
+                g.append('svg:text')
+                  .attr("class","red-ui-flow-group-label")
+                  .on("mouseover", function() {
+                         let grpId = $(g[0]).attr('id');
+                         $(`#group_select_${grpId}`).addClass('red-ui-flow-group-hovered');
+                         d3.event.preventDefault();})
+                  .on("mouseout", function() {
+                         let grpId = $(g[0]).attr('id');
+                         $(`#group_select_${grpId}`).removeClass('red-ui-flow-group-hovered');
+                         d3.event.preventDefault();});
                 d.dirty = true;
             });
             if (addedGroups) {
