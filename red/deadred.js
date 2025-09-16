@@ -1377,15 +1377,95 @@ var DEADRED = (function() {
         var highlightNodes = (ndeIds) => {
             // move the workspace to the first node of
             // the group but don't make the highlight blink
-            RED.view.reveal(ndeIds[0], false)
-            RED.view.redraw();
+            RED.view.selectNodes({selected: ndeIds});
+        };
 
-            RED.tray.hide();
-            RED.view.selectNodes({
-                selected: ndeIds,
-                onselect: function(selection) { RED.tray.show(); },
-                oncancel: function() { RED.tray.show(); }
+        function highlightLink(fromNodeId, toNodeId) {
+            $('.link-from-' + fromNodeId + "-to-" + toNodeId).addClass('link-highlight');
+            $('.node-' + fromNodeId).addClass( "node-highlight");
+            $('.node-' + toNodeId).addClass("node-highlight");
+        }
+
+        function rmHighlightLink(fromNodeId, toNodeId) {
+            $('.link-from-' + fromNodeId + "-to-" + toNodeId).removeClass('link-highlight')
+            $('.node-' + fromNodeId).removeClass("node-highlight");
+            $('.node-' + toNodeId).removeClass("node-highlight");
+        }
+
+        function rmAllLinkHighlights() {
+            $('.link-highlight').removeClass('link-highlight');
+            $('.node-highlight').removeClass('node-highlight');
+            $('.group-highlight').removeClass("group-highlight");
+        }
+
+        function linkOnlyHighlight(fromNodeId, toNodeId) {
+            $('.link-from-' + fromNodeId + "-to-" + toNodeId).addClass('link-highlight')
+        }
+
+        function nodeOnlyHighlight(nodes) {
+            nodes.forEach( function( ndeId) {
+                $('.node-' + ndeId).addClass("node-highlight");
             });
+        }
+
+        function groupOnlyHighlight(nodes) {
+            nodes.forEach(function (ndeId) {
+                $('.group-' + ndeId).addClass("group-highlight");
+            });
+        }
+
+        var scrollDiv = (ele) => {
+          var anId = $(ele).data("ids").split(",")[0];
+
+          var scrollLeft = $(ele).data("scroll-left");
+          if (anId && scrollLeft) {
+            var m;
+            var divElem = $(  $(".node-" + anId).parents("div.svg-container")[0] || $(".group-" + anId).parents("div.svg-container")[0] );
+
+            if (m = ("" + scrollLeft).match(/(.+)%/)) {
+              var diff = divElem.find("svg").width() - divElem.width();
+              if (diff > 0) { scrollLeft = diff * (parseInt(m[1]) / 100); }
+            }
+
+            divElem.animate({ scrollLeft: scrollLeft });
+          }
+
+          var scrollTop = $(ele).data("scroll-top");
+          if (anId && scrollTop) {
+            var m;
+            var divElem = $($(".node-" + anId).parents("div.svg-container")[0] || $(".group-" + anId).parents("div.svg-container")[0]);
+
+            if (m = ("" + scrollTop).match(/(.+)%/)) {
+              var diff = divElem.find("svg").height() - divElem.height();
+              if (diff > 0) { scrollTop = diff * (parseInt(m[1]) / 100); }
+            }
+
+            divElem.animate({ scrollTop: scrollTop });
+          }
+        };
+
+        var allToLast = (ndeIds) => {
+          for (var jdx = 0; jdx < ndeIds.length - 1; jdx++) {
+            linkOnlyHighlight(ndeIds[jdx], ndeIds[ndeIds.length - 1]);
+          }
+        };
+
+        var firstToAll = (ndeIds) => {
+          for (var jdx = 1; jdx < ndeIds.length; jdx++) {
+            linkOnlyHighlight(ndeIds[0], ndeIds[jdx]);
+          }
+        };
+
+        var prevToNext = (ndeIds) => {
+          for (var jdx = 0; jdx < ndeIds.length - 1; jdx++) {
+            linkOnlyHighlight(ndeIds[jdx], ndeIds[jdx + 1]);
+          }
+        };
+
+        var portHighlight = (ele) => {
+          if ( !ele.hasClass("ahl-no-arrows"))  { $('.input-arrows').addClass('node-highlight'); };
+          if ( !ele.hasClass("ahl-no-output"))  { $('.output-deco').addClass('node-highlight'); }
+          if ( !ele.hasClass("ahl-no-input"))   { $('.input-deco').addClass('node-highlight'); }
         };
 
         $('a.ahl-node-only').each(function (idx, ele) {
@@ -1395,7 +1475,9 @@ var DEADRED = (function() {
 
             var ndeIds = getDataIds(ele);
 
+            $(ele).off('click');
             $(ele).on('click', function (e) {
+                e.preventDefault()
                 if ( ndeIds.length == 1 ) {
                     RED.view.reveal(ndeIds[0], true)
                     RED.view.redraw();
@@ -1410,15 +1492,30 @@ var DEADRED = (function() {
             $(ele).removeClass('ahl-group-only');
             $(ele).css('color', '#f4a0a0')
 
-            // here the ids are group ides, need to find all nodes in those
-            // groups and highlight them
             var grpIds = getDataIds(ele);
-            var ndeIds = []
-            grpIds.forEach( grpId => {
-                ndeIds = ndeIds.concat( nodesInGrp( grpId ) )
-            })
 
+            $(ele).off('click');
             $(ele).on('click', function (e) {
+                e.preventDefault()
+                if ( grpIds.length == 1 ) {
+                    RED.view.reveal(grpIds[0], true)
+                    RED.view.redraw();
+                } else {
+                    highlightNodes(grpIds)
+                }
+            });
+        });
+
+        $('a.ahl-link-node').each(function (idx, ele) {
+            var ndeIds = getDataIds(ele);
+
+            setHrefClass(ele);
+            $(ele).removeClass('ahl-group-only');
+            $(ele).css('color', '#f4a0a0')
+
+            $(ele).off('click');
+            $(ele).on('click', function (e) {
+                e.preventDefault()
                 if ( ndeIds.length == 1 ) {
                     RED.view.reveal(ndeIds[0], true)
                     RED.view.redraw();
@@ -1427,6 +1524,7 @@ var DEADRED = (function() {
                 }
             });
         });
+
     }
 
     // called once the deploy restart flow is called.
