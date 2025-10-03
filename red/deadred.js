@@ -694,6 +694,42 @@ var DEADRED = (function() {
 
                 break
 
+            case "split":
+                if ( nde.property == "payload" &&
+                     nde.arraySplt == 1 &&
+                     nde.arraySpltType == "len") {
+
+                    if ( Array.isArray(msg.payload) ) {
+                        let parts = {
+                            "id": RED.nodes.id(),
+                            "count": msg.payload.length,
+                            "len": 1,
+                            "type": "array"
+                        }
+
+                        msg.payload.forEach( (v, idx) => {
+                            let msg2 = cloneIt(msg)
+
+                            // support nesting parts into existing parts...
+                            // if we have an existing parts, then that gets
+                            // nested into our parts.
+                            let newParts = cloneIt(parts);
+                            if (msg2.parts) { newParts.parts = msg2.parts }
+
+                            msg2.parts = newParts
+                            msg2.payload = v
+                            msg2.parts.index = idx
+                            msg2._msgid = RED.nodes.id()
+
+                            passMsgToLinks(RED.nodes.getNodeLinks( nde ), msg2);
+                        })
+                    }
+                } else {
+                    nodeTypeNotSupported(nde)
+                }
+
+                return
+
             case 'subflow':
                 // we get here from the inside of a subflow. A subflow
                 // calls this and eventually it ends with an out node
