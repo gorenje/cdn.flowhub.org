@@ -20,6 +20,7 @@
         "ctrl-alt-r": "core:show-remote-diff",
         "ctrl-alt-n": "core:new-project",
         "ctrl-alt-o": "core:open-project",
+        "ctrl-shift-d": "core:clear-debug-messages",
         "ctrl-shift-l": "core:show-event-log",
         "ctrl-shift-p":"core:show-action-list",
         "alt-enter": "core:click-selected-nodes-button"
