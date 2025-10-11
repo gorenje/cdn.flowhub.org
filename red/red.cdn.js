@@ -44752,18 +44752,30 @@ RED.search = (function() {
         if (flags.flow && flags.flow.length) {
             flags.flow = [ ...new Set(flags.flow) ]; //deduplicate
         }
+
+        if (flags.uses && flags.uses.indexOf("selection") >= 0) {
+           let seletectedThings = (RED.view.selection() &&
+               RED.view.selection().nodes) || [];
+
+           flags.uses = seletectedThings.map( d => d.id )
+           seletectedThings.forEach( thng => {
+               if ( thng.type == "group" ) {
+                  RED.group.getNodes(thng,true,false).forEach( d => flags.uses.push(d.id) )
+               }
+           })
+
+           flags.uses = [ ...new Set(flags.uses) ]
+        }
+
         if (val.length > 0 || hasFlags) {
             val = val.toLowerCase();
             let i;
             let j;
             let list = [];
             const nodes = {};
-            let keys = [];
-            if (flags.uses) {
-                keys = flags.uses;
-            } else {
-                keys = Object.keys(index);
-            }
+
+            let keys = Object.keys(index);
+
             for (i=0;i<keys.length;i++) {
                 const key = keys[i];
                 const kpos = val ? keys[i].indexOf(val) : -1;
@@ -44772,7 +44784,7 @@ RED.search = (function() {
                     for (j=0;j<ids.length;j++) {
                         var node = index[key][ids[j]];
                         var isConfigNode = node.node._def.category === "config" && node.node.type !== 'group';
-                        if (flags.uses && key === node.node.id) {
+                        if (flags.uses && !flags.uses.includes(node.node.id)) {
                             continue;
                         }
                         if (flags.hasOwnProperty("invalid")) {
