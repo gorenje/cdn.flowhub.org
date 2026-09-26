@@ -982,14 +982,14 @@ var RED = (function() {
             // _if_ a gist is specified and _not_ a flowhub id. If gist
             // loading fails, then add exception to info box!
             if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")
-              && srchParams.get("gist") && !srchParams.get("fhid") &&
+              && (srchParams.get("gist") || srchParams.get("fb64")) && !srchParams.get("fhid") &&
                  options.type == "GET") {
 
-                let failureFlow = (ex) => {
+                let failureFlow = (ex, name) => {
                     return [ {
                             "id": "42805616781e564c",
                             "type": "tab",
-                            "label": "[deadred] failed to load gist",
+                            "label": name || "[deadred] failed to load gist",
                             "disabled": false,
                             "info": "",
                             "env": []
@@ -997,7 +997,7 @@ var RED = (function() {
                             "id": "b6b4eb80e0790685",
                             "type": "comment",
                             "z": "42805616781e564c",
-                            "name": "Welcome to Deadred - Double Click on this Node",
+                            "name": "Welcome to Deadred - Double Click for error details",
                             "info": "Unfortunately the load of the gist failed with:\n```\n" + ex + "\n```\n",
                             "x": 1070,
                             "y": 634,
@@ -1006,38 +1006,70 @@ var RED = (function() {
                     ]
                 };
 
-                try {
-                    jqXHR.abort();
+                if (srchParams.get("fb64")) {
+                    var atobUtf8 = (content) => {
+                        return new TextDecoder().decode(Uint8Array.fromBase64(content))
+                    };
 
-                    let gistid = srchParams.get("gist").split("/");
-                    gistid = gistid[gistid.length-1];
 
-                    $.get(
-                        "https://api.github.com/gists/" + gistid
-                    ).success( (gistdata) => {
-                        try {
-                            options.success({
-                                rev: RED.nodes.id() + RED.nodes.id(),
-                                flows: JSON.parse(gistdata.files["flow.json"].content)
-                            })
-                            // store the flow data to local storage for the
-                            // flowcompare node.
-                            RED.settings.setLocal( "flowdata", JSON.stringify({
-                                rev: RED.nodes.id() + RED.nodes.id(),
-                                flows: JSON.parse(gistdata.files["flow.json"].content)
-                            }))
-                        } catch ( ex ) {
-                            options.success({
-                                rev: RED.nodes.id() + RED.nodes.id(),
-                                flows: failureFlow(ex)
-                            })
-                        }
-                    })
-                } catch ( ex ) {
-                    options.success({
-                        rev: RED.nodes.id() + RED.nodes.id(),
-                        flows: failureFlow(ex)
-                    })
+                   try {
+                       jqXHR.abort();
+
+                       let flowdata =  atobUtf8(srchParams.get("fb64"))
+
+                       options.success({
+                           rev: RED.nodes.id() + RED.nodes.id(),
+                           flows: JSON.parse(flowdata)
+                       })
+                       // store the flow data to local storage for the
+                       // flowcompare node.
+                       RED.settings.setLocal( "flowdata", JSON.stringify({
+                           rev: RED.nodes.id() + RED.nodes.id(),
+                           flows: JSON.parse(flowdata)
+                       }))
+                   } catch ( ex ) {
+                       options.success({
+                           rev: RED.nodes.id() + RED.nodes.id(),
+                           flows: failureFlow(ex, "failed to load base64")
+                       })
+                   }
+
+                }
+
+                if (srchParams.get("gist")) {
+                   try {
+                       jqXHR.abort();
+
+                       let gistid = srchParams.get("gist").split("/");
+                       gistid = gistid[gistid.length-1];
+
+                       $.get(
+                           "https://api.github.com/gists/" + gistid
+                       ).success( (gistdata) => {
+                           try {
+                               options.success({
+                                   rev: RED.nodes.id() + RED.nodes.id(),
+                                   flows: JSON.parse(gistdata.files["flow.json"].content)
+                               })
+                               // store the flow data to local storage for the
+                               // flowcompare node.
+                               RED.settings.setLocal( "flowdata", JSON.stringify({
+                                   rev: RED.nodes.id() + RED.nodes.id(),
+                                   flows: JSON.parse(gistdata.files["flow.json"].content)
+                               }))
+                           } catch ( ex ) {
+                               options.success({
+                                   rev: RED.nodes.id() + RED.nodes.id(),
+                                   flows: failureFlow(ex)
+                               })
+                           }
+                       })
+                   } catch ( ex ) {
+                       options.success({
+                           rev: RED.nodes.id() + RED.nodes.id(),
+                           flows: failureFlow(ex)
+                       })
+                   }
                 }
             }
         });

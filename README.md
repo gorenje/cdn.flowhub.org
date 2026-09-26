@@ -70,6 +70,11 @@ Since this is a static instance, there is no possibility to dynamically load new
 
 The Node-RED tour is automatically shown each time the instance is loaded, this can be prevented by including [t=0](https://cdn.flowhub.org/?t=0) in the URL.
 
+## Base64 encoded flows.json
+
+These can be provided using the [...?fb64=...](https://cdn.flowhub.org/?t=0&fb64=W3siaWQiOiJiYTRhZTk1MjIzMDNkNGU5IiwidHlwZSI6InRhYiIsImxhYmVsIjoiQmFzZTY0IGVuY29kZWQiLCJkaXNhYmxlZCI6ZmFsc2UsImluZm8iOiIiLCJlbnYiOltdfSx7ImlkIjoiZGRiNzg1ZTYzMDI5M2JjYSIsInR5cGUiOiJjb21tZW50IiwieiI6ImJhNGFlOTUyMjMwM2Q0ZTkiLCJuYW1lIjoiIiwiaW5mbyI6IlN1cHBvcnRlZCB1c2luZyB0aGUgYGZiNjQ9YCBwYXJhbWV0ZXIuIiwieCI6MjAxLjk2NTc0NDAxODU1NDcsInkiOjE2OC4yMzk0NTIzNjIwNjA1NSwid2lyZXMiOltdfV0=) parameter. Be warned this will fail most of the time since the [maximum length](https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers) of URLs will restrict the length of the base64 string.
+
+
 ## Running locally
 
 To run this locally for testing *(this assumes `python3` and `make` have been installed.)*:
