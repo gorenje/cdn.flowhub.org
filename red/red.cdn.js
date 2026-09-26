@@ -982,7 +982,7 @@ var RED = (function() {
             // _if_ a gist is specified and _not_ a flowhub id. If gist
             // loading fails, then add exception to info box!
             if ( options.url == (RED.settings.get("dynamicServer", "") + "flows")
-              && (srchParams.get("gist") || srchParams.get("fb64")) && !srchParams.get("fhid") &&
+              && (srchParams.get("gist") || srchParams.get("fb64") || srchParams.get("nold")) && !srchParams.get("fhid") &&
                  options.type == "GET") {
 
                 let failureFlow = (ex, name) => {
@@ -1005,6 +1005,26 @@ var RED = (function() {
                         }
                     ]
                 };
+
+                if (srchParams.get("nold")) {
+                    jqXHR.abort();
+                    let flowdata = [ {
+                        "id": "42805616781e564c",
+                        "type": "tab",
+                        "label": "Flow 1",
+                        "disabled": false,
+                        "info": "",
+                        "env": []
+                    }]
+                    options.success({
+                       rev: RED.nodes.id() + RED.nodes.id(),
+                       flows:  flowdata
+                    })
+                    RED.settings.setLocal("flowdata", JSON.stringify({
+                        rev: RED.nodes.id() + RED.nodes.id(),
+                        flows:  flowdata
+                    }))
+                }
 
                 if (srchParams.get("fb64")) {
                     var atobUtf8 = (content) => {
