@@ -1858,6 +1858,34 @@ var DEADRED = (function() {
             } catch (ex) { RED.notify(`Error: ${ex.message}`, { type: "warning" }) }
         })
 
+        // initialise iframe support. This allows certain actinos to be
+        // performed when this is localed inside an iframe inside another page.
+        window.onmessage = function (e) {
+            if (e.data.msg == "cleardeploy") {
+                RED.actions.invoke("core:deploy-flows")
+            }
+
+            if (e.data.msg == "loadflow") {
+                let t = () => {
+                    RED.events.off("flows:add", t)
+                    setTimeout(()=> {
+                        RED.actions.invoke("core:show-next-tab")
+                    },300)
+                }
+                RED.events.on("flows:add", t)
+
+                RED.nodes.import(e.data.nodes, {
+                    generateIds: false,
+                    addFlow: false,
+                    markChanged: false,
+                    reimport: true,
+                    importMap: ((zz) => { let h = {}; h[zz] = "import"; return h })(e.data.nodes[0].z),
+                    applyNodeDefaults: false,
+                    eventContext: null
+                })
+            }
+        }
+
         console.log( "DEADRED initialised" )
     }
 
